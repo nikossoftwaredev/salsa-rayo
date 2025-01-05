@@ -25,7 +25,7 @@ const MobileHeader = () => {
       <div className="flex items-center justify-between p-2">
         <BiLogOut />
 
-        <button className="btn btn-square btn-sm btn-outline btn-secondary h-[20] flex justify-center mr-1">
+        <button className="btn btn-square btn-sm btn-ghost btn-secondary h-[20] flex justify-center mr-1">
           {openModal ? (
             <MdClose onClick={() => setOpenModal(false)} size={20} />
           ) : (

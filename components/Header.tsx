@@ -1,6 +1,6 @@
 "use client";
 
-import {  headerLinks } from "@/data/config";
+import { headerLinks } from "@/data/config";
 import MobileHeader from "./MobileHeader";
 import Logo from "./Logo";
 
@@ -8,7 +8,7 @@ const Header = () => {
   const languageId = "en";
   return (
     <header className="w-full z-[999] absolute max-h-[100px] bg-transparent">
-      <nav className="w-full text-accent backdrop-blur-lg ">
+      <nav className="w-full text-primary backdrop-blur-lg ">
         <span className="md:hidden">
           <MobileHeader />
         </span>
@@ -28,8 +28,6 @@ const Header = () => {
                   </li>
                 );
               })}
-
-
             </span>
           </ul>
         </span>

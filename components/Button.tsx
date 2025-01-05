@@ -1,13 +1,39 @@
-import React, { FC, ButtonHTMLAttributes } from "react";
+/* eslint-disable react/jsx-props-no-spreading */
+import { ButtonHTMLAttributes, ReactNode } from "react";
 
-// Define the component with ButtonHTMLAttributes
-const Button: FC<ButtonHTMLAttributes<HTMLButtonElement>> = (props) => {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children: ReactNode;
+  loading?: boolean;
+  variant?: "primary" | "neutral" | "secondary" | "accent" | "ghost" | "link";
+  outlined?: boolean;
+}
+
+const Button = (props: ButtonProps) => {
+  const {
+    className,
+    children,
+    loading = false,
+    variant,
+    outlined = true,
+    ...buttonPros
+  } = props;
+
   return (
     <button
-      {...props}
-      className={`btn bg-gradient-to-r from-purple to-yellow-300 text-white ${props.className} hover:scale-105 ease-in-out duration-300`}
+      type="button"
+      {...buttonPros}
+      className={`btn ${variant ? `btn-${variant}` : ""} ${
+        outlined ? "btn-outline" : "btn-active"
+      } ${className}`}
     >
-      {props.children || "Button"}
+      {loading ? (
+        <>
+          <span className="loading loading-infinity"></span>
+          LOADING
+        </>
+      ) : (
+        children
+      )}
     </button>
   );
 };
