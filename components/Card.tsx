@@ -1,3 +1,5 @@
+import { twMerge } from "tailwind-merge";
+
 const Card = ({
   children,
   className,
@@ -7,7 +9,10 @@ const Card = ({
 }) => {
   return (
     <div
-      className={`card bg-base-300 shadow-xl outline outline-accent ${className}`}
+      className={twMerge(
+        `card bg-base-300 shadow-xl outline outline-accent`,
+        className
+      )}
     >
       {children}
     </div>

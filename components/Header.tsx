@@ -5,6 +5,7 @@ import MobileHeader from "./MobileHeader";
 import Logo from "./Logo";
 
 const Header = () => {
+  const languageId = "en";
   return (
     <header className="w-full z-[999] absolute max-h-[100px] bg-transparent">
       <nav className="w-full text-accent backdrop-blur-lg ">
@@ -22,7 +23,7 @@ const Header = () => {
                       href={linkConfig.path}
                       className={`font-bold text-lg hover:text-primary`}
                     >
-                      {linkConfig.text}
+                      {linkConfig.text[languageId]}
                     </a>
                   </li>
                 );

@@ -1,5 +1,5 @@
 "use client";
-import {  headerLinks } from "@/data/config";
+import { headerLinks } from "@/data/config";
 import { useEffect, useState } from "react";
 import { BiLogOut } from "react-icons/bi";
 import { MdMenu, MdClose } from "react-icons/md";
@@ -7,6 +7,7 @@ import SocialsSection from "./SocialsSection";
 
 const MobileHeader = () => {
   const [openModal, setOpenModal] = useState(false);
+  const languageId = "en";
 
   useEffect(() => {
     if (openModal) {
@@ -23,12 +24,12 @@ const MobileHeader = () => {
     <>
       <div className="flex items-center justify-between p-2">
         <BiLogOut />
-       
-        <button className="btn btn-square btn-outline btn-secondary h-[40] flex justify-center mr-1">
+
+        <button className="btn btn-square btn-sm btn-outline btn-secondary h-[20] flex justify-center mr-1">
           {openModal ? (
-            <MdClose onClick={() => setOpenModal(false)} size={40} />
+            <MdClose onClick={() => setOpenModal(false)} size={20} />
           ) : (
-            <MdMenu onClick={() => setOpenModal(true)} size={40} />
+            <MdMenu onClick={() => setOpenModal(true)} size={20} />
           )}
         </button>
       </div>
@@ -48,7 +49,7 @@ const MobileHeader = () => {
                     href={linkConfig.path}
                     className={`text-3xl text-primary font-extrabold uppercase hover:text-primary`}
                   >
-                    {linkConfig.text}
+                    {linkConfig.text[languageId]}
                   </a>
                 </span>
               );
