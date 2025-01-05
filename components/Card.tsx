@@ -8,12 +8,7 @@ const Card = ({
   className?: string;
 }) => {
   return (
-    <div
-      className={twMerge(
-        `card bg-base-300 shadow-xl outline outline-accent`,
-        className
-      )}
-    >
+    <div className={twMerge(`card bg-base-300 shadow-xl`, className)}>
       {children}
     </div>
   );

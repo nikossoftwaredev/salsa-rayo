@@ -132,7 +132,7 @@ const ContactForm = () => {
               return inputType === "textarea" ? (
                 <TextArea
                   key={dataField}
-                  className={colSpan ? "col-span-full" : ""}
+                  className={"col-span-2"}
                   required={false}
                   rows={4}
                   autoComplete={id}

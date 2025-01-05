@@ -53,7 +53,7 @@ const AboutSection: FC<{ [key: string]: any }> = () => (
       </div>
     </AboutCard>
     <SectionTitle title="Media" />
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {YOUTUBE_VIDEOS.map((video_id) => (
         <YoutubeIFrame key={video_id} video_id={video_id} />
       ))}
