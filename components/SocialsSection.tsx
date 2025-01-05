@@ -1,9 +1,10 @@
 import {
+  FACEBOOK_URL,
   INSTAGRAM_URL,
   SPOTIFY_URL,
-  YOUTUBE_URL
+  YOUTUBE_URL,
 } from "@/data/config";
-import { FaInstagram, FaSpotify, FaYoutube } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaSpotify, FaYoutube } from "react-icons/fa";
 import { SectionTitle } from "./SectionTitle";
 import Card from "./Card";
 
@@ -20,7 +21,11 @@ const SOCIALS_INFO = [
   {
     url: SPOTIFY_URL,
     icon: <FaSpotify size={25} className="text-[#1DB954]" />,
-  }
+  },
+  {
+    url: FACEBOOK_URL,
+    icon: <FaFacebook size={25} className="text-[#1877F2]" />,
+  },
 ];
 
 const SocialsSection = () => {

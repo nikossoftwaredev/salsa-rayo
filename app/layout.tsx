@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const APPLICATION_NAME = "Salsa Rayo Dance Schools";
 const APPLICATION_DESCRIPTION =
@@ -35,9 +36,10 @@ export default function RootLayout({
       <head>
         <script data-preload src="https://terminal.jup.ag/main-v1.js"></script>
       </head>
-      <body className="text-base-content text-lg font-custom w-full flex justify-center">
+      <body className="text-base-content text-lg font-custom w-full flex justify-center flex-wrap  ">
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );

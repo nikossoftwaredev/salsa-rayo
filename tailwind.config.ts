@@ -13,7 +13,7 @@ const config: Config = {
         yellow: "#DEBE54",
       },
       fontFamily: {
-        custom: ["roboto", "custom-font", "sans-serif"], // Replace 'CustomFontName' with the actual font name
+        custom: ["faculty", "roboto", "custom-font", "sans-serif"], // Replace 'CustomFontName' with the actual font name
       },
     },
   },
@@ -23,7 +23,7 @@ const config: Config = {
       {
         forest: {
           ...require("daisyui/src/theming/themes")["forest"],
-          primary: "#DEBE54",
+          primary: "#18A07B",
           accent: "#7737b8",
         },
       },

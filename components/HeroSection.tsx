@@ -1,5 +1,6 @@
 import Button from "./Button";
 import Logo from "./Logo";
+import { SectionTitle } from "./SectionTitle";
 
 const HeroSection = () => {
   return (
@@ -12,17 +13,15 @@ const HeroSection = () => {
     >
       <div className="p-4 flex flex-col items-center justify-center w-full text-center text-white space-y-6 bg-black bg-opacity-50">
         <Logo />
+        <SectionTitle title="Dance and connect" />
         <p className="text-2xl font-extrabold ">
-          This is your getaway to the vibrant world of social dancing!
+          This is your getaway to the magical world of social dancing!
         </p>
         <div className="text-base md:text-xl">
-          <p>
-            Learn to dance, make friends, and embrace the rhythm of salsa in an
-            inclusive and vibrant community.
-          </p>
+          <p>Learn to dance, make friends, and extend your skills.</p>
           <p>Join our classes today!</p>
         </div>
-        <Button>Get Started Now</Button>
+        <Button variant="primary">Get Started Now</Button>
       </div>
     </section>
   );

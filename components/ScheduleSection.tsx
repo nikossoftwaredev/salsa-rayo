@@ -1,17 +1,17 @@
 "use client";
-import { SCHEDULE } from "@/data/config";
 
 import { SectionTitle } from "./SectionTitle";
 import Card from "./Card";
 import Chip from "./Chip";
 import { FaRegClock } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
+import { SCHEDULE } from "@/data/schedule";
 
 const ScheduleSection = () => {
   const currentDayIndex = new Date().getDay();
 
   return (
-    <section id="schedule w-full ">
+    <section id="schedule">
       <div className="w-full grid gap-4">
         {SCHEDULE.map(({ day, schedule, dayIndex }) => (
           <Card
