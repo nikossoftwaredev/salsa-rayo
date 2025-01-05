@@ -2,7 +2,7 @@
 import Card from "@/components/Card";
 import { FC } from "react";
 import { SectionTitle } from "./SectionTitle";
-import { YOUTUBE_URL, YOUTUBE_VIDEOS } from "@/data/config";
+import { YOUTUBE_VIDEOS } from "@/data/config";
 import YoutubeIFrame from "./YoutubeIFrame";
 
 const AboutCard: FC<{ href: string; children: React.ReactNode }> = ({
@@ -33,7 +33,7 @@ const AboutSection: FC<{ [key: string]: any }> = () => (
       <figure className="flex flex-col items-center justify-center">
         <img
           src="/images/instructor-anna.png"
-          alt="katerina-dimitrakopoulou"
+          alt="anna-lontou"
           className="h-[300px] w-[300px] rounded-xl object-cover"
           loading="lazy"
         />
