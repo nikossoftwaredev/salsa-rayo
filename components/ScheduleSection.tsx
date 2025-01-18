@@ -18,7 +18,7 @@ const ScheduleSection = () => {
             key={day}
             className={twMerge(
               `px-4 pb-4`,
-              currentDayIndex === dayIndex ? "outline-primary " : ""
+              currentDayIndex === dayIndex ? "outline outline-primary " : ""
             )}
           >
             <SectionTitle title={day} />

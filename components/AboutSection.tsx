@@ -24,41 +24,43 @@ const AboutCard: FC<{ href: string; children: React.ReactNode }> = ({
 );
 
 const AboutSection: FC<{ [key: string]: any }> = () => (
-  <section
-    id="about"
-    className="w-full flex flex-col items-center justify-center gap-4"
-  >
-    <SectionTitle title="About Us" />
-    <AboutCard href="/resume">
-      <figure className="flex flex-col items-center justify-center">
-        <img
-          src="/images/instructor-anna.png"
-          alt="anna-lontou"
-          className="h-[300px] w-[300px] rounded-xl object-cover"
-          loading="lazy"
-        />
-      </figure>
-      <div className="p-3">
-        <div>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam
-          expedita illo veritatis placeat corrupti rem asperiores totam
-          doloremque sequi! Nostrum necessitatibus aspernatur excepturi
-          <br />
-          Nullam nec Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          Ipsam expedita illo veritatis placeat corrupti rem asperiores totam
-          doloremque sequi! Nostrum necessitatibus aspernatur excepturi
-          consectetur reprehenderit illo velit repudiandae ullam suscipit.
+  <>
+    <SectionTitle title="ABOUT US" isMainSection />
+    <section
+      id="about"
+      className="w-full flex flex-col items-center justify-center gap-4"
+    >
+      <AboutCard href="/resume">
+        <figure className="flex flex-col items-center justify-center">
+          <img
+            src="/images/instructor-anna.png"
+            alt="anna-lontou"
+            className="h-[300px] w-[300px] rounded-xl object-cover"
+            loading="lazy"
+          />
+        </figure>
+        <div className="p-3">
+          <div>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam
+            expedita illo veritatis placeat corrupti rem asperiores totam
+            doloremque sequi! Nostrum necessitatibus aspernatur excepturi
+            <br />
+            Nullam nec Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Ipsam expedita illo veritatis placeat corrupti rem asperiores totam
+            doloremque sequi! Nostrum necessitatibus aspernatur excepturi
+            consectetur reprehenderit illo velit repudiandae ullam suscipit.
+          </div>
         </div>
+      </AboutCard>
+      <SectionTitle title="MEDIA" isMainSection />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {YOUTUBE_VIDEOS.map((video_id) => (
+          <YoutubeIFrame key={video_id} video_id={video_id} />
+        ))}
       </div>
-    </AboutCard>
-    <SectionTitle title="Media" />
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {YOUTUBE_VIDEOS.map((video_id) => (
-        <YoutubeIFrame key={video_id} video_id={video_id} />
-      ))}
-    </div>
-  </section>
+    </section>
+  </>
 );
 
 export default AboutSection;

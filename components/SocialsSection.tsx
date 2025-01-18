@@ -31,7 +31,7 @@ const SOCIALS_INFO = [
 const SocialsSection = () => {
   return (
     <section id="socials">
-      <SectionTitle title="Socials" />
+      <SectionTitle title="SOCIALS" isMainSection />
       <Card className="w-full">
         <div className="card-body flex flex-row flex-wrap items-center justify-center gap-2">
           {SOCIALS_INFO.map(({ url, icon }) => (

@@ -5,7 +5,7 @@ import { FiMapPin } from "react-icons/fi";
 const MapSection = () => {
   return (
     <div className="w-full flex flex-col items-center justify-center">
-      <SectionTitle title="Maps" />
+      <SectionTitle title="MAPS" isMainSection />
       <Card className="sm:w-full md:w-3/4 shadow-md mt-4 flex items-center justify-center">
         <iframe
           title="map"

@@ -115,7 +115,7 @@ const ContactForm = () => {
 
   return (
     <main className="flex items-center justify-center flex-col">
-      <SectionTitle title="Contact Us" />
+      <SectionTitle title="CONTACT US" isMainSection />
       <Card className="mb-5 w-full max-w-[600px]">
         <form>
           <div className="grid p-4 gap-2 sm:grid-cols-1 md:grid-cols-2">

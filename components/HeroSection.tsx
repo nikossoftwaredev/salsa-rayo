@@ -13,7 +13,7 @@ const HeroSection = () => {
     >
       <div className="p-4 flex flex-col items-center justify-center w-full text-center text-white space-y-6 bg-black bg-opacity-50">
         <Logo />
-        <SectionTitle title="Dance and connect" />
+        <SectionTitle title="Dance & Connect" />
         <p className="text-2xl font-extrabold ">
           This is your getaway to the magical world of social dancing!
         </p>
