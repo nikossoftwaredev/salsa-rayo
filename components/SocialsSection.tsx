@@ -6,7 +6,6 @@ import {
 } from "@/data/config";
 import { FaFacebook, FaInstagram, FaSpotify, FaYoutube } from "react-icons/fa";
 import { SectionTitle } from "./SectionTitle";
-import Card from "./Card";
 
 // CHANGE THE COLORS OF THE ICONS
 const SOCIALS_INFO = [
@@ -32,21 +31,19 @@ const SocialsSection = () => {
   return (
     <section id="socials">
       <SectionTitle title="SOCIALS" isMainSection />
-      <Card className="w-full">
-        <div className="card-body flex flex-row flex-wrap items-center justify-center gap-2">
-          {SOCIALS_INFO.map(({ url, icon }) => (
-            <a
-              key={url}
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center btn btn-square bg-black"
-            >
-              {icon}
-            </a>
-          ))}
-        </div>
-      </Card>
+      <span className="card-body flex flex-row flex-wrap items-center justify-center gap-2">
+        {SOCIALS_INFO.map(({ url, icon }) => (
+          <a
+            key={url}
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center btn btn-square bg-black"
+          >
+            {icon}
+          </a>
+        ))}
+      </span>
     </section>
   );
 };

@@ -28,7 +28,7 @@ const ScheduleSection = () => {
                   key={time}
                   className="flex flex-col gap-4 items-center justify-start p-2 card bg-base-200 shadow-xl"
                 >
-                  <div className="flex items-center gap-2 text-primary">
+                  <div className="font-sans  flex items-center gap-2 text-primary">
                     <FaRegClock />
                     <h3 className="text-lg font-bold">{time}</h3>
                   </div>
