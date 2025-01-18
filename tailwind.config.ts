@@ -21,8 +21,8 @@ const config: Config = {
   daisyui: {
     themes: [
       {
-        forest: {
-          ...require("daisyui/src/theming/themes")["forest"],
+        myTheme: {
+          ...require("daisyui/src/theming/themes")["sunset"],
           primary: "#18A07B",
           accent: "#7737b8",
         },

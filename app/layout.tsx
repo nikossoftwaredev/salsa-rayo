@@ -32,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="forest">
+    <html lang="en" data-theme="myTheme">
       <head>
         <script data-preload src="https://terminal.jup.ag/main-v1.js"></script>
       </head>

@@ -17,7 +17,7 @@ const ScheduleSection = () => {
           <Card
             key={day}
             className={twMerge(
-              `px-4 pb-4`,
+              `px-4 pb-4 bg-base-300`,
               currentDayIndex === dayIndex ? "outline outline-primary " : ""
             )}
           >
