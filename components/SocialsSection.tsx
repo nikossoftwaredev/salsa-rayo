@@ -27,10 +27,10 @@ const SOCIALS_INFO = [
   },
 ];
 
-const SocialsSection = () => {
+const SocialsSection = ({ isMobile = false }: { isMobile?: boolean }) => {
   return (
     <section id="socials">
-      <SectionTitle title="SOCIALS" isMainSection />
+      {!isMobile && <SectionTitle title="SOCIALS" isMainSection />}
       <span className="card-body flex flex-row flex-wrap items-center justify-center gap-2">
         {SOCIALS_INFO.map(({ url, icon }) => (
           <a

@@ -55,7 +55,7 @@ const MobileHeader = () => {
               );
             })}
           </span>
-          <SocialsSection />
+          <SocialsSection isMobile />
         </div>
       )}
     </>

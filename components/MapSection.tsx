@@ -1,7 +1,8 @@
 import Card from "@/components/Card";
 import { MAP_IFRAME, NAVIGATION } from "@/data/config";
 import { SectionTitle } from "./SectionTitle";
-import { FiMapPin } from "react-icons/fi";
+import { MdDirections } from "react-icons/md";
+
 const MapSection = () => {
   return (
     <div className="w-full flex flex-col items-center justify-center">
@@ -10,7 +11,7 @@ const MapSection = () => {
         <iframe
           title="map"
           src={MAP_IFRAME}
-          className="rounded-lg border-hidden "
+          className="rounded-lg border-hidden invert-[90%] hue-rotate-180"
           width="100%"
           height="400px"
           loading="lazy"
@@ -23,7 +24,7 @@ const MapSection = () => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        Get Directions <FiMapPin />
+        Get Directions <MdDirections />
       </a>
     </div>
   );
