@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import Button from "./Button";
 import Logo from "./Logo";
 import { SectionTitle } from "./SectionTitle";
+import GetStartedButton from "./GetStartedButton";
 
 const HeroSection = () => {
   const [scrollOffset, setScrollOffset] = useState(55);
@@ -30,7 +30,7 @@ const HeroSection = () => {
         backgroundPosition: `${scrollOffset}% 0%`, // Move image horizontally
       }}
     >
-      <div className="p-4 flex flex-col items-center justify-center w-full text-center text-white space-y-6 bg-black bg-opacity-50">
+      <div className="p-4 flex flex-col items-center justify-center card text-center text-white space-y-6 bg-black bg-opacity-50">
         <Logo />
         <SectionTitle title="Dance & Connect" />
         <p className="text-2xl font-extrabold ">
@@ -40,7 +40,7 @@ const HeroSection = () => {
           <p>Learn to dance, make friends, and extend your skills.</p>
           <p>Join our classes today!</p>
         </div>
-        <Button variant="primary">Get Started Now</Button>
+        <GetStartedButton />
       </div>
     </section>
   );

@@ -28,16 +28,16 @@ const footerSections = [
 
 const Footer = () => {
   return (
-    <footer className="flex items-center flex-col py-10 bg-base-200 w-full">
-      <div className="flex justify-center items-start gap-20 pb-5  sm:flex-col md:flex-row flex-wrap">
+    <footer className="flex items-center flex-col py-10 bg-base-200 w-full font-sans">
+      <div className="grid md:grid-cols-2 pb-5 gap-10 grid-cols-1 md:flex-row flex-wrap">
         {footerSections.map((footerSection) => (
           <section key={footerSection.title}>
-            <h4 className="text-3xl pb-3 font-bold text-accent-focus">
+            <h4 className="text-3xl pb-3 font-bold">
               <span>{footerSection.title}</span>
             </h4>
             {footerSection.subtitles.map((subtitle) => (
               <div
-                className="text-lg flex  items-center justify-start gap-2"
+                className="text-lg flex items-center justify-start gap-2"
                 key={subtitle.value}
               >
                 {subtitle.icon} {subtitle.value}

@@ -114,7 +114,10 @@ const ContactForm = () => {
   });
 
   return (
-    <main className="flex items-center justify-center flex-col">
+    <main
+      id="contact-form"
+      className="flex items-center justify-center flex-col "
+    >
       <SectionTitle title="CONTACT US" isMainSection />
       <Card className="mb-5 w-full max-w-[600px]">
         <form>

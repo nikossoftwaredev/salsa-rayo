@@ -11,8 +11,11 @@ const ScheduleSection = () => {
   const currentDayIndex = new Date().getDay();
 
   return (
-    <section id="schedule">
-      <div className="w-full grid gap-4">
+    <section
+      id="schedule"
+      className="flex items-center justify-center flex-col"
+    >
+      <div className="w-full grid md:grid-cols-2 gap-4 max-w-96 md:max-w-3xl">
         {SCHEDULE.map(({ day, schedule, dayIndex }) => (
           <Card
             key={day}
@@ -22,17 +25,19 @@ const ScheduleSection = () => {
             )}
           >
             <SectionTitle title={day} />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               {schedule.map(({ time, title, instructors }) => (
                 <div
                   key={time}
                   className="flex flex-col gap-4 items-center justify-start p-2 card bg-base-200 shadow-xl"
                 >
-                  <div className="font-sans  flex items-center gap-2 text-primary">
+                  <div className="font-sans  flex items-center gap-2 ">
                     <FaRegClock />
-                    <h3 className="text-lg font-bold">{time}</h3>
+                    <h3 className="text-lg ">{time}</h3>
                   </div>
-                  <h4 className="text-xl font-extrabold ">{title}</h4>
+                  <h4 className="text-xl font-extrabold text-primary">
+                    {title}
+                  </h4>
                   <div className="flex flex-wrap gap-2 items-center justify-center">
                     {instructors.map(({ image, name }) => (
                       <Chip key={name} image={image} label={name} />

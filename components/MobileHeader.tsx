@@ -1,7 +1,6 @@
 "use client";
 import { headerLinks } from "@/data/config";
 import { useEffect, useState } from "react";
-import { BiLogOut } from "react-icons/bi";
 import { MdMenu, MdClose } from "react-icons/md";
 import SocialsSection from "./SocialsSection";
 
@@ -23,13 +22,11 @@ const MobileHeader = () => {
   return (
     <>
       <div className="flex items-center justify-between p-2">
-        <BiLogOut />
-
-        <button className="btn btn-square btn-sm btn-ghost btn-secondary h-[20] flex justify-center mr-1">
+        <button className="btn btn-square btn-sm btn-ghost btn-secondary h-[30] flex justify-center mr-1 ml-auto">
           {openModal ? (
-            <MdClose onClick={() => setOpenModal(false)} size={20} />
+            <MdClose onClick={() => setOpenModal(false)} size={30} />
           ) : (
-            <MdMenu onClick={() => setOpenModal(true)} size={20} />
+            <MdMenu onClick={() => setOpenModal(true)} size={30} />
           )}
         </button>
       </div>

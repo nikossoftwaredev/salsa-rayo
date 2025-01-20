@@ -19,7 +19,7 @@ const MapSection = () => {
         />
       </Card>
       <a
-        className="btn btn-primary btn-outline my-4 flex items-center justify-center"
+        className="btn btn-accent  my-4 flex items-center justify-center"
         href={NAVIGATION}
         target="_blank"
         rel="noopener noreferrer"
