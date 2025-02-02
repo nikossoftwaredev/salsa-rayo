@@ -15,8 +15,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 
   const title = `Zap - TG Channel - ${tgChannel?.username}`;
-  const description = `View ${tgChannel?.title} on Zap ⚡`;
-  const ts = new Date();
+  const description = `View ${tgChannel?.title} on Zap ⚡ 2222`;
+  const ts = Date.now();
   const ogImageUrl = `https://salsa-rayo.vercel.app/api/og?tg-channel=${encodeURIComponent(
     telegramChannelId
   )}&ts=${ts}`;
