@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+export const revalidate = 60;
+
 type Props = {
   params: Promise<{ telegramChannelId: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
