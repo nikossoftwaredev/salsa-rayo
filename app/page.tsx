@@ -1,9 +1,10 @@
-import AboutSection from "@/components/AboutSection";
-import ContactForm from "@/components/ContactForm";
-import HeroSection from "@/components/HeroSection";
-import MapSection from "@/components/MapSection";
-import ScheduleSection from "@/components/ScheduleSection";
-import SocialsSection from "@/components/SocialsSection";
+import AboutSection from "@/components/sections/about/AboutSection";
+import { BookingSection } from "@/components/sections/booking/BookingSection";
+import ContactForm from "@/components/sections/contact-form/ContactForm";
+import HeroSection from "@/components/sections/hero/HeroSection";
+import MapSection from "@/components/sections/map/MapSection";
+import ScheduleSection from "@/components/sections/schedule/ScheduleSection";
+import SocialsSection from "@/components/sections/socials/SocialsSection";
 
 export const revalidate = 0;
 
@@ -21,10 +22,11 @@ export default function Home() {
       }}
     >
       <HeroSection />
-      <div className="w-full max-w-7xl flex flex-col px-4">
+      <div className="w-full max-w-7xl flex flex-col px-4 gap-4">
         <ScheduleSection />
         <AboutSection />
         <SocialsSection />
+        <BookingSection />
         <MapSection />
         <ContactForm />
       </div>

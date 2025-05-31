@@ -1,8 +1,8 @@
 "use client";
 
-import { SectionTitle } from "./SectionTitle";
-import Card from "./Card";
-import Chip from "./Chip";
+import { SectionTitle } from "@/components/SectionTitle";
+import Card from "@/components/Card";
+import Chip from "@/components/Chip";
 import { FaRegClock } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
 import { SCHEDULE } from "@/data/schedule";

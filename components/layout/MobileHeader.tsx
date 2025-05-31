@@ -2,7 +2,7 @@
 import { headerLinks } from "@/data/config";
 import { useEffect, useState } from "react";
 import { MdMenu, MdClose } from "react-icons/md";
-import SocialsSection from "./SocialsSection";
+import SocialsSection from "@/components/sections/socials/SocialsSection";
 
 const MobileHeader = () => {
   const [openModal, setOpenModal] = useState(false);

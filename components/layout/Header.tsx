@@ -2,7 +2,7 @@
 
 import { headerLinks } from "@/data/config";
 import MobileHeader from "./MobileHeader";
-import Logo from "./Logo";
+import Logo from "../Logo";
 
 const Header = () => {
   const languageId = "en";
@@ -21,9 +21,10 @@ const Header = () => {
                   <li key={linkConfig.path}>
                     <a
                       href={linkConfig.path}
-                      className={`font-bold text-lg hover:text-primary`}
+                      className={`font-bold text-lg relative group transition-colors duration-200`}
                     >
                       {linkConfig.text[languageId]}
+                      <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                     </a>
                   </li>
                 );

@@ -5,7 +5,7 @@ import {
   YOUTUBE_URL,
 } from "@/data/config";
 import { FaFacebook, FaInstagram, FaSpotify, FaYoutube } from "react-icons/fa";
-import { SectionTitle } from "./SectionTitle";
+import { SectionTitle } from "@/components/SectionTitle";
 
 // CHANGE THE COLORS OF THE ICONS
 const SOCIALS_INFO = [

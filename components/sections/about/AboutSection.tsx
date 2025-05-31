@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Card from "@/components/Card";
 import { FC } from "react";
-import { SectionTitle } from "./SectionTitle";
+import { SectionTitle } from "@/components/SectionTitle";
 import { YOUTUBE_VIDEOS } from "@/data/config";
 import YoutubeIFrame from "./YoutubeIFrame";
 

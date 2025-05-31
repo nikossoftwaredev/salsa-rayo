@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-sync-scripts */
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/Header";
+import Header from "@/components/layout/Header";
 import Footer from "@/components/Footer";
 
 const APPLICATION_NAME = "Salsa Rayo Dance Schools";
