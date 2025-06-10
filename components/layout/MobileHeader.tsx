@@ -1,58 +1,70 @@
 "use client";
-import { headerLinks } from "@/data/config";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { MdMenu, MdClose } from "react-icons/md";
+import { headerLinks } from "@/data/config";
 import SocialsSection from "@/components/sections/socials/SocialsSection";
 
 const MobileHeader = () => {
-  const [openModal, setOpenModal] = useState(false);
-  const languageId = "en";
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  // Prevent body scroll when menu is open
   useEffect(() => {
-    if (openModal) {
-      const originalStyle = window.getComputedStyle(document.body).overflow;
+    if (isMenuOpen) {
       document.body.style.overflow = "hidden";
-
-      return () => {
-        document.body.style.overflow = originalStyle;
-      };
+    } else {
+      document.body.style.overflow = "unset";
     }
-  }, [openModal]);
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isMenuOpen]);
 
   return (
     <>
-      <div className="flex items-center justify-between p-2">
-        <button className="btn btn-square btn-sm btn-ghost btn-secondary h-[30] flex justify-center mr-1 ml-auto">
-          {openModal ? (
-            <MdClose onClick={() => setOpenModal(false)} size={30} />
-          ) : (
-            <MdMenu onClick={() => setOpenModal(true)} size={30} />
-          )}
+      {/* Toggle Button - Stays in Header */}
+      <div className="flex items-center justify-start h-full px-4">
+        <button
+          onClick={toggleMenu}
+          className="btn btn-circle btn-ghost text-primary hover:bg-primary/20 transition-colors duration-300"
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+        >
+          {isMenuOpen ? <MdClose size={24} /> : <MdMenu size={24} />}
         </button>
       </div>
-      {openModal && (
-        <div
-          className="overscroll-none overflow-hidden p-3 
-                    h-screen-small h-screen w-full max-h-screen 
-                    max-w-none flex items-center flex-col justify-center
-                    backdrop-blur-lg"
-        >
-          <span className="flex flex-col justify-center items-center gap-4 mb-10">
-            {headerLinks.map((linkConfig) => {
-              return (
-                <span key={linkConfig.path}>
-                  <a
-                    onClick={() => setOpenModal(false)}
-                    href={linkConfig.path}
-                    className={`text-3xl text-primary font-extrabold uppercase hover:text-primary`}
-                  >
-                    {linkConfig.text[languageId]}
-                  </a>
-                </span>
-              );
-            })}
-          </span>
-          <SocialsSection isMobile />
+
+      {/* Mobile Menu Content - Below Header */}
+      {isMenuOpen && (
+        <div className="fixed top-[60px] left-0 right-0 bottom-0 z-50 bg-white bg-opacity-100">
+          <div className="flex flex-col items-center pt-20 px-6 space-y-8">
+            {/* Navigation Links */}
+            <nav className="flex flex-col items-center space-y-6">
+              {headerLinks.map((link) => (
+                <a
+                  key={link.path}
+                  href={link.path}
+                  onClick={closeMenu}
+                  className="text-2xl font-bold text-primary hover:text-accent transition-colors duration-300"
+                >
+                  {link.text.en}
+                </a>
+              ))}
+            </nav>
+
+            {/* Social Icons */}
+            <div className="mt-8">
+              <SocialsSection isMobile />
+            </div>
+          </div>
         </div>
       )}
     </>

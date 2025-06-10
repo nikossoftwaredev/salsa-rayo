@@ -5,31 +5,25 @@ import HeroSection from "@/components/sections/hero/HeroSection";
 import MapSection from "@/components/sections/map/MapSection";
 import ScheduleSection from "@/components/sections/schedule/ScheduleSection";
 import SocialsSection from "@/components/sections/socials/SocialsSection";
+import BackgroundEffects from "@/components/BackgroundEffects";
 
 export const revalidate = 0;
 
 export default function Home() {
   return (
-    <main
-      className="flex flex-col min-h-screen items-center justify-center gap-16 w-full pb-4 bg-base-100"
-      style={{
-        backgroundImage: "url('/images/background.jpg')",
-        backgroundRepeat: "repeat",
-        backgroundSize: "",
-        backgroundPosition: "top left",
-        minHeight: "100vh",
-        margin: 0,
-      }}
-    >
-      <HeroSection />
-      <div className="w-full max-w-7xl flex flex-col px-4 gap-4">
-        <ScheduleSection />
-        <AboutSection />
-        <SocialsSection />
-        <BookingSection />
-        <MapSection />
-        <ContactForm />
+    <div className="relative min-h-screen w-full overflow-x-hidden">
+      <BackgroundEffects />
+      <div className="relative">
+        <HeroSection />
+        <div className="w-full flex flex-col items-center gap-16 pb-16">
+          <ScheduleSection />
+          <AboutSection />
+          <SocialsSection />
+          <BookingSection />
+          <MapSection />
+          <ContactForm />
+        </div>
       </div>
-    </main>
+    </div>
   );
 }

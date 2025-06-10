@@ -36,10 +36,12 @@ export default function RootLayout({
       <head>
         <script data-preload src="https://terminal.jup.ag/main-v1.js"></script>
       </head>
-      <body className="text-base-content text-lg font-custom w-full flex justify-center flex-wrap  ">
+      <body className="text-base-content text-lg font-custom w-full min-h-screen flex flex-col">
         <Header />
-        {children}
-        <Footer />
+        <main className="flex-1 overflow-y-auto">
+          {children}
+          <Footer />
+        </main>
       </body>
     </html>
   );

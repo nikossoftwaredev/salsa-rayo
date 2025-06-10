@@ -1,6 +1,6 @@
 export const BookingSection = () => {
   return (
-    <div className="w-full">
+    <div className="w-full" id="privates">
       <iframe
         src="https://kratisix.com/en/anna-lontou?isEmbed=true"
         width="100%"

@@ -5,42 +5,61 @@ import { SectionTitle } from "@/components/SectionTitle";
 import GetStartedButton from "@/components/GetStartedButton";
 
 const HeroSection = () => {
-  const [scrollOffset, setScrollOffset] = useState(55);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrollOffset(() => {
-        const result = Math.max(55 - window.scrollY * 0.1, 0);
-        return result;
-      });
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    setIsLoaded(true);
   }, []);
 
   return (
     <section
       id="hero"
-      className="hero min-h-screen w-full bg-no-repeat flex items-center justify-center"
+      className="hero h-screen w-full bg-cover bg-center bg-no-repeat flex items-center justify-center relative overflow-hidden"
       style={{
         backgroundImage: "url(/images/hero-image.png)",
-        backgroundPosition: `${scrollOffset}% 0%`, // Move image horizontally
       }}
     >
-      <div className="p-4 flex flex-col items-center justify-center sm:card text-center text-white space-y-6 bg-black bg-opacity-50">
-        <Logo />
+      {/* Background Overlay */}
+      <div className="absolute inset-0 bg-black opacity-50"></div>
+
+      {/* Main Content */}
+      <div
+        className={`relative z-10 p-4 md:p-8 flex flex-col items-center justify-center text-center text-white space-y-6 md:space-y-8 transform transition-all duration-1000 ${
+          isLoaded ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
+        }`}
+      >
+        {/* Logo - Hidden on mobile */}
+        <div className="hidden md:block">
+          <Logo />
+        </div>
+
+        {/* Main Title */}
         <SectionTitle title="Dance & Connect" />
-        <p className="text-2xl font-extrabold ">
+
+        {/* Subtitle */}
+        <p className="text-xl md:text-3xl lg:text-4xl font-extrabold text-primary px-4">
           This is your getaway to the magical world of social dancing!
         </p>
-        <div className="text-base md:text-xl">
+
+        {/* Description */}
+        <div className="text-base md:text-lg lg:text-2xl space-y-2 max-w-3xl px-4">
           <p>Learn to dance, make friends, and extend your skills.</p>
-          <p>Join our classes today!</p>
+          <p>Join our passionate salsa community today!</p>
         </div>
-        <GetStartedButton />
+
+        {/* Call to Action */}
+        <div className="mt-6 md:mt-8">
+          <GetStartedButton />
+        </div>
+
+        {/* Stats Section */}
+      </div>
+
+      {/* Scroll Indicator - Hidden on mobile */}
+      <div className="hidden md:block absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
+          <div className="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
+        </div>
       </div>
     </section>
   );

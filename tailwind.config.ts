@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -7,13 +8,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors: {
-        gray: "#282929",
-        purple: "#7737b8",
-        yellow: "#DEBE54",
-      },
       fontFamily: {
-        custom: ["faculty", "roboto", "custom-font", "sans-serif"], // Replace 'CustomFontName' with the actual font name
+        custom: ["faculty", "roboto", "custom-font", "sans-serif"],
+      },
+      backdropBlur: {
+        xs: "2px",
       },
     },
   },
