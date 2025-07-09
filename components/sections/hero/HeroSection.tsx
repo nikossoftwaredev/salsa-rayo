@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import Logo from "@/components/Logo";
-import { SectionTitle } from "@/components/SectionTitle";
 import GetStartedButton from "@/components/GetStartedButton";
 
 const HeroSection = () => {

@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { DetailedHTMLProps, InputHTMLAttributes } from "react";
 
 type TextFieldProps = DetailedHTMLProps<

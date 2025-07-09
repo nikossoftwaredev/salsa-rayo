@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Card from "@/components/Card";
 import { FC } from "react";
+import Image from "next/image";
 import { SectionTitle } from "@/components/SectionTitle";
 import { YOUTUBE_VIDEOS } from "@/data/config";
 import YoutubeIFrame from "./YoutubeIFrame";
@@ -32,10 +33,12 @@ const AboutSection: FC<{ [key: string]: any }> = () => (
     >
       <AboutCard href="/resume">
         <figure className="flex flex-col items-center justify-center">
-          <img
+          <Image
             src="/images/instructor-anna.png"
             alt="anna-lontou"
-            className="h-[300px] w-[300px] rounded-xl object-cover"
+            width={300}
+            height={300}
+            className="rounded-xl object-cover"
             loading="lazy"
           />
         </figure>

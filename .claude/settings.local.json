@@ -3,7 +3,9 @@
     "allow": [
       "Bash(ls:*)",
       "Bash(rg:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(pnpm lint:*)",
+      "Bash(npx eslint:*)"
     ],
     "deny": []
   }
