@@ -19,8 +19,16 @@ const HeroSection = () => {
         backgroundImage: "url(/images/hero-image.png)",
       }}
     >
-      {/* Background Overlay */}
-      <div className="absolute inset-0 bg-black opacity-50"></div>
+      {/* Animated gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-transparent"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-accent/20 animate-pulse"></div>
+      
+      {/* Animated particles */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-primary rounded-full animate-float-slow opacity-60"></div>
+        <div className="absolute top-3/4 right-1/3 w-3 h-3 bg-accent rounded-full animate-float-medium opacity-40"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-2 h-2 bg-white rounded-full animate-float-fast opacity-30"></div>
+      </div>
 
       {/* Main Content */}
       <div
@@ -34,17 +42,29 @@ const HeroSection = () => {
         </div>
 
         {/* Main Title */}
-        <SectionTitle title="Dance & Connect" />
+        <div className="relative">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-4 tracking-tight">
+            <span className="bg-gradient-to-r from-white via-primary to-white bg-clip-text text-transparent animate-gradient-x">Dance</span>
+            <span className="text-white"> & </span>
+            <span className="bg-gradient-to-r from-white via-accent to-white bg-clip-text text-transparent animate-gradient-x animation-delay-200">Connect</span>
+          </h1>
+        </div>
 
         {/* Subtitle */}
-        <p className="text-xl md:text-3xl lg:text-4xl font-extrabold text-primary px-4">
-          This is your getaway to the magical world of social dancing!
+        <p className="text-xl md:text-3xl lg:text-4xl font-light text-white px-4 tracking-wide">
+          This is your <span className="font-bold text-primary animate-pulse">getaway</span> to the magical world of social dancing!
         </p>
 
         {/* Description */}
-        <div className="text-base md:text-lg lg:text-2xl space-y-2 max-w-3xl px-4">
-          <p>Learn to dance, make friends, and extend your skills.</p>
-          <p>Join our passionate salsa community today!</p>
+        <div className="text-base md:text-lg lg:text-2xl space-y-3 max-w-4xl px-4">
+          <p className="opacity-90 leading-relaxed">
+            <span className="inline-block transform hover:scale-105 transition-transform">Learn to dance</span>, 
+            <span className="inline-block transform hover:scale-105 transition-transform mx-2">make friends</span>, 
+            and <span className="inline-block transform hover:scale-105 transition-transform">extend your skills</span>.
+          </p>
+          <p className="font-semibold text-lg md:text-xl lg:text-2xl mt-4">
+            Join our <span className="text-primary">passionate</span> salsa community today!
+          </p>
         </div>
 
         {/* Call to Action */}
@@ -55,11 +75,13 @@ const HeroSection = () => {
         {/* Stats Section */}
       </div>
 
-      {/* Scroll Indicator - Hidden on mobile */}
-      <div className="hidden md:block absolute bottom-8 left-1/2 transform -translate-x-1/2">
-        <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
+      {/* Enhanced Scroll Indicator */}
+      <div className="hidden md:block absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="w-8 h-12 border-2 border-white/70 rounded-full flex justify-center relative overflow-hidden group hover:border-primary transition-colors">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/10 group-hover:to-primary/20 transition-colors"></div>
+          <div className="w-1.5 h-4 bg-white rounded-full mt-2 animate-scroll-down"></div>
         </div>
+        <p className="text-white/60 text-xs mt-2 tracking-wider">SCROLL</p>
       </div>
     </section>
   );

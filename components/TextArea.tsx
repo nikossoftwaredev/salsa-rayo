@@ -12,7 +12,7 @@ const TextArea = (props: TextFieldProps) => {
   return (
     <textarea
       {...props}
-      className={`textarea textarea-bordered ${className}`}
+      className={`textarea textarea-bordered placeholder:text-base-content/40 ${className}`}
     />
   );
 };

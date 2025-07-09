@@ -10,9 +10,9 @@ import {
 import Card from "@/components/Card";
 import Button from "@/components/Button";
 import { SectionTitle } from "@/components/SectionTitle";
-import TextArea from "./TextArea";
-import TextField from "./TextField";
-import { IoMdSend, IoMdMail, IoMdPerson, IoMdCall } from "react-icons/io";
+import TextArea from "@/components/TextArea";
+import TextField from "@/components/TextField";
+import { IoMdSend } from "react-icons/io";
 
 const initFormData = {
   firstname: "",
@@ -29,7 +29,6 @@ interface InputFieldProps {
   placeholder: string;
   required: boolean;
   colSpan?: number;
-  icon?: React.ReactNode;
 }
 
 const inputFields: InputFieldProps[] = [
@@ -39,7 +38,6 @@ const inputFields: InputFieldProps[] = [
     inputType: "text",
     placeholder: "First Name",
     required: true,
-    icon: <IoMdPerson className="text-primary" />,
   },
   {
     id: "lastname",
@@ -47,7 +45,6 @@ const inputFields: InputFieldProps[] = [
     inputType: "text",
     placeholder: "Last Name",
     required: true,
-    icon: <IoMdPerson className="text-primary" />,
   },
   {
     id: "email",
@@ -55,7 +52,6 @@ const inputFields: InputFieldProps[] = [
     inputType: "email",
     placeholder: "Email",
     required: true,
-    icon: <IoMdMail className="text-accent" />,
   },
   {
     id: "phone",
@@ -63,7 +59,6 @@ const inputFields: InputFieldProps[] = [
     inputType: "tel",
     placeholder: "Phone",
     required: true,
-    icon: <IoMdCall className="text-accent" />,
   },
   {
     id: "message",
@@ -121,7 +116,7 @@ const ContactForm = () => {
   return (
     <main
       id="contact-form"
-      className="flex items-center justify-center flex-col"
+      className="flex items-center justify-center flex-col "
     >
       <SectionTitle title="CONTACT US" isMainSection />
       <Card className="mb-5 w-full max-w-[600px]">
@@ -135,7 +130,6 @@ const ContactForm = () => {
                 required,
                 colSpan,
                 id,
-                icon,
               } = inputField;
 
               return inputType === "textarea" ? (
@@ -151,27 +145,18 @@ const ContactForm = () => {
                   name={id}
                 />
               ) : (
-                <div
+                <TextField
+                  id={id}
                   key={dataField}
-                  className={`${colSpan ? "col-span-full" : ""} relative`}
-                >
-                  {icon && (
-                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2 z-10">
-                      {icon}
-                    </div>
-                  )}
-                  <TextField
-                    id={id}
-                    className={`w-full ${icon ? "pl-10" : "pl-4"}`}
-                    required={required}
-                    type={inputType}
-                    value={formData[dataField as string]}
-                    placeholder={placeholder}
-                    autoComplete={id}
-                    onChange={onChangeFormData(dataField)}
-                    name={id}
-                  />
-                </div>
+                  className={colSpan ? "col-span-full" : ""}
+                  required={required}
+                  type={inputType}
+                  value={formData[dataField as string]}
+                  placeholder={placeholder}
+                  autoComplete={id}
+                  onChange={onChangeFormData(dataField)}
+                  name={id}
+                />
               );
             })}
             <Button
@@ -181,7 +166,10 @@ const ContactForm = () => {
               loading={loading}
               type="submit"
             >
-              Send <IoMdSend />
+              <span className="flex items-center gap-2">
+                Send
+                <IoMdSend size={18} />
+              </span>
             </Button>
           </div>
         </form>

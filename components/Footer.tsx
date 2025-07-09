@@ -34,16 +34,22 @@ const footerSections = [
 
 const Footer = () => {
   return (
-    <footer className="relative w-full bg-gradient-to-br from-base-300 to-base-200 border-t border-primary/20">
-      <div className="flex items-center flex-col py-16 px-8 w-full font-sans">
+    <footer className="relative w-full bg-gradient-to-br from-base-300 via-base-200 to-base-300 border-t-2 border-primary/30 overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-3xl animate-float-slow"></div>
+        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-accent/20 to-transparent rounded-full blur-3xl animate-float-medium"></div>
+      </div>
+      
+      <div className="relative flex items-center flex-col py-20 px-8 w-full font-sans z-10">
         {/* Main Footer Content */}
         <div className="grid md:grid-cols-3 pb-12 gap-12 grid-cols-1 max-w-6xl w-full">
           {/* Brand Section */}
           <section className="text-left">
-            <h3 className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-4 ">
+            <h3 className="text-5xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent mb-4 animate-gradient-x">
               Salsa Rayo
             </h3>
-            <p className="text-base-content/80 mb-6 leading-relaxed">
+            <p className="text-base-content/80 mb-6 leading-relaxed text-lg">
               Your gateway to the magical world of social dancing! Join our
               passionate community and discover the joy of salsa.
             </p>
@@ -55,16 +61,16 @@ const Footer = () => {
           {/* Footer Sections */}
           {footerSections.map((footerSection) => (
             <section key={footerSection.title} className="text-left">
-              <h4 className="text-2xl pb-4 font-bold text-primary">
+              <h4 className="text-2xl pb-6 font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 {footerSection.title}
               </h4>
               <div className="space-y-3">
                 {footerSection.subtitles.map((subtitle) => (
                   <div
-                    className="text-base flex items-center justify-start gap-3 text-base-content/70"
+                    className="text-base flex items-center justify-start gap-3 text-base-content/70 group hover:text-base-content transition-colors duration-300"
                     key={subtitle.value}
                   >
-                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-accent/20 text-accent">
+                    <div className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-accent/20 text-white shadow-lg group-hover:shadow-primary/50 transition-all duration-300">
                       {subtitle.icon}
                     </div>
                     {subtitle.type === "tel" ? (
@@ -91,8 +97,11 @@ const Footer = () => {
           ))}
         </div>
 
-        {/* Divider */}
-        <div className="w-full max-w-6xl h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent mb-8"></div>
+        {/* Animated Divider */}
+        <div className="w-full max-w-6xl mb-8 relative">
+          <div className="h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+          <div className="absolute inset-0 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent animate-pulse"></div>
+        </div>
 
         {/* Copyright Section */}
         <section className="text-center text-base-content/60">
@@ -101,8 +110,12 @@ const Footer = () => {
               © Copyright {new Date().getFullYear()} Salsa Rayo Dance School
             </span>
             <span className="hidden md:inline">•</span>
-            <span className="flex items-center gap-1">
-              Made with <FaHeart className="text-red-500" size={12} /> by
+            <span className="flex items-center gap-2">
+              Made with 
+              <span className="w-6 h-6 flex items-center justify-center rounded-full bg-red-500/20">
+                <FaHeart className="text-red-500" size={12} />
+              </span>
+              by
               <AppLink
                 className="text-primary hover:text-accent transition-colors duration-300 font-medium"
                 href="https://www.linkedin.com/in/nikosdim97/"
@@ -112,8 +125,15 @@ const Footer = () => {
             </span>
           </div>
 
-          <div className="mt-4 text-xs text-base-content/40 animate-pulse">
-            Keep dancing, keep dreaming!
+          <div className="mt-6 relative">
+            <p className="text-sm text-base-content/50 font-light tracking-widest uppercase">
+              Keep dancing, keep dreaming!
+            </p>
+            <div className="mt-2 flex justify-center gap-1">
+              <span className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0ms'}}></span>
+              <span className="w-2 h-2 bg-accent rounded-full animate-bounce" style={{animationDelay: '200ms'}}></span>
+              <span className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '400ms'}}></span>
+            </div>
           </div>
         </section>
       </div>
