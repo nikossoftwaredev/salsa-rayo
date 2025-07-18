@@ -10,7 +10,7 @@ const AboutCard: FC<{ href: string; children: React.ReactNode }> = ({
   href,
   children,
 }) => (
-  <Card className="grid grid-cols-1 lg:grid-cols-2 justify-center md:w-3/4 p-4 leading-8 text-lg font-medium">
+  <Card className="grid grid-cols-1 lg:grid-cols-2 justify-center md:w-3/4 p-4 leading-8 text-lg font-medium backdrop-blur-md bg-white/10 border border-white/20 shadow-xl hover:bg-white/15 transition-all duration-300">
     {children}
     <p></p>
     <a

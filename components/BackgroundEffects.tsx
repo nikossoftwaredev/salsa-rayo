@@ -4,6 +4,7 @@ import { FaMusic, FaHeart, FaGuitar } from "react-icons/fa";
 import { GiMicrophone, GiMusicalNotes, GiTrumpet } from "react-icons/gi";
 import { IoMusicalNotesOutline } from "react-icons/io5";
 import PartnerIcon from "@/components/icons/PartnerIcon";
+import Lightning from "@/components/react-bits/Backgrounds/Lightning/Lightning";
 
 const BackgroundEffects = () => {
   const floatingIcons = [
@@ -50,6 +51,17 @@ const BackgroundEffects = () => {
 
   return (
     <>
+      {/* Lightning Background Effect */}
+      <div className="fixed inset-0 z-0 w-full h-screen">
+        <Lightning
+          hue={220}
+          xOffset={0}
+          speed={1}
+          intensity={1}
+          size={1}
+        />
+      </div>
+
       {/* Subtle Gradient Background */}
       <div className="fixed inset-0 z-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-70" />
 

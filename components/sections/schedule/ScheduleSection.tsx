@@ -38,11 +38,11 @@ const ScheduleSection = () => {
           >
             <Card
               className={twMerge(
-                `group relative overflow-hidden p-8 bg-gradient-to-br backdrop-blur-sm border-2 transition-all duration-500`,
+                `group relative overflow-hidden p-8 bg-gradient-to-br backdrop-blur-md bg-white/10 border-2 transition-all duration-500`,
                 currentDayIndex === dayIndex
-                  ? "from-primary/20 to-accent/10 border-primary shadow-2xl shadow-primary/30 scale-[1.02]"
-                  : "from-base-200/50 to-base-300/50 border-white/10 hover:border-primary/50 hover:shadow-2xl hover:scale-[1.01]",
-                `hover:from-primary/15 hover:to-accent/15`
+                  ? "from-primary/20 to-accent/10 border-primary shadow-2xl shadow-primary/30 scale-[1.02] bg-white/15"
+                  : "from-base-200/30 to-base-300/30 border-white/20 hover:border-primary/50 hover:shadow-2xl hover:scale-[1.01] bg-white/5",
+                `hover:from-primary/15 hover:to-accent/15 hover:bg-white/10`
               )}
             >
               <div className="relative mb-8">

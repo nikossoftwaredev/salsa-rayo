@@ -13,6 +13,7 @@ import { SectionTitle } from "@/components/SectionTitle";
 import TextArea from "@/components/TextArea";
 import TextField from "@/components/TextField";
 import { IoMdSend } from "react-icons/io";
+import { FaUser, FaPhone, FaEnvelope, FaMessage } from "react-icons/fa6";
 
 const initFormData = {
   firstname: "",
@@ -29,6 +30,7 @@ interface InputFieldProps {
   placeholder: string;
   required: boolean;
   colSpan?: number;
+  icon?: React.ReactNode;
 }
 
 const inputFields: InputFieldProps[] = [
@@ -38,6 +40,7 @@ const inputFields: InputFieldProps[] = [
     inputType: "text",
     placeholder: "First Name",
     required: true,
+    icon: <FaUser className="text-primary" size={18} />,
   },
   {
     id: "lastname",
@@ -45,6 +48,7 @@ const inputFields: InputFieldProps[] = [
     inputType: "text",
     placeholder: "Last Name",
     required: true,
+    icon: <FaUser className="text-primary" size={18} />,
   },
   {
     id: "email",
@@ -52,6 +56,7 @@ const inputFields: InputFieldProps[] = [
     inputType: "email",
     placeholder: "Email",
     required: true,
+    icon: <FaEnvelope className="text-primary" size={18} />,
   },
   {
     id: "phone",
@@ -59,6 +64,7 @@ const inputFields: InputFieldProps[] = [
     inputType: "tel",
     placeholder: "Phone",
     required: true,
+    icon: <FaPhone className="text-primary" size={18} />,
   },
   {
     id: "message",
@@ -119,7 +125,7 @@ const ContactForm = () => {
       className="flex items-center justify-center flex-col "
     >
       <SectionTitle title="CONTACT US" isMainSection />
-      <Card className="mb-5 w-full max-w-[600px]">
+      <Card className="mb-5 w-full max-w-[600px] backdrop-blur-md bg-white/10 border border-white/20 shadow-xl hover:bg-white/15 transition-all duration-300">
         <form>
           <div className="grid p-4 gap-2 sm:grid-cols-1 md:grid-cols-2">
             {inputFields.map((inputField) => {
@@ -139,24 +145,28 @@ const ContactForm = () => {
                   required={false}
                   rows={4}
                   autoComplete={id}
-                  value={formData.info as string}
+                  value={formData[dataField] as string}
                   placeholder={placeholder}
-                  onChange={onChangeFormData("info")}
-                  name={id}
-                />
-              ) : (
-                <TextField
-                  id={id}
-                  key={dataField}
-                  className={colSpan ? "col-span-full" : ""}
-                  required={required}
-                  type={inputType}
-                  value={formData[dataField as string]}
-                  placeholder={placeholder}
-                  autoComplete={id}
                   onChange={onChangeFormData(dataField)}
                   name={id}
                 />
+              ) : (
+                <div key={dataField} className={colSpan ? "col-span-full relative" : "relative"}>
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
+                    {inputField.icon}
+                  </div>
+                  <TextField
+                    id={id}
+                    className="pl-10"
+                    required={required}
+                    type={inputType}
+                    value={formData[dataField as string]}
+                    placeholder={placeholder}
+                    autoComplete={id}
+                    onChange={onChangeFormData(dataField)}
+                    name={id}
+                  />
+                </div>
               );
             })}
             <Button
