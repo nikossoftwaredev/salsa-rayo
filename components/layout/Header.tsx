@@ -20,7 +20,7 @@ const Header = () => {
 
       {/* ---------- NAVBAR (drawer-content) ---------- */}
       <div className="drawer-content w-full">
-        <nav className="h-[60px] w-full bg-base-100/90 backdrop-blur-lg border-b border-primary/10">
+        <nav className="h-[60px] w-full bg-white/10 backdrop-blur-md border-b border-white/20 shadow-lg">
           <div className="max-w-7xl mx-auto flex items-center justify-between px-4 h-full">
             {/* Logo */}
 
@@ -32,7 +32,7 @@ const Header = () => {
                 <li key={linkConfig.path}>
                   <a
                     href={linkConfig.path}
-                    className="font-bold text-lg text-primary relative group transition-colors duration-200 cursor-pointer"
+                    className="font-bold text-lg text-white hover:text-primary relative group transition-colors duration-200 cursor-pointer"
                   >
                     {linkConfig.text.en}
                     <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
@@ -44,7 +44,7 @@ const Header = () => {
             {/* Burger button (mobile) */}
             <label
               htmlFor="mobile-drawer"
-              className="btn btn-circle btn-ghost md:hidden text-primary hover:bg-primary/20"
+              className="btn btn-circle btn-ghost md:hidden text-white hover:bg-white/20"
               aria-label="Open menu"
             >
               <MdMenu size={24} />

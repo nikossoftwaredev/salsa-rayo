@@ -22,8 +22,8 @@ const config: Config = {
       {
         myTheme: {
           ...require("daisyui/src/theming/themes")["sunset"],
-          primary: "#18A07B",
-          accent: "#7737b8",
+          primary: "#5B4FDB",
+          accent: "#E31E7F",
         },
       },
     ],

@@ -4,9 +4,9 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/Footer";
 
-const APPLICATION_NAME = "Salsa Rayo Dance Schools";
+const APPLICATION_NAME = "Salsa Rayo Dance School";
 const APPLICATION_DESCRIPTION =
-  "Salsa Rayo Dance Schools is a dance school that offers dance classes in Salsa, Bachata, Kizomba, and more. We are based in the Netherlands and offer classes in Amsterdam, Utrecht, and Rotterdam.";
+  "Salsa Rayo Dance School is a dance school that offers dance classes in Salsa, Bachata, Kizomba, and more. We are based in the Netherlands and offer classes in Amsterdam, Utrecht, and Rotterdam.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://salsa-rayo.com"),
@@ -17,12 +17,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: APPLICATION_NAME,
     description: APPLICATION_DESCRIPTION,
-    images: "https:/salsa-rayo/images/logo.webp",
+    images: "https:/salsa-rayo/images/logo.png",
   },
   twitter: {
     title: APPLICATION_NAME,
     description: APPLICATION_DESCRIPTION,
-    images: "https:/salsa-rayo/images/logo.webp",
+    images: "https:/salsa-rayo/images/logo.png",
   },
 };
 

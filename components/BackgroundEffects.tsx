@@ -54,7 +54,7 @@ const BackgroundEffects = () => {
       {/* Lightning Background Effect */}
       <div className="fixed inset-0 z-0 w-full h-screen">
         <Lightning
-          hue={220}
+          hue={250}
           xOffset={0}
           speed={1}
           intensity={1}

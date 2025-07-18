@@ -12,6 +12,37 @@ import PartnerIcon from "@/components/icons/PartnerIcon";
 const ScheduleSection = () => {
   const currentDayIndex = new Date().getDay();
 
+  // Temporary early return with coming soon message
+  return (
+    <section
+      id="schedule"
+      className="flex items-center justify-center flex-col space-y-12 relative"
+    >
+      <SectionTitle title="Class Schedule" isMainSection />
+      
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="text-center py-20"
+      >
+        <h2 className="text-3xl md:text-4xl font-bold text-white/90 mb-4">
+          Coming Soon
+        </h2>
+        <p className="text-xl text-white/70 font-medium">
+          Our exciting class schedule will be available shortly!
+        </p>
+        <div className="mt-8 flex justify-center gap-2">
+          <span className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></span>
+          <span className="w-2 h-2 bg-accent rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></span>
+          <span className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></span>
+        </div>
+      </motion.div>
+    </section>
+  );
+
+  // Original code below (temporarily disabled)
   return (
     <section
       id="schedule"

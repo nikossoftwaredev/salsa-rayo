@@ -24,10 +24,10 @@ const GetStartedButton = () => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         style={{
-          background: "linear-gradient(135deg, #18A07B, #7737b8)",
+          background: "linear-gradient(135deg, #5B4FDB, #E31E7F)",
           boxShadow: isHovered
-            ? "0 10px 40px rgba(24, 160, 123, 0.4), 0 10px 50px rgba(119, 55, 184, 0.3), inset 0 -2px 10px rgba(255,255,255,0.2)"
-            : "0 4px 20px rgba(24, 160, 123, 0.3), 0 4px 25px rgba(119, 55, 184, 0.2)",
+            ? "0 10px 40px rgba(91, 79, 219, 0.4), 0 10px 50px rgba(227, 30, 127, 0.3), inset 0 -2px 10px rgba(255,255,255,0.2)"
+            : "0 4px 20px rgba(91, 79, 219, 0.3), 0 4px 25px rgba(227, 30, 127, 0.2)",
         }}
       >
         {/* Shimmer effect */}
@@ -44,7 +44,7 @@ const GetStartedButton = () => {
           className="absolute inset-0 bg-gradient-to-r from-accent via-primary to-accent transform transition-transform duration-700 ease-out"
           style={{
             transform: isHovered ? "translateX(0%)" : "translateX(-100%)",
-            background: "linear-gradient(135deg, #7737b8, #18A07B, #7737b8)",
+            background: "linear-gradient(135deg, #E31E7F, #5B4FDB, #E31E7F)",
           }}
         />
 
