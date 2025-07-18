@@ -25,7 +25,7 @@ const Header = () => {
 
       {/* ---------- NAVBAR (drawer-content) ---------- */}
       <div className="drawer-content w-full">
-        <nav className="h-[60px] w-full bg-white/10 backdrop-blur-md border-b border-white/20 shadow-lg">
+        <nav className="h-[60px] w-full bg-black/30 backdrop-blur-md border-b border-white/20 shadow-lg">
           <div className="max-w-7xl mx-auto flex items-center justify-between px-4 h-full">
             {/* Logo */}
 
@@ -70,7 +70,7 @@ const Header = () => {
         <div className="min-h-full w-full bg-base-100 flex flex-col">
           {/* Close button and Language Switcher */}
           <div className="flex justify-between items-center pt-4 px-4">
-            <LanguageSwitcher />
+            <LanguageSwitcher isMobile />
             <label
               htmlFor="mobile-drawer"
               className="btn btn-circle btn-ghost text-primary hover:bg-primary/20"

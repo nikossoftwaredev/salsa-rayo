@@ -28,7 +28,11 @@ const languages: Record<typeof SUPPORTED_LOCALES[number], {
   },
 };
 
-export default function LanguageSwitcher() {
+interface LanguageSwitcherProps {
+  isMobile?: boolean;
+}
+
+export default function LanguageSwitcher({ isMobile = false }: LanguageSwitcherProps) {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
@@ -41,7 +45,7 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <details className="dropdown dropdown-end">
+    <details className={`dropdown ${isMobile ? 'dropdown-right' : 'dropdown-end'}`}>
       <summary 
         tabIndex={0} 
         role="button" 
