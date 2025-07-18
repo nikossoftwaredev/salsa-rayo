@@ -2,5 +2,108 @@
   "HomePage": {
     "title": "Welcome to Salsa Rayo",
     "description": "Learn salsa dancing with us"
+  },
+  "Hero": {
+    "dance": "Dance",
+    "and": " & ",
+    "connect": "Connect",
+    "joinCommunity": "Join our passionate salsa community today!",
+    "imageAlt": "Salsa dancers in vibrant costumes"
+  },
+  "About": {
+    "title": "ABOUT US",
+    "moreInfo": "MORE INFO",
+    "annaName": "Anna Lontou",
+    "annaTitle": "Lead Dance Instructor",
+    "annaDescription": "Anna Lontou is a passionate and experienced salsa dance instructor dedicated to sharing the joy of Latin dance with students of all levels.",
+    "konstantinosName": "Konstantinos Bitsis",
+    "konstantinosTitle": "Senior Dance Instructor",
+    "konstantinosDescription": "Konstantinos Bitsis is a seasoned dance instructor with years of experience in salsa, bachata, and other Latin dance styles.",
+    "annaImageAlt": "Anna Lontou - Lead Dance Instructor",
+    "konstantinosImageAlt": "Konstantinos Bitsis - Senior Dance Instructor"
+  },
+  "Schedule": {
+    "title": "Class Schedule",
+    "comingSoon": "Coming Soon",
+    "comingSoonDescription": "Our exciting class schedule will be available shortly!",
+    "today": "TODAY",
+    "days": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    },
+    "classes": {
+      "salsa1": "Salsa Level 1",
+      "salsa2": "Salsa Level 2",
+      "mambo": "Mambo",
+      "bachata1": "Bachata Level 1",
+      "bachata2": "Bachata Level 2",
+      "ladiesStyle": "Ladies Style"
+    }
+  },
+  "Contact": {
+    "title": "CONTACT US",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Type your message...",
+    "send": "Send",
+    "loading": "LOADING"
+  },
+  "Gallery": {
+    "title": "Gallery",
+    "all": "All",
+    "seeMore": "See More",
+    "categories": {
+      "photos": "Photos",
+      "shows": "Shows",
+      "socialDancing": "Social Dancing",
+      "workshops": "Workshops"
+    },
+    "descriptions": {
+      "photos": "Dance photos and memories",
+      "shows": "Live dance performances and showcases",
+      "socialDancing": "Social dance nights and parties",
+      "workshops": "Special workshops and masterclasses"
+    }
+  },
+  "Map": {
+    "title": "FIND US",
+    "subtitle": "Our Location",
+    "mapTitle": "Salsa Rayo Location Map",
+    "getDirections": "Get Directions"
+  },
+  "Socials": {
+    "title": "SOCIALS"
+  },
+  "Footer": {
+    "schedule": "Schedule",
+    "days": "Monday - Thursday",
+    "workDays": "Monday - Thursday",
+    "hours": "17:00 - 23:00",
+    "workHours": "17:00 - 23:00",
+    "contactInfo": "Contact Info",
+    "description": "Your gateway to the magical world of social dancing! Join our passionate community and discover the joy of salsa.",
+    "copyright": "© Copyright {year} Salsa Rayo Dance School",
+    "madeWith": "Made with",
+    "by": "by",
+    "tagline": "Keep dancing, keep dreaming!",
+    "slogan": "Keep dancing, keep dreaming!"
+  },
+  "Common": {
+    "getStarted": "Get Started Now",
+    "loading": "LOADING",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "Navigation": {
+    "schedule": "Schedule",
+    "about": "About",
+    "gallery": "Gallery"
   }
 }

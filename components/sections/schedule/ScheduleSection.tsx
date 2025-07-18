@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { SectionTitle } from "@/components/SectionTitle";
 import Card from "@/components/Card";
 import Chip from "@/components/Chip";
@@ -11,6 +12,7 @@ import PartnerIcon from "@/components/icons/PartnerIcon";
 import { CircleIcon } from "@/components/CircleIcon";
 
 const ScheduleSection = () => {
+  const t = useTranslations('Schedule');
   const currentDayIndex = new Date().getDay();
 
   // Temporary early return with coming soon message
@@ -19,7 +21,7 @@ const ScheduleSection = () => {
       id="schedule"
       className="flex items-center justify-center flex-col space-y-12 relative"
     >
-      <SectionTitle title="Class Schedule" isMainSection />
+      <SectionTitle title={t('title')} isMainSection />
       
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -29,10 +31,10 @@ const ScheduleSection = () => {
         className="text-center py-20"
       >
         <h2 className="text-3xl md:text-4xl font-bold text-white/90 mb-4">
-          Coming Soon
+          {t('comingSoon')}
         </h2>
         <p className="text-xl text-white/70 font-medium">
-          Our exciting class schedule will be available shortly!
+          {t('comingSoonDescription')}
         </p>
         <div className="mt-8 flex justify-center gap-2">
           <span className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></span>
@@ -54,7 +56,7 @@ const ScheduleSection = () => {
         <div className="absolute top-1/4 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl"></div>
       </div>
-      <SectionTitle title="Class Schedule" isMainSection />
+      <SectionTitle title={t('title')} isMainSection />
 
       <div className="w-full grid xl:grid-cols-2 gap-8 max-w-96 md:max-w-5xl">
         {SCHEDULE.map(({ day, schedule, dayIndex }) => (
@@ -85,7 +87,7 @@ const ScheduleSection = () => {
                   <div className="absolute -top-3 -right-3 flex items-center gap-2 bg-primary text-white px-3 py-1 rounded-full shadow-lg animate-pulse-scale">
                     <FaCalendarAlt size={14} />
                     <span className="text-xs font-bold tracking-wider">
-                      TODAY
+                      {t('today')}
                     </span>
                   </div>
                 )}

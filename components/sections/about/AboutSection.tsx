@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 import Card from "@/components/Card";
 import { FC } from "react";
 import Image from "next/image";
 import { SectionTitle } from "@/components/SectionTitle";
+import { useTranslations } from "next-intl";
 
-const AboutCard: FC<{ href: string; children: React.ReactNode }> = ({
+const AboutCard: FC<{ href: string; children: React.ReactNode; buttonText: string }> = ({
   href,
   children,
+  buttonText,
 }) => (
   <Card className="grid grid-cols-1 lg:grid-cols-2 justify-center md:w-3/4 p-4 leading-8 text-lg font-medium bg-base-200 shadow-xl hover:shadow-2xl transition-all duration-300">
     {children}
@@ -17,23 +20,26 @@ const AboutCard: FC<{ href: string; children: React.ReactNode }> = ({
       target={href.startsWith("/") ? "_self" : "_blank"}
       rel="noreferrer"
     >
-      ΠΕΡΙΣΣΟΤΕΡΑ
+      {buttonText}
     </a>
   </Card>
 );
 
-const AboutSection: FC<{ [key: string]: any }> = () => (
+const AboutSection: FC<{ [key: string]: any }> = () => {
+  const t = useTranslations('About');
+  
+  return (
   <>
-    <SectionTitle title="ABOUT US" isMainSection />
+    <SectionTitle title={t('title')} isMainSection />
     <section
       id="about"
       className="w-full flex flex-col items-center justify-center gap-4"
     >
-      <AboutCard href="/resume">
+      <AboutCard href="/resume" buttonText={t('moreInfo')}>
         <figure className="flex flex-col items-center justify-center">
           <Image
             src="/images/instructor-anna.jpg"
-            alt="anna-lontou"
+            alt={t('annaImageAlt')}
             width={300}
             height={300}
             className="rounded-xl object-cover"
@@ -41,21 +47,19 @@ const AboutSection: FC<{ [key: string]: any }> = () => (
           />
         </figure>
         <div className="p-3">
-          <h3 className="text-2xl font-bold mb-4">Anna Lontou</h3>
-          <h4 className="text-xl text-primary mb-4">Lead Dance Instructor</h4>
+          <h3 className="text-2xl font-bold mb-4">{t('annaName')}</h3>
+          <h4 className="text-xl text-primary mb-4">{t('annaTitle')}</h4>
           <div>
-            Anna Lontou is a passionate and experienced salsa dance instructor who brings energy and expertise to every class. With over a decade of teaching experience, Anna specializes in Latin dance styles including Salsa, Bachata, and Merengue.
-            <br /><br />
-            Her dynamic teaching approach combines technical precision with the joy of dance, making classes accessible for beginners while challenging experienced dancers. Anna believes that dance is not just about steps, but about expression, connection, and building confidence through movement.
+            {t('annaDescription')}
           </div>
         </div>
       </AboutCard>
       
-      <AboutCard href="/resume">
+      <AboutCard href="/resume" buttonText={t('moreInfo')}>
         <figure className="flex flex-col items-center justify-center">
           <Image
             src="/images/instructor-konstantinos.jpg"
-            alt="konstantinos-bitsis"
+            alt={t('konstantinosImageAlt')}
             width={300}
             height={300}
             className="rounded-xl object-cover"
@@ -63,17 +67,16 @@ const AboutSection: FC<{ [key: string]: any }> = () => (
           />
         </figure>
         <div className="p-3">
-          <h3 className="text-2xl font-bold mb-4">Konstantinos Bitsis</h3>
-          <h4 className="text-xl text-primary mb-4">Senior Dance Instructor</h4>
+          <h3 className="text-2xl font-bold mb-4">{t('konstantinosName')}</h3>
+          <h4 className="text-xl text-primary mb-4">{t('konstantinosTitle')}</h4>
           <div>
-            Konstantinos Bitsis is a seasoned dance instructor with a deep passion for Latin rhythms and social dancing. His expertise spans across various Latin dance styles, with a particular focus on Cuban Salsa and Rueda de Casino.
-            <br /><br />
-            Known for his patient teaching style and attention to detail, Konstantinos creates a supportive learning environment where students can develop their technique while discovering their own dance personality. His classes emphasize musicality, partner connection, and the cultural roots of Latin dance.
+            {t('konstantinosDescription')}
           </div>
         </div>
       </AboutCard>
     </section>
   </>
-);
+  );
+};
 
 export default AboutSection;

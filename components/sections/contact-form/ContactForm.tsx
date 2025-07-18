@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { useTranslations } from "next-intl";
 import {
   HTMLInputTypeAttribute,
   MouseEvent,
@@ -39,7 +40,7 @@ const inputFields: InputFieldProps[] = [
     id: "firstname",
     dataField: "firstname",
     inputType: "text",
-    placeholder: "First Name",
+    placeholder: "firstName",
     required: true,
     icon: <FaUser className="text-primary" size={18} />,
   },
@@ -47,7 +48,7 @@ const inputFields: InputFieldProps[] = [
     id: "lastname",
     dataField: "lastname",
     inputType: "text",
-    placeholder: "Last Name",
+    placeholder: "lastName",
     required: true,
     icon: <FaUser className="text-primary" size={18} />,
   },
@@ -55,7 +56,7 @@ const inputFields: InputFieldProps[] = [
     id: "email",
     dataField: "email",
     inputType: "email",
-    placeholder: "Email",
+    placeholder: "email",
     required: true,
     icon: <FaEnvelope className="text-primary" size={18} />,
   },
@@ -63,7 +64,7 @@ const inputFields: InputFieldProps[] = [
     id: "phone",
     dataField: "phone",
     inputType: "tel",
-    placeholder: "Phone",
+    placeholder: "phone",
     required: true,
     icon: <FaPhone className="text-primary" size={18} />,
   },
@@ -71,13 +72,14 @@ const inputFields: InputFieldProps[] = [
     id: "message",
     dataField: "message",
     inputType: "textarea",
-    placeholder: "Type your message...",
+    placeholder: "message",
     required: false,
     colSpan: 2,
   },
 ];
 
 const ContactForm = () => {
+  const t = useTranslations('Contact');
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<Record<string, any>>(initFormData);
 
@@ -125,7 +127,7 @@ const ContactForm = () => {
       id="contact-form"
       className="flex items-center justify-center flex-col"
     >
-      <SectionTitle title="CONTACT US" isMainSection />
+      <SectionTitle title={t('title')} isMainSection />
       <Card className="mb-5 w-full max-w-[600px] bg-transparent border border-white/20 shadow-xl hover:bg-black/70 transition-all duration-300 relative overflow-hidden">
         {/* Lightning Effect inside the card */}
         <div className="absolute inset-0 -z-10 opacity-30">
@@ -157,7 +159,7 @@ const ContactForm = () => {
                   rows={4}
                   autoComplete={id}
                   value={formData[dataField] as string}
-                  placeholder={placeholder}
+                  placeholder={t(placeholder as any)}
                   onChange={onChangeFormData(dataField)}
                   name={id}
                 />
@@ -175,7 +177,7 @@ const ContactForm = () => {
                     required={required}
                     type={inputType}
                     value={formData[dataField as string]}
-                    placeholder={placeholder}
+                    placeholder={t(placeholder as any)}
                     autoComplete={id}
                     onChange={onChangeFormData(dataField)}
                     name={id}
@@ -191,7 +193,7 @@ const ContactForm = () => {
               type="submit"
             >
               <span className="flex items-center gap-2">
-                Send
+                {t('send')}
                 <IoMdSend size={18} />
               </span>
             </Button>

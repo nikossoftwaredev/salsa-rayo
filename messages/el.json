@@ -1,6 +1,109 @@
 {
   "HomePage": {
-    "title": "Καλώς ήρθατε στο Salsa Rayo",
+    "title": "Καλώς ήρθατε στη Salsa Rayo",
     "description": "Μάθετε salsa μαζί μας"
+  },
+  "Hero": {
+    "dance": "Dance",
+    "and": " & ",
+    "connect": "Connect",
+    "joinCommunity": "Γίνετε μέλος της κοινότητας salsa σήμερα!",
+    "imageAlt": "Χορευτές salsa με γαματα κοστούμια"
+  },
+  "About": {
+    "title": "ΣΧΕΤΙΚΑ ΜΕ ΕΜΑΣ",
+    "moreInfo": "ΠΕΡΙΣΣΟΤΕΡΑ",
+    "annaName": "Άννα Λοντού",
+    "annaTitle": "Επικεφαλής Δασκάλα Χορού",
+    "annaDescription": "Η Άννα Λοντού είναι μια παθιασμένη και έμπειρη δασκάλα salsa αφοσιωμένη στο να μοιράζεται τη χαρά του λατινικού χορού με μαθητές όλων των επιπέδων.",
+    "konstantinosName": "Κωνσταντίνος Μπίτσης",
+    "konstantinosTitle": "Ανώτερος Δάσκαλος Χορού",
+    "konstantinosDescription": "Ο Κωνσταντίνος Μπίτσης είναι ένας έμπειρος δάσκαλος χορού με χρόνια εμπειρίας σε salsa, bachata και άλλα λατινικά στυλ χορού.",
+    "annaImageAlt": "Άννα Λοντού - Επικεφαλής Δασκάλα Χορού",
+    "konstantinosImageAlt": "Κωνσταντίνος Μπίτσης - Ανώτερος Δάσκαλος Χορού"
+  },
+  "Schedule": {
+    "title": "Πρόγραμμα Μαθημάτων",
+    "comingSoon": "Σύντομα",
+    "comingSoonDescription": "Το συναρπαστικό πρόγραμμα μαθημάτων μας θα είναι διαθέσιμο σύντομα!",
+    "today": "ΣΗΜΕΡΑ",
+    "days": {
+      "monday": "Δευτέρα",
+      "tuesday": "Τρίτη",
+      "wednesday": "Τετάρτη",
+      "thursday": "Πέμπτη",
+      "friday": "Παρασκευή",
+      "saturday": "Σάββατο",
+      "sunday": "Κυριακή"
+    },
+    "classes": {
+      "salsa1": "Salsa Επίπεδο 1",
+      "salsa2": "Salsa Επίπεδο 2",
+      "mambo": "Mambo",
+      "bachata1": "Bachata Επίπεδο 1",
+      "bachata2": "Bachata Επίπεδο 2",
+      "ladiesStyle": "Ladies Style"
+    }
+  },
+  "Contact": {
+    "title": "ΕΠΙΚΟΙΝΩΝΙΑ",
+    "firstName": "Όνομα",
+    "lastName": "Επώνυμο",
+    "email": "Email",
+    "phone": "Τηλέφωνο",
+    "message": "Πληκτρολογήστε το μήνυμά σας...",
+    "send": "Αποστολή",
+    "loading": "ΦΟΡΤΩΣΗ"
+  },
+  "Gallery": {
+    "title": "Gallery",
+    "all": "Όλα",
+    "seeMore": "Δείτε Περισσότερα",
+    "categories": {
+      "photos": "Φωτογραφίες",
+      "shows": "Παραστάσεις",
+      "socialDancing": "Social Dancing",
+      "workshops": "Σεμινάρια"
+    },
+    "descriptions": {
+      "photos": "Φωτογραφίες χορού και αναμνήσεις",
+      "shows": "Ζωντανές παραστάσεις χορού",
+      "socialDancing": "Βραδιές social dancing και πάρτι",
+      "workshops": "Ειδικά σεμινάρια και masterclasses"
+    }
+  },
+  "Map": {
+    "title": "ΒΡΕΙΤΕ ΜΑΣ",
+    "subtitle": "Η Τοποθεσία μας",
+    "mapTitle": "Χάρτης τοποθεσίας Salsa Rayo",
+    "getDirections": "Οδηγίες"
+  },
+  "Socials": {
+    "title": "ΚΟΙΝΩΝΙΚΑ ΔΙΚΤΥΑ"
+  },
+  "Footer": {
+    "schedule": "Πρόγραμμα",
+    "days": "Δευτέρα - Πέμπτη",
+    "workDays": "Δευτέρα - Πέμπτη",
+    "hours": "17:00 - 23:00",
+    "workHours": "17:00 - 23:00",
+    "contactInfo": "Πληροφορίες Επικοινωνίας",
+    "description": "Η πύλη σας στον μαγικό κόσμο του social dancing! Γίνετε μέλος της παθιασμένης κοινότητάς μας και ανακαλύψτε τη χαρά της salsa.",
+    "copyright": "© Copyright {year} Salsa Rayo Dance School",
+    "madeWith": "Δημιουργήθηκε με",
+    "by": "από",
+    "tagline": "Συνεχίστε να χορεύετε, συνεχίστε να ονειρεύεστε!",
+    "slogan": "Συνεχίστε να χορεύετε, συνεχίστε να ονειρεύεστε!"
+  },
+  "Common": {
+    "getStarted": "Ξεκινήστε",
+    "loading": "ΦΟΡΤΩΣΗ",
+    "openMenu": "Άνοιγμα μενού",
+    "closeMenu": "Κλείσιμο μενού"
+  },
+  "Navigation": {
+    "schedule": "Πρόγραμμα",
+    "about": "Σχετικά",
+    "gallery": "Gallery"
   }
 }

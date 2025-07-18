@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { SectionTitle } from "@/components/SectionTitle";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   FaHeart,
 } from "react-icons/fa";
@@ -37,7 +38,7 @@ interface GallerySectionProps {
   isFullPage?: boolean;
 }
 
-const getFilterTabs = (includeAll: boolean): FilterTab[] => {
+const getFilterTabs = (includeAll: boolean, t: ReturnType<typeof useTranslations>): FilterTab[] => {
   const tabs: FilterTab[] = Object.entries(GALLERY_CATEGORIES).map(
     ([category, { label, icon, color }]) => ({
       id: category as GalleryCategory,
@@ -51,7 +52,7 @@ const getFilterTabs = (includeAll: boolean): FilterTab[] => {
     return [
       {
         id: "all" as FilterType,
-        label: "All",
+        label: t('all'),
         icon: <FaHeart size={18} />,
         color: "text-pink-500",
       },
@@ -86,13 +87,14 @@ const getGalleryItems = (isFullPage: boolean): GalleryItem[] => {
 const GallerySection: React.FC<GallerySectionProps> = ({
   isFullPage = false,
 }) => {
+  const t = useTranslations('Gallery');
   const [activeFilter, setActiveFilter] = useState<FilterType>(
     isFullPage ? "all" : "photos"
   );
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
   const router = useRouter();
 
-  const filterTabs = getFilterTabs(isFullPage);
+  const filterTabs = getFilterTabs(isFullPage, t);
   const galleryItems = getGalleryItems(isFullPage);
 
   const filteredItems =
@@ -109,7 +111,7 @@ const GallerySection: React.FC<GallerySectionProps> = ({
       id="gallery"
       className="flex items-center justify-center flex-col space-y-8 relative"
     >
-      {!isFullPage && <SectionTitle title="Gallery" isMainSection />}
+      {!isFullPage && <SectionTitle title={t('title')} isMainSection />}
 
       {/* Filter Tabs */}
       <div className="flex flex-wrap justify-center gap-4 mb-8">
@@ -136,12 +138,10 @@ const GallerySection: React.FC<GallerySectionProps> = ({
       </div>
 
       {/* Masonry Gallery */}
-      <AnimatePresence mode="wait">
         <motion.div
           key={activeFilter}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
           className={twMerge(
             "w-full px-4",
@@ -153,7 +153,6 @@ const GallerySection: React.FC<GallerySectionProps> = ({
             onItemClick={(item) => setSelectedItem(item as GalleryItem)}
           />
         </motion.div>
-      </AnimatePresence>
 
       {/* See More Button - only on homepage */}
       {!isFullPage && (
@@ -168,39 +167,28 @@ const GallerySection: React.FC<GallerySectionProps> = ({
             onClick={handleSeeMore}
             className="btn-lg bg-gradient-to-r from-primary to-accent text-white border-none hover:shadow-2xl"
           >
-            See More
+            {t('seeMore')}
           </Button>
         </motion.div>
       )}
 
-      {/* Modal for enlarged view */}
-      <AnimatePresence>
-        {selectedItem && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm"
-            onClick={() => setSelectedItem(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative max-w-5xl w-full flex items-center justify-center"
-              onClick={(e) => e.stopPropagation()}
-            >
+      {/* DaisyUI Modal for enlarged view */}
+      <input type="checkbox" id="gallery-modal" className="modal-toggle" checked={!!selectedItem} onChange={() => {}} />
+      <div className="modal" onClick={() => setSelectedItem(null)}>
+        <div className="modal-box max-w-5xl w-full max-h-[95vh] p-0 bg-black/95" onClick={(e) => e.stopPropagation()}>
+          {selectedItem && (
+            <>
               {/* Close button */}
-              <button
-                className="absolute -top-12 right-0 text-white text-3xl hover:text-primary transition-colors z-10"
+              <label 
+                htmlFor="gallery-modal" 
+                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 z-10 text-white hover:bg-white/20"
                 onClick={() => setSelectedItem(null)}
               >
-                ×
-              </button>
+                ✕
+              </label>
 
               {selectedItem.type === "video" ? (
-                <div className="aspect-video w-full relative bg-black rounded-xl overflow-hidden shadow-2xl">
+                <div className="aspect-video w-full relative bg-black">
                   <iframe
                     className="absolute inset-0 w-full h-full"
                     src={`https://www.youtube.com/embed/${selectedItem.youtubeId}?autoplay=1`}
@@ -210,10 +198,10 @@ const GallerySection: React.FC<GallerySectionProps> = ({
                   />
                 </div>
               ) : (
-                <div className="relative rounded-xl overflow-hidden shadow-2xl max-h-[90vh]">
+                <div className="relative flex items-center justify-center min-h-[50vh] max-h-[90vh]">
                   <Image
-                    src={selectedItem.src}
-                    alt={selectedItem.alt}
+                    src={selectedItem.src || ''}
+                    alt={selectedItem.alt || ''}
                     width={1200}
                     height={1600}
                     className="max-w-full max-h-[90vh] w-auto h-auto object-contain"
@@ -225,10 +213,11 @@ const GallerySection: React.FC<GallerySectionProps> = ({
                   )}
                 </div>
               )}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </>
+          )}
+        </div>
+        <label className="modal-backdrop" htmlFor="gallery-modal" onClick={() => setSelectedItem(null)}>Close</label>
+      </div>
     </section>
   );
 };

@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import {
   FACEBOOK_URL,
   INSTAGRAM_URL,
@@ -32,6 +35,7 @@ const SOCIALS_INFO = [
 ];
 
 const SocialsSection = ({ isMobile = false }: { isMobile?: boolean }) => {
+  const t = useTranslations('Socials');
   const getColorClasses = (platform: string) => {
     switch (platform) {
       case "instagram":
@@ -49,7 +53,7 @@ const SocialsSection = ({ isMobile = false }: { isMobile?: boolean }) => {
 
   return (
     <section id="socials">
-      {!isMobile && <SectionTitle title="SOCIALS" isMainSection />}
+      {!isMobile && <SectionTitle title={t('title')} isMainSection />}
       <span className="flex flex-row flex-wrap items-center justify-center gap-2">
         {SOCIALS_INFO.map(({ url, icon, color }) => (
           <a

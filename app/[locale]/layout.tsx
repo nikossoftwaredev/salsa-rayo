@@ -6,6 +6,13 @@ import Footer from "@/components/Footer";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { SUPPORTED_LOCALES } from "@/i18n/routing";
+import { Inter } from "next/font/google";
+
+const inter = Inter({ 
+  subsets: ["latin", "greek", "latin-ext"],
+  display: "swap",
+  variable: "--font-inter"
+});
 
 const APPLICATION_NAME = "Salsa Rayo Dance School";
 const APPLICATION_DESCRIPTION =
@@ -31,19 +38,20 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  params: { locale },
+  params,
 }: Readonly<{
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }>) {
   const messages = await getMessages();
+  const locale = (await params).locale;
 
   return (
-    <html lang={locale} data-theme="myTheme">
+    <html lang={locale} data-theme="myTheme" className={inter.variable}>
       <head>
         <script data-preload src="https://terminal.jup.ag/main-v1.js"></script>
       </head>
-      <body className="text-base-content text-lg font-custom w-full min-h-screen flex flex-col">
+      <body className={`${inter.className} text-base-content text-lg w-full min-h-screen flex flex-col`}>
         <NextIntlClientProvider
           locale={locale as (typeof SUPPORTED_LOCALES)[number]}
           messages={messages}

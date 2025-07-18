@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import Card from "@/components/Card";
 import { MAP_IFRAME, NAVIGATION, ADDRESS } from "@/data/config";
 import { SectionTitle } from "@/components/SectionTitle";
@@ -7,9 +8,10 @@ import { MdDirections, MdLocationPin } from "react-icons/md";
 import { motion } from "framer-motion";
 
 const MapSection = () => {
+  const t = useTranslations('Map');
   return (
     <section id="map" className="flex items-center justify-center flex-col">
-      <SectionTitle title="FIND US" isMainSection />
+      <SectionTitle title={t('title')} isMainSection />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -26,7 +28,7 @@ const MapSection = () => {
                 <MdLocationPin className="text-primary" size={20} />
               </div>
               <div className="flex-1">
-                <p className="text-sm text-white/60">Our Location</p>
+                <p className="text-sm text-white/60">{t('subtitle')}</p>
                 <p className="text-base font-medium text-white/90">{ADDRESS}</p>
               </div>
             </div>
@@ -35,7 +37,7 @@ const MapSection = () => {
           {/* Map Container */}
           <div className="relative w-full h-[400px] overflow-hidden rounded-b-lg">
             <iframe
-              title="Salsa Rayo Location Map"
+              title={t('mapTitle')}
               src={MAP_IFRAME}
               className="rounded-lg border-hidden invert-[90%] hue-rotate-180 w-full h-full"
               width="100%"
@@ -57,7 +59,7 @@ const MapSection = () => {
               rel="noopener noreferrer"
             >
               <MdDirections size={20} />
-              Get Directions
+              {t('getDirections')}
             </motion.a>
           </div>
         </Card>

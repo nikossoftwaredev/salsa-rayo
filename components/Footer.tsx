@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { ADDRESS, MAIL, PHONE } from "../data/config";
 import {
   MdMailOutline,
@@ -12,29 +15,32 @@ import SocialsSection from "./sections/socials/SocialsSection";
 import Logo from "./Logo";
 import { CircleIcon } from "./CircleIcon";
 
-const footerSections = [
-  {
-    title: "Schedule",
-    subtitles: [
-      {
-        icon: <MdOutlineCalendarToday />,
-        value: "Monday - Thursday",
-        type: "text",
-      },
-      { icon: <MdAccessTime />, value: "17:00 - 23:00", type: "text" },
-    ],
-  },
-  {
-    title: "Contact Info",
-    subtitles: [
-      { icon: <MdLocationPin />, value: ADDRESS, type: "text" },
-      { icon: <MdOutlinePhone />, value: PHONE, type: "tel" },
-      { icon: <MdMailOutline />, value: MAIL, type: "email" },
-    ],
-  },
-];
 
 const Footer = () => {
+  const t = useTranslations('Footer');
+  
+  const footerSections = [
+    {
+      title: t('schedule'),
+      subtitles: [
+        {
+          icon: <MdOutlineCalendarToday />,
+          value: t('workDays'),
+          type: "text",
+        },
+        { icon: <MdAccessTime />, value: t('workHours'), type: "text" },
+      ],
+    },
+    {
+      title: t('contactInfo'),
+      subtitles: [
+        { icon: <MdLocationPin />, value: ADDRESS, type: "text" },
+        { icon: <MdOutlinePhone />, value: PHONE, type: "tel" },
+        { icon: <MdMailOutline />, value: MAIL, type: "email" },
+      ],
+    },
+  ];
+  
   return (
     <footer className="relative w-full bg-gradient-to-br from-base-300 via-base-200 to-base-300 border-t-2 border-primary/30 overflow-hidden">
       {/* Animated background elements */}
@@ -52,8 +58,7 @@ const Footer = () => {
               <Logo size="lg" />
             </div>
             <p className="text-base-content/80 mb-6 leading-relaxed text-lg">
-              Your gateway to the magical world of social dancing! Join our
-              passionate community and discover the joy of salsa.
+              {t('description')}
             </p>
             <div className="flex justify-start">
               <SocialsSection isMobile />
@@ -111,15 +116,15 @@ const Footer = () => {
         <section className="text-center text-base-content/60">
           <div className="flex flex-col md:flex-row items-center justify-center gap-2 text-sm">
             <span>
-              © Copyright {new Date().getFullYear()} Salsa Rayo Dance School
+              {t('copyright', { year: new Date().getFullYear() })}
             </span>
             <span className="hidden md:inline">•</span>
             <span className="flex items-center gap-2">
-              Made with 
+              {t('madeWith')} 
               <span className="w-6 h-6 flex items-center justify-center rounded-full bg-red-500/20">
                 <FaHeart className="text-red-500" size={12} />
               </span>
-              by
+              {t('by')}
               <AppLink
                 className="text-primary hover:text-accent transition-colors duration-300 font-medium"
                 href="https://www.linkedin.com/in/nikosdim97/"
@@ -131,7 +136,7 @@ const Footer = () => {
 
           <div className="mt-6 relative">
             <p className="text-sm text-base-content/50 font-light tracking-widest uppercase">
-              Keep dancing, keep dreaming!
+              {t('slogan')}
             </p>
             <div className="mt-2 flex justify-center gap-1">
               <span className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0ms'}}></span>

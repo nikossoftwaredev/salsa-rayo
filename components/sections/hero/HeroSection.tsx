@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 const HeroSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const t = useTranslations('HomePage');
+  const tHero = useTranslations('Hero');
 
   useEffect(() => {
     setIsLoaded(true);
@@ -16,7 +17,7 @@ const HeroSection = () => {
   return (
     <section
       id="hero"
-      className="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-black"
+      className="h-screen max-h-screen w-full flex items-center justify-center relative overflow-hidden bg-black"
     >
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"></div>
@@ -32,26 +33,26 @@ const HeroSection = () => {
       </div>
 
       {/* Main Content Container */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 pt-32 pb-20 md:pt-24 md:pb-0">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 py-16 md:py-20">
+        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-center h-full">
           
           {/* Left Content */}
           <div
-            className={`flex flex-col items-center lg:items-start text-center lg:text-left text-white space-y-6 md:space-y-8 transform transition-all duration-1000 ${
+            className={`flex flex-col items-center lg:items-start text-center lg:text-left text-white space-y-4 md:space-y-6 transform transition-all duration-1000 ${
               isLoaded ? "translate-x-0 opacity-100" : "-translate-x-20 opacity-0"
             }`}
           >
             {/* Logo - Hidden on mobile */}
-            <div className="hidden md:block mb-4">
-              <Logo size="lg" />
+            <div className="hidden md:block mb-2">
+              <Logo size="xxl" />
             </div>
 
-            {/* Main Title */}
+            {/* Main Title - Now smaller than logo */}
             <div className="relative">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 tracking-tight">
-                <span className="bg-gradient-to-r from-white via-primary to-white bg-clip-text text-transparent animate-gradient-x">Dance</span>
-                <span className="text-white"> & </span>
-                <span className="bg-gradient-to-r from-white via-accent to-white bg-clip-text text-transparent animate-gradient-x animation-delay-200">Connect</span>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 tracking-tight">
+                <span className="bg-gradient-to-r from-white via-primary to-white bg-clip-text text-transparent animate-gradient-x">{tHero('dance')}</span>
+                <span className="text-white">{tHero('and')}</span>
+                <span className="bg-gradient-to-r from-white via-accent to-white bg-clip-text text-transparent animate-gradient-x animation-delay-200">{tHero('connect')}</span>
               </h1>
             </div>
 
@@ -66,7 +67,7 @@ const HeroSection = () => {
                 {t('description')}
               </p>
               <p className="font-semibold text-lg md:text-xl mt-4">
-                Join our <span className="text-primary">passionate</span> salsa community today!
+                {tHero('joinCommunity')}
               </p>
             </div>
 
@@ -78,11 +79,11 @@ const HeroSection = () => {
 
           {/* Right Image */}
           <div
-            className={`relative transform transition-all duration-1000 delay-300 pb-8 ${
+            className={`relative transform transition-all duration-1000 delay-300 ${
               isLoaded ? "translate-x-0 opacity-100 scale-100" : "translate-x-20 opacity-0 scale-95"
             }`}
           >
-            <div className="relative mx-auto max-w-md lg:max-w-full">
+            <div className="relative mx-auto max-w-sm lg:max-w-md">
               {/* Glow effect behind image */}
               <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-accent/20 to-transparent blur-3xl scale-110"></div>
               
@@ -91,10 +92,10 @@ const HeroSection = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-10"></div>
                 <Image
                   src="/images/hero.jpg"
-                  alt="Salsa dancers in vibrant costumes"
-                  width={600}
-                  height={800}
-                  className="object-cover w-full h-auto"
+                  alt={tHero('imageAlt')}
+                  width={400}
+                  height={600}
+                  className="object-cover w-full h-auto max-h-[70vh]"
                   priority
                 />
               </div>

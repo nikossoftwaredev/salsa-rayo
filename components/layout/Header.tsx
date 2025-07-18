@@ -5,8 +5,12 @@ import Logo from "../Logo";
 import SocialsSection from "@/components/sections/socials/SocialsSection";
 import { MdMenu, MdClose } from "react-icons/md";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useTranslations, useLocale } from "next-intl";
 
 const Header = () => {
+  const t = useTranslations('Common');
+  const locale = useLocale();
+  
   const handleClose = () => {
     const checkbox = document.getElementById(
       "mobile-drawer"
@@ -36,7 +40,7 @@ const Header = () => {
                       href={linkConfig.path}
                       className="font-bold text-lg text-white hover:text-primary relative group transition-colors duration-200 cursor-pointer"
                     >
-                      {linkConfig.text.en}
+                      {linkConfig.text[locale as 'en' | 'el' | 'es'] || linkConfig.text.en}
                       <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
                     </a>
                   </li>
@@ -49,7 +53,7 @@ const Header = () => {
             <label
               htmlFor="mobile-drawer"
               className="btn btn-circle btn-ghost md:hidden text-white hover:bg-white/20"
-              aria-label="Open menu"
+              aria-label={t('openMenu')}
             >
               <MdMenu size={24} />
             </label>
@@ -70,7 +74,7 @@ const Header = () => {
             <label
               htmlFor="mobile-drawer"
               className="btn btn-circle btn-ghost text-primary hover:bg-primary/20"
-              aria-label="Close menu"
+              aria-label={t('closeMenu')}
             >
               <MdClose size={24} />
             </label>
@@ -86,7 +90,7 @@ const Header = () => {
                   onClick={handleClose}
                   className="text-2xl font-bold text-primary hover:text-accent transition-colors duration-300"
                 >
-                  {link.text.en}
+                  {link.text[locale as 'en' | 'el' | 'es'] || link.text.en}
                 </a>
               ))}
             </nav>

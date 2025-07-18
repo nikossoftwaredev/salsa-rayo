@@ -1,0 +1,109 @@
+{
+  "HomePage": {
+    "title": "Bienvenido a Salsa Rayo",
+    "description": "Aprende a bailar salsa con nosotros"
+  },
+  "Hero": {
+    "dance": "Baila",
+    "and": " y ",
+    "connect": "Conecta",
+    "joinCommunity": "¡Únete a nuestra apasionada comunidad de salsa hoy!",
+    "imageAlt": "Bailarines de salsa con trajes vibrantes"
+  },
+  "About": {
+    "title": "ACERCA DE NOSOTROS",
+    "moreInfo": "MÁS INFORMACIÓN",
+    "annaName": "Anna Lontou",
+    "annaTitle": "Instructora Principal de Baile",
+    "annaDescription": "Anna Lontou es una instructora de salsa apasionada y experimentada dedicada a compartir la alegría del baile latino con estudiantes de todos los niveles.",
+    "konstantinosName": "Konstantinos Bitsis",
+    "konstantinosTitle": "Instructor Senior de Baile",
+    "konstantinosDescription": "Konstantinos Bitsis es un instructor de baile experimentado con años de experiencia en salsa, bachata y otros estilos de baile latino.",
+    "annaImageAlt": "Anna Lontou - Instructora Principal de Baile",
+    "konstantinosImageAlt": "Konstantinos Bitsis - Instructor Senior de Baile"
+  },
+  "Schedule": {
+    "title": "Horario de Clases",
+    "comingSoon": "Próximamente",
+    "comingSoonDescription": "¡Nuestro emocionante horario de clases estará disponible pronto!",
+    "today": "HOY",
+    "days": {
+      "monday": "Lunes",
+      "tuesday": "Martes",
+      "wednesday": "Miércoles",
+      "thursday": "Jueves",
+      "friday": "Viernes",
+      "saturday": "Sábado",
+      "sunday": "Domingo"
+    },
+    "classes": {
+      "salsa1": "Salsa Nivel 1",
+      "salsa2": "Salsa Nivel 2",
+      "mambo": "Mambo",
+      "bachata1": "Bachata Nivel 1",
+      "bachata2": "Bachata Nivel 2",
+      "ladiesStyle": "Estilo de Damas"
+    }
+  },
+  "Contact": {
+    "title": "CONTÁCTANOS",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "email": "Correo Electrónico",
+    "phone": "Teléfono",
+    "message": "Escribe tu mensaje...",
+    "send": "Enviar",
+    "loading": "CARGANDO"
+  },
+  "Gallery": {
+    "title": "Galería",
+    "all": "Todo",
+    "seeMore": "Ver Más",
+    "categories": {
+      "photos": "Fotos",
+      "shows": "Espectáculos",
+      "socialDancing": "Baile Social",
+      "workshops": "Talleres"
+    },
+    "descriptions": {
+      "photos": "Fotos de baile y recuerdos",
+      "shows": "Presentaciones y espectáculos de baile en vivo",
+      "socialDancing": "Noches de baile social y fiestas",
+      "workshops": "Talleres especiales y clases magistrales"
+    }
+  },
+  "Map": {
+    "title": "ENCUÉNTRANOS",
+    "subtitle": "Nuestra Ubicación",
+    "mapTitle": "Mapa de ubicación de Salsa Rayo",
+    "getDirections": "Obtener Direcciones"
+  },
+  "Socials": {
+    "title": "REDES SOCIALES"
+  },
+  "Footer": {
+    "schedule": "Horario",
+    "days": "Lunes - Jueves",
+    "workDays": "Lunes - Jueves",
+    "hours": "17:00 - 23:00",
+    "workHours": "17:00 - 23:00",
+    "contactInfo": "Información de Contacto",
+    "description": "¡Tu puerta de entrada al mágico mundo del baile social! Únete a nuestra apasionada comunidad y descubre la alegría de la salsa.",
+    "copyright": "© Copyright {year} Salsa Rayo Dance School",
+    "madeWith": "Hecho con",
+    "by": "por",
+    "tagline": "¡Sigue bailando, sigue soñando!",
+    "slogan": "¡Sigue bailando, sigue soñando!"
+  },
+  "Common": {
+    "getStarted": "Comienza Ahora",
+    "loading": "CARGANDO",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú"
+  },
+  "Navigation": {
+    "schedule": "Horario",
+    "about": "Acerca de",
+    "gallery": "Galería"
+  }
+}

@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Assuming your fonts are stored in /public/fonts/ */
+/* Inter font is loaded via next/font/google in layout.tsx for better performance and Greek/English support */
+
+/* Local fonts stored in /public/fonts/ */
 @font-face {
   font-family: "custom-font";
   src: url("/fonts/SpaceGrotesk-VariableFont_wght.ttf") format("woff2");

@@ -1,7 +1,7 @@
 export const headerLinks = [
-  { path: `#schedule`, text: { en: "Schedule", el: "Πρόγραμμα" } },
-  { path: `#about`, text: { en: "About", el: "Σχετικά" } },
-  { path: `#gallery`, text: { en: "Gallery", el: "Gallery" } },
+  { path: `#schedule`, text: { en: "Schedule", el: "Πρόγραμμα", es: "Horario" } },
+  { path: `#about`, text: { en: "About", el: "Σχετικά", es: "Acerca de" } },
+  { path: `#gallery`, text: { en: "Gallery", el: "Gallery", es: "Galería" } },
 ];
 
 export const INSTAGRAM_URL = "https://www.instagram.com/salsarayo_ds/";

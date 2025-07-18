@@ -6,7 +6,11 @@ import { SUPPORTED_LOCALES } from "@/i18n/routing";
 import { useTransition } from "react";
 import { MdLanguage, MdCheck } from "react-icons/md";
 
-const languages = {
+const languages: Record<typeof SUPPORTED_LOCALES[number], {
+  name: string;
+  flag: string;
+  nativeName: string;
+}> = {
   en: {
     name: "English",
     flag: "🇺🇸",
@@ -16,6 +20,11 @@ const languages = {
     name: "Ελληνικά",
     flag: "🇬🇷",
     nativeName: "Greek"
+  },
+  es: {
+    name: "Español",
+    flag: "🇪🇸",
+    nativeName: "Spanish"
   },
 };
 
@@ -32,8 +41,8 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <div className="dropdown dropdown-end">
-      <div 
+    <details className="dropdown dropdown-end">
+      <summary 
         tabIndex={0} 
         role="button" 
         className="btn btn-ghost btn-circle text-white hover:bg-white/20 relative group"
@@ -41,7 +50,7 @@ export default function LanguageSwitcher() {
       >
         <MdLanguage className="h-6 w-6 transition-transform group-hover:scale-110" />
         <span className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full animate-pulse"></span>
-      </div>
+      </summary>
       <ul 
         tabIndex={0} 
         className="dropdown-content menu bg-base-100/95 backdrop-blur-md rounded-2xl z-[1] w-56 p-1 shadow-2xl border border-primary/20 mt-3"
@@ -94,6 +103,6 @@ export default function LanguageSwitcher() {
           animation: bounce-in 0.3s ease-out;
         }
       `}</style>
-    </div>
+    </details>
   );
 }
