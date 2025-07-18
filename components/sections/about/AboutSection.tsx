@@ -3,8 +3,6 @@ import Card from "@/components/Card";
 import { FC } from "react";
 import Image from "next/image";
 import { SectionTitle } from "@/components/SectionTitle";
-import { YOUTUBE_VIDEOS } from "@/data/config";
-import YoutubeIFrame from "./YoutubeIFrame";
 
 const AboutCard: FC<{ href: string; children: React.ReactNode }> = ({
   href,
@@ -34,7 +32,7 @@ const AboutSection: FC<{ [key: string]: any }> = () => (
       <AboutCard href="/resume">
         <figure className="flex flex-col items-center justify-center">
           <Image
-            src="/images/instructor-anna.png"
+            src="/images/instructor-anna.jpg"
             alt="anna-lontou"
             width={300}
             height={300}
@@ -56,12 +54,6 @@ const AboutSection: FC<{ [key: string]: any }> = () => (
           </div>
         </div>
       </AboutCard>
-      <SectionTitle title="MEDIA" isMainSection />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {YOUTUBE_VIDEOS.map((video_id) => (
-          <YoutubeIFrame key={video_id} video_id={video_id} />
-        ))}
-      </div>
     </section>
   </>
 );

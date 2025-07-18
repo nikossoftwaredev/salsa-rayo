@@ -1,3 +1,15 @@
+// Define instructors separately for reusability
+export const INSTRUCTORS = {
+  konstantinos: {
+    name: "Konstantinos",
+    image: "/images/instructor-konstantinos.jpg",
+  },
+  anna: {
+    name: "Anna",
+    image: "/images/instructor-anna.jpg",
+  },
+};
+
 export const SCHEDULE = [
   {
     day: "Monday",
@@ -6,54 +18,22 @@ export const SCHEDULE = [
       {
         time: "18:00 - 19:00",
         title: "Salsa Level 1",
-        instructors: [
-          {
-            name: "Konstantinos",
-            image: "/images/instructor-konstantinos.png",
-          },
-          {
-            name: "Anna",
-            image: "/images/instructor-anna.png",
-          },
-        ],
+        instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
       },
       {
         time: "19:00 - 20:00",
         title: "Salsa Level 2",
-        instructors: [
-          {
-            name: "Konstantinos",
-            image: "/images/instructor-konstantinos.png",
-          },
-          {
-            name: "Anna",
-            image: "/images/instructor-anna.png",
-          },
-        ],
+        instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
       },
       {
         time: "20:00 - 21:00",
         title: "Mambo",
-        instructors: [
-          {
-            name: "Konstantinos",
-            image: "/images/instructor-konstantinos.png",
-          },
-        ],
+        instructors: [INSTRUCTORS.konstantinos],
       },
       {
         time: "21:00 - 22:00",
         title: "Bachata Level 2",
-        instructors: [
-          {
-            name: "Konstantinos",
-            image: "/images/instructor-konstantinos.png",
-          },
-          {
-            name: "Anna",
-            image: "/images/instructor-anna.png",
-          },
-        ],
+        instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
       },
     ],
   },
@@ -64,49 +44,22 @@ export const SCHEDULE = [
       {
         time: "18:00 - 19:00",
         title: "Salsa Level 1",
-        instructors: [
-          {
-            name: "Konstantinos",
-            image: "/images/instructor-konstantinos.png",
-          },
-          {
-            name: "Anna",
-            image: "/images/instructor-anna.png",
-          },
-        ],
+        instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
       },
       {
         time: "19:00 - 20:00",
         title: "Salsa Level 2",
-        instructors: [
-          {
-            name: "Konstantinos",
-            image: "/images/instructor-konstantinos.png",
-          },
-          {
-            name: "Anna",
-            image: "/images/instructor-anna.png",
-          },
-        ],
+        instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
       },
       {
         time: "20:00 - 21:00",
         title: "Ladies Style",
-        instructors: [{ name: "Anna", image: "/images/instructor-anna.png" }],
+        instructors: [INSTRUCTORS.anna],
       },
       {
         time: "21:00 - 22:00",
         title: "Bachata Level 2",
-        instructors: [
-          {
-            name: "Konstantinos",
-            image: "/images/instructor-konstantinos.png",
-          },
-          {
-            name: "Anna",
-            image: "/images/instructor-anna.png",
-          },
-        ],
+        instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
       },
     ],
   },
@@ -117,58 +70,22 @@ export const SCHEDULE = [
       {
         time: "18:00 - 19:00",
         title: "Salsa Level 1",
-        instructors: [
-          {
-            name: "Konstantinos",
-            image: "/images/instructor-konstantinos.png",
-          },
-          {
-            name: "Anna",
-            image: "/images/instructor-anna.png",
-          },
-        ],
+        instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
       },
       {
         time: "19:00 - 20:00",
         title: "Salsa Level 2",
-        instructors: [
-          {
-            name: "Konstantinos",
-            image: "/images/instructor-konstantinos.png",
-          },
-          {
-            name: "Anna",
-            image: "/images/instructor-anna.png",
-          },
-        ],
+        instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
       },
       {
         time: "20:00 - 21:00",
         title: "Bachata Level 1",
-        instructors: [
-          {
-            name: "Konstantinos",
-            image: "/images/instructor-konstantinos.png",
-          },
-          {
-            name: "Anna",
-            image: "/images/instructor-anna.png",
-          },
-        ],
+        instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
       },
       {
         time: "21:00 - 22:00",
         title: "Bachata Level 2",
-        instructors: [
-          {
-            name: "Konstantinos",
-            image: "/images/instructor-konstantinos.png",
-          },
-          {
-            name: "Anna",
-            image: "/images/instructor-anna.png",
-          },
-        ],
+        instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
       },
     ],
   },
@@ -179,58 +96,22 @@ export const SCHEDULE = [
       {
         time: "18:00 - 19:00",
         title: "Salsa Level 1",
-        instructors: [
-          {
-            name: "Konstantinos",
-            image: "/images/instructor-konstantinos.png",
-          },
-          {
-            name: "Anna",
-            image: "/images/instructor-anna.png",
-          },
-        ],
+        instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
       },
       {
         time: "19:00 - 20:00",
         title: "Salsa Level 2",
-        instructors: [
-          {
-            name: "Konstantinos",
-            image: "/images/instructor-konstantinos.png",
-          },
-          {
-            name: "Anna",
-            image: "/images/instructor-anna.png",
-          },
-        ],
+        instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
       },
       {
         time: "20:00 - 21:00",
         title: "Bachata Level 1",
-        instructors: [
-          {
-            name: "Konstantinos",
-            image: "/images/instructor-konstantinos.png",
-          },
-          {
-            name: "Anna",
-            image: "/images/instructor-anna.png",
-          },
-        ],
+        instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
       },
       {
         time: "21:00 - 22:00",
         title: "Bachata Level 2",
-        instructors: [
-          {
-            name: "Konstantinos",
-            image: "/images/instructor-konstantinos.png",
-          },
-          {
-            name: "Anna",
-            image: "/images/instructor-anna.png",
-          },
-        ],
+        instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
       },
     ],
   },
@@ -241,58 +122,22 @@ export const SCHEDULE = [
   //     {
   //       time: "18:00 - 19:00",
   //       title: "Salsa Level 1",
-  //       instructors: [
-  //         {
-  //           name: "Konstantinos",
-  //           image: "/images/instructor-konstantinos.png",
-  //         },
-  //         {
-  //           name: "Anna",
-  //           image: "/images/instructor-anna.png",
-  //         },
-  //       ],
+  //       instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
   //     },
   //     {
   //       time: "19:00 - 20:00",
   //       title: "Salsa Level 2",
-  //       instructors: [
-  //         {
-  //           name: "Konstantinos",
-  //           image: "/images/instructor-konstantinos.png",
-  //         },
-  //         {
-  //           name: "Anna",
-  //           image: "/images/instructor-anna.png",
-  //         },
-  //       ],
+  //       instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
   //     },
   //     {
   //       time: "20:00 - 21:00",
   //       title: "Bachata Level 1",
-  //       instructors: [
-  //         {
-  //           name: "Konstantinos",
-  //           image: "/images/instructor-konstantinos.png",
-  //         },
-  //         {
-  //           name: "Anna",
-  //           image: "/images/instructor-anna.png",
-  //         },
-  //       ],
+  //       instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
   //     },
   //     {
   //       time: "21:00 - 22:00",
   //       title: "Bachata Level 2",
-  //       instructors: [
-  //         {
-  //           name: "Konstantinos",
-  //           image: "/images/instructor-konstantinos.png",
-  //         },
-  //         {
-  //           name: "Anna",
-  //           image: "/images/instructor-anna.png",
-  //         },
-  //       ],
+  //       instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
   //     },
   //   ],
   // },

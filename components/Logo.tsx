@@ -1,16 +1,30 @@
 import Image from "next/image";
+import Link from "next/link";
 
-const Logo = () => {
+interface LogoProps {
+  size?: "sm" | "lg";
+}
+
+const Logo = ({ size = "sm" }: LogoProps) => {
+  const isLarge = size === "lg";
+  
+  const dimensions = {
+    sm: { width: 48, height: 48, className: "size-12" },
+    lg: { width: 200, height: 80, className: "w-[200px] h-[80px]" }
+  };
+
+  const { width, height, className } = dimensions[size];
+
   return (
-    <div className="size-12 rounded-full">
+    <Link href="/" className={`${className} block cursor-pointer`}>
       <Image
-        src="/images/logo.png"
+        src={isLarge ? "/images/logo-big.png" : "/images/logo.png"}
         alt="Logo"
-        width={48}
-        height={48}
-        className="rounded-full"
+        width={width}
+        height={height}
+        className={`${isLarge ? "object-contain" : "rounded-full"} hover:opacity-80 transition-opacity`}
       />
-    </div>
+    </Link>
   );
 };
 

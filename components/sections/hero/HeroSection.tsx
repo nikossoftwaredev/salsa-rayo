@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Logo from "@/components/Logo";
 import GetStartedButton from "@/components/GetStartedButton";
+import Image from "next/image";
 
 const HeroSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -13,14 +14,13 @@ const HeroSection = () => {
   return (
     <section
       id="hero"
-      className="hero h-screen w-full bg-cover bg-center bg-no-repeat flex items-center justify-center relative overflow-hidden"
-      style={{
-        backgroundImage: "url(/images/hero-image.png)",
-      }}
+      className="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-black"
     >
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"></div>
+      
       {/* Animated gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-transparent"></div>
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-accent/20 animate-pulse"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-accent/10 animate-pulse"></div>
       
       {/* Animated particles */}
       <div className="absolute inset-0">
@@ -29,59 +29,80 @@ const HeroSection = () => {
         <div className="absolute bottom-1/4 left-1/3 w-2 h-2 bg-white rounded-full animate-float-fast opacity-30"></div>
       </div>
 
-      {/* Main Content */}
-      <div
-        className={`relative z-10 p-4 md:p-8 flex flex-col items-center justify-center text-center text-white space-y-6 md:space-y-8 transform transition-all duration-1000 ${
-          isLoaded ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
-        }`}
-      >
-        {/* Logo - Hidden on mobile */}
-        <div className="hidden md:block">
-          <Logo />
+      {/* Main Content Container */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 pt-32 pb-20 md:pt-24 md:pb-0">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          
+          {/* Left Content */}
+          <div
+            className={`flex flex-col items-center lg:items-start text-center lg:text-left text-white space-y-6 md:space-y-8 transform transition-all duration-1000 ${
+              isLoaded ? "translate-x-0 opacity-100" : "-translate-x-20 opacity-0"
+            }`}
+          >
+            {/* Logo - Hidden on mobile */}
+            <div className="hidden md:block mb-4">
+              <Logo size="lg" />
+            </div>
+
+            {/* Main Title */}
+            <div className="relative">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 tracking-tight">
+                <span className="bg-gradient-to-r from-white via-primary to-white bg-clip-text text-transparent animate-gradient-x">Dance</span>
+                <span className="text-white"> & </span>
+                <span className="bg-gradient-to-r from-white via-accent to-white bg-clip-text text-transparent animate-gradient-x animation-delay-200">Connect</span>
+              </h1>
+            </div>
+
+            {/* Subtitle */}
+            <p className="text-xl md:text-2xl lg:text-3xl font-light text-white tracking-wide">
+              This is your <span className="font-bold text-primary animate-pulse">getaway</span> to the magical world of social dancing!
+            </p>
+
+            {/* Description */}
+            <div className="text-base md:text-lg lg:text-xl space-y-3 max-w-2xl">
+              <p className="opacity-90 leading-relaxed">
+                <span className="inline-block transform hover:scale-105 transition-transform">Learn to dance</span>, 
+                <span className="inline-block transform hover:scale-105 transition-transform mx-2">make friends</span>, 
+                and <span className="inline-block transform hover:scale-105 transition-transform">extend your skills</span>.
+              </p>
+              <p className="font-semibold text-lg md:text-xl mt-4">
+                Join our <span className="text-primary">passionate</span> salsa community today!
+              </p>
+            </div>
+
+            {/* Call to Action */}
+            <div className="mt-6 md:mt-8">
+              <GetStartedButton />
+            </div>
+          </div>
+
+          {/* Right Image */}
+          <div
+            className={`relative transform transition-all duration-1000 delay-300 pb-8 ${
+              isLoaded ? "translate-x-0 opacity-100 scale-100" : "translate-x-20 opacity-0 scale-95"
+            }`}
+          >
+            <div className="relative mx-auto max-w-md lg:max-w-full">
+              {/* Glow effect behind image */}
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-accent/20 to-transparent blur-3xl scale-110"></div>
+              
+              {/* Image container with border */}
+              <div className="relative rounded-3xl overflow-hidden border-2 border-white/10 shadow-2xl">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-10"></div>
+                <Image
+                  src="/images/hero.jpg"
+                  alt="Salsa dancers in vibrant costumes"
+                  width={600}
+                  height={800}
+                  className="object-cover w-full h-auto"
+                  priority
+                />
+              </div>
+            </div>
+          </div>
         </div>
-
-        {/* Main Title */}
-        <div className="relative">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-4 tracking-tight">
-            <span className="bg-gradient-to-r from-white via-primary to-white bg-clip-text text-transparent animate-gradient-x">Dance</span>
-            <span className="text-white"> & </span>
-            <span className="bg-gradient-to-r from-white via-accent to-white bg-clip-text text-transparent animate-gradient-x animation-delay-200">Connect</span>
-          </h1>
-        </div>
-
-        {/* Subtitle */}
-        <p className="text-xl md:text-3xl lg:text-4xl font-light text-white px-4 tracking-wide">
-          This is your <span className="font-bold text-primary animate-pulse">getaway</span> to the magical world of social dancing!
-        </p>
-
-        {/* Description */}
-        <div className="text-base md:text-lg lg:text-2xl space-y-3 max-w-4xl px-4">
-          <p className="opacity-90 leading-relaxed">
-            <span className="inline-block transform hover:scale-105 transition-transform">Learn to dance</span>, 
-            <span className="inline-block transform hover:scale-105 transition-transform mx-2">make friends</span>, 
-            and <span className="inline-block transform hover:scale-105 transition-transform">extend your skills</span>.
-          </p>
-          <p className="font-semibold text-lg md:text-xl lg:text-2xl mt-4">
-            Join our <span className="text-primary">passionate</span> salsa community today!
-          </p>
-        </div>
-
-        {/* Call to Action */}
-        <div className="mt-6 md:mt-8">
-          <GetStartedButton />
-        </div>
-
-        {/* Stats Section */}
       </div>
 
-      {/* Enhanced Scroll Indicator */}
-      <div className="hidden md:block absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-8 h-12 border-2 border-white/70 rounded-full flex justify-center relative overflow-hidden group hover:border-primary transition-colors">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/10 group-hover:to-primary/20 transition-colors"></div>
-          <div className="w-1.5 h-4 bg-white rounded-full mt-2 animate-scroll-down"></div>
-        </div>
-        <p className="text-white/60 text-xs mt-2 tracking-wider">SCROLL</p>
-      </div>
     </section>
   );
 };

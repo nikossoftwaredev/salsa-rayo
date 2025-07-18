@@ -9,6 +9,8 @@ import {
 import { FaHeart } from "react-icons/fa";
 import AppLink from "./AppLink";
 import SocialsSection from "./sections/socials/SocialsSection";
+import Logo from "./Logo";
+import { CircleIcon } from "./CircleIcon";
 
 const footerSections = [
   {
@@ -46,9 +48,9 @@ const Footer = () => {
         <div className="grid md:grid-cols-3 pb-12 gap-12 grid-cols-1 max-w-6xl w-full">
           {/* Brand Section */}
           <section className="text-left">
-            <h3 className="text-5xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent mb-4 animate-gradient-x">
-              Salsa Rayo
-            </h3>
+            <div className="mb-6">
+              <Logo size="lg" />
+            </div>
             <p className="text-base-content/80 mb-6 leading-relaxed text-lg">
               Your gateway to the magical world of social dancing! Join our
               passionate community and discover the joy of salsa.
@@ -70,9 +72,11 @@ const Footer = () => {
                     className="text-base flex items-center justify-start gap-3 text-base-content/70 group hover:text-base-content transition-colors duration-300"
                     key={subtitle.value}
                   >
-                    <div className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-accent/20 text-white shadow-lg group-hover:shadow-primary/50 transition-all duration-300">
-                      {subtitle.icon}
-                    </div>
+                    <CircleIcon 
+                      icon={subtitle.icon}
+                      color="#18A07B"
+                      size={48}
+                    />
                     {subtitle.type === "tel" ? (
                       <a
                         href={`tel:${subtitle.value}`}

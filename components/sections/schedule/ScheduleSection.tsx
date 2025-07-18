@@ -8,6 +8,7 @@ import { twMerge } from "tailwind-merge";
 import { motion } from "framer-motion";
 import { SCHEDULE } from "@/data/schedule";
 import PartnerIcon from "@/components/icons/PartnerIcon";
+import { CircleIcon } from "@/components/CircleIcon";
 
 const ScheduleSection = () => {
   const currentDayIndex = new Date().getDay();
@@ -109,18 +110,22 @@ const ScheduleSection = () => {
                     )}
 
                     <div className="flex items-center gap-3 mb-2 w-full">
-                      <div className="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-primary/30 to-accent/30 rounded-full shadow-lg group-hover/class:shadow-primary/50 transition-all duration-300">
-                        <PartnerIcon size={24} className="text-white" />
-                      </div>
+                      <CircleIcon
+                        icon={<PartnerIcon size={24} />}
+                        color="#18A07B"
+                        size={48}
+                      />
                       <h4 className="text-xl font-extrabold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent group-hover/class:scale-105 transition-transform duration-300">
                         {title}
                       </h4>
                     </div>
 
                     <div className="font-sans flex items-center gap-3 w-full">
-                      <div className="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-white/20 to-white/10 rounded-full backdrop-blur-sm">
-                        <FaRegClock size={20} className="text-white" />
-                      </div>
+                      <CircleIcon
+                        icon={<FaRegClock size={20} />}
+                        color="#7737b8"
+                        size={48}
+                      />
                       <h3 className="text-xl font-bold text-white/90 tracking-wide">{time}</h3>
                     </div>
 
