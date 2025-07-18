@@ -51,7 +51,7 @@ const HeroSection = () => {
               <div className="hidden md:block">
                 <Logo size="xxl" />
               </div>
-              <p className="absolute bottom-0 right-2 md:right-5 top-[60px] md:top-[90px] text-xs md:text-sm font-light text-white/90 tracking-wider">
+              <p className="absolute bottom-0 right-0   top-[65px] md:top-[95px]  text-xs md:text-sm font-light text-white/90 tracking-wider">
                 {tHero("danceSchool")}
               </p>
             </div>
