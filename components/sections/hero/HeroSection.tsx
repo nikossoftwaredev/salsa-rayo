@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import Logo from "@/components/Logo";
 import GetStartedButton from "@/components/GetStartedButton";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 const HeroSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const t = useTranslations('HomePage');
 
   useEffect(() => {
     setIsLoaded(true);
@@ -55,15 +57,13 @@ const HeroSection = () => {
 
             {/* Subtitle */}
             <p className="text-xl md:text-2xl lg:text-3xl font-light text-white tracking-wide">
-              This is your <span className="font-bold text-primary animate-pulse">getaway</span> to the magical world of social dancing!
+              {t('title')}
             </p>
 
             {/* Description */}
             <div className="text-base md:text-lg lg:text-xl space-y-3 max-w-2xl">
               <p className="opacity-90 leading-relaxed">
-                <span className="inline-block transform hover:scale-105 transition-transform">Learn to dance</span>, 
-                <span className="inline-block transform hover:scale-105 transition-transform mx-2">make friends</span>, 
-                and <span className="inline-block transform hover:scale-105 transition-transform">extend your skills</span>.
+                {t('description')}
               </p>
               <p className="font-semibold text-lg md:text-xl mt-4">
                 Join our <span className="text-primary">passionate</span> salsa community today!

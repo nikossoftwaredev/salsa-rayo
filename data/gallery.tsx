@@ -83,13 +83,6 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     category: "photos",
     caption: "Amazing Salsa Performance",
   },
-  {
-    id: "social-1",
-    src: "/images/logo-big.png",
-    alt: "Social Dance Night",
-    category: "social",
-    caption: "Friday Night Social",
-  },
 ];
 
 export const GALLERY_VIDEOS: GalleryVideo[] = [
@@ -97,25 +90,25 @@ export const GALLERY_VIDEOS: GalleryVideo[] = [
     id: "1",
     youtubeId: "kR-lwIGdiOA",
     title: "Salsa Performance",
-    category: "shows",
+    category: "social",
   },
   {
     id: "2",
     youtubeId: "1LI82It0cbU",
     title: "Dance Showcase",
-    category: "shows",
+    category: "social",
   },
   {
     id: "3",
     youtubeId: "1-RSFcqptRQ",
-    title: "Workshop Demonstration",
-    category: "workshop",
+    title: "Blue Show",
+    category: "shows",
   },
   {
     id: "4",
     youtubeId: "26-FojKUri4",
-    title: "Social Dancing Night",
-    category: "social",
+    title: "Green Show",
+    category: "shows",
   },
 ];
 

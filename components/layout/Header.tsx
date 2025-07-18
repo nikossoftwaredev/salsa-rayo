@@ -4,6 +4,7 @@ import { headerLinks } from "@/data/config";
 import Logo from "../Logo";
 import SocialsSection from "@/components/sections/socials/SocialsSection";
 import { MdMenu, MdClose } from "react-icons/md";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const Header = () => {
   const handleClose = () => {
@@ -27,19 +28,22 @@ const Header = () => {
             <Logo />
 
             {/* Desktop Links */}
-            <ul className="hidden md:flex items-center gap-8">
-              {headerLinks.map((linkConfig) => (
-                <li key={linkConfig.path}>
-                  <a
-                    href={linkConfig.path}
-                    className="font-bold text-lg text-white hover:text-primary relative group transition-colors duration-200 cursor-pointer"
-                  >
-                    {linkConfig.text.en}
-                    <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <div className="hidden md:flex items-center gap-8">
+              <ul className="flex items-center gap-8">
+                {headerLinks.map((linkConfig) => (
+                  <li key={linkConfig.path}>
+                    <a
+                      href={linkConfig.path}
+                      className="font-bold text-lg text-white hover:text-primary relative group transition-colors duration-200 cursor-pointer"
+                    >
+                      {linkConfig.text.en}
+                      <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <LanguageSwitcher />
+            </div>
 
             {/* Burger button (mobile) */}
             <label
@@ -60,8 +64,9 @@ const Header = () => {
 
         {/* Menu content */}
         <div className="min-h-full w-full bg-base-100 flex flex-col">
-          {/* Close button */}
-          <div className="flex justify-end pt-4 pr-4">
+          {/* Close button and Language Switcher */}
+          <div className="flex justify-between items-center pt-4 px-4">
+            <LanguageSwitcher />
             <label
               htmlFor="mobile-drawer"
               className="btn btn-circle btn-ghost text-primary hover:bg-primary/20"
