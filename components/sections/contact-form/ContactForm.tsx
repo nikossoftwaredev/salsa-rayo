@@ -13,7 +13,8 @@ import { SectionTitle } from "@/components/SectionTitle";
 import TextArea from "@/components/TextArea";
 import TextField from "@/components/TextField";
 import { IoMdSend } from "react-icons/io";
-import { FaUser, FaPhone, FaEnvelope, FaMessage } from "react-icons/fa6";
+import { FaUser, FaPhone, FaEnvelope } from "react-icons/fa6";
+import Lightning from "@/components/react-bits/Backgrounds/Lightning/Lightning";
 
 const initFormData = {
   firstname: "",
@@ -122,11 +123,21 @@ const ContactForm = () => {
   return (
     <main
       id="contact-form"
-      className="flex items-center justify-center flex-col "
+      className="flex items-center justify-center flex-col"
     >
       <SectionTitle title="CONTACT US" isMainSection />
-      <Card className="mb-5 w-full max-w-[600px] backdrop-blur-md bg-white/10 border border-white/20 shadow-xl hover:bg-white/15 transition-all duration-300">
-        <form>
+      <Card className="mb-5 w-full max-w-[600px] bg-transparent border border-white/20 shadow-xl hover:bg-black/70 transition-all duration-300 relative overflow-hidden">
+        {/* Lightning Effect inside the card */}
+        <div className="absolute inset-0 -z-10 opacity-30">
+          <Lightning
+            hue={280}
+            xOffset={0}
+            speed={0.3}
+            intensity={0.5}
+            size={0.6}
+          />
+        </div>
+        <form className="relative z-10">
           <div className="grid p-4 gap-2 sm:grid-cols-1 md:grid-cols-2">
             {inputFields.map((inputField) => {
               const {
@@ -151,7 +162,10 @@ const ContactForm = () => {
                   name={id}
                 />
               ) : (
-                <div key={dataField} className={colSpan ? "col-span-full relative" : "relative"}>
+                <div
+                  key={dataField}
+                  className={colSpan ? "col-span-full relative" : "relative"}
+                >
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
                     {inputField.icon}
                   </div>

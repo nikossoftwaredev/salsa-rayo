@@ -4,11 +4,7 @@ import { useState } from "react";
 import { SectionTitle } from "@/components/SectionTitle";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  FaMapMarkerAlt,
-  FaTheaterMasks,
-  FaUsers,
   FaHeart,
-  FaArrowLeft,
 } from "react-icons/fa";
 import { 
   GALLERY_IMAGES, 
@@ -154,7 +150,7 @@ const GallerySection: React.FC<GallerySectionProps> = ({
         >
           <MasonryGallery 
             items={filteredItems}
-            onItemClick={setSelectedItem}
+            onItemClick={(item) => setSelectedItem(item as GalleryItem)}
           />
         </motion.div>
       </AnimatePresence>

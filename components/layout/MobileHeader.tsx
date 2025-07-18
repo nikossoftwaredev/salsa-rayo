@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { MdMenu, MdClose } from "react-icons/md";
 import { headerLinks } from "@/data/config";
 import SocialsSection from "@/components/sections/socials/SocialsSection";
+import Logo from "@/components/Logo";
 
 const MobileHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -63,6 +64,11 @@ const MobileHeader = () => {
             {/* Social Icons */}
             <div className="mt-8">
               <SocialsSection isMobile />
+            </div>
+
+            {/* Logo */}
+            <div className="mt-8 flex justify-center">
+              <Logo size="lg" />
             </div>
           </div>
         </div>

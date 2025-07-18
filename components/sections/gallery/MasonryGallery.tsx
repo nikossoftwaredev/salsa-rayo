@@ -13,6 +13,7 @@ interface MasonryItem {
   alt?: string;
   title?: string;
   caption?: string;
+  category?: string;
 }
 
 interface MasonryGalleryProps {
