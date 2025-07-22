@@ -7,6 +7,8 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { SUPPORTED_LOCALES } from "@/i18n/routing";
 import { Inter } from "next/font/google";
+import Lightning from "@/components/react-bits/Backgrounds/Lightning/Lightning";
+import Logo from "@/components/Logo";
 
 const inter = Inter({ 
   subsets: ["latin", "greek", "latin-ext"],
@@ -56,11 +58,25 @@ export default async function RootLayout({
           locale={locale as (typeof SUPPORTED_LOCALES)[number]}
           messages={messages}
         >
-          <Header />
-          <main className="flex-1 overflow-y-auto">
-            {children}
-            <Footer />
-          </main>
+          {/* Temporary Coming Soon Page */}
+          <div className="fixed inset-0 w-full h-full bg-black overflow-hidden">
+            <div className="absolute inset-0 w-full h-full">
+              <Lightning hue={280} speed={0.5} intensity={0.8} />
+            </div>
+            <div className="absolute inset-0 flex flex-col items-center justify-center z-10 gap-8">
+              <Logo size="xxxl" />
+              <div className="flex items-end gap-2">
+                <h1 className="text-3xl md:text-5xl font-bold text-white tracking-wider">
+                  COMING SOON
+                </h1>
+                <div className="flex gap-1 mb-2">
+                  <span className="w-2 h-2 bg-white rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+                  <span className="w-2 h-2 bg-white rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+                  <span className="w-2 h-2 bg-white rounded-full animate-bounce"></span>
+                </div>
+              </div>
+            </div>
+          </div>
         </NextIntlClientProvider>
       </body>
     </html>

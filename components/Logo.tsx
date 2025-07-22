@@ -2,16 +2,17 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface LogoProps {
-  size?: "sm" | "lg" | "xxl";
+  size?: "sm" | "lg" | "xxl" | "xxxl";
 }
 
 const Logo = ({ size = "sm" }: LogoProps) => {
-  const isLarge = size === "lg" || size === "xxl";
+  const isLarge = size === "lg" || size === "xxl" || size === "xxxl";
   
   const dimensions = {
     sm: { width: 48, height: 48, className: "size-12" },
     lg: { width: 200, height: 80, className: "w-[200px] h-[80px]" },
-    xxl: { width: 320, height: 128, className: "w-[320px] h-[128px]" }
+    xxl: { width: 320, height: 128, className: "w-[320px] h-[128px]" },
+    xxxl: { width: 480, height: 192, className: "w-[480px] h-[192px]" }
   };
 
   const { width, height, className } = dimensions[size];
