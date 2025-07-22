@@ -28,6 +28,7 @@ pnpm lint
 ## Architecture Overview
 
 ### Tech Stack
+
 - **Next.js 15.1.3** with App Router and Turbopack
 - **React 19.0.0** with TypeScript
 - **Tailwind CSS** with DaisyUI component library (sunset theme)
@@ -38,14 +39,16 @@ pnpm lint
 
 1. **Component Structure**: Follows atomic design with components organized by type (layout, sections, UI primitives). Each major page section is self-contained in `/components/sections/`.
 
-2. **Styling Strategy**: 
+2. **Styling Strategy**:
+
    - Uses DaisyUI's "sunset" theme with custom overrides (primary: #18A07B, accent: #7737b8)
    - Gradient styles centralized in `data/config.ts` as `GRADIENT_STYLE`
    - Custom fonts loaded via @font-face (Faculty, Roboto, Space Grotesk)
 
 3. **State Management**: Simple React hooks for local state. No global state management needed for current scope.
 
-4. **Data Flow**: 
+4. **Data Flow**:
+
    - Static data (schedule, config) in `/data` directory
    - Contact form submits to `/api/send-mail` endpoint
    - Schedule data structure supports bilingual content (en/el)
@@ -61,7 +64,6 @@ pnpm lint
 
 ### Special Considerations
 
-1. **Jupiter Terminal Integration**: The layout includes a script from `terminal.jup.ag` - appears to be for crypto/Web3 functionality
 2. **Bilingual Support**: Config structure supports English/Greek but currently only English is implemented
 3. **Mobile Navigation**: Uses drawer pattern with hamburger menu on mobile devices
 4. **Performance**: Home page sets `revalidate = 0` to disable caching

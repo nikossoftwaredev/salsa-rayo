@@ -48,9 +48,6 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} data-theme="myTheme" className={inter.variable}>
-      <head>
-        <script data-preload src="https://terminal.jup.ag/main-v1.js"></script>
-      </head>
       <body
         className={`${inter.className} text-base-content text-lg w-full min-h-screen flex flex-col`}
       >
