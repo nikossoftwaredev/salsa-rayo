@@ -18,7 +18,7 @@ const inter = Inter({
 
 const APPLICATION_NAME = "Salsa Rayo Dance School";
 const APPLICATION_DESCRIPTION =
-  "Salsa Rayo Dance School is a dance school that offers dance classes in Salsa, Bachata, Kizomba, and more. We are based in the Netherlands and offer classes in Amsterdam, Utrecht, and Rotterdam.";
+  "Salsa Rayo is a dance school that offers Salsa and Bachata classes for all levels. We are based in Agios Dimitrios, Athens, Greece";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://salsa-rayo.com"),
