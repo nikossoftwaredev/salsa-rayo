@@ -64,7 +64,12 @@ export default async function RootLayout({
               <Lightning hue={280} speed={0.5} intensity={0.8} />
             </div>
             <div className="absolute inset-0 flex flex-col items-center justify-center z-10 gap-8">
-              <Logo size="xxxl" />
+              <div className="relative">
+                <Logo size="xxxl" />
+                <h2 className="absolute bottom-6 right-0 text-sm md:text-base font-semibold text-white tracking-widest">
+                  DANCE SCHOOL
+                </h2>
+              </div>
               <div className="flex items-end gap-2">
                 <h1 className="text-3xl md:text-5xl font-bold text-white tracking-wider">
                   COMING SOON
