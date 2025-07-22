@@ -63,21 +63,28 @@ export default async function RootLayout({
             <div className="absolute inset-0 w-full h-full">
               <Lightning hue={280} speed={0.5} intensity={0.8} />
             </div>
-            <div className="absolute inset-0 flex flex-col items-center justify-center z-10 gap-8">
+            <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
               <div className="relative">
-                <Logo size="xxxl" />
-                <h2 className="absolute bottom-6 right-0 text-sm md:text-base font-semibold text-white tracking-widest">
+                <div className="hidden md:block">
+                  <Logo size="xxxl" />
+                </div>
+                <div className="block md:hidden">
+                  <Logo size="xxl" />
+                </div>
+                <h2 className="absolute bottom-4 md:bottom-6 right-0 text-xs md:text-base font-semibold text-white tracking-widest">
                   Dance School
                 </h2>
               </div>
+            </div>
+            <div className="absolute bottom-12 left-0 right-0 flex justify-center z-10">
               <div className="flex items-end gap-2">
-                <h1 className="text-3xl md:text-5xl font-bold text-white tracking-wider">
+                <h1 className="text-2xl md:text-5xl font-bold tracking-wider bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 bg-[length:200%_auto] bg-clip-text text-transparent animate-gradient-x">
                   COMING SOON
                 </h1>
-                <div className="flex gap-1 mb-2">
-                  <span className="w-2 h-2 bg-white rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-                  <span className="w-2 h-2 bg-white rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-                  <span className="w-2 h-2 bg-white rounded-full animate-bounce"></span>
+                <div className="flex gap-1 mb-1 md:mb-2">
+                  <span className="w-1.5 md:w-2 h-1.5 md:h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+                  <span className="w-1.5 md:w-2 h-1.5 md:h-2 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+                  <span className="w-1.5 md:w-2 h-1.5 md:h-2 bg-gradient-to-r from-orange-500 to-purple-500 rounded-full animate-bounce"></span>
                 </div>
               </div>
             </div>
