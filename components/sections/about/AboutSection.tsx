@@ -65,11 +65,10 @@ const AboutSection: FC<{ [key: string]: any }> = () => {
   const t = useTranslations("About");
 
   return (
-    <>
+    <div id="about" className="scroll-mt-20">
       <SectionTitle title={t("title")} isMainSection />
       <section
-        id="about"
-        className="w-full flex flex-col items-center justify-center gap-4 scroll-mt-20"
+        className="w-full flex flex-col items-center justify-center gap-4"
       >
         {/* School Card */}
         <AboutCard>
@@ -134,7 +133,7 @@ const AboutSection: FC<{ [key: string]: any }> = () => {
           </div>
         </AboutCard>
       </section>
-    </>
+    </div>
   );
 };
 

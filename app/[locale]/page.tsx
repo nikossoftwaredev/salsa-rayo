@@ -5,6 +5,7 @@ import MapSection from "@/components/sections/map/MapSection";
 import ScheduleSection from "@/components/sections/schedule/ScheduleSection";
 import GallerySection from "@/components/sections/gallery/GallerySection";
 import BackgroundEffects from "@/components/BackgroundEffects";
+import SummerOfferButton from "@/components/SummerOfferButton";
 
 export const revalidate = 0;
 
@@ -12,6 +13,7 @@ export default function Home() {
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden">
       <BackgroundEffects />
+      <SummerOfferButton />
       <div className="relative">
         <HeroSection />
         <div className="w-full flex flex-col items-center">

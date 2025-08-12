@@ -33,6 +33,7 @@ type GalleryItem =
 
 interface GallerySectionProps {
   isFullPage?: boolean;
+  initialCategory?: GalleryCategory;
 }
 
 const getFilterTabs = (): FilterTab[] => {
@@ -48,7 +49,7 @@ const getFilterTabs = (): FilterTab[] => {
   return tabs;
 };
 
-const getGalleryItems = (isFullPage: boolean): GalleryItem[] => {
+const getGalleryItems = (isFullPage: boolean, category?: GalleryCategory): GalleryItem[] => {
   const images: GalleryItem[] = GALLERY_IMAGES.map(img => ({ ...img, type: "image" as const }));
   const videos: GalleryItem[] = GALLERY_VIDEOS.map(vid => ({ ...vid, type: "video" as const }));
   
@@ -61,9 +62,14 @@ const getGalleryItems = (isFullPage: boolean): GalleryItem[] => {
     if (i < videos.length) allItems.push(videos[i]);
   }
   
-  // If not full page, limit the items
-  if (!isFullPage) {
-    return allItems.slice(0, 8);
+  // If category is specified, filter items
+  if (category) {
+    const filteredItems = allItems.filter(item => item.category === category);
+    // For homepage, limit to 4 items per category
+    if (!isFullPage) {
+      return filteredItems.slice(0, 4);
+    }
+    return filteredItems;
   }
   
   return allItems;
@@ -71,19 +77,21 @@ const getGalleryItems = (isFullPage: boolean): GalleryItem[] => {
 
 const GallerySection: React.FC<GallerySectionProps> = ({
   isFullPage = false,
+  initialCategory,
 }) => {
   const t = useTranslations('Gallery');
-  const [activeFilter, setActiveFilter] = useState<FilterType>("photos");
+  const [activeFilter, setActiveFilter] = useState<FilterType>(initialCategory || "photos");
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
   const router = useRouter();
 
   const filterTabs = getFilterTabs();
-  const galleryItems = getGalleryItems(isFullPage);
-
-  const filteredItems = galleryItems.filter((item) => item.category === activeFilter);
+  const filteredItems = getGalleryItems(isFullPage, activeFilter);
+  
+  // Get total items available for the current category
+  const totalItemsInCategory = getGalleryItems(true, activeFilter).length;
 
   const handleSeeMore = () => {
-    router.push("/gallery");
+    router.push(`/gallery?category=${activeFilter}`);
   };
 
   return (
@@ -129,17 +137,12 @@ const GallerySection: React.FC<GallerySectionProps> = ({
           {filterTabs.find(tab => tab.id === activeFilter)?.label}
         </h2>
         <p className="text-sm md:text-base text-white/60 mt-2">
-          {/* @ts-expect-error Dynamic key access for descriptions */}
-          {t(`descriptions.${activeFilter}`)}
+          {t(`descriptions.${activeFilter}` as `descriptions.${typeof activeFilter}`)}
         </p>
       </motion.div>
 
       {/* Masonry Gallery */}
-        <motion.div
-          key={activeFilter}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
+        <div
           className={twMerge(
             "w-full px-4",
             isFullPage ? "max-w-7xl" : "max-w-6xl"
@@ -149,10 +152,10 @@ const GallerySection: React.FC<GallerySectionProps> = ({
             items={filteredItems}
             onItemClick={(item) => setSelectedItem(item as GalleryItem)}
           />
-        </motion.div>
+        </div>
 
-      {/* See More Button - only on homepage */}
-      {!isFullPage && (
+      {/* See More Button - only on homepage and when there are more items available */}
+      {!isFullPage && totalItemsInCategory > 4 && (
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

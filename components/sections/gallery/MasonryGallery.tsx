@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 
 interface MasonryItem {
@@ -60,15 +59,9 @@ const MasonryGallery: React.FC<MasonryGalleryProps> = ({ items, onItemClick }) =
     >
       {columnItems.map((column, colIndex) => (
         <div key={colIndex} className="flex-1 flex flex-col gap-4">
-          {column.map((item, itemIndex) => (
-            <motion.div
+          {column.map((item) => (
+            <div
               key={item.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ 
-                duration: 0.4, 
-                delay: (colIndex * 0.1) + (itemIndex * 0.05) 
-              }}
               className={twMerge(
                 "relative group cursor-pointer rounded-xl overflow-hidden",
                 "shadow-lg backdrop-blur-sm bg-white/5 border border-white/10",
@@ -109,7 +102,7 @@ const MasonryGallery: React.FC<MasonryGalleryProps> = ({ items, onItemClick }) =
                   />
                 </div>
               )}
-            </motion.div>
+            </div>
           ))}
         </div>
       ))}

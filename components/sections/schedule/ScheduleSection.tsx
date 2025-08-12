@@ -31,11 +31,11 @@ const ScheduleSection = () => {
           <motion.div
             key={dayKey}
             initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{
               duration: 0.7,
               ease: "easeOut",
+              delay: 0.1,
             }}
           >
             <Card
@@ -118,9 +118,8 @@ const ScheduleSection = () => {
       {/* More classes coming soon message */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
         className="text-center mt-8"
       >
         <p className="text-lg md:text-xl text-white/70 font-medium italic">

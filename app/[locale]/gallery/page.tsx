@@ -3,8 +3,20 @@
 import GallerySection from "@/components/sections/gallery/GallerySection";
 import BackgroundEffects from "@/components/BackgroundEffects";
 import { motion } from "framer-motion";
+import { useSearchParams } from "next/navigation";
+import { GalleryCategory } from "@/data/gallery";
+import { Suspense } from "react";
 
-export default function GalleryPage() {
+function GalleryContent() {
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get('category');
+  
+  // Validate category parameter
+  const validCategories: GalleryCategory[] = ["photos", "shows", "social", "workshop"];
+  const initialCategory = validCategories.includes(categoryParam as GalleryCategory) 
+    ? (categoryParam as GalleryCategory) 
+    : undefined;
+  
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden">
       <BackgroundEffects />
@@ -30,8 +42,23 @@ export default function GalleryPage() {
         </div>
 
         {/* Gallery Section Component */}
-        <GallerySection isFullPage />
+        <GallerySection isFullPage initialCategory={initialCategory} />
       </div>
     </div>
+  );
+}
+
+export default function GalleryPage() {
+  return (
+    <Suspense fallback={
+      <div className="relative min-h-screen w-full overflow-x-hidden">
+        <BackgroundEffects />
+        <div className="flex items-center justify-center h-screen">
+          <span className="loading loading-spinner loading-lg text-primary"></span>
+        </div>
+      </div>
+    }>
+      <GalleryContent />
+    </Suspense>
   );
 }
