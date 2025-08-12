@@ -10,21 +10,25 @@ const languages: Record<typeof SUPPORTED_LOCALES[number], {
   name: string;
   flag: string;
   nativeName: string;
+  shortCode: string;
 }> = {
   en: {
     name: "English",
     flag: "🇺🇸",
-    nativeName: "English"
+    nativeName: "English",
+    shortCode: "EN"
   },
   el: {
     name: "Ελληνικά",
     flag: "🇬🇷",
-    nativeName: "Greek"
+    nativeName: "Greek",
+    shortCode: "EL"
   },
   es: {
     name: "Español",
     flag: "🇪🇸",
-    nativeName: "Spanish"
+    nativeName: "Spanish",
+    shortCode: "ES"
   },
 };
 
@@ -78,8 +82,8 @@ export default function LanguageSwitcher({ isMobile = false }: LanguageSwitcherP
               >
                 <span className="text-2xl">{languages[lang].flag}</span>
                 <div className="flex-1 text-left">
-                  <p className="font-semibold">{languages[lang].name}</p>
-                  <p className="text-xs opacity-70">{languages[lang].nativeName}</p>
+                  <p className="font-semibold">{languages[lang].shortCode}</p>
+                  <p className="text-xs opacity-70">{languages[lang].name}</p>
                 </div>
                 {isActive && (
                   <MdCheck className="h-5 w-5 text-primary animate-bounce-in" />

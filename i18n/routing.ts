@@ -14,7 +14,7 @@ export const routing = defineRouting({
   localeDetection: true,
   
   // Locale prefix configuration
-  localePrefix: "as-needed",
+  localePrefix: "always",
   
   // Disable alternate links in the HTML head
   alternateLinks: false
