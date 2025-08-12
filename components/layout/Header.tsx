@@ -6,6 +6,7 @@ import SocialsSection from "@/components/sections/socials/SocialsSection";
 import { MdMenu, MdClose } from "react-icons/md";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useTranslations, useLocale } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 const Header = () => {
   const t = useTranslations('Common');
@@ -36,13 +37,13 @@ const Header = () => {
               <ul className="flex items-center gap-8">
                 {headerLinks.map((linkConfig) => (
                   <li key={linkConfig.path}>
-                    <a
+                    <Link
                       href={linkConfig.path}
                       className="font-bold text-lg text-white hover:text-primary relative group transition-colors duration-200 cursor-pointer"
                     >
                       {linkConfig.text[locale as 'en' | 'el' | 'es'] || linkConfig.text.en}
                       <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -84,14 +85,14 @@ const Header = () => {
           <div className="flex flex-col items-center pt-12 px-6 space-y-8 flex-grow">
             <nav className="flex flex-col items-center space-y-6">
               {headerLinks.map((link) => (
-                <a
+                <Link
                   key={link.path}
                   href={link.path}
                   onClick={handleClose}
                   className="text-2xl font-bold text-primary hover:text-accent transition-colors duration-300"
                 >
                   {link.text[locale as 'en' | 'el' | 'es'] || link.text.en}
-                </a>
+                </Link>
               ))}
             </nav>
 

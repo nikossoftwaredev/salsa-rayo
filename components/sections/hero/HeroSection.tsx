@@ -7,7 +7,6 @@ import { useTranslations } from "next-intl";
 
 const HeroSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const t = useTranslations("HomePage");
   const tHero = useTranslations("Hero");
 
   useEffect(() => {
@@ -65,14 +64,8 @@ const HeroSection = () => {
               </h1>
             </div>
 
-            {/* Subtitle */}
-            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-light text-white tracking-wide">
-              {t("title")}
-            </p>
-
-            {/* Description */}
-            <div className="text-sm sm:text-base md:text-lg lg:text-xl space-y-2 md:space-y-3 max-w-2xl">
-              <p className="opacity-90 leading-relaxed">{t("description")}</p>
+            {/* Main CTA Text */}
+            <div className="text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl">
               <p className="font-semibold text-base sm:text-lg md:text-xl mt-2 md:mt-4">
                 {tHero("joinCommunity")}
               </p>

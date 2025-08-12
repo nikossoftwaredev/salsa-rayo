@@ -1,14 +1,11 @@
-/* eslint-disable @next/next/no-sync-scripts */
 import type { Metadata } from "next";
 import "../globals.css";
-// import Header from "@/components/layout/Header";
-// import Footer from "@/components/Footer";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { SUPPORTED_LOCALES } from "@/i18n/routing";
 import { Inter } from "next/font/google";
-import Lightning from "@/components/react-bits/Backgrounds/Lightning/Lightning";
-import Logo from "@/components/Logo";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/Footer";
 
 const inter = Inter({
   subsets: ["latin", "greek", "latin-ext"],
@@ -39,15 +36,17 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({
+  children,
   params,
 }: Readonly<{
   params: Promise<{ locale: string }>;
+  children: React.ReactNode;
 }>) {
   const messages = await getMessages();
   const locale = (await params).locale;
 
   return (
-    <html lang={locale} data-theme="myTheme" className={inter.variable}>
+    <html lang={locale} data-theme="myTheme" className={`${inter.variable} scroll-smooth`}>
       <body
         className={`${inter.className} text-base-content text-lg w-full min-h-screen flex flex-col`}
       >
@@ -55,37 +54,11 @@ export default async function RootLayout({
           locale={locale as (typeof SUPPORTED_LOCALES)[number]}
           messages={messages}
         >
-          {/* Temporary Coming Soon Page */}
-          <div className="fixed inset-0 w-full h-full bg-black overflow-hidden">
-            <div className="absolute inset-0 w-full h-full">
-              <Lightning hue={280} speed={0.5} intensity={0.8} />
-            </div>
-            <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
-              <div className="relative">
-                <div className="hidden md:block">
-                  <Logo size="xxxl" />
-                </div>
-                <div className="block md:hidden">
-                  <Logo size="xxl" />
-                </div>
-                <h2 className="absolute bottom-4 md:bottom-6 right-0 text-xs md:text-base font-semibold text-white tracking-widest">
-                  Dance School
-                </h2>
-              </div>
-            </div>
-            <div className="absolute bottom-12 left-0 right-0 flex justify-center z-10">
-              <div className="flex items-end gap-2">
-                <h1 className="text-2xl md:text-5xl font-bold tracking-wider bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 bg-[length:200%_auto] bg-clip-text text-transparent animate-gradient-x">
-                  COMING SOON
-                </h1>
-                <div className="flex gap-1 mb-1 md:mb-2">
-                  <span className="w-1.5 md:w-2 h-1.5 md:h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-                  <span className="w-1.5 md:w-2 h-1.5 md:h-2 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-                  <span className="w-1.5 md:w-2 h-1.5 md:h-2 bg-gradient-to-r from-orange-500 to-purple-500 rounded-full animate-bounce"></span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Header />
+          <main className="flex-1 overflow-y-auto">
+            {children}
+            <Footer />
+          </main>
         </NextIntlClientProvider>
       </body>
     </html>

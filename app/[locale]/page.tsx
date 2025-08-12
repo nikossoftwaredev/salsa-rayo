@@ -15,11 +15,11 @@ export default function Home() {
       <div className="relative">
         <HeroSection />
         <div className="w-full flex flex-col items-center">
-          <div className="w-full py-24 px-4 md:px-8 relative">
-            <ScheduleSection />
-          </div>
           <div className="w-full py-24 px-4 md:px-8 bg-gradient-to-b from-transparent via-base-200/20 to-transparent relative">
             <AboutSection />
+          </div>
+          <div className="w-full py-24 px-4 md:px-8 relative">
+            <ScheduleSection />
           </div>
           <div className="w-full py-24 px-4 md:px-8 relative">
             <GallerySection />

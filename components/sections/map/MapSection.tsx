@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
 const MapSection = () => {
   const t = useTranslations('Map');
   return (
-    <section id="map" className="flex items-center justify-center flex-col">
+    <section id="map" className="flex items-center justify-center flex-col scroll-mt-20">
       <SectionTitle title={t('title')} isMainSection />
 
       <motion.div

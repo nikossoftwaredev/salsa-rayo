@@ -7,13 +7,15 @@
     "dance": "Dance",
     "and": " & ",
     "connect": "Connect",
-    "joinCommunity": "Join our passionate salsa community today!",
+    "joinCommunity": "Join our school!",
     "imageAlt": "Salsa dancers in vibrant costumes",
     "danceSchool": "Dance School"
   },
   "About": {
     "title": "ABOUT US",
     "moreInfo": "MORE INFO",
+    "schoolName": "Salsa Rayo",
+    "schoolDescription": "Salsa Rayo dance school was born from a shared dream. Konstantinos and Anna met in 2018, as teenagers with a passion for dance and the desire to create something of their own.\n\nStarting as a dance couple, they traveled to many festivals around the world, from Europe to New York. They also participated in Salsa competitions, where they won awards and distinctions, both in duets and group performances. With a strong stage presence and unique chemistry, Konstantinos and Anna evolved into a dynamic duo that authentically conveys their love for dance, both to students and audiences.\n\nIn 2025, the dream becomes reality. Salsa Rayo opens its doors in Agios Dimitrios, as a space where teaching meets passion and technique combines with inspiration.\n\nThe name Rayo, which means lightning in Spanish, was not chosen by chance. It represents strength, speed, and energy - elements that characterize both their style and the school's philosophy. Their goal is to share their knowledge and experience, inspire new dancers, and transmit the culture of Salsa and Bachata in a space full of creativity and respect for the art of dance.",
     "annaName": "Anna Lontou",
     "annaTitle": "Lead Dance Instructor",
     "annaDescription": "Anna Lontou is a passionate and experienced salsa dance instructor dedicated to sharing the joy of Latin dance with students of all levels.",
@@ -27,6 +29,7 @@
     "title": "Class Schedule",
     "comingSoon": "Coming Soon",
     "comingSoonDescription": "Our exciting class schedule will be available shortly!",
+    "moreClassesComing": "Don't worry, more classes will be announced soon!",
     "today": "TODAY",
     "days": {
       "monday": "Monday",
@@ -54,7 +57,15 @@
     "phone": "Phone",
     "message": "Type your message...",
     "send": "Send",
-    "loading": "LOADING"
+    "sending": "Sending...",
+    "loading": "LOADING",
+    "validation": {
+      "firstNameRequired": "First name is required",
+      "lastNameRequired": "Last name is required",
+      "invalidEmail": "Please enter a valid email address",
+      "invalidPhone": "Please enter a valid phone number",
+      "pleaseCorrectErrors": "Please correct the errors in the form"
+    }
   },
   "Gallery": {
     "title": "Gallery",
@@ -69,8 +80,8 @@
     "descriptions": {
       "photos": "Dance photos and memories",
       "shows": "Live dance performances and showcases",
-      "socialDancing": "Social dance nights and parties",
-      "workshops": "Special workshops and masterclasses"
+      "social": "Social dance nights and parties",
+      "workshop": "Special workshops and masterclasses"
     }
   },
   "Map": {
@@ -84,12 +95,11 @@
   },
   "Footer": {
     "schedule": "Schedule",
-    "days": "Monday - Thursday",
-    "workDays": "Monday - Thursday",
+    "workDays": "Monday - Friday",
     "hours": "17:00 - 23:00",
     "workHours": "17:00 - 23:00",
     "contactInfo": "Contact Info",
-    "description": "Your gateway to the magical world of social dancing! Join our passionate community and discover the joy of salsa.",
+    "description": "Your gateway to the magical world of social dancing! Join our passionate community and discover the joy of salsa and bachata.",
     "copyright": "© Copyright {year} Salsa Rayo Dance School",
     "madeWith": "Made with",
     "by": "by",
@@ -106,5 +116,23 @@
     "schedule": "Schedule",
     "about": "About",
     "gallery": "Gallery"
+  },
+  "Pricing": {
+    "pageTitle": "Our Packages",
+    "pageSubtitle": "Choose the perfect plan for your dance journey",
+    "needHelp": "Need Help Choosing?",
+    "contactUs": "Contact us for personalized guidance on selecting the right package for your dance goals.",
+    "getInTouch": "Get in Touch",
+    "morePackagesComing": "More packages and offers will be announced very soon!"
+  },
+  "Package": {
+    "validUntilBadge": "Valid until August 31st",
+    "summerOffer": "Summer Offer",
+    "forEveryone": "For Everyone",
+    "perMonth": "/month",
+    "totalClasses": "16 hours for one month",
+    "classesPerWeek": "4 classes per week",
+    "redeemableUntil": "*Redeemable until October 31st",
+    "claimOffer": "Claim Offer"
   }
 }

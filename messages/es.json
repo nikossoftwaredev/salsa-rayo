@@ -7,13 +7,15 @@
     "dance": "Baila",
     "and": " y ",
     "connect": "Conecta",
-    "joinCommunity": "¡Únete a nuestra apasionada comunidad de salsa hoy!",
+    "joinCommunity": "¡Únete a nuestra escuela!",
     "imageAlt": "Bailarines de salsa con trajes vibrantes",
     "danceSchool": "Escuela de Baile"
   },
   "About": {
     "title": "ACERCA DE NOSOTROS",
     "moreInfo": "MÁS INFORMACIÓN",
+    "schoolName": "Salsa Rayo",
+    "schoolDescription": "La escuela de baile Salsa Rayo nació de un sueño compartido. Konstantinos y Anna se conocieron en 2018, siendo adolescentes con pasión por el baile y el deseo de crear algo propio.\n\nComenzando como pareja de baile, viajaron a muchos festivales alrededor del mundo, desde Europa hasta Nueva York. También participaron en competencias de Salsa, donde obtuvieron premios y distinciones, tanto en duetos como en presentaciones grupales. Con una fuerte presencia escénica y química única, Konstantinos y Anna evolucionaron en un dúo dinámico que transmite auténticamente su amor por el baile, tanto a estudiantes como al público.\n\nEn 2025, el sueño se hace realidad. Salsa Rayo abre sus puertas en Agios Dimitrios, como un espacio donde la enseñanza se encuentra con la pasión y la técnica se combina con la inspiración.\n\nEl nombre Rayo no fue elegido al azar. Representa fuerza, velocidad y energía, elementos que caracterizan tanto su estilo como la filosofía de la escuela. Su objetivo es compartir su conocimiento y experiencia, inspirar a nuevos bailarines y transmitir la cultura de la Salsa y la Bachata en un espacio lleno de creatividad y respeto por el arte del baile.",
     "annaName": "Anna Lontou",
     "annaTitle": "Instructora Principal de Baile",
     "annaDescription": "Anna Lontou es una instructora de salsa apasionada y experimentada dedicada a compartir la alegría del baile latino con estudiantes de todos los niveles.",
@@ -27,6 +29,7 @@
     "title": "Horario de Clases",
     "comingSoon": "Próximamente",
     "comingSoonDescription": "¡Nuestro emocionante horario de clases estará disponible pronto!",
+    "moreClassesComing": "No te preocupes, ¡más clases serán anunciadas pronto!",
     "today": "HOY",
     "days": {
       "monday": "Lunes",
@@ -54,7 +57,15 @@
     "phone": "Teléfono",
     "message": "Escribe tu mensaje...",
     "send": "Enviar",
-    "loading": "CARGANDO"
+    "sending": "Enviando...",
+    "loading": "CARGANDO",
+    "validation": {
+      "firstNameRequired": "El nombre es obligatorio",
+      "lastNameRequired": "El apellido es obligatorio",
+      "invalidEmail": "Por favor ingrese un correo electrónico válido",
+      "invalidPhone": "Por favor ingrese un número de teléfono válido",
+      "pleaseCorrectErrors": "Por favor corrija los errores en el formulario"
+    }
   },
   "Gallery": {
     "title": "Galería",
@@ -69,8 +80,8 @@
     "descriptions": {
       "photos": "Fotos de baile y recuerdos",
       "shows": "Presentaciones y espectáculos de baile en vivo",
-      "socialDancing": "Noches de baile social y fiestas",
-      "workshops": "Talleres especiales y clases magistrales"
+      "social": "Noches de baile social y fiestas",
+      "workshop": "Talleres especiales y clases magistrales"
     }
   },
   "Map": {
@@ -84,12 +95,11 @@
   },
   "Footer": {
     "schedule": "Horario",
-    "days": "Lunes - Jueves",
-    "workDays": "Lunes - Jueves",
+    "workDays": "Lunes - Viernes",
     "hours": "17:00 - 23:00",
     "workHours": "17:00 - 23:00",
     "contactInfo": "Información de Contacto",
-    "description": "¡Tu puerta de entrada al mágico mundo del baile social! Únete a nuestra apasionada comunidad y descubre la alegría de la salsa.",
+    "description": "¡Tu puerta de entrada al mágico mundo del baile social! Únete a nuestra apasionada comunidad y descubre la alegría de la salsa y la bachata.",
     "copyright": "© Copyright {year} Salsa Rayo Dance School",
     "madeWith": "Hecho con",
     "by": "por",
@@ -106,5 +116,23 @@
     "schedule": "Horario",
     "about": "Acerca de",
     "gallery": "Galería"
+  },
+  "Pricing": {
+    "pageTitle": "Nuestros Paquetes",
+    "pageSubtitle": "Elige el plan perfecto para tu viaje de baile",
+    "needHelp": "¿Necesitas Ayuda?",
+    "contactUs": "Contáctanos para obtener orientación personalizada sobre la selección del paquete adecuado.",
+    "getInTouch": "Contáctanos",
+    "morePackagesComing": "Más paquetes y ofertas serán anunciados muy pronto!"
+  },
+  "Package": {
+    "validUntilBadge": "Válida hasta el 31 de agosto",
+    "summerOffer": "Oferta de Verano",
+    "forEveryone": "Para Todos",
+    "perMonth": "/mes",
+    "totalClasses": "16 horas por un mes",
+    "classesPerWeek": "4 clases por semana",
+    "redeemableUntil": "*Canjeable hasta el 31 de octubre",
+    "claimOffer": "Reclamar Oferta"
   }
 }

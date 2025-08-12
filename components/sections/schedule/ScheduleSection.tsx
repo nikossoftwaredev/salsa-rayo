@@ -14,42 +14,10 @@ import { CircleIcon } from "@/components/CircleIcon";
 const ScheduleSection = () => {
   const t = useTranslations('Schedule');
   const currentDayIndex = new Date().getDay();
-
-  // Temporary early return with coming soon message
   return (
     <section
       id="schedule"
-      className="flex items-center justify-center flex-col space-y-12 relative"
-    >
-      <SectionTitle title={t('title')} isMainSection />
-      
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="text-center py-20"
-      >
-        <h2 className="text-3xl md:text-4xl font-bold text-white/90 mb-4">
-          {t('comingSoon')}
-        </h2>
-        <p className="text-xl text-white/70 font-medium">
-          {t('comingSoonDescription')}
-        </p>
-        <div className="mt-8 flex justify-center gap-2">
-          <span className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></span>
-          <span className="w-2 h-2 bg-accent rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></span>
-          <span className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></span>
-        </div>
-      </motion.div>
-    </section>
-  );
-
-  // Original code below (temporarily disabled)
-  return (
-    <section
-      id="schedule"
-      className="flex items-center justify-center flex-col space-y-12 relative"
+      className="flex items-center justify-center flex-col space-y-12 relative scroll-mt-20"
     >
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
@@ -59,9 +27,9 @@ const ScheduleSection = () => {
       <SectionTitle title={t('title')} isMainSection />
 
       <div className="w-full grid xl:grid-cols-2 gap-8 max-w-96 md:max-w-5xl">
-        {SCHEDULE.map(({ day, schedule, dayIndex }) => (
+        {SCHEDULE.map(({ dayKey, schedule, dayIndex }) => (
           <motion.div
-            key={day}
+            key={dayKey}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -81,7 +49,8 @@ const ScheduleSection = () => {
             >
               <div className="relative mb-8">
                 <h3 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                  {day}
+                  {/* @ts-expect-error Dynamic key access for days */}
+                  {t(`days.${dayKey}`)}
                 </h3>
                 {currentDayIndex === dayIndex && (
                   <div className="absolute -top-3 -right-3 flex items-center gap-2 bg-primary text-white px-3 py-1 rounded-full shadow-lg animate-pulse-scale">
@@ -117,7 +86,7 @@ const ScheduleSection = () => {
                         color="#18A07B"
                         size={48}
                       />
-                      <h4 className="text-xl font-extrabold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent group-hover/class:scale-105 transition-transform duration-300">
+                      <h4 className="text-lg md:text-xl font-extrabold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent group-hover/class:scale-105 transition-transform duration-300 whitespace-nowrap">
                         {title}
                       </h4>
                     </div>
@@ -128,7 +97,7 @@ const ScheduleSection = () => {
                         color="#7737b8"
                         size={48}
                       />
-                      <h3 className="text-xl font-bold text-white/90 tracking-wide">{time}</h3>
+                      <h3 className="text-lg md:text-xl font-bold text-white/90 tracking-wide whitespace-nowrap">{time}</h3>
                     </div>
 
                     <div className="flex flex-wrap gap-3 items-center justify-center mt-2">
@@ -145,6 +114,19 @@ const ScheduleSection = () => {
           </motion.div>
         ))}
       </div>
+      
+      {/* More classes coming soon message */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+        className="text-center mt-8"
+      >
+        <p className="text-lg md:text-xl text-white/70 font-medium italic">
+          {t('moreClassesComing')}
+        </p>
+      </motion.div>
     </section>
   );
 };

@@ -4,9 +4,6 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { SectionTitle } from "@/components/SectionTitle";
 import { motion } from "framer-motion";
-import {
-  FaHeart,
-} from "react-icons/fa";
 import { 
   GALLERY_IMAGES, 
   GALLERY_VIDEOS, 
@@ -21,7 +18,7 @@ import Button from "@/components/Button";
 import { useRouter } from "next/navigation";
 import MasonryGallery from "./MasonryGallery";
 
-type FilterType = "all" | GalleryCategory;
+type FilterType = GalleryCategory;
 
 interface FilterTab {
   id: FilterType;
@@ -38,7 +35,7 @@ interface GallerySectionProps {
   isFullPage?: boolean;
 }
 
-const getFilterTabs = (includeAll: boolean, t: ReturnType<typeof useTranslations>): FilterTab[] => {
+const getFilterTabs = (): FilterTab[] => {
   const tabs: FilterTab[] = Object.entries(GALLERY_CATEGORIES).map(
     ([category, { label, icon, color }]) => ({
       id: category as GalleryCategory,
@@ -47,18 +44,6 @@ const getFilterTabs = (includeAll: boolean, t: ReturnType<typeof useTranslations
       color,
     })
   );
-
-  if (includeAll) {
-    return [
-      {
-        id: "all" as FilterType,
-        label: t('all'),
-        icon: <FaHeart size={18} />,
-        color: "text-pink-500",
-      },
-      ...tabs,
-    ];
-  }
 
   return tabs;
 };
@@ -88,19 +73,14 @@ const GallerySection: React.FC<GallerySectionProps> = ({
   isFullPage = false,
 }) => {
   const t = useTranslations('Gallery');
-  const [activeFilter, setActiveFilter] = useState<FilterType>(
-    isFullPage ? "all" : "photos"
-  );
+  const [activeFilter, setActiveFilter] = useState<FilterType>("photos");
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
   const router = useRouter();
 
-  const filterTabs = getFilterTabs(isFullPage, t);
+  const filterTabs = getFilterTabs();
   const galleryItems = getGalleryItems(isFullPage);
 
-  const filteredItems =
-    activeFilter === "all"
-      ? galleryItems
-      : galleryItems.filter((item) => item.category === activeFilter);
+  const filteredItems = galleryItems.filter((item) => item.category === activeFilter);
 
   const handleSeeMore = () => {
     router.push("/gallery");
@@ -109,7 +89,7 @@ const GallerySection: React.FC<GallerySectionProps> = ({
   return (
     <section
       id="gallery"
-      className="flex items-center justify-center flex-col space-y-8 relative"
+      className="flex items-center justify-center flex-col space-y-8 relative scroll-mt-20"
     >
       {!isFullPage && <SectionTitle title={t('title')} isMainSection />}
 
@@ -120,7 +100,7 @@ const GallerySection: React.FC<GallerySectionProps> = ({
             key={tab.id}
             onClick={() => setActiveFilter(tab.id)}
             className={twMerge(
-              "flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-300",
+              "flex items-center gap-2 px-3 sm:px-6 py-2 sm:py-3 rounded-full font-semibold transition-all duration-300",
               "backdrop-blur-md border border-white/20",
               activeFilter === tab.id
                 ? "bg-gradient-to-r from-primary to-accent text-white shadow-lg"
@@ -132,10 +112,27 @@ const GallerySection: React.FC<GallerySectionProps> = ({
             >
               {tab.icon}
             </span>
-            <span>{tab.label}</span>
+            <span className="hidden sm:inline">{tab.label}</span>
           </button>
         ))}
       </div>
+
+      {/* Category Title */}
+      <motion.div
+        key={`title-${activeFilter}`}
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className="text-center mb-6"
+      >
+        <h2 className="text-2xl md:text-3xl font-bold text-white/90">
+          {filterTabs.find(tab => tab.id === activeFilter)?.label}
+        </h2>
+        <p className="text-sm md:text-base text-white/60 mt-2">
+          {/* @ts-expect-error Dynamic key access for descriptions */}
+          {t(`descriptions.${activeFilter}`)}
+        </p>
+      </motion.div>
 
       {/* Masonry Gallery */}
         <motion.div
@@ -175,7 +172,7 @@ const GallerySection: React.FC<GallerySectionProps> = ({
       {/* DaisyUI Modal for enlarged view */}
       <input type="checkbox" id="gallery-modal" className="modal-toggle" checked={!!selectedItem} onChange={() => {}} />
       <div className="modal" onClick={() => setSelectedItem(null)}>
-        <div className="modal-box max-w-5xl w-full max-h-[95vh] p-0 bg-black/95" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-box max-w-5xl w-full max-h-[95vh] p-2 sm:p-0 bg-black/95" onClick={(e) => e.stopPropagation()}>
           {selectedItem && (
             <>
               {/* Close button */}
@@ -198,7 +195,7 @@ const GallerySection: React.FC<GallerySectionProps> = ({
                   />
                 </div>
               ) : (
-                <div className="relative flex items-center justify-center min-h-[50vh] max-h-[90vh]">
+                <div className="relative flex items-center justify-center min-h-[50vh] max-h-[90vh] px-2 sm:px-0">
                   <Image
                     src={selectedItem.src || ''}
                     alt={selectedItem.alt || ''}
@@ -206,11 +203,6 @@ const GallerySection: React.FC<GallerySectionProps> = ({
                     height={1600}
                     className="max-w-full max-h-[90vh] w-auto h-auto object-contain"
                   />
-                  {selectedItem.caption && (
-                    <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
-                      <p className="text-white text-lg font-medium">{selectedItem.caption}</p>
-                    </div>
-                  )}
                 </div>
               )}
             </>

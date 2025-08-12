@@ -16,8 +16,27 @@ import TextField from "@/components/TextField";
 import { IoMdSend } from "react-icons/io";
 import { FaUser, FaPhone, FaEnvelope } from "react-icons/fa6";
 import Lightning from "@/components/react-bits/Backgrounds/Lightning/Lightning";
+import { sendContactFormEmail } from "@/server-actions/send-email";
+import Toast from "@/components/Toast";
+import { z } from "zod";
 
-const initFormData = {
+// Zod validation schema
+const formSchema = z.object({
+  firstname: z.string().min(1, "validation.firstNameRequired"),
+  lastname: z.string().min(1, "validation.lastNameRequired"),
+  email: z.string().email("validation.invalidEmail"),
+  phone: z.string()
+    .min(10, "validation.invalidPhone")
+    .regex(
+      /^[+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{4,12}$/,
+      "validation.invalidPhone"
+    ),
+  message: z.string().optional(),
+});
+
+type FormData = z.infer<typeof formSchema>;
+
+const initFormData: FormData = {
   firstname: "",
   lastname: "",
   phone: "",
@@ -27,7 +46,7 @@ const initFormData = {
 
 interface InputFieldProps {
   id: string;
-  dataField: keyof typeof initFormData;
+  dataField: keyof FormData;
   inputType: HTMLInputTypeAttribute;
   placeholder: string;
   required: boolean;
@@ -79,40 +98,95 @@ const inputFields: InputFieldProps[] = [
 ];
 
 const ContactForm = () => {
-  const t = useTranslations('Contact');
+  const t = useTranslations("Contact");
   const [loading, setLoading] = useState<boolean>(false);
-  const [formData, setFormData] = useState<Record<string, any>>(initFormData);
+  const [formData, setFormData] = useState<FormData>(initFormData);
+  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+  const [toast, setToast] = useState<{
+    isVisible: boolean;
+    message: string;
+    type: "success" | "error";
+  }>({
+    isVisible: false,
+    message: "",
+    type: "success",
+  });
 
   const onChangeFormData = useCallback(
-    (dataField: string) => (e: any) => {
-      setFormData((prev) => ({ ...prev, [dataField]: e.target.value }));
+    (dataField: keyof FormData) => (e: any) => {
+      const value = e.target.value;
+      setFormData((prev) => ({ ...prev, [dataField]: value }));
+      
+      // Clear error for this field when user starts typing
+      if (errors[dataField]) {
+        setErrors((prev) => ({ ...prev, [dataField]: undefined }));
+      }
     },
-    []
+    [errors]
   );
 
   const onSendEmail = useCallback(
     async (e: MouseEvent<HTMLElement>) => {
       e.preventDefault();
+      
+      // Validate form data
+      try {
+        formSchema.parse(formData);
+        setErrors({});
+      } catch (error) {
+        if (error instanceof z.ZodError) {
+          const fieldErrors: Partial<Record<keyof FormData, string>> = {};
+          error.issues.forEach((err: any) => {
+            if (err.path[0]) {
+              // Get the translation key from the error message
+              const errorKey = err.message;
+              fieldErrors[err.path[0] as keyof FormData] = t(errorKey as any);
+            }
+          });
+          setErrors(fieldErrors);
+          
+          // Show error toast
+          setToast({
+            isVisible: true,
+            message: t("validation.pleaseCorrectErrors"),
+            type: "error",
+          });
+          return;
+        }
+      }
+      
       setLoading(true);
 
       try {
-        await fetch("/api/send-mail", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            formData,
-          }),
-        });
-        setFormData(initFormData);
+        const result = await sendContactFormEmail(formData);
+
+        if (result.success) {
+          setToast({
+            isVisible: true,
+            message: result.message,
+            type: "success",
+          });
+          setFormData(initFormData);
+          setErrors({});
+        } else {
+          setToast({
+            isVisible: true,
+            message: result.message,
+            type: "error",
+          });
+        }
       } catch (err) {
-        console.log(err);
+        console.error("Error sending email:", err);
+        setToast({
+          isVisible: true,
+          message: "An unexpected error occurred. Please try again later.",
+          type: "error",
+        });
       }
 
       setLoading(false);
     },
-    [formData]
+    [formData, t]
   );
 
   const disabled = inputFields.some((inputField) => {
@@ -125,9 +199,15 @@ const ContactForm = () => {
   return (
     <main
       id="contact-form"
-      className="flex items-center justify-center flex-col"
+      className="flex items-center justify-center flex-col scroll-mt-20"
     >
-      <SectionTitle title={t('title')} isMainSection />
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.isVisible}
+        onClose={() => setToast({ ...toast, isVisible: false })}
+      />
+      <SectionTitle title={t("title")} isMainSection />
       <Card className="mb-5 w-full max-w-[600px] bg-transparent border border-white/20 shadow-xl hover:bg-black/70 transition-all duration-300 relative overflow-hidden">
         {/* Lightning Effect inside the card */}
         <div className="absolute inset-0 -z-10 opacity-30">
@@ -140,7 +220,7 @@ const ContactForm = () => {
           />
         </div>
         <form className="relative z-10">
-          <div className="grid p-4 gap-2 sm:grid-cols-1 md:grid-cols-2">
+          <div className="grid p-4 gap-6 sm:grid-cols-1 md:grid-cols-2">
             {inputFields.map((inputField) => {
               const {
                 dataField,
@@ -154,7 +234,7 @@ const ContactForm = () => {
               return inputType === "textarea" ? (
                 <TextArea
                   key={dataField}
-                  className={"col-span-2"}
+                  className={`col-span-2 ${errors[dataField] ? "textarea-error" : ""}`}
                   required={false}
                   rows={4}
                   autoComplete={id}
@@ -173,15 +253,20 @@ const ContactForm = () => {
                   </div>
                   <TextField
                     id={id}
-                    className="pl-10"
+                    className={`pl-10 ${errors[dataField] ? "input-error" : ""}`}
                     required={required}
                     type={inputType}
-                    value={formData[dataField as string]}
+                    value={formData[dataField as keyof FormData]}
                     placeholder={t(placeholder as any)}
                     autoComplete={id}
                     onChange={onChangeFormData(dataField)}
                     name={id}
                   />
+                  {errors[dataField] && (
+                    <span className="text-xs text-error absolute -bottom-5 left-3">
+                      {errors[dataField]}
+                    </span>
+                  )}
                 </div>
               );
             })}
@@ -190,10 +275,11 @@ const ContactForm = () => {
               onClick={onSendEmail}
               disabled={disabled}
               loading={loading}
+              loadingText={t("sending")}
               type="submit"
             >
-              <span className="flex items-center gap-2">
-                {t('send')}
+              <span className="flex items-center justify-center gap-2">
+                {t("send")}
                 <IoMdSend size={18} />
               </span>
             </Button>

@@ -3,6 +3,7 @@ import { ButtonHTMLAttributes, ReactNode } from "react";
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   loading?: boolean;
+  loadingText?: string;
   variant?: "primary" | "neutral" | "secondary" | "accent" | "ghost" | "link";
   outlined?: boolean;
 }
@@ -12,6 +13,7 @@ const Button = (props: ButtonProps) => {
     className,
     children,
     loading = false,
+    loadingText,
     variant,
     outlined = true,
     ...buttonPros
@@ -31,10 +33,10 @@ const Button = (props: ButtonProps) => {
       {/* Content */}
       <span className="relative z-10">
         {loading ? (
-          <>
-            <span className="loading loading-infinity"></span>
-            LOADING
-          </>
+          <span className="flex items-center justify-center gap-2">
+            <span className="loading loading-spinner loading-sm"></span>
+            <span>{loadingText || "LOADING"}</span>
+          </span>
         ) : (
           children
         )}

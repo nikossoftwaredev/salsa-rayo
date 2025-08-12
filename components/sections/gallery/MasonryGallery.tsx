@@ -88,14 +88,11 @@ const MasonryGallery: React.FC<MasonryGalleryProps> = ({ items, onItemClick }) =
                       style={{ aspectRatio: '16/9' }}
                       unoptimized
                     />
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/60 group-hover:bg-black/40 transition-colors">
-                      <div className="text-center">
-                        <div className="w-14 h-14 mx-auto mb-2 flex items-center justify-center rounded-full bg-white/20 group-hover:bg-white/30 transition-all backdrop-blur-sm">
-                          <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                          </svg>
-                        </div>
-                        <p className="text-white font-medium text-sm px-3 drop-shadow-lg">{item.title}</p>
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
+                      <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full bg-white/20 group-hover:bg-white/30 transition-all group-hover:scale-110 backdrop-blur-sm">
+                        <svg className="w-8 h-8 md:w-10 md:h-10 text-white ml-1" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                        </svg>
                       </div>
                     </div>
                   </div>
@@ -110,11 +107,6 @@ const MasonryGallery: React.FC<MasonryGalleryProps> = ({ items, onItemClick }) =
                     className="w-full h-auto group-hover:scale-105 transition-transform duration-500"
                     style={{ objectFit: "cover" }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                    <span className="text-white font-semibold text-sm">
-                      {item.caption || item.alt}
-                    </span>
-                  </div>
                 </div>
               )}
             </motion.div>

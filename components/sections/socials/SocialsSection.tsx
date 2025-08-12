@@ -55,7 +55,7 @@ const SocialsSection = ({ isMobile = false }: { isMobile?: boolean }) => {
     <section id="socials">
       {!isMobile && <SectionTitle title={t('title')} isMainSection />}
       <span className="flex flex-row flex-wrap items-center justify-center gap-2">
-        {SOCIALS_INFO.map(({ url, icon, color }) => (
+        {SOCIALS_INFO.filter(({ url }) => url && url.trim() !== "").map(({ url, icon, color }) => (
           <a
             key={url}
             href={url}

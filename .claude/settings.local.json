@@ -8,7 +8,9 @@
       "Bash(npx eslint:*)",
       "Bash(mv:*)",
       "Bash(pnpm tsc:*)",
-      "Bash(pnpm dev:*)"
+      "Bash(pnpm dev:*)",
+      "Bash(git config:*)",
+      "Bash(pnpm add:*)"
     ],
     "deny": []
   }
