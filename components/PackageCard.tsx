@@ -5,7 +5,8 @@ import Card from "@/components/Card";
 import Button from "@/components/Button";
 import { FaBolt } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
+import ContactFormModal from "@/components/ContactFormModal";
 
 interface PackageCardProps {
   originalPrice?: string;
@@ -19,20 +20,13 @@ const PackageCard: React.FC<PackageCardProps> = ({
   onClaim,
 }) => {
   const t = useTranslations("Package");
-  const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleClaim = () => {
     if (onClaim) {
       onClaim();
     } else {
-      // Default: scroll to contact form
-      const contactForm = document.getElementById("contact-form");
-      if (contactForm) {
-        contactForm.scrollIntoView({ behavior: "smooth", block: "center" });
-      } else {
-        // If on pricing page, navigate to home and then scroll
-        router.push("/#contact-form");
-      }
+      setIsModalOpen(true);
     }
   };
 
@@ -115,11 +109,10 @@ const PackageCard: React.FC<PackageCardProps> = ({
           <div className="pt-4">
             <Button
               onClick={handleClaim}
-              className="w-full bg-gradient-to-r from-primary to-accent text-white border-none hover:shadow-xl hover:shadow-primary/50 font-bold text-lg py-3"
+              className="w-full bg-gradient-to-r from-primary to-accent text-white border-none hover:shadow-xl hover:shadow-primary/50 font-bold text-base md:text-lg py-3"
               outlined={false}
             >
               <span className="flex items-center justify-center gap-2">
-                <FaBolt />
                 {t("claimOffer")}
               </span>
             </Button>
@@ -130,6 +123,12 @@ const PackageCard: React.FC<PackageCardProps> = ({
         <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
         <div className="absolute -top-20 -left-20 w-40 h-40 bg-accent/10 rounded-full blur-3xl"></div>
       </Card>
+      
+      <ContactFormModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)}
+        initialMessage="I am interested about the summer offer"
+      />
     </motion.div>
   );
 };

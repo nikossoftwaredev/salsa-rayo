@@ -36,13 +36,13 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-const initFormData: FormData = {
+const initFormData = (initialMessage: string): FormData => ({
   firstname: "",
   lastname: "",
   phone: "",
   email: "",
-  message: "",
-};
+  message: initialMessage,
+});
 
 interface InputFieldProps {
   id: string;
@@ -97,10 +97,17 @@ const inputFields: InputFieldProps[] = [
   },
 ];
 
-const ContactForm = () => {
+interface ContactFormProps {
+  showTextArea?: boolean;
+  initialMessage?: string;
+  hideTitle?: boolean;
+  onSuccess?: () => void;
+}
+
+const ContactForm = ({ showTextArea = true, initialMessage = "", hideTitle = false, onSuccess }: ContactFormProps) => {
   const t = useTranslations("Contact");
   const [loading, setLoading] = useState<boolean>(false);
-  const [formData, setFormData] = useState<FormData>(initFormData);
+  const [formData, setFormData] = useState<FormData>(initFormData(initialMessage));
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   const [toast, setToast] = useState<{
     isVisible: boolean;
@@ -166,8 +173,15 @@ const ContactForm = () => {
             message: result.message,
             type: "success",
           });
-          setFormData(initFormData);
+          setFormData(initFormData(initialMessage));
           setErrors({});
+          
+          // Call onSuccess callback if provided
+          if (onSuccess) {
+            setTimeout(() => {
+              onSuccess();
+            }, 1500); // Wait a bit for user to see success message
+          }
         } else {
           setToast({
             isVisible: true,
@@ -207,7 +221,7 @@ const ContactForm = () => {
         isVisible={toast.isVisible}
         onClose={() => setToast({ ...toast, isVisible: false })}
       />
-      <SectionTitle title={t("title")} isMainSection />
+      {!hideTitle && <SectionTitle title={t("title")} isMainSection />}
       <Card className="mb-5 w-full max-w-[600px] bg-transparent border border-white/20 shadow-xl hover:bg-black/70 transition-all duration-300 relative overflow-hidden">
         {/* Lightning Effect inside the card */}
         <div className="absolute inset-0 -z-10 opacity-30">
@@ -220,8 +234,8 @@ const ContactForm = () => {
           />
         </div>
         <form className="relative z-10">
-          <div className="grid p-4 gap-6 sm:grid-cols-1 md:grid-cols-2">
-            {inputFields.map((inputField) => {
+          <div className="grid p-4 gap-6 grid-cols-1 md:grid-cols-2">
+            {inputFields.filter(field => showTextArea || field.dataField !== "message").map((inputField) => {
               const {
                 dataField,
                 inputType,
@@ -234,7 +248,7 @@ const ContactForm = () => {
               return inputType === "textarea" ? (
                 <TextArea
                   key={dataField}
-                  className={`col-span-2 ${errors[dataField] ? "textarea-error" : ""}`}
+                  className={`col-span-1 md:col-span-2 ${errors[dataField] ? "textarea-error" : ""}`}
                   required={false}
                   rows={4}
                   autoComplete={id}
@@ -246,7 +260,7 @@ const ContactForm = () => {
               ) : (
                 <div
                   key={dataField}
-                  className={colSpan ? "col-span-full relative" : "relative"}
+                  className={colSpan ? "col-span-1 md:col-span-full relative" : "relative"}
                 >
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
                     {inputField.icon}
@@ -271,7 +285,7 @@ const ContactForm = () => {
               );
             })}
             <Button
-              className="mt-5 col-span-2"
+              className="mt-5 col-span-1 md:col-span-2"
               onClick={onSendEmail}
               disabled={disabled}
               loading={loading}
