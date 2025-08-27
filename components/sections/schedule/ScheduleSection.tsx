@@ -2,18 +2,24 @@
 
 import { useTranslations } from "next-intl";
 import { SectionTitle } from "@/components/SectionTitle";
-import Card from "@/components/Card";
-import Chip from "@/components/Chip";
-import { FaRegClock, FaStar, FaCalendarAlt } from "react-icons/fa";
-import { twMerge } from "tailwind-merge";
 import { motion } from "framer-motion";
-import { SCHEDULE } from "@/data/schedule";
-import PartnerIcon from "@/components/icons/PartnerIcon";
-import { CircleIcon } from "@/components/CircleIcon";
+import { SCHEDULE, INSTRUCTORS } from "@/data/schedule";
+import Image from "next/image";
+
+type Instructor = typeof INSTRUCTORS[keyof typeof INSTRUCTORS];
+
+interface ScheduleItem {
+  time: string;
+  title: string;
+  instructors: Instructor[];
+  hint?: string;
+}
+
 
 const ScheduleSection = () => {
-  const t = useTranslations('Schedule');
+  const t = useTranslations("Schedule");
   const currentDayIndex = new Date().getDay();
+
   return (
     <section
       id="schedule"
@@ -21,111 +27,105 @@ const ScheduleSection = () => {
     >
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/4 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/4 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
       </div>
-      <SectionTitle title={t('title')} isMainSection />
 
-      <div className="w-full grid xl:grid-cols-2 gap-8 max-w-96 md:max-w-5xl">
-        {SCHEDULE.map(({ dayKey, schedule, dayIndex }) => (
+      <SectionTitle title={t("title")} isMainSection />
+
+
+      <div className="w-full max-w-4xl space-y-4">
+        {SCHEDULE.map(({ dayKey, schedule, dayIndex }, index) => (
           <motion.div
             key={dayKey}
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{
-              duration: 0.7,
+              duration: 0.5,
               ease: "easeOut",
-              delay: 0.1,
+              delay: index * 0.1,
             }}
+            className="relative"
           >
-            <Card
-              className={twMerge(
-                `group relative overflow-hidden p-8 bg-gradient-to-br backdrop-blur-md bg-white/10 border-2 transition-all duration-500`,
-                currentDayIndex === dayIndex
-                  ? "from-primary/20 to-accent/10 border-primary shadow-2xl shadow-primary/30 scale-[1.02] bg-white/15"
-                  : "from-base-200/30 to-base-300/30 border-white/20 hover:border-primary/50 hover:shadow-2xl hover:scale-[1.01] bg-white/5",
-                `hover:from-primary/15 hover:to-accent/15 hover:bg-white/10`
-              )}
-            >
-              <div className="relative mb-8">
-                <h3 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            {/* Day Container */}
+            <div className="relative flex flex-col md:flex-row items-stretch bg-gradient-to-br from-primary/10 to-accent/10 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/10 hover:border-primary/30 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/20 hover:bg-gradient-to-br hover:from-primary/15 hover:to-accent/15">
+              {/* Subtle pattern overlay */}
+              <div className="absolute inset-0 opacity-5" style={{
+                backgroundImage: 'radial-gradient(circle at 1px 1px, rgb(24, 160, 123) 1px, transparent 1px)',
+                backgroundSize: '20px 20px'
+              }}></div>
+              {/* Day Badge */}
+              <div className="relative md:w-48 p-6 md:p-8 flex items-center justify-center bg-white/10 backdrop-blur-md border-r border-white/10">
+                {/* Glass shine effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-50"></div>
+                {/* Hover shine effect */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+                <h3 className="relative text-2xl md:text-3xl font-black text-white uppercase tracking-wider drop-shadow-lg">
                   {/* @ts-expect-error Dynamic key access for days */}
-                  {t(`days.${dayKey}`)}
+                  {t(`days.${dayKey}`).slice(0, 3)}
                 </h3>
-                {currentDayIndex === dayIndex && (
-                  <div className="absolute -top-3 -right-3 flex items-center gap-2 bg-primary text-white px-3 py-1 rounded-full shadow-lg animate-pulse-scale">
-                    <FaCalendarAlt size={14} />
-                    <span className="text-xs font-bold tracking-wider">
-                      {t('today')}
-                    </span>
-                  </div>
-                )}
               </div>
 
-              <div className="grid grid-cols-1 gap-6">
-                {schedule.map(({ time, title, instructors }) => (
-                  <div
-                    key={time}
-                    className="relative flex flex-col gap-4 items-center justify-start p-6 rounded-2xl bg-gradient-to-r from-base-100/80 to-base-200/80 backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-300 group/class border border-white/10 hover:border-primary/30 hover:transform hover:-translate-y-1"
-                  >
-                    {(title.toLowerCase().includes("advanced") ||
-                      title.toLowerCase().includes("intensive")) && (
-                      <div className="absolute top-3 right-3 animate-pulse">
-                        <div className="relative">
-                          <FaStar className="text-accent" size={18} />
-                          <div className="absolute inset-0 blur-sm">
-                            <FaStar className="text-accent" size={18} />
-                          </div>
-                        </div>
+              {/* Classes Container */}
+              <div className="relative flex-1 p-4 md:p-6">
+                <div className="space-y-3">
+                  {schedule.map(({ time, title, hint, instructors }: ScheduleItem) => (
+                    <div
+                      key={`${dayKey}-${time}`}
+                      className="flex items-center justify-between gap-4 group"
+                    >
+                      {/* Time */}
+                      <div className="w-24 md:w-28 text-xs md:text-sm font-bold text-white/70 group-hover:text-primary transition-colors duration-300 whitespace-nowrap">
+                        {time}
                       </div>
-                    )}
 
-                    <div className="flex items-center gap-3 mb-2 w-full">
-                      <CircleIcon
-                        icon={<PartnerIcon size={24} />}
-                        color="#18A07B"
-                        size={48}
-                      />
-                      <h4 className="text-lg md:text-xl font-extrabold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent group-hover/class:scale-105 transition-transform duration-300 whitespace-nowrap">
-                        {title}
-                      </h4>
-                    </div>
-
-                    <div className="font-sans flex items-center gap-3 w-full">
-                      <CircleIcon
-                        icon={<FaRegClock size={20} />}
-                        color="#7737b8"
-                        size={48}
-                      />
-                      <h3 className="text-lg md:text-xl font-bold text-white/90 tracking-wide whitespace-nowrap">{time}</h3>
-                    </div>
-
-                    <div className="flex flex-wrap gap-3 items-center justify-center mt-2">
-                      {instructors.map(({ image, name }) => (
-                        <div key={name} className="transition-all duration-300 hover:scale-105">
-                          <Chip image={image} label={name} />
+                      {/* Title with hint */}
+                      <div className="flex-1">
+                        <div className="text-sm md:text-base font-semibold text-white group-hover:text-primary transition-colors duration-300">
+                          {title}
                         </div>
-                      ))}
+                        {hint && (
+                          <div className="text-xs md:text-sm font-normal text-gray-400">
+                            ({hint})
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Instructors */}
+                      {instructors && instructors.length > 0 && (
+                        <div className="flex -space-x-2">
+                          {instructors.map((instructor) => (
+                            <div
+                              key={instructor.name}
+                              className="relative w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden border-2 border-white/20 group-hover:border-primary/50 transition-all duration-300"
+                            >
+                              <Image
+                                src={instructor.image}
+                                alt={instructor.name}
+                                fill
+                                className="object-cover object-top scale-125 -translate-y-1"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </Card>
+            </div>
+
+            {/* Current Day Indicator */}
+            {currentDayIndex === dayIndex && (
+              <div className="absolute -top-2 -right-2 bg-primary text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                {t("today")}
+              </div>
+            )}
           </motion.div>
         ))}
       </div>
-      
-      {/* More classes coming soon message */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
-        className="text-center mt-8"
-      >
-        <p className="text-lg md:text-xl text-white/70 font-medium italic">
-          {t('moreClassesComing')}
-        </p>
-      </motion.div>
+
     </section>
   );
 };

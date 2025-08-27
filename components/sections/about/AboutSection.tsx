@@ -72,7 +72,7 @@ const AboutSection: FC<{ [key: string]: any }> = () => {
       >
         {/* School Card */}
         <AboutCard>
-          <div className="flex flex-col items-center justify-center p-4">
+          <div className="flex flex-col items-center justify-center p-8 md:p-12">
             <div className="pointer-events-none">
               <div className="block md:hidden">
                 <Logo size="xxl" />
@@ -93,7 +93,7 @@ const AboutSection: FC<{ [key: string]: any }> = () => {
 
         {/* Anna Card */}
         <AboutCard>
-          <figure className="flex flex-col items-center justify-center">
+          <figure className="flex flex-col items-center justify-center p-4">
             <Image
               src="/images/instructor-anna.jpg"
               alt={t("annaImageAlt")}
@@ -114,7 +114,7 @@ const AboutSection: FC<{ [key: string]: any }> = () => {
 
         {/* Konstantinos Card */}
         <AboutCard>
-          <figure className="flex flex-col items-center justify-center">
+          <figure className="flex flex-col items-center justify-center p-4">
             <Image
               src="/images/instructor-konstantinos.jpg"
               alt={t("konstantinosImageAlt")}

@@ -75,6 +75,12 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     category: "photos",
   },
   {
+    id: "instructor-3",
+    src: "/images/instructor-natasha.jpg",
+    alt: "Instructor Natasha",
+    category: "photos",
+  },
+  {
     id: "dance-1",
     src: "/images/hero.jpg",
     alt: "Dance Performance",
@@ -156,6 +162,18 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     id: "gallery-13",
     src: "/images/gallery/Screenshot_2024-05-19-16-24-44-935_com.facebook.katana-min.jpg",
     alt: "Salsa Dance Photo",
+    category: "photos",
+  },
+  {
+    id: "gallery-14",
+    src: "/images/gallery/our-space.jpg",
+    alt: "Dance Studio Space",
+    category: "photos",
+  },
+  {
+    id: "gallery-15",
+    src: "/images/gallery/our-space-vertical.jpg",
+    alt: "Dance Studio Space - Vertical",
     category: "photos",
   },
 ];

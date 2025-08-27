@@ -26,12 +26,23 @@ export const metadata: Metadata = {
   openGraph: {
     title: APPLICATION_NAME,
     description: APPLICATION_DESCRIPTION,
-    images: "https:/salsa-rayo/images/logo.png",
+    images: [
+      {
+        url: "https://salsa-rayo.com/images/gallery/our-space.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Salsa Rayo Dance Studio - Professional dance floor in Athens",
+      },
+    ],
+    siteName: APPLICATION_NAME,
+    locale: "en_US",
+    type: "website",
   },
   twitter: {
+    card: "summary_large_image",
     title: APPLICATION_NAME,
     description: APPLICATION_DESCRIPTION,
-    images: "https:/salsa-rayo/images/logo.png",
+    images: ["https://salsa-rayo.com/images/gallery/our-space.jpg"],
   },
 };
 
