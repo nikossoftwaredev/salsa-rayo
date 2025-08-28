@@ -16,7 +16,8 @@ export const PHONE = "+30 2109700700";
 
 export const TIKTOK_URL = "";
 
-export const FACEBOOK_URL = "";
+export const FACEBOOK_URL =
+  "https://www.facebook.com/profile.php?id=61579636514978";
 export const ADDRESS = "Θερμοπυλών 19, Άγιος Δημήτριος";
 export const MAIL = "salsarayo21@gmail.com";
 export const BUSINESS_NAME = "Salsa Rayo Dance School";
