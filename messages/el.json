@@ -123,16 +123,17 @@
     "needHelp": "Χρειάζεστε Βοήθεια;",
     "contactUs": "Επικοινωνήστε μαζί μας για εξατομικευμένη καθοδήγηση στην επιλογή του κατάλληλου πακέτου.",
     "getInTouch": "Επικοινωνήστε",
-    "morePackagesComing": "Περισσότερα πακέτα και προσφορές θα ανακοινωθούν πολύ σύντομα!"
+    "morePackagesComing": "Περισσότερα πακέτα και προσφορές θα ανακοινωθούν πολύ σύντομα!",
+    "studentOrYouth": "Student 10% Discount",
+    "studentDiscount": "10% φοιτητική έκπτωση"
   },
   "Package": {
     "validUntilBadge": "Ισχύει έως 31 Αυγούστου",
-    "summerOffer": "Καλοκαιρινή Προσφορά",
-    "forEveryone": "Για Όλους",
+    "subscriptionRequest": "Αίτημα Συνδρομής",
     "perMonth": "/μήνα",
-    "totalClasses": "16 ώρες για έναν μήνα",
-    "classesPerWeek": "4 μαθήματα την εβδομάδα",
-    "redeemableUntil": "*Μπορείτε να το εξαργυρώσετε έως 31 Οκτωβρίου",
-    "claimOffer": "Διεκδικήστε την Προσφορά"
+    "hoursPerMonth": "{hours} ώρες για έναν μήνα",
+    "classesPerWeek": "{classes} μαθήματα την εβδομάδα",
+    "mostPopular": "Πιο Δημοφιλές",
+    "getStarted": "Ξεκινήστε"
   }
 }

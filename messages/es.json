@@ -123,16 +123,17 @@
     "needHelp": "¿Necesitas Ayuda?",
     "contactUs": "Contáctanos para obtener orientación personalizada sobre la selección del paquete adecuado.",
     "getInTouch": "Contáctanos",
-    "morePackagesComing": "Más paquetes y ofertas serán anunciados muy pronto!"
+    "morePackagesComing": "Más paquetes y ofertas serán anunciados muy pronto!",
+    "studentOrYouth": "Student 10% Discount",
+    "studentDiscount": "10% descuento estudiante aplicado"
   },
   "Package": {
     "validUntilBadge": "Válida hasta el 31 de agosto",
-    "summerOffer": "Oferta de Verano",
-    "forEveryone": "Para Todos",
+    "subscriptionRequest": "Solicitud de Suscripción",
     "perMonth": "/mes",
-    "totalClasses": "16 horas por un mes",
-    "classesPerWeek": "4 clases por semana",
-    "redeemableUntil": "*Canjeable hasta el 31 de octubre",
-    "claimOffer": "Reclamar Oferta"
+    "hoursPerMonth": "{hours} horas por un mes",
+    "classesPerWeek": "{classes} clases por semana",
+    "mostPopular": "Más Popular",
+    "getStarted": "Comenzar"
   }
 }

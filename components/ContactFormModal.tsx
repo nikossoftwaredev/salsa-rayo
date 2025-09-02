@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import ContactForm from "@/components/sections/contact-form/ContactForm";
 import { motion, AnimatePresence } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
-import { useTranslations } from "next-intl";
 
 interface ContactFormModalProps {
   isOpen: boolean;
@@ -13,7 +12,6 @@ interface ContactFormModalProps {
 }
 
 const ContactFormModal = ({ isOpen, onClose, initialMessage = "I am interested about the summer offer" }: ContactFormModalProps) => {
-  const t = useTranslations("Package");
 
   useEffect(() => {
     if (isOpen) {
@@ -61,9 +59,6 @@ const ContactFormModal = ({ isOpen, onClose, initialMessage = "I am interested a
               </button>
               
               <div className="p-6">
-                <h2 className="text-2xl font-bold text-center mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                  {t("summerOffer")}
-                </h2>
                 
                 <ContactForm 
                   showTextArea={false}

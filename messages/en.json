@@ -123,16 +123,17 @@
     "needHelp": "Need Help Choosing?",
     "contactUs": "Contact us for personalized guidance on selecting the right package for your dance goals.",
     "getInTouch": "Get in Touch",
-    "morePackagesComing": "More packages and offers will be announced very soon!"
+    "morePackagesComing": "More packages and offers will be announced very soon!",
+    "studentOrYouth": "Student 10% Discount",
+    "studentDiscount": "10% student discount applied"
   },
   "Package": {
     "validUntilBadge": "Valid until August 31st",
-    "summerOffer": "Summer Offer",
-    "forEveryone": "For Everyone",
+    "subscriptionRequest": "Subscription Request",
     "perMonth": "/month",
-    "totalClasses": "16 hours for one month",
-    "classesPerWeek": "4 classes per week",
-    "redeemableUntil": "*Redeemable until October 31st",
-    "claimOffer": "Claim Offer"
+    "hoursPerMonth": "{hours} hours for one month",
+    "classesPerWeek": "{classes} classes per week",
+    "mostPopular": "Most Popular",
+    "getStarted": "Get Started"
   }
 }

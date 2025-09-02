@@ -6,15 +6,18 @@ import PackageCard from "@/components/PackageCard";
 import { motion } from "framer-motion";
 import { FaBolt } from "react-icons/fa";
 import Logo from "@/components/Logo";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
+import { PACKAGES } from "@/data/packages";
+import { useState } from "react";
 
 export default function PricingPage() {
   const t = useTranslations("Pricing");
+  const [isStudentDiscount, setIsStudentDiscount] = useState(false);
 
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden">
       <BackgroundEffects />
-      
+
       <div className="relative pt-32 pb-16 px-4 md:px-8">
         {/* Page Header */}
         <motion.div
@@ -30,19 +33,47 @@ export default function PricingPage() {
             </h1>
             <FaBolt className="text-accent text-3xl" />
           </div>
-          <p className="text-xl text-white/70 mt-4">
-            {t("pageSubtitle")}
-          </p>
+          <p className="text-xl text-white/70 mt-4">{t("pageSubtitle")}</p>
         </motion.div>
 
-        {/* Packages Grid - Ready for multiple cards */}
+        {/* Student Discount Toggle */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="flex justify-center items-center gap-3 mb-8"
+        >
+          <label className="flex items-center gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              className="toggle toggle-primary"
+              checked={isStudentDiscount}
+              onChange={(e) => setIsStudentDiscount(e.target.checked)}
+            />
+            <span className="text-white/80">
+              {t("studentOrYouth")}
+            </span>
+          </label>
+        </motion.div>
+
+        {/* Packages Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {/* Beginner Package */}
-          <div className="md:col-span-2 lg:col-span-3 flex justify-center">
-            <PackageCard />
-          </div>
-          
-          {/* Future packages can be added here */}
+          {PACKAGES.map((pkg, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
+            >
+              <PackageCard
+                title={pkg.title}
+                price={pkg.price}
+                numberOfLessons={pkg.numberOfLessons}
+                isMostPopular={pkg.isMostPopular}
+                isStudentDiscount={isStudentDiscount}
+              />
+            </motion.div>
+          ))}
         </div>
 
         {/* Logo with Dance School text - Temporary for Screenshot */}
@@ -86,9 +117,7 @@ export default function PricingPage() {
             <h3 className="text-2xl font-bold text-white/90 mb-4">
               {t("needHelp")}
             </h3>
-            <p className="text-white/70 mb-6">
-              {t("contactUs")}
-            </p>
+            <p className="text-white/70 mb-6">{t("contactUs")}</p>
             <Link
               href="/#contact-form"
               className="inline-flex items-center gap-2 text-primary hover:text-accent transition-colors duration-300 font-semibold"
