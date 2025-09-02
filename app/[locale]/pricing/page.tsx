@@ -92,18 +92,6 @@ export default function PricingPage() {
           </div>
         </motion.div>
 
-        {/* Coming Soon Text */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="text-center"
-        >
-          <p className="text-white/60 text-base md:text-lg">
-            {t("morePackagesComing")}
-          </p>
-        </motion.div>
 
         {/* Additional Info Section */}
         <motion.div
