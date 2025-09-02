@@ -20,7 +20,7 @@ export const PACKAGES: PackageCardData[] = [
   },
   {
     title: "Rayo 24",
-    price: "100",
+    price: "99",
     numberOfLessons: 6,
     isMostPopular: false,
   },

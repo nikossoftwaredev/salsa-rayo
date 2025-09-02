@@ -39,7 +39,7 @@ const PackageCard: React.FC<PackageCardProps> = ({
   const lessonsPerMonth = numberOfLessons * 4;
   
   const displayPrice = isStudentDiscount 
-    ? (parseFloat(price) * 0.9).toFixed(0)
+    ? Math.floor(parseFloat(price) * 0.9).toString()
     : price;
   
   const features = [
@@ -55,7 +55,7 @@ const PackageCard: React.FC<PackageCardProps> = ({
       transition={{ duration: 0.6 }}
       className="w-full max-w-sm mx-auto"
     >
-      <Card className={`relative overflow-hidden bg-gradient-to-br from-base-300 via-base-200 to-base-300 border-2 ${isMostPopular ? 'border-primary hover:border-accent hover:shadow-2xl hover:shadow-accent/50' : 'border-primary/30 hover:border-primary/60 hover:shadow-2xl hover:shadow-primary/30'} transition-all duration-500 hover:scale-[1.02]`}>
+      <Card className={`relative overflow-hidden bg-gradient-to-br from-base-300 via-base-200 to-base-300 border-2 ${isMostPopular ? 'border-accent hover:border-accent hover:shadow-2xl hover:shadow-accent/50' : 'border-primary/30 hover:border-primary/60 hover:shadow-2xl hover:shadow-primary/30'} transition-all duration-500 hover:scale-[1.02]`}>
         {/* Most Popular Badge */}
         {isMostPopular && (
           <div className="absolute top-0 right-0 z-10">
