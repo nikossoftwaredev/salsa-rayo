@@ -168,6 +168,16 @@ const ContactForm = ({ showTextArea = true, initialMessage = "", hideTitle = fal
         const result = await sendContactFormEmail(formData);
 
         if (result.success) {
+          // Track Facebook Pixel Lead event
+          if (typeof window !== 'undefined' && (window as any).fbq) {
+            (window as any).fbq('track', 'Lead', {
+              value: 0,
+              currency: 'EUR',
+              content_name: 'Contact Form',
+              content_category: 'Dance Classes',
+            });
+          }
+          
           setToast({
             isVisible: true,
             message: result.message,
@@ -200,7 +210,7 @@ const ContactForm = ({ showTextArea = true, initialMessage = "", hideTitle = fal
 
       setLoading(false);
     },
-    [formData, t]
+    [formData, t, initialMessage, onSuccess]
   );
 
   const disabled = inputFields.some((inputField) => {

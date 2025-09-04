@@ -75,12 +75,6 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     category: "photos",
   },
   {
-    id: "instructor-3",
-    src: "/images/instructor-natasha.jpg",
-    alt: "Instructor Natasha",
-    category: "photos",
-  },
-  {
     id: "dance-1",
     src: "/images/hero.jpg",
     alt: "Dance Performance",
