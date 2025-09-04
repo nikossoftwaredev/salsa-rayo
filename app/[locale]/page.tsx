@@ -5,6 +5,8 @@ import MapSection from "@/components/sections/map/MapSection";
 import ScheduleSection from "@/components/sections/schedule/ScheduleSection";
 import GallerySection from "@/components/sections/gallery/GallerySection";
 import BackgroundEffects from "@/components/BackgroundEffects";
+import GoogleReviews from "@/components/GoogleReviews";
+import { GOOGLE_PLACE_ID } from "@/data/config";
 
 export const revalidate = 0;
 
@@ -28,7 +30,8 @@ export default function Home() {
           <div className="w-full py-24 px-4 md:px-8 bg-gradient-to-b from-transparent via-base-200/20 to-transparent relative">
             <MapSection />
           </div>
-          <div className="w-full py-24 px-4 md:px-8 relative">
+          <GoogleReviews placeId={GOOGLE_PLACE_ID} />
+          <div className="w-full  items-center py-24 px-4 md:px-8 relative">
             <ContactForm />
           </div>
         </div>

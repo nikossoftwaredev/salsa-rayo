@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { ADDRESS, MAIL, PHONE } from "../data/config";
+import { ADDRESS, MAIL, PHONE, PHONE_2 } from "../data/config";
 import {
   MdMailOutline,
   MdOutlineCalendarToday,
@@ -36,6 +36,7 @@ const Footer = () => {
       subtitles: [
         { icon: <MdLocationPin />, value: ADDRESS, type: "text" },
         { icon: <MdOutlinePhone />, value: PHONE, type: "tel" },
+        { icon: <MdOutlinePhone />, value: PHONE_2, type: "tel" },
         { icon: <MdMailOutline />, value: MAIL, type: "email" },
       ],
     },
