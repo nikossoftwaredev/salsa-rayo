@@ -60,11 +60,18 @@ export default async function RootLayout({
     <html lang={locale} data-theme="myTheme" className={`${inter.variable} scroll-smooth`}>
       <head>
         <meta name="facebook-domain-verification" content="p7lcpq9nkt4pup3w2e9piy3e2lsak2" />
+        {/* Preload critical images */}
+        <link rel="preload" as="image" href="/images/gallery/our-space.jpg" media="(min-width: 768px)" />
+        <link rel="preload" as="image" href="/images/gallery/our-space-vertical.jpg" media="(max-width: 767px)" />
         <script
           defer
           dangerouslySetInnerHTML={{
             __html: `
-              window.addEventListener('load', function() {
+              // Load Facebook Pixel only after user interaction to prevent bfcache issues
+              let fbPixelLoaded = false;
+              function loadFbPixel() {
+                if (fbPixelLoaded) return;
+                fbPixelLoaded = true;
                 !function(f,b,e,v,n,t,s)
                 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
                 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -75,7 +82,13 @@ export default async function RootLayout({
                 'https://connect.facebook.net/en_US/fbevents.js');
                 fbq('init', '4196861283929685');
                 fbq('track', 'PageView');
+              }
+              // Load on first interaction
+              ['scroll', 'click', 'touchstart'].forEach(event => {
+                window.addEventListener(event, loadFbPixel, { once: true, passive: true });
               });
+              // Or after 3 seconds
+              setTimeout(loadFbPixel, 3000);
             `,
           }}
         />

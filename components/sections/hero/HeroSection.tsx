@@ -17,7 +17,7 @@ const HeroSection = () => {
       id="hero"
       className="h-screen w-full flex items-center justify-center relative overflow-hidden"
     >
-      {/* Background Image */}
+      {/* Background Image with preload */}
       <div className="absolute inset-0">
         {/* Mobile Image */}
         <Image
@@ -26,6 +26,8 @@ const HeroSection = () => {
           fill
           className="object-cover md:hidden"
           priority
+          sizes="100vw"
+          quality={85}
         />
         {/* Desktop Image */}
         <Image
@@ -34,21 +36,13 @@ const HeroSection = () => {
           fill
           className="object-cover hidden md:block"
           priority
+          sizes="100vw"
+          quality={85}
         />
         <div className="absolute inset-0 bg-black/60"></div>
       </div>
 
-      {/* Animated gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-accent/10 animate-pulse"></div>
-
-      {/* Animated particles */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-primary rounded-full animate-float-slow opacity-60"></div>
-        <div className="absolute top-3/4 right-1/3 w-3 h-3 bg-accent rounded-full animate-float-medium opacity-40"></div>
-        <div className="absolute bottom-1/4 left-1/3 w-2 h-2 bg-white rounded-full animate-float-fast opacity-30"></div>
-      </div>
-
-      {/* Main Content Container */}
+      {/* Main Content Container - removed animated overlay and particles for performance */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4">
         <div className="flex flex-col items-center justify-center text-center">
           {/* Center Content */}
@@ -63,7 +57,7 @@ const HeroSection = () => {
             {/* Main Title - Now smaller than logo */}
             <div className="relative">
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-4 tracking-tight">
-                <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent animate-gradient-x">
+                <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                   {tHero("dance")} {tHero("and")} {tHero("connect")}
                 </span>
               </h1>
