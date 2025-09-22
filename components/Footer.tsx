@@ -1,7 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { ADDRESS, MAIL, PHONE, PHONE_2 } from "../data/config";
+import { MAIL, PHONE } from "../data/config";
+
 import {
   MdMailOutline,
   MdOutlineCalendarToday,
@@ -15,33 +16,31 @@ import SocialsSection from "./sections/socials/SocialsSection";
 import Logo from "./Logo";
 import { CircleIcon } from "./CircleIcon";
 
-
 const Footer = () => {
-  const t = useTranslations('Footer');
-  
+  const t = useTranslations("Footer");
+
   const footerSections = [
     {
-      title: t('schedule'),
+      title: t("schedule"),
       subtitles: [
         {
           icon: <MdOutlineCalendarToday />,
-          value: t('workDays'),
+          value: t("workDays"),
           type: "text",
         },
-        { icon: <MdAccessTime />, value: t('workHours'), type: "text" },
+        { icon: <MdAccessTime />, value: t("workHours"), type: "text" },
       ],
     },
     {
-      title: t('contactInfo'),
+      title: t("contactInfo"),
       subtitles: [
-        { icon: <MdLocationPin />, value: ADDRESS, type: "text" },
+        { icon: <MdLocationPin />, value: t("address"), type: "text" },
         { icon: <MdOutlinePhone />, value: PHONE, type: "tel" },
-        { icon: <MdOutlinePhone />, value: PHONE_2, type: "tel" },
         { icon: <MdMailOutline />, value: MAIL, type: "email" },
       ],
     },
   ];
-  
+
   return (
     <footer className="relative w-full bg-gradient-to-br from-base-300 via-base-200 to-base-300 border-t-2 border-primary/30 overflow-hidden">
       {/* Animated background elements */}
@@ -49,7 +48,7 @@ const Footer = () => {
         <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-3xl animate-float-slow"></div>
         <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-accent/20 to-transparent rounded-full blur-3xl animate-float-medium"></div>
       </div>
-      
+
       <div className="relative flex items-center flex-col py-20 px-8 w-full font-sans z-10">
         {/* Main Footer Content */}
         <div className="grid md:grid-cols-3 pb-12 gap-12 grid-cols-1 max-w-6xl w-full">
@@ -59,7 +58,7 @@ const Footer = () => {
               <Logo size="lg" />
             </div>
             <p className="text-base-content/80 mb-6 leading-relaxed text-lg">
-              {t('description')}
+              {t("description")}
             </p>
             <div className="flex justify-start">
               <SocialsSection isMobile />
@@ -78,7 +77,7 @@ const Footer = () => {
                     className="text-base flex items-center justify-start gap-3 text-base-content/70 group hover:text-base-content transition-colors duration-300"
                     key={subtitle.value}
                   >
-                    <CircleIcon 
+                    <CircleIcon
                       icon={subtitle.icon}
                       color="#18A07B"
                       size={48}
@@ -116,16 +115,14 @@ const Footer = () => {
         {/* Copyright Section */}
         <section className="text-center text-base-content/60">
           <div className="flex flex-col md:flex-row items-center justify-center gap-2 text-sm">
-            <span>
-              {t('copyright', { year: new Date().getFullYear() })}
-            </span>
+            <span>{t("copyright", { year: new Date().getFullYear() })}</span>
             <span className="hidden md:inline">•</span>
             <span className="flex items-center gap-2">
-              {t('madeWith')} 
+              {t("madeWith")}
               <span className="w-6 h-6 flex items-center justify-center rounded-full bg-red-500/20">
                 <FaHeart className="text-red-500" size={12} />
               </span>
-              {t('by')}
+              {t("by")}
               <AppLink
                 className="text-primary hover:text-accent transition-colors duration-300 font-medium"
                 href="https://www.linkedin.com/in/nikosdim97/"
@@ -137,12 +134,21 @@ const Footer = () => {
 
           <div className="mt-6 relative">
             <p className="text-sm text-base-content/50 font-light tracking-widest uppercase">
-              {t('slogan')}
+              {t("slogan")}
             </p>
             <div className="mt-2 flex justify-center gap-1">
-              <span className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0ms'}}></span>
-              <span className="w-2 h-2 bg-accent rounded-full animate-bounce" style={{animationDelay: '200ms'}}></span>
-              <span className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '400ms'}}></span>
+              <span
+                className="w-2 h-2 bg-primary rounded-full animate-bounce"
+                style={{ animationDelay: "0ms" }}
+              ></span>
+              <span
+                className="w-2 h-2 bg-accent rounded-full animate-bounce"
+                style={{ animationDelay: "200ms" }}
+              ></span>
+              <span
+                className="w-2 h-2 bg-primary rounded-full animate-bounce"
+                style={{ animationDelay: "400ms" }}
+              ></span>
             </div>
           </div>
         </section>

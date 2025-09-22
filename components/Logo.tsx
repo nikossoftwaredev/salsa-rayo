@@ -26,6 +26,8 @@ const Logo = ({ size = "sm" }: LogoProps) => {
         width={width}
         height={height}
         className={`${isLarge ? "object-contain" : "rounded-full"} hover:opacity-80 transition-opacity`}
+        priority={size === "xxl" || size === "xxxl"}
+        loading={size === "xxl" || size === "xxxl" ? "eager" : "lazy"}
       />
     </Link>
   );

@@ -13,7 +13,6 @@ export const SPOTIFY_URL =
   "https://open.spotify.com/playlist/57VP2xxQHG5GMQURfYBXu9?si=4yxCqyX1RKqSIyBL-6eK0w&pi=0Tf7tlZdQQm1s&nd=1&dlsi=72c4875cc8d14a81";
 export const YOUTUBE_URL = "https://www.youtube.com/@SalsaRayoDanceSchool";
 export const PHONE = "+30 2109700730";
-export const PHONE_2= "+30 6940812546";
 
 export const TIKTOK_URL = "";
 

@@ -15,7 +15,6 @@ import TextArea from "@/components/TextArea";
 import TextField from "@/components/TextField";
 import { IoMdSend } from "react-icons/io";
 import { FaUser, FaPhone, FaEnvelope } from "react-icons/fa6";
-import Lightning from "@/components/react-bits/Backgrounds/Lightning/Lightning";
 import { sendContactFormEmail } from "@/server-actions/send-email";
 import Toast from "@/components/Toast";
 import { z } from "zod";
@@ -232,18 +231,8 @@ const ContactForm = ({ showTextArea = true, initialMessage = "", hideTitle = fal
         onClose={() => setToast({ ...toast, isVisible: false })}
       />
       {!hideTitle && <SectionTitle title={t("title")} isMainSection />}
-      <Card className="mb-5 w-full max-w-[600px] bg-transparent border border-white/20 shadow-xl hover:bg-black/70 transition-all duration-300 relative overflow-hidden">
-        {/* Lightning Effect inside the card */}
-        <div className="absolute inset-0 -z-10 opacity-30">
-          <Lightning
-            hue={280}
-            xOffset={0}
-            speed={0.3}
-            intensity={0.5}
-            size={0.6}
-          />
-        </div>
-        <form className="relative z-10">
+      <Card className="mb-5 w-full max-w-[600px] bg-transparent border border-white/20 shadow-xl hover:bg-black/70 transition-all duration-300">
+        <form>
           <div className="grid p-4 gap-6 grid-cols-1 md:grid-cols-2">
             {inputFields.filter(field => showTextArea || field.dataField !== "message").map((inputField) => {
               const {
