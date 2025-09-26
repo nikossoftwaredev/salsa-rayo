@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { useLocale } from 'next-intl'
 import { Orisha } from '@/data/orishas'
 import { 
   FaBolt, FaDrum, FaExternalLinkAlt, FaHammer, 
@@ -14,6 +15,8 @@ interface OrishaCardProps {
 }
 
 export default function OrishaCard({ orisha }: OrishaCardProps) {
+  const locale = useLocale() as 'en' | 'el' | 'es'
+  
   const getOrishaIcon = (id: string) => {
     const iconProps = {
       className: "flex-shrink-0",
@@ -80,14 +83,14 @@ export default function OrishaCard({ orisha }: OrishaCardProps) {
           className="text-sm font-bold opacity-90 mb-2 text-center"
           style={{ color: orisha.color }}
         >
-          {orisha.title}
+          {orisha.title[locale] || orisha.title.en}
         </div>
         
         {/* Stats section with icons */}
         <div className="space-y-2 text-xs">
           <div className="flex items-center gap-2">
             {getOrishaIcon(orisha.id)}
-            <p className="opacity-90 leading-tight">{orisha.specialty}</p>
+            <p className="opacity-90 leading-tight">{orisha.specialty[locale] || orisha.specialty.en}</p>
           </div>
           
           <div className="flex items-center gap-2">
@@ -96,7 +99,7 @@ export default function OrishaCard({ orisha }: OrishaCardProps) {
               style={{ color: orisha.color }} 
               size={16} 
             />
-            <p className="opacity-90 leading-tight">{orisha.movements}</p>
+            <p className="opacity-90 leading-tight">{orisha.movements[locale] || orisha.movements.en}</p>
           </div>
         </div>
         
