@@ -3,11 +3,11 @@ import OrishasGrid from '@/components/sections/orishas/OrishasGrid'
 import BackgroundEffects from '@/components/BackgroundEffects'
 
 type Props = {
-  params: { locale: string }
+  params: Promise<{ locale: string }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const locale = params.locale
+  const locale = (await params).locale
   
   const titles = {
     en: 'Orishas in Salsa Dance | Salsa Rayo',
