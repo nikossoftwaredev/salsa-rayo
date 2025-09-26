@@ -2,16 +2,51 @@
 
 import Image from 'next/image'
 import { Orisha } from '@/data/orishas'
-import { FaUser, FaMusic, FaExternalLinkAlt } from 'react-icons/fa'
+import { 
+  FaBolt, FaDrum, FaExternalLinkAlt, FaHammer, 
+  FaBullseye, FaDove, FaWind, FaHeart, FaWater, 
+  FaCrutch, FaFire 
+} from 'react-icons/fa'
+import { GiCrossroad } from 'react-icons/gi'
 
 interface OrishaCardProps {
   orisha: Orisha
 }
 
 export default function OrishaCard({ orisha }: OrishaCardProps) {
+  const getOrishaIcon = (id: string) => {
+    const iconProps = {
+      className: "flex-shrink-0",
+      style: { color: orisha.color },
+      size: 16
+    }
+    
+    switch(id) {
+      case 'shango':
+        return <FaBolt {...iconProps} />
+      case 'eleggua':
+        return <GiCrossroad {...iconProps} />
+      case 'oggun':
+        return <FaHammer {...iconProps} />
+      case 'ochosi':
+        return <FaBullseye {...iconProps} />
+      case 'obatala':
+        return <FaDove {...iconProps} />
+      case 'oya':
+        return <FaWind {...iconProps} />
+      case 'oshun':
+        return <FaHeart {...iconProps} />
+      case 'yemaya':
+        return <FaWater {...iconProps} />
+      case 'babalu-aye':
+        return <FaCrutch {...iconProps} />
+      default:
+        return <FaFire {...iconProps} />
+    }
+  }
   return (
     <div 
-      className="card bg-base-100 shadow-2xl relative rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
+      className="card bg-base-100 shadow-2xl relative rounded-2xl transition-all duration-300 hover:scale-105"
       style={{
         '--hover-color': orisha.color
       } as React.CSSProperties}
@@ -50,20 +85,16 @@ export default function OrishaCard({ orisha }: OrishaCardProps) {
         
         {/* Stats section with icons */}
         <div className="space-y-2 text-xs">
-          <div className="flex items-start gap-2">
-            <FaUser 
-              className="mt-0.5 flex-shrink-0" 
-              style={{ color: orisha.color }} 
-              size={12} 
-            />
+          <div className="flex items-center gap-2">
+            {getOrishaIcon(orisha.id)}
             <p className="opacity-90 leading-tight">{orisha.specialty}</p>
           </div>
           
-          <div className="flex items-start gap-2">
-            <FaMusic 
-              className="mt-0.5 flex-shrink-0" 
+          <div className="flex items-center gap-2">
+            <FaDrum 
+              className="flex-shrink-0" 
               style={{ color: orisha.color }} 
-              size={12} 
+              size={16} 
             />
             <p className="opacity-90 leading-tight">{orisha.movements}</p>
           </div>
