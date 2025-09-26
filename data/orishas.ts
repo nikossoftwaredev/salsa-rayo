@@ -14,7 +14,7 @@ export const orishas: Orisha[] = [
   {
     id: 'shango',
     name: 'Shangó ⚡',
-    title: 'Thunder King - God of Salsa Rayo',
+    title: 'Thunder King - God of Thunder (Rayo)',
     specialty: 'Thunder, lightning, fire, justice, drums',
     rhythm: 'Toque de Shangó',
     movements: 'Powerful axe throwing motions, lightning strikes, chest-proud warrior stance',
