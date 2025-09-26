@@ -1,5 +1,4 @@
 import { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
 import OrishasGrid from '@/components/sections/orishas/OrishasGrid'
 import BackgroundEffects from '@/components/BackgroundEffects'
 
