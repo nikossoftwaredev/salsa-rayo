@@ -11,7 +11,9 @@
       "Bash(pnpm dev:*)",
       "Bash(git config:*)",
       "Bash(pnpm add:*)",
-      "WebFetch(domain:react.dev)"
+      "WebFetch(domain:react.dev)",
+      "WebSearch",
+      "Bash(curl:*)"
     ],
     "deny": []
   }

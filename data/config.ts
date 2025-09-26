@@ -5,6 +5,7 @@ export const headerLinks = [
     text: { en: "Schedule", el: "Πρόγραμμα", es: "Horario" },
   },
   { path: `/pricing`, text: { en: "Pricing", el: "Τιμές", es: "Precios" } },
+  { path: `/orishas`, text: { en: "Orishas", el: "Orishas", es: "Orishas" } },
   { path: `/#gallery`, text: { en: "Gallery", el: "Gallery", es: "Galería" } },
 ];
 
