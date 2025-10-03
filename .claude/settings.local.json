@@ -14,7 +14,9 @@
       "WebFetch(domain:react.dev)",
       "WebSearch",
       "Bash(curl:*)",
-      "Bash(pnpm run:*)"
+      "Bash(pnpm run:*)",
+      "Bash(pnpm remove:*)",
+      "Bash(pnpm info:*)"
     ],
     "deny": []
   }
