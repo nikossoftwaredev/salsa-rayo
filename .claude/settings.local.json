@@ -16,7 +16,14 @@
       "Bash(curl:*)",
       "Bash(pnpm run:*)",
       "Bash(pnpm remove:*)",
-      "Bash(pnpm info:*)"
+      "Bash(pnpm info:*)",
+      "Bash(node:*)",
+      "Bash(command:*)",
+      "Bash(command -v:*)",
+      "Read(//usr/lib/**)",
+      "Bash(sudo -E bash -)",
+      "Bash(sudo apt-get install:*)",
+      "Bash(npx:*)"
     ],
     "deny": []
   }
