@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -16,18 +15,6 @@ const config: Config = {
         xs: "2px",
       },
     },
-  },
-  plugins: [require("daisyui")],
-  daisyui: {
-    themes: [
-      {
-        myTheme: {
-          ...require("daisyui/src/theming/themes")["sunset"],
-          primary: "#5B4FDB",
-          accent: "#E31E7F",
-        },
-      },
-    ],
   },
 };
 export default config;

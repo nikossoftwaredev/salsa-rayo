@@ -23,7 +23,8 @@
       "Read(//usr/lib/**)",
       "Bash(sudo -E bash -)",
       "Bash(sudo apt-get install:*)",
-      "Bash(npx:*)"
+      "Bash(npx:*)",
+      "WebFetch(domain:daisyui.com)"
     ],
     "deny": []
   }

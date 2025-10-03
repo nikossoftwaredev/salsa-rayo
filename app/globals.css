@@ -1,6 +1,17 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: sunset --default;
+}
+
+@theme {
+  --font-custom: faculty, roboto, custom-font, sans-serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --backdrop-blur-xs: 2px;
+
+  /* Custom theme colors based on previous daisyUI sunset theme with custom colors */
+  --color-primary: #5B4FDB;
+  --color-accent: #E31E7F;
+}
 
 /* Inter font is loaded via next/font/google in layout.tsx for better performance and Greek/English support */
 
