@@ -24,7 +24,14 @@
       "Bash(sudo -E bash -)",
       "Bash(sudo apt-get install:*)",
       "Bash(npx:*)",
-      "WebFetch(domain:daisyui.com)"
+      "WebFetch(domain:daisyui.com)",
+      "WebFetch(domain:ui.shadcn.com)",
+      "Bash(cat:*)",
+      "Bash(pnpm build:*)",
+      "WebFetch(domain:www.luisball.com)",
+      "Bash(pnpm dlx:*)",
+      "Bash(git checkout:*)",
+      "Bash(pnpm install:*)"
     ],
     "deny": []
   }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import "../globals.css";
+import "./globals.css";
+
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { SUPPORTED_LOCALES } from "@/i18n/routing";
@@ -57,12 +58,28 @@ export default async function RootLayout({
   const locale = (await params).locale;
 
   return (
-    <html lang={locale} data-theme="myTheme" className={`${inter.variable} scroll-smooth`}>
+    <html
+      lang={locale}
+      className={`dark ${inter.variable} scroll-smooth`}
+    >
       <head>
-        <meta name="facebook-domain-verification" content="p7lcpq9nkt4pup3w2e9piy3e2lsak2" />
+        <meta
+          name="facebook-domain-verification"
+          content="p7lcpq9nkt4pup3w2e9piy3e2lsak2"
+        />
         {/* Preload critical images */}
-        <link rel="preload" as="image" href="/images/gallery/our-space.jpg" media="(min-width: 768px)" />
-        <link rel="preload" as="image" href="/images/gallery/our-space-vertical.jpg" media="(max-width: 767px)" />
+        <link
+          rel="preload"
+          as="image"
+          href="/images/gallery/our-space.jpg"
+          media="(min-width: 768px)"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/images/gallery/our-space-vertical.jpg"
+          media="(max-width: 767px)"
+        />
         <script
           defer
           dangerouslySetInnerHTML={{
@@ -97,14 +114,14 @@ export default async function RootLayout({
           <img
             height="1"
             width="1"
-            style={{ display: 'none' }}
+            style={{ display: "none" }}
             src="https://www.facebook.com/tr?id=4196861283929685&ev=PageView&noscript=1"
             alt=""
           />
         </noscript>
       </head>
       <body
-        className={`${inter.className} text-base-content text-lg w-full min-h-screen flex flex-col`}
+        className={`${inter.className} text-foreground text-lg w-full min-h-screen flex flex-col`}
       >
         <NextIntlClientProvider
           locale={locale as (typeof SUPPORTED_LOCALES)[number]}

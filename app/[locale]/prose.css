@@ -1,0 +1,171 @@
+@layer utilities {
+  /* Custom prose styles with semantic coloring */
+  .prose {
+    @apply text-foreground;
+
+    & h1:not(.not-prose h1) {
+      @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-foreground;
+    }
+
+    & h2:not(.not-prose h2) {
+      @apply scroll-m-20 border-b border-border pb-2 text-3xl font-semibold tracking-tight mt-12 first:mt-0 text-foreground;
+    }
+
+    & h3:not(.not-prose h3) {
+      @apply scroll-m-20 text-2xl font-semibold mt-12 tracking-tight first:mt-0 text-foreground;
+    }
+
+    & h4:not(.not-prose h4) {
+      @apply scroll-m-20 text-xl font-semibold mt-12 tracking-tight first:mt-0 text-foreground;
+    }
+
+    & h5:not(.not-prose h5) {
+      @apply scroll-m-20 text-lg font-semibold mt-12 tracking-tight first:mt-0 text-foreground;
+    }
+
+    & h6:not(.not-prose h6) {
+      @apply scroll-m-20 text-base font-semibold mt-12 tracking-tight first:mt-0 text-foreground;
+    }
+
+    & h1:not(.not-prose h1),
+    & h2:not(.not-prose h2),
+    & h3:not(.not-prose h3),
+    & h4:not(.not-prose h4),
+    & h5:not(.not-prose h5),
+    & h6:not(.not-prose h6) {
+      & + p {
+        @apply mt-0;
+      }
+    }
+
+    & p:not(.not-prose p) {
+      @apply leading-[175%] [&:not(:first-child)]:mt-6 text-foreground;
+    }
+
+    & li:not(.not-prose li) {
+      @apply leading-[175%] text-foreground;
+    }
+
+    & a:not(.not-prose a) {
+      @apply font-medium text-primary underline underline-offset-4 hover:text-primary/80;
+    }
+
+    & blockquote:not(.not-prose blockquote) {
+      @apply mt-6 border-l-2 border-border pl-6 italic text-muted-foreground bg-muted/30 py-2;
+    }
+
+    & table:not(.not-prose table) {
+      @apply my-6 w-full overflow-y-auto border border-border rounded-md;
+
+      & thead tr {
+        @apply m-0 border-t border-border p-0 even:bg-muted;
+      }
+
+      & th {
+        @apply border border-border px-4 py-2 text-left font-bold text-foreground bg-muted/50 [&[align=center]]:text-center [&[align=right]]:text-right;
+      }
+
+      & tbody tr {
+        @apply m-0 border-t border-border p-0 even:bg-muted/30;
+      }
+
+      & td {
+        @apply border border-border px-4 py-2 text-left text-foreground [&[align=center]]:text-center [&[align=right]]:text-right;
+      }
+    }
+
+    & ul:not(.not-prose ul) {
+      @apply my-6 ml-6 list-disc [&>li]:mt-2;
+
+      & p {
+        @apply my-0 inline;
+      }
+    }
+
+    & ol:not(.not-prose ol) {
+      @apply my-6 ml-6 list-decimal [&>li]:mt-2;
+
+      & p {
+        @apply my-0 inline;
+      }
+    }
+
+    & pre:not(.not-prose pre) {
+      @apply bg-muted border border-border rounded-md p-4 my-6 text-sm overflow-y-auto text-foreground;
+    }
+
+    & code:not(pre code):not(.not-prose code) {
+      @apply relative rounded bg-muted border border-border px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold text-foreground;
+    }
+
+    & .lead:not(.not-prose .lead) {
+      @apply text-xl text-muted-foreground;
+    }
+
+    & .large:not(.not-prose .large) {
+      @apply text-lg font-semibold text-foreground;
+    }
+
+    & .small:not(.not-prose .small) {
+      @apply text-sm font-medium leading-none text-foreground;
+    }
+
+    & .muted:not(.not-prose .muted) {
+      @apply text-sm text-muted-foreground;
+    }
+
+    & img:not(.not-prose img),
+    & picture:not(.not-prose picture),
+    & video:not(.not-prose video) {
+      @apply my-6 rounded-md border border-border;
+    }
+
+    & picture > img:not(.not-prose picture > img) {
+      @apply my-0;
+    }
+
+    & kbd:not(.not-prose kbd) {
+      @apply rounded-md bg-muted border border-border px-1.5 py-0.5 text-xs font-semibold text-foreground;
+    }
+
+    & hr {
+      @apply my-10 border-border;
+    }
+
+    & dl:not(.not-prose dl) {
+      @apply my-6;
+
+      & dt {
+        @apply font-semibold mt-6 tracking-tight first:mt-0 text-foreground;
+      }
+    }
+
+    & details:not(.not-prose details) {
+      @apply mt-6 border border-border rounded-md p-4;
+
+      & summary {
+        @apply cursor-pointer font-semibold mt-6 tracking-tight text-foreground hover:text-primary;
+      }
+
+      & p {
+        @apply [&:first-of-type]:mt-2;
+      }
+    }
+
+    & mark:not(.not-prose mark) {
+      @apply bg-yellow-200 dark:bg-yellow-900/50 text-foreground px-1 rounded;
+    }
+
+    & small:not(.not-prose small) {
+      @apply text-xs leading-none text-muted-foreground;
+    }
+
+    & strong:not(.not-prose strong) {
+      @apply font-semibold text-foreground;
+    }
+
+    & em:not(.not-prose em) {
+      @apply italic text-foreground;
+    }
+  }
+}

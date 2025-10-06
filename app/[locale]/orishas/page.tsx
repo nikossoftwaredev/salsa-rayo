@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default function OrishasPage() {
   return (
-    <main className="min-h-screen bg-base-100">
+    <main className="min-h-screen bg-background">
       <BackgroundEffects />
       <OrishasGrid />
     </main>
