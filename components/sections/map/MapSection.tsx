@@ -1,11 +1,12 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import Card from "@/components/Card";
+import { Card } from "@/components/ui/card";
 import { MAP_IFRAME, NAVIGATION, ADDRESS } from "@/data/config";
 import { SectionTitle } from "@/components/SectionTitle";
 import { MdDirections, MdLocationPin } from "react-icons/md";
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 
 const MapSection = () => {
   const t = useTranslations('Map');
@@ -50,17 +51,20 @@ const MapSection = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
 
             {/* Directions Button */}
-            <motion.a
+            <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="btn btn-primary absolute bottom-4 right-4 flex items-center gap-2 shadow-xl hover:shadow-2xl z-10 bg-gradient-to-r from-primary to-accent border-none"
-              href={NAVIGATION}
-              target="_blank"
-              rel="noopener noreferrer"
+              className="absolute bottom-4 right-4 z-10"
             >
-              <MdDirections size={20} />
-              {t('getDirections')}
-            </motion.a>
+              <Button
+                variant="gradient"
+                onClick={() => window.open(NAVIGATION, '_blank', 'noopener,noreferrer')}
+                className="font-medium"
+              >
+                <MdDirections size={20} />
+                {t('getDirections')}
+              </Button>
+            </motion.div>
           </div>
         </Card>
       </motion.div>

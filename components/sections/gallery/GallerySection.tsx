@@ -14,9 +14,15 @@ import {
 } from "@/data/gallery";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
-import Button from "@/components/Button";
+import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import MasonryGallery from "./MasonryGallery";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { IoClose } from "react-icons/io5";
 
 type FilterType = GalleryCategory;
 
@@ -164,29 +170,20 @@ const GallerySection: React.FC<GallerySectionProps> = ({
           className="mt-12"
         >
           <Button
+            variant="gradient"
             onClick={handleSeeMore}
-            className="btn-lg bg-gradient-to-r from-primary to-accent text-white border-none hover:shadow-2xl"
+            className="px-8 py-3 text-lg"
           >
             {t('seeMore')}
           </Button>
         </motion.div>
       )}
 
-      {/* DaisyUI Modal for enlarged view */}
-      <input type="checkbox" id="gallery-modal" className="modal-toggle" checked={!!selectedItem} onChange={() => {}} />
-      <div className="modal" onClick={() => setSelectedItem(null)}>
-        <div className="modal-box max-w-5xl w-full max-h-[95vh] p-2 sm:p-0 bg-black/95" onClick={(e) => e.stopPropagation()}>
+      {/* Dialog for enlarged view */}
+      <Dialog open={!!selectedItem} onOpenChange={(open) => !open && setSelectedItem(null)}>
+        <DialogContent className="max-w-5xl w-full max-h-[95vh] p-2 sm:p-4 bg-black/95 border-white/20">
           {selectedItem && (
             <>
-              {/* Close button */}
-              <label 
-                htmlFor="gallery-modal" 
-                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 z-10 text-white hover:bg-white/20"
-                onClick={() => setSelectedItem(null)}
-              >
-                ✕
-              </label>
-
               {selectedItem.type === "video" ? (
                 <div className="aspect-video w-full relative bg-black">
                   <iframe
@@ -198,21 +195,20 @@ const GallerySection: React.FC<GallerySectionProps> = ({
                   />
                 </div>
               ) : (
-                <div className="relative flex items-center justify-center min-h-[50vh] max-h-[90vh] px-2 sm:px-0">
+                <div className="relative flex items-center justify-center min-h-[50vh] max-h-[85vh]">
                   <Image
                     src={selectedItem.src || ''}
                     alt={selectedItem.alt || ''}
                     width={1200}
                     height={1600}
-                    className="max-w-full max-h-[90vh] w-auto h-auto object-contain"
+                    className="max-w-full max-h-[85vh] w-auto h-auto object-contain"
                   />
                 </div>
               )}
             </>
           )}
-        </div>
-        <label className="modal-backdrop" htmlFor="gallery-modal" onClick={() => setSelectedItem(null)}>Close</label>
-      </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };

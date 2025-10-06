@@ -50,23 +50,23 @@ export default function LanguageSwitcher({ isMobile = false }: LanguageSwitcherP
 
   return (
     <details className={`dropdown ${isMobile ? 'dropdown-right' : 'dropdown-end'}`}>
-      <summary 
-        tabIndex={0} 
-        role="button" 
-        className="btn btn-ghost btn-circle text-white hover:bg-white/20 relative group"
+      <summary
+        tabIndex={0}
+        role="button"
+        className="flex items-center justify-center w-10 h-10 rounded-full text-white hover:bg-white/20 relative group cursor-pointer transition-colors duration-200"
         aria-label="Change language"
       >
         <MdLanguage className="h-6 w-6 transition-transform group-hover:scale-110" />
         <span className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full animate-pulse"></span>
       </summary>
-      <ul 
-        tabIndex={0} 
-        className="dropdown-content menu bg-base-100/95 backdrop-blur-md rounded-2xl z-[1] w-56 p-1 shadow-2xl border border-primary/20 mt-3"
+      <ul
+        tabIndex={0}
+        className="dropdown-content menu bg-background/95 backdrop-blur-md rounded-2xl z-[1] w-56 p-1 shadow-2xl border border-primary/20 mt-3"
       >
         <li className="px-3 py-2">
-          <span className="text-xs font-medium text-base-content/60 uppercase tracking-wider">Select Language</span>
+          <span className="text-xs font-medium text-foreground/60 uppercase tracking-wider">Select Language</span>
         </li>
-        <div className="divider my-0"></div>
+        <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent my-1"></div>
         {SUPPORTED_LOCALES.map((lang) => {
           const isActive = locale === lang;
           return (
@@ -74,9 +74,9 @@ export default function LanguageSwitcher({ isMobile = false }: LanguageSwitcherP
               <button
                 onClick={() => handleLanguageChange(lang)}
                 className={`flex items-center gap-3 rounded-xl transition-all duration-200 py-3 ${
-                  isActive 
-                    ? 'bg-primary/20 text-primary hover:bg-primary/30' 
-                    : 'hover:bg-base-200'
+                  isActive
+                    ? 'bg-primary/20 text-primary hover:bg-primary/30'
+                    : 'hover:bg-secondary'
                 } ${isPending ? 'opacity-50 cursor-wait' : ''}`}
                 disabled={isPending}
               >

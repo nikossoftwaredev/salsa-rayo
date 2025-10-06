@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import ContactForm from "@/components/sections/contact-form/ContactForm";
 import { motion, AnimatePresence } from "framer-motion";
-import { IoMdClose } from "react-icons/io";
+import { MdClose } from "react-icons/md";
 
 interface ContactFormModalProps {
   isOpen: boolean;
@@ -11,17 +11,20 @@ interface ContactFormModalProps {
   initialMessage?: string;
 }
 
-const ContactFormModal = ({ isOpen, onClose, initialMessage = "I am interested about the summer offer" }: ContactFormModalProps) => {
-
+const ContactFormModal = ({
+  isOpen,
+  onClose,
+  initialMessage = "I am interested about the summer offer",
+}: ContactFormModalProps) => {
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
-    
+
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [isOpen]);
 
@@ -37,30 +40,34 @@ const ContactFormModal = ({ isOpen, onClose, initialMessage = "I am interested a
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50"
             onClick={onClose}
           />
-          
+
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            transition={{ duration: 0.3, type: "spring", stiffness: 300, damping: 30 }}
+            transition={{
+              duration: 0.3,
+              type: "spring",
+              stiffness: 300,
+              damping: 30,
+            }}
             className="fixed inset-0 flex items-center justify-center z-50 p-4"
             onClick={onClose}
           >
-            <div 
-              className="relative max-w-[600px] w-full max-h-[90vh] overflow-y-auto bg-gradient-to-br from-primary/20 via-base-100 to-accent/20 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20"
+            <div
+              className="relative max-w-[600px] w-full max-h-[90vh] overflow-y-auto bg-gradient-to-br from-primary/20 via-background to-accent/20 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 z-10 btn btn-sm btn-circle btn-ghost text-white hover:bg-white/10"
+                className="absolute top-4 right-4 z-10 h-8 w-8 rounded-full flex items-center justify-center text-white hover:bg-white/10 transition-colors"
                 aria-label="Close modal"
               >
-                <IoMdClose size={20} />
+                <MdClose size={20} />
               </button>
-              
+
               <div className="p-6">
-                
-                <ContactForm 
+                <ContactForm
                   showTextArea={false}
                   initialMessage={initialMessage}
                   hideTitle={true}

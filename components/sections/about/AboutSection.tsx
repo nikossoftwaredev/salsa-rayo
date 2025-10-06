@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import Card from "@/components/Card";
+import { Card } from "@/components/ui/card";
 import { FC, useState } from "react";
 import Image from "next/image";
 import { SectionTitle } from "@/components/SectionTitle";
@@ -10,7 +10,7 @@ import Logo from "@/components/Logo";
 const AboutCard: FC<{
   children: React.ReactNode;
 }> = ({ children }) => (
-  <Card className="grid grid-cols-1 lg:grid-cols-2 justify-center md:w-3/4 p-4 leading-8 text-lg font-medium bg-base-200 shadow-xl hover:shadow-2xl transition-all duration-300">
+  <Card className="grid grid-cols-1 lg:grid-cols-2 justify-center md:w-3/4 p-4 leading-8 text-lg font-medium bg-secondary shadow-xl hover:shadow-2xl transition-all duration-300">
     {children}
   </Card>
 );
@@ -36,14 +36,14 @@ const InstructorDescription: FC<{
           <div className="mt-4">
             <button
               onClick={() => setIsExpanded(true)}
-              className="btn btn-sm btn-outline btn-primary w-full flex items-center justify-center gap-2"
+              className="w-full flex items-center justify-center gap-2 px-4 py-2 text-sm border border-primary text-primary rounded-md hover:bg-primary hover:text-white transition-colors duration-200"
               aria-label={`Show more about ${name}`}
             >
               <span>Δείτε περισσότερα</span>
-              <svg 
+              <svg
                 className="w-4 h-4"
-                fill="none" 
-                stroke="currentColor" 
+                fill="none"
+                stroke="currentColor"
                 viewBox="0 0 24 24"
               >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />

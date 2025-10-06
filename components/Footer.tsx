@@ -42,7 +42,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative w-full bg-gradient-to-br from-base-300 via-base-200 to-base-300 border-t-2 border-primary/30 overflow-hidden">
+    <footer className="relative w-full bg-gradient-to-br from-muted/50 via-secondary to-muted border-t-2 border-primary/30 overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-3xl animate-float-slow"></div>
@@ -57,7 +57,7 @@ const Footer = () => {
             <div className="mb-6">
               <Logo size="lg" />
             </div>
-            <p className="text-base-content/80 mb-6 leading-relaxed text-lg">
+            <p className="text-foreground/80 mb-6 leading-relaxed text-lg">
               {t("description")}
             </p>
             <div className="flex justify-start">
@@ -74,7 +74,7 @@ const Footer = () => {
               <div className="space-y-3">
                 {footerSection.subtitles.map((subtitle) => (
                   <div
-                    className="text-base flex items-center justify-start gap-3 text-base-content/70 group hover:text-base-content transition-colors duration-300"
+                    className="text-base flex items-center justify-start gap-3 text-foreground/70 group hover:text-foreground transition-colors duration-300"
                     key={subtitle.value}
                   >
                     <CircleIcon
@@ -113,7 +113,7 @@ const Footer = () => {
         </div>
 
         {/* Copyright Section */}
-        <section className="text-center text-base-content/60">
+        <section className="text-center text-foreground/60">
           <div className="flex flex-col md:flex-row items-center justify-center gap-2 text-sm">
             <span>{t("copyright", { year: new Date().getFullYear() })}</span>
             <span className="hidden md:inline">•</span>
@@ -133,7 +133,7 @@ const Footer = () => {
           </div>
 
           <div className="mt-6 relative">
-            <p className="text-sm text-base-content/50 font-light tracking-widest uppercase">
+            <p className="text-sm text-foreground/50 font-light tracking-widest uppercase">
               {t("slogan")}
             </p>
             <div className="mt-2 flex justify-center gap-1">

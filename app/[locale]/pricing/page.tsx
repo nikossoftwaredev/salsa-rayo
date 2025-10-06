@@ -9,6 +9,8 @@ import Logo from "@/components/Logo";
 import { Link } from "@/i18n/routing";
 import { PACKAGES } from "@/data/packages";
 import { useState } from "react";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 export default function PricingPage() {
   const t = useTranslations("Pricing");
@@ -20,12 +22,7 @@ export default function PricingPage() {
 
       <div className="relative pt-32 pb-16 px-4 md:px-8">
         {/* Page Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16 max-w-3xl mx-auto"
-        >
+        <div className="text-center mb-16 max-w-3xl mx-auto">
           <div className="flex justify-center items-center gap-3 mb-4">
             <FaBolt className="text-primary text-3xl" />
             <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
@@ -34,27 +31,24 @@ export default function PricingPage() {
             <FaBolt className="text-accent text-3xl" />
           </div>
           <p className="text-xl text-white/70 mt-4">{t("pageSubtitle")}</p>
-        </motion.div>
+        </div>
 
         {/* Student Discount Toggle */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex justify-center items-center gap-3 mb-8"
-        >
-          <label className="flex items-center gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              className="toggle toggle-primary"
+        <div className="flex justify-center items-center gap-3 mb-8">
+          <div className="flex items-center gap-3">
+            <Switch
+              id="student-discount"
               checked={isStudentDiscount}
-              onChange={(e) => setIsStudentDiscount(e.target.checked)}
+              onCheckedChange={setIsStudentDiscount}
             />
-            <span className="text-white/80">
+            <Label
+              htmlFor="student-discount"
+              className="text-white/80 cursor-pointer"
+            >
               {t("studentOrYouth")}
-            </span>
-          </label>
-        </motion.div>
+            </Label>
+          </div>
+        </div>
 
         {/* Packages Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -77,31 +71,18 @@ export default function PricingPage() {
         </div>
 
         {/* Logo with Dance School text - Temporary for Screenshot */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.15 }}
-          className="flex justify-center mt-12 mb-8"
-        >
+        <div className="flex justify-center mt-12 mb-8">
           <div className="relative">
             <Logo size="xxl" />
             <p className="absolute bottom-0 right-0 top-[95px] text-sm font-light text-white/90 tracking-wider">
               Dance School
             </p>
           </div>
-        </motion.div>
-
+        </div>
 
         {/* Additional Info Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          className="text-center mt-20 max-w-2xl mx-auto"
-        >
-          <div className="bg-gradient-to-r from-base-300/50 to-base-200/50 backdrop-blur-md rounded-2xl p-8 border border-white/10">
+        <div className="text-center mt-20 max-w-2xl mx-auto">
+          <div className="bg-gradient-to-r from-muted/50 to-secondary/50 backdrop-blur-md rounded-2xl p-8 border border-white/10">
             <h3 className="text-2xl font-bold text-white/90 mb-4">
               {t("needHelp")}
             </h3>
@@ -114,7 +95,7 @@ export default function PricingPage() {
               <span className="animate-bounce-x">→</span>
             </Link>
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

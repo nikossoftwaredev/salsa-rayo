@@ -1,8 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import Card from "@/components/Card";
-import Button from "@/components/Button";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { FaBolt } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -55,7 +55,7 @@ const PackageCard: React.FC<PackageCardProps> = ({
       transition={{ duration: 0.6 }}
       className="w-full max-w-sm mx-auto"
     >
-      <Card className={`relative overflow-hidden bg-gradient-to-br from-base-300 via-base-200 to-base-300 border-2 ${isMostPopular ? 'border-accent hover:border-accent hover:shadow-2xl hover:shadow-accent/50' : 'border-primary/30 hover:border-primary/60 hover:shadow-2xl hover:shadow-primary/30'} transition-all duration-500 hover:scale-[1.02]`}>
+      <Card className={`relative overflow-hidden bg-gradient-to-br from-muted via-secondary to-muted border-2 ${isMostPopular ? 'border-accent hover:border-accent hover:shadow-2xl hover:shadow-accent/50' : 'border-primary/30 hover:border-primary/60 hover:shadow-2xl hover:shadow-primary/30'} transition-all duration-500 hover:scale-[1.02]`}>
         {/* Most Popular Badge */}
         {isMostPopular && (
           <div className="absolute top-0 right-0 z-10">
@@ -114,9 +114,9 @@ const PackageCard: React.FC<PackageCardProps> = ({
           {/* CTA Button */}
           <div className="pt-4">
             <Button
+              variant="gradient"
               onClick={handleClaim}
-              className="w-full bg-gradient-to-r from-primary to-accent text-white border-none hover:shadow-xl hover:shadow-primary/50 font-bold text-base md:text-lg py-3"
-              outlined={false}
+              className="w-full hover:shadow-xl hover:shadow-primary/50 font-bold text-base md:text-lg py-3"
             >
               <span className="flex items-center justify-center gap-2">
                 {t("getStarted")}

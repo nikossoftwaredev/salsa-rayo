@@ -61,7 +61,7 @@ const SocialsSection = ({ isMobile = false }: { isMobile?: boolean }) => {
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className={`flex items-center justify-center btn btn-square transition-all duration-300 hover:scale-110 hover:shadow-lg transform ${getColorClasses(
+            className={`flex items-center justify-center w-12 h-12 rounded-md transition-all duration-300 hover:scale-110 hover:shadow-lg transform ${getColorClasses(
               color
             )}`}
           >
