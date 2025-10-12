@@ -20,22 +20,16 @@ export const SCHEDULE = [
     dayIndex: 1,
     schedule: [
       {
-        time: "20:00 - 21:00",
-        title: "Bachata",
-        hint: "Open/High level",
-        instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
-      },
-      {
         time: "21:00 - 22:00",
-        title: "Salsa Powerup",
-        hint: "Open level",
-        instructors: [INSTRUCTORS.natasha],
+        title: "Bachata 1",
+        hint: "",
+        instructors: [INSTRUCTORS.anna, INSTRUCTORS.konstantinos],
       },
       {
         time: "22:00 - 23:00",
-        title: "Salsa Techniques",
-        hint: "Intermediate",
-        instructors: [INSTRUCTORS.natasha],
+        title: "Bachata 2",
+        hint: "",
+        instructors: [INSTRUCTORS.anna, INSTRUCTORS.konstantinos],
       },
     ],
   },
@@ -45,25 +39,21 @@ export const SCHEDULE = [
     schedule: [
       {
         time: "19:00 - 20:00",
-        title: "Basics & History",
-        instructors: [INSTRUCTORS.konstantinos],
+        title: "Salsa Powerup",
+        hint: "Open level",
+        instructors: [INSTRUCTORS.natasha],
       },
       {
         time: "20:00 - 21:00",
-        title: "Bachata",
-        hint: "Open/Low level",
+        title: "Salsa",
+        hint: "Improvers",
         instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
       },
       {
         time: "21:00 - 22:00",
-        title: "Salsa",
-        hint: "Open/Low level",
-        instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
-      },
-      {
-        time: "22:00 - 23:00",
-        title: "Mambo",
-        instructors: [INSTRUCTORS.konstantinos],
+        title: "Ladies Styling",
+        hint: "Open level",
+        instructors: [INSTRUCTORS.anna],
       },
     ],
   },
@@ -73,13 +63,19 @@ export const SCHEDULE = [
     schedule: [
       {
         time: "20:00 - 21:00",
-        title: "Salsa",
-        hint: "Open/High level",
-        instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
+        title: "Salsa Techniques",
+        hint: "Open level",
+        instructors: [INSTRUCTORS.natasha],
       },
       {
         time: "21:00 - 22:00",
-        title: "Pachanga",
+        title: "Mambo / Pachanga",
+        instructors: [INSTRUCTORS.konstantinos],
+      },
+      {
+        time: "22:00 - 23:00",
+        title: "Salsa",
+        hint: "Intermediate",
         instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
       },
     ],
@@ -90,14 +86,14 @@ export const SCHEDULE = [
     schedule: [
       {
         time: "19:00 - 20:00",
-        title: "Salsa",
-        hint: "Open/Low level",
+        title: "Bachata 1",
+        hint: "",
         instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
       },
       {
         time: "20:00 - 21:00",
-        title: "Bachata",
-        hint: "Open/Low level",
+        title: "Salsa",
+        hint: "Improvers",
         instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
       },
       {
@@ -108,7 +104,7 @@ export const SCHEDULE = [
       {
         time: "22:00 - 23:00",
         title: "Salsa",
-        hint: "Open/High level",
+        hint: "Intermediate",
         instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
       },
     ],
@@ -118,19 +114,9 @@ export const SCHEDULE = [
     dayIndex: 5,
     schedule: [
       {
-        time: "20:00 - 21:00",
-        title: "Ladies Style",
-        instructors: [INSTRUCTORS.anna],
-      },
-      {
-        time: "21:00 - 22:00",
-        title: "Rooftop Social",
-        instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
-      },
-      {
-        time: "22:00 - 23:00",
-        title: "Rooftop Social",
-        instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
+        time: "20:00 ",
+        title: "Early Social",
+        instructors: [],
       },
     ],
   },
