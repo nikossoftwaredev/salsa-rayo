@@ -2,6 +2,10 @@
 
 This document contains important development guidelines and best practices to follow when working on this codebase.
 
+## General Development Guidelines
+
+- **NEVER RUN THE DEV SERVER YOURSELF I RUN IT**
+
 ## Icon Library Preference
 
 **Always use `react-icons` for icons in this project. Do NOT use `lucide-react` or other icon libraries.**

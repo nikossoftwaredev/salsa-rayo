@@ -41,7 +41,8 @@
       "Bash(true)",
       "WebFetch(domain:www.salsarayo.com)",
       "Bash(git log:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(openssl rand:*)"
     ],
     "deny": []
   }

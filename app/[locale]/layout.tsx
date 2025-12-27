@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { SUPPORTED_LOCALES } from "@/i18n/routing";
 import { Inter } from "next/font/google";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/Footer";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { Providers } from "@/components/Providers";
 
 const inter = Inter({
   subsets: ["latin", "greek", "latin-ext"],
@@ -56,6 +56,7 @@ export default async function RootLayout({
 }>) {
   const messages = await getMessages();
   const locale = (await params).locale;
+  const session = await getServerSession(authOptions);
 
   return (
     <html
@@ -123,16 +124,13 @@ export default async function RootLayout({
       <body
         className={`${inter.className} text-foreground text-lg w-full min-h-screen flex flex-col`}
       >
-        <NextIntlClientProvider
+        <Providers
           locale={locale as (typeof SUPPORTED_LOCALES)[number]}
           messages={messages}
+          session={session}
         >
-          <Header />
-          <main className="flex-1 overflow-y-auto">
-            {children}
-            <Footer />
-          </main>
-        </NextIntlClientProvider>
+          {children}
+        </Providers>
       </body>
     </html>
   );

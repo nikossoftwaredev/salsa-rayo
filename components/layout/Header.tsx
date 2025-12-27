@@ -13,6 +13,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { AuthButton } from "@/components/AuthButton";
 
 const Header = () => {
   const t = useTranslations('Common');
@@ -42,6 +43,7 @@ const Header = () => {
               ))}
             </ul>
             <LanguageSwitcher />
+            <AuthButton />
           </div>
 
           {/* Mobile Menu */}
@@ -55,9 +57,10 @@ const Header = () => {
               </button>
             </SheetTrigger>
             <SheetContent side="right" className="w-full bg-background border-l border-border/20">
-              {/* Language Switcher */}
-              <div className="flex justify-start items-center mb-12">
+              {/* Language Switcher & Auth */}
+              <div className="flex justify-between items-center mb-12 w-full">
                 <LanguageSwitcher isMobile />
+                <AuthButton />
               </div>
 
               {/* Links & socials */}

@@ -62,12 +62,11 @@ export default function LanguageSwitcher({ isMobile = false }: LanguageSwitcherP
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          size="icon"
-          className="relative w-10 h-10 rounded-full text-foreground hover:bg-foreground/20"
+          className="relative w-12 h-12 p-0 rounded-full text-foreground hover:bg-foreground/20"
           aria-label="Change language"
           disabled={isPending}
         >
-          <MdLanguage className="h-6 w-6 transition-transform group-hover:scale-110" />
+          <MdLanguage size={24} className="size-6 transition-transform group-hover:scale-110" />
           <span className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full animate-pulse" />
         </Button>
       </DropdownMenuTrigger>
