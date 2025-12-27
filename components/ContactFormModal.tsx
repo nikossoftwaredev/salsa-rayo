@@ -37,7 +37,7 @@ const ContactFormModal = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50"
             onClick={onClose}
           />
 
@@ -55,12 +55,12 @@ const ContactFormModal = ({
             onClick={onClose}
           >
             <div
-              className="relative max-w-[600px] w-full max-h-[90vh] overflow-y-auto bg-gradient-to-br from-primary/20 via-background to-accent/20 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20"
+              className="relative max-w-[600px] w-full max-h-[90vh] overflow-y-auto bg-gradient-to-br from-primary/20 via-background to-accent/20 backdrop-blur-lg rounded-2xl shadow-2xl border border-border/20"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 z-10 h-8 w-8 rounded-full flex items-center justify-center text-white hover:bg-white/10 transition-colors"
+                className="absolute top-4 right-4 z-10 h-8 w-8 rounded-full flex items-center justify-center text-foreground hover:bg-foreground/10 transition-colors"
                 aria-label="Close modal"
               >
                 <MdClose size={20} />

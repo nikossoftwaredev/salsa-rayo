@@ -42,7 +42,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative w-full bg-gradient-to-br from-muted/50 via-secondary to-muted border-t-2 border-primary/30 overflow-hidden">
+    <footer className="relative w-full bg-card border-t border-border overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-3xl animate-float-slow"></div>

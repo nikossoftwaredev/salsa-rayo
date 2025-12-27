@@ -25,12 +25,12 @@ export default function PricingPage() {
         <div className="text-center mb-16 max-w-3xl mx-auto">
           <div className="flex justify-center items-center gap-3 mb-4">
             <FaBolt className="text-primary text-3xl" />
-            <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent leading-tight">
               {t("pageTitle")}
             </h1>
             <FaBolt className="text-accent text-3xl" />
           </div>
-          <p className="text-xl text-white/70 mt-4">{t("pageSubtitle")}</p>
+          <p className="text-xl text-muted-foreground mt-4">{t("pageSubtitle")}</p>
         </div>
 
         {/* Student Discount Toggle */}
@@ -43,7 +43,7 @@ export default function PricingPage() {
             />
             <Label
               htmlFor="student-discount"
-              className="text-white/80 cursor-pointer"
+              className="text-foreground/80 cursor-pointer"
             >
               {t("studentOrYouth")}
             </Label>
@@ -74,7 +74,7 @@ export default function PricingPage() {
         <div className="flex justify-center mt-12 mb-8">
           <div className="relative">
             <Logo size="xxl" />
-            <p className="absolute bottom-0 right-0 top-[95px] text-sm font-light text-white/90 tracking-wider">
+            <p className="absolute bottom-0 right-0 top-[95px] text-sm font-light text-foreground/90 tracking-wider">
               Dance School
             </p>
           </div>
@@ -82,11 +82,11 @@ export default function PricingPage() {
 
         {/* Additional Info Section */}
         <div className="text-center mt-20 max-w-2xl mx-auto">
-          <div className="bg-gradient-to-r from-muted/50 to-secondary/50 backdrop-blur-md rounded-2xl p-8 border border-white/10">
-            <h3 className="text-2xl font-bold text-white/90 mb-4">
+          <div className="bg-gradient-to-r from-muted/50 to-secondary/50 backdrop-blur-md rounded-2xl p-8 border border-border/10">
+            <h3 className="text-2xl font-bold text-foreground/90 mb-4">
               {t("needHelp")}
             </h3>
-            <p className="text-white/70 mb-6">{t("contactUs")}</p>
+            <p className="text-muted-foreground mb-6">{t("contactUs")}</p>
             <Link
               href="/#contact-form"
               className="inline-flex items-center gap-2 text-primary hover:text-accent transition-colors duration-300 font-semibold"

@@ -55,12 +55,12 @@ const PackageCard: React.FC<PackageCardProps> = ({
       transition={{ duration: 0.6 }}
       className="w-full max-w-sm mx-auto"
     >
-      <Card className={`relative overflow-hidden bg-gradient-to-br from-muted via-secondary to-muted border-2 ${isMostPopular ? 'border-accent hover:border-accent hover:shadow-2xl hover:shadow-accent/50' : 'border-primary/30 hover:border-primary/60 hover:shadow-2xl hover:shadow-primary/30'} transition-all duration-500 hover:scale-[1.02]`}>
+      <Card className={`relative overflow-hidden ${isMostPopular ? 'hover:shadow-2xl hover:shadow-accent/50' : 'hover:shadow-2xl hover:shadow-primary/30'} transition-all duration-500 hover:scale-[1.02]`}>
         {/* Most Popular Badge */}
         {isMostPopular && (
           <div className="absolute top-0 right-0 z-10">
             <div className="relative">
-              <div className="bg-gradient-to-r from-primary to-accent text-white text-xs font-bold px-4 py-2 rounded-bl-2xl animate-pulse-slow">
+              <div className="bg-gradient-to-r from-primary to-accent text-primary-foreground text-xs font-bold px-4 py-2 rounded-bl-2xl animate-pulse-slow">
                 {t("mostPopular")}
               </div>
               <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent blur-lg opacity-50"></div>
@@ -80,11 +80,11 @@ const PackageCard: React.FC<PackageCardProps> = ({
           <div className="text-center py-4">
             <div className="flex items-center justify-center gap-3">
               {isStudentDiscount && (
-                <span className="text-2xl text-white/50 line-through">
+                <span className="text-2xl text-muted-foreground line-through">
                   {price}€
                 </span>
               )}
-              <span className="text-5xl font-bold text-white">
+              <span className="text-5xl font-bold text-foreground">
                 {displayPrice}€
               </span>
             </div>
@@ -104,7 +104,7 @@ const PackageCard: React.FC<PackageCardProps> = ({
                 <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 flex items-center justify-center group-hover:from-primary/30 group-hover:to-accent/30 transition-all duration-300">
                   <FaBolt className="text-primary text-sm group-hover:text-accent transition-colors duration-300" />
                 </div>
-                <span className="text-white/80 text-sm leading-relaxed">
+                <span className="text-foreground/80 text-sm leading-relaxed">
                   {feature}
                 </span>
               </motion.div>

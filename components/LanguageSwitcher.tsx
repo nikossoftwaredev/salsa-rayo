@@ -5,6 +5,15 @@ import { useRouter, usePathname } from "@/i18n/routing";
 import { SUPPORTED_LOCALES } from "@/i18n/routing";
 import { useTransition } from "react";
 import { MdLanguage, MdCheck } from "react-icons/md";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
 const languages: Record<typeof SUPPORTED_LOCALES[number], {
   name: string;
@@ -49,68 +58,50 @@ export default function LanguageSwitcher({ isMobile = false }: LanguageSwitcherP
   };
 
   return (
-    <details className={`dropdown ${isMobile ? 'dropdown-right' : 'dropdown-end'}`}>
-      <summary
-        tabIndex={0}
-        role="button"
-        className="flex items-center justify-center w-10 h-10 rounded-full text-white hover:bg-white/20 relative group cursor-pointer transition-colors duration-200"
-        aria-label="Change language"
+    <DropdownMenu modal={false}>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="relative w-10 h-10 rounded-full text-foreground hover:bg-foreground/20"
+          aria-label="Change language"
+          disabled={isPending}
+        >
+          <MdLanguage className="h-6 w-6 transition-transform group-hover:scale-110" />
+          <span className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full animate-pulse" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        align={isMobile ? "start" : "end"}
+        className="w-56 bg-background/95 backdrop-blur-md border-primary/20"
       >
-        <MdLanguage className="h-6 w-6 transition-transform group-hover:scale-110" />
-        <span className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full animate-pulse"></span>
-      </summary>
-      <ul
-        tabIndex={0}
-        className="dropdown-content menu bg-background/95 backdrop-blur-md rounded-2xl z-[1] w-56 p-1 shadow-2xl border border-primary/20 mt-3"
-      >
-        <li className="px-3 py-2">
-          <span className="text-xs font-medium text-foreground/60 uppercase tracking-wider">Select Language</span>
-        </li>
-        <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent my-1"></div>
+        <DropdownMenuLabel className="text-xs font-medium text-foreground/60 uppercase tracking-wider">
+          Select Language
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator className="bg-gradient-to-r from-transparent via-border to-transparent" />
         {SUPPORTED_LOCALES.map((lang) => {
           const isActive = locale === lang;
           return (
-            <li key={lang} className="px-1 py-1">
-              <button
-                onClick={() => handleLanguageChange(lang)}
-                className={`flex items-center gap-3 rounded-xl transition-all duration-200 py-3 ${
-                  isActive
-                    ? 'bg-primary/20 text-primary hover:bg-primary/30'
-                    : 'hover:bg-secondary'
-                } ${isPending ? 'opacity-50 cursor-wait' : ''}`}
-                disabled={isPending}
-              >
-                <span className="text-2xl">{languages[lang].flag}</span>
-                <div className="flex-1 text-left">
-                  <p className="font-semibold">{languages[lang].shortCode}</p>
-                  <p className="text-xs opacity-70">{languages[lang].name}</p>
-                </div>
-                {isActive && (
-                  <MdCheck className="h-5 w-5 text-primary animate-bounce-in" />
-                )}
-              </button>
-            </li>
+            <DropdownMenuItem
+              key={lang}
+              onClick={() => handleLanguageChange(lang)}
+              className={`flex items-center gap-3 cursor-pointer ${
+                isActive ? 'bg-primary/20 text-primary' : ''
+              } ${isPending ? 'opacity-50' : ''}`}
+              disabled={isPending}
+            >
+              <span className="text-2xl">{languages[lang].flag}</span>
+              <div className="flex-1">
+                <p className="font-semibold">{languages[lang].shortCode}</p>
+                <p className="text-xs opacity-70">{languages[lang].name}</p>
+              </div>
+              {isActive && (
+                <MdCheck className="h-5 w-5 text-primary" />
+              )}
+            </DropdownMenuItem>
           );
         })}
-      </ul>
-      <style jsx>{`
-        @keyframes bounce-in {
-          0% {
-            transform: scale(0);
-            opacity: 0;
-          }
-          50% {
-            transform: scale(1.2);
-          }
-          100% {
-            transform: scale(1);
-            opacity: 1;
-          }
-        }
-        .animate-bounce-in {
-          animation: bounce-in 0.3s ease-out;
-        }
-      `}</style>
-    </details>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

@@ -10,7 +10,7 @@ import Logo from "@/components/Logo";
 const AboutCard: FC<{
   children: React.ReactNode;
 }> = ({ children }) => (
-  <Card className="grid grid-cols-1 lg:grid-cols-2 justify-center md:w-3/4 p-4 leading-8 text-lg font-medium bg-secondary shadow-xl hover:shadow-2xl transition-all duration-300">
+  <Card className="grid grid-cols-1 lg:grid-cols-2 justify-center md:w-3/4 p-4 leading-8 text-lg font-medium hover:shadow-2xl transition-all duration-300 border border-border text-muted-foreground">
     {children}
   </Card>
 );
@@ -83,7 +83,7 @@ const AboutSection: FC<{ [key: string]: any }> = () => {
             </div>
           </div>
           <div className="p-3">
-            <h3 className="text-2xl font-bold mb-4">{t("schoolName")}</h3>
+            <h3 className="text-2xl font-bold mb-4 text-foreground">{t("schoolName")}</h3>
             <InstructorDescription 
               description={t("schoolDescription")} 
               name={t("schoolName")}
@@ -104,7 +104,7 @@ const AboutSection: FC<{ [key: string]: any }> = () => {
             />
           </figure>
           <div className="p-3">
-            <h3 className="text-2xl font-bold mb-4">{t("annaName")}</h3>
+            <h3 className="text-2xl font-bold mb-4 text-foreground">{t("annaName")}</h3>
             <InstructorDescription 
               description={t("annaDescription")} 
               name={t("annaName")}
@@ -125,7 +125,7 @@ const AboutSection: FC<{ [key: string]: any }> = () => {
             />
           </figure>
           <div className="p-3">
-            <h3 className="text-2xl font-bold mb-4">{t("konstantinosName")}</h3>
+            <h3 className="text-2xl font-bold mb-4 text-foreground">{t("konstantinosName")}</h3>
             <InstructorDescription 
               description={t("konstantinosDescription")} 
               name={t("konstantinosName")}

@@ -64,8 +64,8 @@ const MasonryGallery: React.FC<MasonryGalleryProps> = ({ items, onItemClick }) =
               key={item.id}
               className={twMerge(
                 "relative group cursor-pointer rounded-xl overflow-hidden",
-                "shadow-lg backdrop-blur-sm bg-white/5 border border-white/10",
-                "hover:shadow-2xl hover:border-white/30 transition-all duration-300"
+                "shadow-lg backdrop-blur-sm bg-card",
+                "hover:shadow-2xl transition-all duration-300"
               )}
               onClick={() => onItemClick(item)}
             >
@@ -82,9 +82,9 @@ const MasonryGallery: React.FC<MasonryGalleryProps> = ({ items, onItemClick }) =
                       loading="lazy"
                       unoptimized
                     />
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
-                      <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full bg-white/20 group-hover:bg-white/30 transition-all group-hover:scale-110 backdrop-blur-sm">
-                        <svg className="w-8 h-8 md:w-10 md:h-10 text-white ml-1" fill="currentColor" viewBox="0 0 20 20">
+                    <div className="absolute inset-0 flex items-center justify-center bg-background/20 group-hover:bg-background/10 transition-colors">
+                      <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full bg-foreground/20 group-hover:bg-foreground/30 transition-all group-hover:scale-110 backdrop-blur-sm">
+                        <svg className="w-8 h-8 md:w-10 md:h-10 text-foreground ml-1" fill="currentColor" viewBox="0 0 20 20">
                           <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
                         </svg>
                       </div>

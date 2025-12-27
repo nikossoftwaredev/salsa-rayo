@@ -114,15 +114,15 @@ const GallerySection: React.FC<GallerySectionProps> = ({
             key={tab.id}
             onClick={() => setActiveFilter(tab.id)}
             className={twMerge(
-              "flex items-center gap-2 px-3 sm:px-6 py-2 sm:py-3 rounded-full font-semibold transition-all duration-300",
-              "backdrop-blur-md border border-white/20",
+              "flex items-center gap-2 px-3 sm:px-6 py-2 sm:py-3 rounded-full font-semibold transition-all duration-300 cursor-pointer",
+              "backdrop-blur-md border border-border/20",
               activeFilter === tab.id
-                ? "bg-gradient-to-r from-primary to-accent text-white shadow-lg"
-                : "bg-white/10 text-white/80 hover:bg-white/20"
+                ? "bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-lg scale-105"
+                : "bg-card text-foreground/80 hover:bg-card/80 hover:scale-105 hover:shadow-md hover:border-primary/30"
             )}
           >
             <span
-              className={activeFilter === tab.id ? "text-white" : tab.color}
+              className={activeFilter === tab.id ? "text-primary-foreground" : tab.color}
             >
               {tab.icon}
             </span>
@@ -139,10 +139,10 @@ const GallerySection: React.FC<GallerySectionProps> = ({
         transition={{ duration: 0.3 }}
         className="text-center mb-6"
       >
-        <h2 className="text-2xl md:text-3xl font-bold text-white/90">
+        <h2 className="text-2xl md:text-3xl font-bold text-foreground/90">
           {filterTabs.find(tab => tab.id === activeFilter)?.label}
         </h2>
-        <p className="text-sm md:text-base text-white/60 mt-2">
+        <p className="text-sm md:text-base text-muted-foreground mt-2">
           {t(`descriptions.${activeFilter}` as `descriptions.${typeof activeFilter}`)}
         </p>
       </motion.div>
@@ -162,13 +162,7 @@ const GallerySection: React.FC<GallerySectionProps> = ({
 
       {/* See More Button - only on homepage and when there are more items available */}
       {!isFullPage && totalItemsInCategory > 4 && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-          className="mt-12"
-        >
+        <div className="mt-12">
           <Button
             variant="gradient"
             onClick={handleSeeMore}
@@ -176,16 +170,16 @@ const GallerySection: React.FC<GallerySectionProps> = ({
           >
             {t('seeMore')}
           </Button>
-        </motion.div>
+        </div>
       )}
 
       {/* Dialog for enlarged view */}
       <Dialog open={!!selectedItem} onOpenChange={(open) => !open && setSelectedItem(null)}>
-        <DialogContent className="max-w-5xl w-full max-h-[95vh] p-2 sm:p-4 bg-black/95 border-white/20">
+        <DialogContent className="max-w-5xl w-full max-h-[95vh] p-2 sm:p-4 bg-background/95 border-border/20">
           {selectedItem && (
             <>
               {selectedItem.type === "video" ? (
-                <div className="aspect-video w-full relative bg-black">
+                <div className="aspect-video w-full relative bg-background">
                   <iframe
                     className="absolute inset-0 w-full h-full"
                     src={`https://www.youtube.com/embed/${selectedItem.youtubeId}?autoplay=1`}

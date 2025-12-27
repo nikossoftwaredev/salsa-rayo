@@ -21,7 +21,7 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40">
-      <nav className="h-[60px] w-full bg-black/30 backdrop-blur-md border-b border-white/20 shadow-lg">
+      <nav className="h-[60px] w-full bg-background/30 backdrop-blur-md border-b border-border/20 shadow-lg">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-4 h-full">
           {/* Logo */}
           <Logo size="md" />
@@ -33,7 +33,7 @@ const Header = () => {
                 <li key={linkConfig.path}>
                   <Link
                     href={linkConfig.path}
-                    className="font-bold text-lg text-white hover:text-primary relative group transition-colors duration-200 cursor-pointer"
+                    className="font-bold text-lg text-foreground hover:text-primary relative group transition-colors duration-200 cursor-pointer"
                   >
                     {linkConfig.text[locale as 'en' | 'el' | 'es'] || linkConfig.text.en}
                     <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
@@ -48,13 +48,13 @@ const Header = () => {
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <button
-                className="flex items-center justify-center w-10 h-10 rounded-full md:hidden text-white hover:bg-white/20 transition-colors duration-200"
+                className="flex items-center justify-center w-10 h-10 rounded-full md:hidden text-foreground hover:bg-foreground/20 transition-colors duration-200"
                 aria-label={t('openMenu')}
               >
                 <MdMenu size={24} />
               </button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-full bg-background border-l border-white/20">
+            <SheetContent side="right" className="w-full bg-background border-l border-border/20">
               {/* Language Switcher */}
               <div className="flex justify-start items-center mb-12">
                 <LanguageSwitcher isMobile />

@@ -35,7 +35,7 @@ function GalleryContent() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-xl text-white/70 text-center"
+            className="text-xl text-muted-foreground text-center"
           >
             Explore our dance journey through photos and videos
           </motion.p>

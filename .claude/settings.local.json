@@ -31,7 +31,17 @@
       "WebFetch(domain:www.luisball.com)",
       "Bash(pnpm dlx:*)",
       "Bash(git checkout:*)",
-      "Bash(pnpm install:*)"
+      "Bash(pnpm install:*)",
+      "Bash(pnpm dlx shadcn@latest add:*)",
+      "Bash(pnpm clean:*)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm list:*)",
+      "Bash(pnpm store prune:*)",
+      "Bash(pkill:*)",
+      "Bash(true)",
+      "WebFetch(domain:www.salsarayo.com)",
+      "Bash(git log:*)",
+      "Bash(find:*)"
     ],
     "deny": []
   }
