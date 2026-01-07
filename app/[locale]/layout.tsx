@@ -62,7 +62,7 @@ export default async function RootLayout({
     <html
       lang={locale}
       data-theme="myTheme"
-      className={`${inter.variable} scroll-smooth`}
+      className={`${inter.variable} scroll-smooth dark`}
     >
       <head>
         <meta
