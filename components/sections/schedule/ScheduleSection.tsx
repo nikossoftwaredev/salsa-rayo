@@ -72,8 +72,8 @@ const ScheduleSection = () => {
               </div>
 
               {/* Classes Container */}
-              <div className="relative flex-1 p-4 md:p-6">
-                <div className="space-y-3">
+              <div className="relative flex-1 p-4 md:p-6 flex items-center">
+                <div className="space-y-3 w-full">
                   {schedule.map(({ time, title, hint, instructors }: ScheduleItem) => (
                     <div
                       key={`${dayKey}-${time}`}

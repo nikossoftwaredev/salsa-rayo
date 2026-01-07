@@ -20,6 +20,12 @@ export const SCHEDULE = [
     dayIndex: 1,
     schedule: [
       {
+        time: "19:00 - 20:00",
+        title: "Salsa",
+        hint: "Beginners",
+        instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
+      },
+      {
         time: "21:00 - 22:00",
         title: "Bachata 1",
         hint: "",
@@ -61,6 +67,12 @@ export const SCHEDULE = [
     dayKey: "wednesday",
     dayIndex: 3,
     schedule: [
+      {
+        time: "19:00 - 20:00",
+        title: "Salsa",
+        hint: "Beginners",
+        instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
+      },
       {
         time: "20:00 - 21:00",
         title: "Salsa Techniques",

@@ -65,7 +65,8 @@ const MasonryGallery: React.FC<MasonryGalleryProps> = ({ items, onItemClick }) =
               className={twMerge(
                 "relative group cursor-pointer rounded-xl overflow-hidden",
                 "shadow-lg backdrop-blur-sm bg-card",
-                "hover:shadow-2xl transition-all duration-300"
+                "hover:shadow-2xl transition-all duration-300",
+                "border-2 border-transparent hover:border-primary"
               )}
               onClick={() => onItemClick(item)}
             >

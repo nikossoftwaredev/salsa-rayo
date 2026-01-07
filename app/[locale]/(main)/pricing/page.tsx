@@ -82,11 +82,11 @@ export default function PricingPage() {
 
         {/* Additional Info Section */}
         <div className="text-center mt-20 max-w-2xl mx-auto">
-          <div className="bg-gradient-to-r from-muted/50 to-secondary/50 backdrop-blur-md rounded-2xl p-8 border border-border/10">
-            <h3 className="text-2xl font-bold text-foreground/90 mb-4">
+          <div className="bg-gradient-to-br from-primary/10 via-accent/10 to-primary/10 backdrop-blur-md rounded-2xl p-8 border border-primary/20 shadow-lg shadow-primary/20">
+            <h3 className="text-2xl font-bold text-foreground mb-4">
               {t("needHelp")}
             </h3>
-            <p className="text-muted-foreground mb-6">{t("contactUs")}</p>
+            <p className="text-foreground/70 mb-6">{t("contactUs")}</p>
             <Link
               href="/#contact-form"
               className="inline-flex items-center gap-2 text-primary hover:text-accent transition-colors duration-300 font-semibold"

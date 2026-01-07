@@ -55,7 +55,7 @@ const PackageCard: React.FC<PackageCardProps> = ({
       transition={{ duration: 0.6 }}
       className="w-full max-w-sm mx-auto"
     >
-      <Card className={`relative overflow-hidden ${isMostPopular ? 'hover:shadow-2xl hover:shadow-accent/50' : 'hover:shadow-2xl hover:shadow-primary/30'} transition-all duration-500 hover:scale-[1.02]`}>
+      <Card className={`relative overflow-hidden border-2 ${isMostPopular ? 'border-accent hover:shadow-[0_20px_50px_rgba(255,0,255,0.4)] hover:shadow-accent/50' : 'border-primary/50 hover:shadow-[0_20px_50px_rgba(139,92,246,0.3)] hover:shadow-primary/40'} transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1`}>
         {/* Most Popular Badge */}
         {isMostPopular && (
           <div className="absolute top-0 right-0 z-10">
@@ -116,7 +116,7 @@ const PackageCard: React.FC<PackageCardProps> = ({
             <Button
               variant="gradient"
               onClick={handleClaim}
-              className="w-full hover:shadow-xl hover:shadow-primary/50 font-bold text-base md:text-lg py-3"
+              className="w-full font-bold text-base md:text-lg py-3"
             >
               <span className="flex items-center justify-center gap-2">
                 {t("getStarted")}

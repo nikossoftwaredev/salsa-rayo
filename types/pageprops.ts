@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 export interface BasePageProps {
   params: Promise<{
     locale: Locale;
-    chatId: string;
+    chatId?: string;
   }>;
 }
 

@@ -62,7 +62,7 @@ export default function LanguageSwitcher({ isMobile = false }: LanguageSwitcherP
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="relative w-12 h-12 p-0 rounded-full text-foreground hover:bg-foreground/20"
+          className="relative w-12 h-12 p-0 rounded-full text-foreground hover:text-primary hover:bg-transparent group"
           aria-label="Change language"
           disabled={isPending}
         >

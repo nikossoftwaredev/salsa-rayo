@@ -8,11 +8,15 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
 import { IoLogOutOutline } from "react-icons/io5"
+import { MdAdminPanelSettings } from "react-icons/md"
+import { useRouter } from "next/navigation"
 
 export const AuthButton = () => {
   const { data: session, status } = useSession()
+  const router = useRouter()
 
   if (status === "loading") {
     return <div className="w-8 h-8 rounded-full bg-muted animate-pulse" />
@@ -20,7 +24,12 @@ export const AuthButton = () => {
 
   if (!session) {
     return (
-      <Button onClick={() => signIn("google")} variant="default" size="sm">
+      <Button 
+        onClick={() => signIn("google")} 
+        variant="ghost" 
+        size="sm"
+        className="text-muted-foreground hover:text-foreground border border-border/50 hover:border-border hover:bg-muted/50 transition-all duration-300"
+      >
         Sign In
       </Button>
     )
@@ -43,6 +52,15 @@ export const AuthButton = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
+        {session.user.isAdmin && (
+          <>
+            <DropdownMenuItem onClick={() => router.push('/admin')}>
+              <MdAdminPanelSettings className="mr-2 h-4 w-4" />
+              <span>Admin</span>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+          </>
+        )}
         <DropdownMenuItem onClick={() => signOut()}>
           <IoLogOutOutline className="mr-2 h-4 w-4" />
           <span>Log out</span>

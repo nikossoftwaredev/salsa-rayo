@@ -42,7 +42,11 @@
       "WebFetch(domain:www.salsarayo.com)",
       "Bash(git log:*)",
       "Bash(find:*)",
-      "Bash(openssl rand:*)"
+      "Bash(openssl rand:*)",
+      "Bash(mkdir:*)",
+      "Bash(pnpm prisma validate:*)",
+      "WebFetch(domain:pris.ly)",
+      "WebFetch(domain:www.prisma.io)"
     ],
     "deny": []
   }

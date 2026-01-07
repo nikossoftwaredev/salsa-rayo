@@ -66,14 +66,12 @@ const ContactFormModal = ({
                 <MdClose size={20} />
               </button>
 
-              <div className="p-6">
-                <ContactForm
-                  showTextArea={false}
-                  initialMessage={initialMessage}
-                  hideTitle={true}
-                  onSuccess={onClose}
-                />
-              </div>
+              <ContactForm
+                showTextArea={false}
+                initialMessage={initialMessage}
+                hideTitle={true}
+                onSuccess={onClose}
+              />
             </div>
           </motion.div>
         </>

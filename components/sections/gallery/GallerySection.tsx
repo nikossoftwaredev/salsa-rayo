@@ -174,35 +174,47 @@ const GallerySection: React.FC<GallerySectionProps> = ({
       )}
 
       {/* Dialog for enlarged view */}
-      <Dialog open={!!selectedItem} onOpenChange={(open) => !open && setSelectedItem(null)}>
-        <DialogContent className="max-w-5xl w-full max-h-[95vh] p-2 sm:p-4 bg-background/95 border-border/20">
-          {selectedItem && (
-            <>
-              {selectedItem.type === "video" ? (
-                <div className="aspect-video w-full relative bg-background">
-                  <iframe
-                    className="absolute inset-0 w-full h-full"
-                    src={`https://www.youtube.com/embed/${selectedItem.youtubeId}?autoplay=1`}
-                    title={selectedItem.title}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                  />
-                </div>
-              ) : (
-                <div className="relative flex items-center justify-center min-h-[50vh] max-h-[85vh]">
-                  <Image
-                    src={selectedItem.src || ''}
-                    alt={selectedItem.alt || ''}
-                    width={1200}
-                    height={1600}
-                    className="max-w-full max-h-[85vh] w-auto h-auto object-contain"
-                  />
-                </div>
-              )}
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
+      {selectedItem && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-background/90 backdrop-blur-sm"
+            onClick={() => setSelectedItem(null)}
+          />
+          
+          {/* Content */}
+          <div className="relative w-full h-full flex items-center justify-center p-4">
+            <button
+              onClick={() => setSelectedItem(null)}
+              className="absolute top-4 right-4 z-50 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 hover:bg-background hover:scale-110 transition-all duration-200"
+            >
+              <IoClose className="w-6 h-6 text-foreground" />
+            </button>
+            
+            {selectedItem.type === "video" ? (
+              <div className="relative w-full max-w-6xl aspect-video">
+                <iframe
+                  className="absolute inset-0 w-full h-full rounded-lg"
+                  src={`https://www.youtube.com/embed/${selectedItem.youtubeId}?autoplay=1`}
+                  title={selectedItem.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+            ) : (
+              <Image
+                src={selectedItem.src || ''}
+                alt={selectedItem.alt || ''}
+                width={2400}
+                height={2400}
+                className="max-w-full max-h-full w-auto h-auto object-contain rounded-lg"
+                quality={100}
+                priority
+              />
+            )}
+          </div>
+        </div>
+      )}
     </section>
   );
 };
