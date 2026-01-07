@@ -46,7 +46,8 @@
       "Bash(mkdir:*)",
       "Bash(pnpm prisma validate:*)",
       "WebFetch(domain:pris.ly)",
-      "WebFetch(domain:www.prisma.io)"
+      "WebFetch(domain:www.prisma.io)",
+      "Bash(pnpm prisma generate:*)"
     ],
     "deny": []
   }
