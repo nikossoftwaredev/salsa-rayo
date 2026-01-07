@@ -26,13 +26,13 @@ export const SCHEDULE = [
         instructors: [INSTRUCTORS.konstantinos, INSTRUCTORS.anna],
       },
       {
-        time: "21:00 - 22:00",
+        time: "20:00 - 21:00",
         title: "Bachata 1",
         hint: "",
         instructors: [INSTRUCTORS.anna, INSTRUCTORS.konstantinos],
       },
       {
-        time: "22:00 - 23:00",
+        time: "21:00 - 22:00",
         title: "Bachata 2",
         hint: "",
         instructors: [INSTRUCTORS.anna, INSTRUCTORS.konstantinos],
@@ -128,6 +128,8 @@ export const SCHEDULE = [
       {
         time: "20:00 ",
         title: "Early Social",
+        hint: "Starting March",
+
         instructors: [],
       },
     ],
