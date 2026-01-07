@@ -9,7 +9,7 @@ export default async function AdminLayout({
 }: BaseLayoutProps) {
   const { locale } = await params;
   const isUserAdmin = await isAdmin();
-  
+
   if (!isUserAdmin) {
     return (
       <div className="flex h-screen w-full items-center justify-center">

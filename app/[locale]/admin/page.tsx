@@ -1,10 +1,9 @@
-import { BasePageProps } from "@/types/pageprops"
-import { prisma } from "@/lib/db"
+import { prisma } from "@/lib/db";
 
-export default async function AdminDashboard({ params }: BasePageProps) {
+export default async function AdminDashboard() {
   // Get actual client count from database
-  const clientCount = await prisma.client.count()
-  
+  const clientCount = await prisma.client.count();
+
   return (
     <div>
       <h2 className="text-2xl font-bold mb-6">Admin Dashboard</h2>
@@ -23,5 +22,5 @@ export default async function AdminDashboard({ params }: BasePageProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }
