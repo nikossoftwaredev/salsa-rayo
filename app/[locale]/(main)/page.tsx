@@ -15,7 +15,7 @@ export const revalidate = 0;
 
 // Loading placeholder component
 const SectionLoader = () => (
-  <div className="w-full h-96 animate-pulse bg-base-200/10 rounded-lg" />
+  <div className="w-full h-96 animate-pulse bg-secondary/10 rounded-lg" />
 );
 
 export default function Home() {
@@ -27,7 +27,7 @@ export default function Home() {
       <div className="relative">
         <HeroSection />
         <div className="w-full flex flex-col items-center">
-          <div className="w-full py-24 px-4 md:px-8 bg-gradient-to-b from-transparent via-base-200/20 to-transparent relative">
+          <div className="w-full py-24 px-4 md:px-8 bg-gradient-to-b from-transparent via-secondary/20 to-transparent relative">
             <AboutSection />
           </div>
           <div className="w-full py-24 px-4 md:px-8 relative">
@@ -41,7 +41,7 @@ export default function Home() {
             </Suspense>
           </div>
           {/* <BookingSection /> */}
-          <div className="w-full py-24 px-4 md:px-8 bg-gradient-to-b from-transparent via-base-200/20 to-transparent relative">
+          <div className="w-full py-24 px-4 md:px-8 bg-gradient-to-b from-transparent via-secondary/20 to-transparent relative">
             <Suspense fallback={<SectionLoader />}>
               <MapSection />
             </Suspense>

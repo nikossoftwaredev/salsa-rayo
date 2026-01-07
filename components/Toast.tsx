@@ -29,7 +29,7 @@ const Toast: React.FC<ToastProps> = ({
     }
   }, [isVisible, duration, onClose]);
 
-  const bgColor = type === "success" ? "bg-success" : "bg-error";
+  const bgColor = type === "success" ? "bg-primary" : "bg-destructive";
   const Icon = type === "success" ? FaCheckCircle : FaExclamationCircle;
 
   return (
@@ -39,7 +39,7 @@ const Toast: React.FC<ToastProps> = ({
           initial={{ opacity: 0, y: -50, x: "-50%" }}
           animate={{ opacity: 1, y: 0, x: "-50%" }}
           exit={{ opacity: 0, y: -50, x: "-50%" }}
-          className={`fixed top-24 left-1/2 transform -translate-x-1/2 z-50 ${bgColor} text-white px-6 py-4 rounded-lg shadow-xl flex items-center gap-3 min-w-[300px] max-w-[90vw]`}
+          className={`fixed top-24 left-1/2 transform -translate-x-1/2 z-50 ${bgColor} text-primary-foreground px-6 py-4 rounded-lg shadow-xl flex items-center gap-3 min-w-[300px] max-w-[90vw]`}
         >
           <Icon className="text-2xl flex-shrink-0" />
           <p className="flex-grow text-sm md:text-base">{message}</p>

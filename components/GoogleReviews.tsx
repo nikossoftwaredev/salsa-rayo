@@ -37,12 +37,12 @@ const GoogleReviews = ({ placeId }: ReviewsProps) => {
 
   if (loading) {
     return (
-      <div className="relative card bg-base-100 w-72 overflow-hidden border border-base-300">
+      <div className="relative bg-background w-72 overflow-hidden border border-muted rounded-lg shadow-md">
         {/* Gradient top border */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500 via-yellow-500 to-orange-500" />
-        <div className="card-body">
+        <div className="p-6">
           <div className="flex items-center justify-center">
-            <div className="text-sm text-base-content/70">
+            <div className="text-sm text-foreground/70">
               Loading reviews...
             </div>
           </div>
@@ -62,11 +62,11 @@ const GoogleReviews = ({ placeId }: ReviewsProps) => {
   }
 
   return (
-    <div className="relative card bg-base-100 w-72 overflow-hidden border border-base-300">
+    <div className="relative bg-background w-72 overflow-hidden border border-muted rounded-lg shadow-md">
       {/* Gradient top border */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500 via-yellow-500 to-orange-500" />
 
-      <div className="card-body p-6">
+      <div className="p-6">
         <div className="flex gap-4">
           {/* Google Icon - 30% width */}
           <div className="flex-[0_0_30%] flex items-center justify-center">
@@ -76,7 +76,7 @@ const GoogleReviews = ({ placeId }: ReviewsProps) => {
           {/* Content - 70% width */}
           <div className="flex-[0_0_70%] flex flex-col justify-center">
             {/* Title */}
-            <h3 className="text-base-content font-medium text-lg mb-2">
+            <h3 className="text-foreground font-medium text-lg mb-2">
               Google Rating
             </h3>
 
@@ -97,7 +97,7 @@ const GoogleReviews = ({ placeId }: ReviewsProps) => {
                     <div key={i} className="relative">
                       {/* Background star (empty) */}
                       <svg
-                        className="w-5 h-5 text-base-300 absolute"
+                        className="w-5 h-5 text-muted absolute"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                       >
@@ -124,7 +124,7 @@ const GoogleReviews = ({ placeId }: ReviewsProps) => {
               href={url || "#"}
               target="_blank"
               rel="noopener noreferrer"
-              className="link link-hover text-sm text-base-content/70 hover:text-primary transition-colors"
+              className="text-sm text-foreground/70 hover:text-primary transition-colors underline-offset-4 hover:underline"
             >
               Read our {user_ratings_total ?? 0} reviews
             </a>

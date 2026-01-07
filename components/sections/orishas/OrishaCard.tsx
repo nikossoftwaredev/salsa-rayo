@@ -48,8 +48,8 @@ export default function OrishaCard({ orisha }: OrishaCardProps) {
     }
   }
   return (
-    <div 
-      className="card bg-base-100 shadow-2xl relative rounded-2xl transition-all duration-300 hover:scale-105"
+    <div
+      className="bg-background shadow-2xl relative rounded-2xl transition-all duration-300 hover:scale-105 overflow-hidden"
       style={{
         '--hover-color': orisha.color
       } as React.CSSProperties}
@@ -77,7 +77,7 @@ export default function OrishaCard({ orisha }: OrishaCardProps) {
         </div>
       </figure>
       
-      <div className="card-body p-4">
+      <div className="p-4">
         {/* Title with colored accent */}
         <div 
           className="text-sm font-bold opacity-90 mb-2 text-center"
@@ -109,7 +109,7 @@ export default function OrishaCard({ orisha }: OrishaCardProps) {
             href={orisha.wikiLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-xs btn-ghost gap-1 hover:text-primary"
+            className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md hover:bg-white/10 hover:text-primary transition-colors duration-200"
           >
             <span>See More</span>
             <FaExternalLinkAlt size={10} />

@@ -53,19 +53,19 @@ const ScheduleSection = () => {
             className="relative"
           >
             {/* Day Container */}
-            <div className="relative flex flex-col md:flex-row items-stretch bg-gradient-to-br from-primary/10 to-accent/10 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/10 hover:border-primary/30 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/20 hover:bg-gradient-to-br hover:from-primary/15 hover:to-accent/15">
+            <div className="relative flex flex-col md:flex-row items-stretch bg-card backdrop-blur-xl rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-primary/20">
               {/* Subtle pattern overlay */}
               <div className="absolute inset-0 opacity-5" style={{
                 backgroundImage: 'radial-gradient(circle at 1px 1px, rgb(24, 160, 123) 1px, transparent 1px)',
                 backgroundSize: '20px 20px'
               }}></div>
               {/* Day Badge */}
-              <div className="relative md:w-48 p-6 md:p-8 flex items-center justify-center bg-white/10 backdrop-blur-md border-r border-white/10">
+              <div className="relative md:w-48 p-6 md:p-8 flex items-center justify-center bg-primary/10 backdrop-blur-md border-r border-border/10">
                 {/* Glass shine effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-50"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-foreground/20 to-transparent opacity-50"></div>
                 {/* Hover shine effect */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
-                <h3 className="relative text-2xl md:text-3xl font-black text-white uppercase tracking-wider drop-shadow-lg">
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-foreground/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+                <h3 className="relative text-2xl md:text-3xl font-black text-foreground uppercase tracking-wider drop-shadow-lg">
                   {/* @ts-expect-error Dynamic key access for days */}
                   {t(`days.${dayKey}`).slice(0, 3)}
                 </h3>
@@ -80,17 +80,17 @@ const ScheduleSection = () => {
                       className="flex items-center justify-between gap-4 group"
                     >
                       {/* Time */}
-                      <div className="w-24 md:w-28 text-xs md:text-sm font-bold text-white/70 group-hover:text-primary transition-colors duration-300 whitespace-nowrap">
+                      <div className="w-24 md:w-28 text-xs md:text-sm font-bold text-foreground/70 group-hover:text-primary transition-colors duration-300 whitespace-nowrap">
                         {time}
                       </div>
 
                       {/* Title with hint */}
                       <div className="flex-1">
-                        <div className="text-sm md:text-base font-semibold text-white group-hover:text-primary transition-colors duration-300">
+                        <div className="text-sm md:text-base font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
                           {title}
                         </div>
                         {hint && (
-                          <div className="text-xs md:text-sm font-normal text-gray-400">
+                          <div className="text-xs md:text-sm font-normal text-muted-foreground">
                             ({hint})
                           </div>
                         )}

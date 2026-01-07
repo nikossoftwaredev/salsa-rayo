@@ -8,13 +8,14 @@ import {
   useCallback,
   useState,
 } from "react";
-import Card from "@/components/Card";
-import Button from "@/components/Button";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { SectionTitle } from "@/components/SectionTitle";
-import TextArea from "@/components/TextArea";
-import TextField from "@/components/TextField";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import { IoMdSend } from "react-icons/io";
 import { FaUser, FaPhone, FaEnvelope } from "react-icons/fa6";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { sendContactFormEmail } from "@/server-actions/send-email";
 import Toast from "@/components/Toast";
 import { z } from "zod";
@@ -24,7 +25,8 @@ const formSchema = z.object({
   firstname: z.string().min(1, "validation.firstNameRequired"),
   lastname: z.string().min(1, "validation.lastNameRequired"),
   email: z.string().email("validation.invalidEmail"),
-  phone: z.string()
+  phone: z
+    .string()
     .min(10, "validation.invalidPhone")
     .regex(
       /^[+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{4,12}$/,
@@ -103,11 +105,20 @@ interface ContactFormProps {
   onSuccess?: () => void;
 }
 
-const ContactForm = ({ showTextArea = true, initialMessage = "", hideTitle = false, onSuccess }: ContactFormProps) => {
+const ContactForm = ({
+  showTextArea = true,
+  initialMessage = "",
+  hideTitle = false,
+  onSuccess,
+}: ContactFormProps) => {
   const t = useTranslations("Contact");
   const [loading, setLoading] = useState<boolean>(false);
-  const [formData, setFormData] = useState<FormData>(initFormData(initialMessage));
-  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+  const [formData, setFormData] = useState<FormData>(
+    initFormData(initialMessage)
+  );
+  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
+    {}
+  );
   const [toast, setToast] = useState<{
     isVisible: boolean;
     message: string;
@@ -122,7 +133,7 @@ const ContactForm = ({ showTextArea = true, initialMessage = "", hideTitle = fal
     (dataField: keyof FormData) => (e: any) => {
       const value = e.target.value;
       setFormData((prev) => ({ ...prev, [dataField]: value }));
-      
+
       // Clear error for this field when user starts typing
       if (errors[dataField]) {
         setErrors((prev) => ({ ...prev, [dataField]: undefined }));
@@ -134,7 +145,7 @@ const ContactForm = ({ showTextArea = true, initialMessage = "", hideTitle = fal
   const onSendEmail = useCallback(
     async (e: MouseEvent<HTMLElement>) => {
       e.preventDefault();
-      
+
       // Validate form data
       try {
         formSchema.parse(formData);
@@ -150,7 +161,7 @@ const ContactForm = ({ showTextArea = true, initialMessage = "", hideTitle = fal
             }
           });
           setErrors(fieldErrors);
-          
+
           // Show error toast
           setToast({
             isVisible: true,
@@ -160,7 +171,7 @@ const ContactForm = ({ showTextArea = true, initialMessage = "", hideTitle = fal
           return;
         }
       }
-      
+
       setLoading(true);
 
       try {
@@ -168,15 +179,15 @@ const ContactForm = ({ showTextArea = true, initialMessage = "", hideTitle = fal
 
         if (result.success) {
           // Track Facebook Pixel Lead event
-          if (typeof window !== 'undefined' && (window as any).fbq) {
-            (window as any).fbq('track', 'Lead', {
+          if (typeof window !== "undefined" && (window as any).fbq) {
+            (window as any).fbq("track", "Lead", {
               value: 0,
-              currency: 'EUR',
-              content_name: 'Contact Form',
-              content_category: 'Dance Classes',
+              currency: "EUR",
+              content_name: "Contact Form",
+              content_category: "Dance Classes",
             });
           }
-          
+
           setToast({
             isVisible: true,
             message: result.message,
@@ -184,7 +195,7 @@ const ContactForm = ({ showTextArea = true, initialMessage = "", hideTitle = fal
           });
           setFormData(initFormData(initialMessage));
           setErrors({});
-          
+
           // Call onSuccess callback if provided
           if (onSuccess) {
             setTimeout(() => {
@@ -231,72 +242,89 @@ const ContactForm = ({ showTextArea = true, initialMessage = "", hideTitle = fal
         onClose={() => setToast({ ...toast, isVisible: false })}
       />
       {!hideTitle && <SectionTitle title={t("title")} isMainSection />}
-      <Card className="mb-5 w-full max-w-[600px] bg-transparent border border-white/20 shadow-xl hover:bg-black/70 transition-all duration-300">
-        <form>
-          <div className="grid p-4 gap-6 grid-cols-1 md:grid-cols-2">
-            {inputFields.filter(field => showTextArea || field.dataField !== "message").map((inputField) => {
-              const {
-                dataField,
-                inputType,
-                placeholder,
-                required,
-                colSpan,
-                id,
-              } = inputField;
+      <Card className="p-0 w-full max-w-[600px] bg-transparent border border-white/20 shadow-xl hover:bg-black/70 transition-all duration-300">
+        <form className="p-4 flex flex-col gap-10">
+          <div className="grid  gap-6 grid-cols-1 md:grid-cols-2">
+            {inputFields
+              .filter((field) => showTextArea || field.dataField !== "message")
+              .map((inputField) => {
+                const {
+                  dataField,
+                  inputType,
+                  placeholder,
+                  required,
+                  colSpan,
+                  id,
+                } = inputField;
 
-              return inputType === "textarea" ? (
-                <TextArea
-                  key={dataField}
-                  className={`col-span-1 md:col-span-2 ${errors[dataField] ? "textarea-error" : ""}`}
-                  required={false}
-                  rows={4}
-                  autoComplete={id}
-                  value={formData[dataField] as string}
-                  placeholder={t(placeholder as any)}
-                  onChange={onChangeFormData(dataField)}
-                  name={id}
-                />
-              ) : (
-                <div
-                  key={dataField}
-                  className={colSpan ? "col-span-1 md:col-span-full relative" : "relative"}
-                >
-                  <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
-                    {inputField.icon}
-                  </div>
-                  <TextField
-                    id={id}
-                    className={`pl-10 ${errors[dataField] ? "input-error" : ""}`}
-                    required={required}
-                    type={inputType}
-                    value={formData[dataField as keyof FormData]}
-                    placeholder={t(placeholder as any)}
+                return inputType === "textarea" ? (
+                  <Textarea
+                    key={dataField}
+                    className={`col-span-1 md:col-span-2 ${
+                      errors[dataField] ? "textarea-error" : ""
+                    }`}
+                    required={false}
+                    rows={6}
                     autoComplete={id}
+                    value={formData[dataField] as string}
+                    placeholder={t(placeholder as any)}
                     onChange={onChangeFormData(dataField)}
                     name={id}
                   />
-                  {errors[dataField] && (
-                    <span className="text-xs text-error absolute -bottom-5 left-3">
-                      {errors[dataField]}
-                    </span>
-                  )}
-                </div>
-              );
-            })}
-            <Button
-              className="mt-5 col-span-1 md:col-span-2"
-              onClick={onSendEmail}
-              disabled={disabled}
-              loading={loading}
-              loadingText={t("sending")}
-              type="submit"
-            >
-              <span className="flex items-center justify-center gap-2">
-                {t("send")}
-                <IoMdSend size={18} />
-              </span>
-            </Button>
+                ) : (
+                  <div
+                    key={dataField}
+                    className={
+                      colSpan
+                        ? "col-span-1 md:col-span-full relative"
+                        : "relative"
+                    }
+                  >
+                    <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
+                      {inputField.icon}
+                    </div>
+                    <Input
+                      id={id}
+                      className={`pl-10 ${
+                        errors[dataField] ? "input-error" : ""
+                      }`}
+                      required={required}
+                      type={inputType}
+                      value={formData[dataField as keyof FormData]}
+                      placeholder={t(placeholder as any)}
+                      autoComplete={id}
+                      onChange={onChangeFormData(dataField)}
+                      name={id}
+                    />
+                    {errors[dataField] && (
+                      <span className="text-xs text-error absolute -bottom-5 left-3">
+                        {errors[dataField]}
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
           </div>
+          <Button
+            className="mt-auto w-full"
+            onClick={onSendEmail}
+            disabled={disabled || loading}
+            type="submit"
+          >
+            <span className="flex items-center justify-center gap-2">
+              {loading ? (
+                <>
+                  <AiOutlineLoading3Quarters className="animate-spin h-4 w-4" />
+                  {t("sending")}
+                </>
+              ) : (
+                <>
+                  {t("send")}
+                  <IoMdSend size={18} />
+                </>
+              )}
+            </span>
+          </Button>
         </form>
       </Card>
     </main>

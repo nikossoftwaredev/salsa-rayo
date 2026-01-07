@@ -39,7 +39,7 @@ const HeroSection = () => {
           sizes="100vw"
           quality={85}
         />
-        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="absolute inset-0 bg-background/60"></div>
       </div>
 
       {/* Main Content Container - removed animated overlay and particles for performance */}
@@ -47,7 +47,7 @@ const HeroSection = () => {
         <div className="flex flex-col items-center justify-center text-center">
           {/* Center Content */}
           <div
-            className={`flex flex-col items-center text-center text-white space-y-2 md:space-y-6 transform transition-all duration-1000 md:bg-white/10 md:backdrop-blur-md md:border md:border-white/20 md:shadow-2xl md:rounded-2xl p-8 md:p-12 ${
+            className={`flex flex-col items-center text-center text-foreground space-y-2 md:space-y-6 transform transition-all duration-1000 md:bg-foreground/10 md:backdrop-blur-md md:border md:border-border/20 md:shadow-2xl md:rounded-2xl p-8 md:p-12 ${
               isLoaded
                 ? "translate-y-0 opacity-100"
                 : "translate-y-20 opacity-0"

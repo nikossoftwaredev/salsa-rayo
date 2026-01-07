@@ -12,7 +12,7 @@ const GetStartedButton = () => {
   return (
     <Link
       href="#contact-form"
-      className="relative inline-flex h-16 px-10 bg-transparent border-2 border-primary hover:border-accent text-white font-bold rounded-xl transition-all duration-300 hover:scale-105 overflow-hidden"
+      className="relative inline-flex h-16 px-10 bg-transparent border-2 border-primary hover:border-accent text-foreground font-bold rounded-xl transition-all duration-300 hover:scale-105 overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

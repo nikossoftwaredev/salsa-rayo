@@ -1,11 +1,11 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import Card from "@/components/Card";
 import { MAP_IFRAME, NAVIGATION, ADDRESS } from "@/data/config";
 import { SectionTitle } from "@/components/SectionTitle";
 import { MdDirections, MdLocationPin } from "react-icons/md";
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 
 const MapSection = () => {
   const t = useTranslations('Map');
@@ -20,49 +20,50 @@ const MapSection = () => {
         transition={{ duration: 0.6 }}
         className="w-full max-w-[600px]"
       >
-        <Card className="backdrop-blur-md bg-white/10 border border-white/20 shadow-xl hover:bg-white/15 transition-all duration-300">
+        <div className="bg-card rounded-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
           {/* Address Bar */}
-          <div className="p-4 border-b border-white/10">
+          <div className="px-4 py-3">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-accent/20">
                 <MdLocationPin className="text-primary" size={20} />
               </div>
               <div className="flex-1">
-                <p className="text-sm text-white/60">{t('subtitle')}</p>
-                <p className="text-base font-medium text-white/90">{ADDRESS}</p>
+                <p className="text-sm text-muted-foreground">{t('subtitle')}</p>
+                <p className="text-base font-medium text-foreground/90">{ADDRESS}</p>
               </div>
             </div>
           </div>
 
           {/* Map Container */}
-          <div className="relative w-full h-[400px] overflow-hidden rounded-b-lg">
+          <div className="relative w-full h-[400px] overflow-hidden">
             <iframe
               title={t('mapTitle')}
               src={MAP_IFRAME}
-              className="rounded-lg border-hidden invert-[90%] hue-rotate-180 w-full h-full"
-              width="100%"
-              height="100%"
+              className="border-hidden invert-[90%] hue-rotate-180 w-full h-full block"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
 
             {/* Overlay gradient for better integration */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent pointer-events-none" />
 
             {/* Directions Button */}
-            <motion.a
+            <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="btn btn-primary absolute bottom-4 right-4 flex items-center gap-2 shadow-xl hover:shadow-2xl z-10 bg-gradient-to-r from-primary to-accent border-none"
-              href={NAVIGATION}
-              target="_blank"
-              rel="noopener noreferrer"
+              className="absolute bottom-4 right-4 z-10"
             >
-              <MdDirections size={20} />
-              {t('getDirections')}
-            </motion.a>
+              <Button
+                variant="gradient"
+                onClick={() => window.open(NAVIGATION, '_blank', 'noopener,noreferrer')}
+                className="font-medium"
+              >
+                <MdDirections size={20} />
+                {t('getDirections')}
+              </Button>
+            </motion.div>
           </div>
-        </Card>
+        </div>
       </motion.div>
     </section>
   );

@@ -14,9 +14,15 @@ import {
 } from "@/data/gallery";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
-import Button from "@/components/Button";
+import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import MasonryGallery from "./MasonryGallery";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { IoClose } from "react-icons/io5";
 
 type FilterType = GalleryCategory;
 
@@ -108,15 +114,15 @@ const GallerySection: React.FC<GallerySectionProps> = ({
             key={tab.id}
             onClick={() => setActiveFilter(tab.id)}
             className={twMerge(
-              "flex items-center gap-2 px-3 sm:px-6 py-2 sm:py-3 rounded-full font-semibold transition-all duration-300",
-              "backdrop-blur-md border border-white/20",
+              "flex items-center gap-2 px-3 sm:px-6 py-2 sm:py-3 rounded-full font-semibold transition-all duration-300 cursor-pointer",
+              "backdrop-blur-md border border-border/20",
               activeFilter === tab.id
-                ? "bg-gradient-to-r from-primary to-accent text-white shadow-lg"
-                : "bg-white/10 text-white/80 hover:bg-white/20"
+                ? "bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-lg scale-105"
+                : "bg-card text-foreground/80 hover:bg-card/80 hover:scale-105 hover:shadow-md hover:border-primary/30"
             )}
           >
             <span
-              className={activeFilter === tab.id ? "text-white" : tab.color}
+              className={activeFilter === tab.id ? "text-primary-foreground" : tab.color}
             >
               {tab.icon}
             </span>
@@ -133,10 +139,10 @@ const GallerySection: React.FC<GallerySectionProps> = ({
         transition={{ duration: 0.3 }}
         className="text-center mb-6"
       >
-        <h2 className="text-2xl md:text-3xl font-bold text-white/90">
+        <h2 className="text-2xl md:text-3xl font-bold text-foreground/90">
           {filterTabs.find(tab => tab.id === activeFilter)?.label}
         </h2>
-        <p className="text-sm md:text-base text-white/60 mt-2">
+        <p className="text-sm md:text-base text-muted-foreground mt-2">
           {t(`descriptions.${activeFilter}` as `descriptions.${typeof activeFilter}`)}
         </p>
       </motion.div>
@@ -156,63 +162,59 @@ const GallerySection: React.FC<GallerySectionProps> = ({
 
       {/* See More Button - only on homepage and when there are more items available */}
       {!isFullPage && totalItemsInCategory > 4 && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-          className="mt-12"
-        >
+        <div className="mt-12">
           <Button
+            variant="gradient"
             onClick={handleSeeMore}
-            className="btn-lg bg-gradient-to-r from-primary to-accent text-white border-none hover:shadow-2xl"
+            className="px-8 py-3 text-lg"
           >
             {t('seeMore')}
           </Button>
-        </motion.div>
+        </div>
       )}
 
-      {/* DaisyUI Modal for enlarged view */}
-      <input type="checkbox" id="gallery-modal" className="modal-toggle" checked={!!selectedItem} onChange={() => {}} />
-      <div className="modal" onClick={() => setSelectedItem(null)}>
-        <div className="modal-box max-w-5xl w-full max-h-[95vh] p-2 sm:p-0 bg-black/95" onClick={(e) => e.stopPropagation()}>
-          {selectedItem && (
-            <>
-              {/* Close button */}
-              <label 
-                htmlFor="gallery-modal" 
-                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 z-10 text-white hover:bg-white/20"
-                onClick={() => setSelectedItem(null)}
-              >
-                ✕
-              </label>
-
-              {selectedItem.type === "video" ? (
-                <div className="aspect-video w-full relative bg-black">
-                  <iframe
-                    className="absolute inset-0 w-full h-full"
-                    src={`https://www.youtube.com/embed/${selectedItem.youtubeId}?autoplay=1`}
-                    title={selectedItem.title}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                  />
-                </div>
-              ) : (
-                <div className="relative flex items-center justify-center min-h-[50vh] max-h-[90vh] px-2 sm:px-0">
-                  <Image
-                    src={selectedItem.src || ''}
-                    alt={selectedItem.alt || ''}
-                    width={1200}
-                    height={1600}
-                    className="max-w-full max-h-[90vh] w-auto h-auto object-contain"
-                  />
-                </div>
-              )}
-            </>
-          )}
+      {/* Dialog for enlarged view */}
+      {selectedItem && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-background/90 backdrop-blur-sm"
+            onClick={() => setSelectedItem(null)}
+          />
+          
+          {/* Content */}
+          <div className="relative w-full h-full flex items-center justify-center p-4">
+            <button
+              onClick={() => setSelectedItem(null)}
+              className="absolute top-4 right-4 z-50 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 hover:bg-background hover:scale-110 transition-all duration-200"
+            >
+              <IoClose className="w-6 h-6 text-foreground" />
+            </button>
+            
+            {selectedItem.type === "video" ? (
+              <div className="relative w-full max-w-6xl aspect-video">
+                <iframe
+                  className="absolute inset-0 w-full h-full rounded-lg"
+                  src={`https://www.youtube.com/embed/${selectedItem.youtubeId}?autoplay=1`}
+                  title={selectedItem.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+            ) : (
+              <Image
+                src={selectedItem.src || ''}
+                alt={selectedItem.alt || ''}
+                width={2400}
+                height={2400}
+                className="max-w-full max-h-full w-auto h-auto object-contain rounded-lg"
+                quality={100}
+                priority
+              />
+            )}
+          </div>
         </div>
-        <label className="modal-backdrop" htmlFor="gallery-modal" onClick={() => setSelectedItem(null)}>Close</label>
-      </div>
+      )}
     </section>
   );
 };

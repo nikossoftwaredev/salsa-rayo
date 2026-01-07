@@ -1,12 +1,9 @@
 import { Metadata } from 'next'
 import OrishasGrid from '@/components/sections/orishas/OrishasGrid'
 import BackgroundEffects from '@/components/BackgroundEffects'
+import { BasePageProps } from '@/types/pageprops'
 
-type Props = {
-  params: Promise<{ locale: string }>
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: BasePageProps): Promise<Metadata> {
   const locale = (await params).locale
   
   const titles = {
@@ -37,7 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default function OrishasPage() {
   return (
-    <main className="min-h-screen bg-base-100">
+    <main className="min-h-screen bg-background">
       <BackgroundEffects />
       <OrishasGrid />
     </main>

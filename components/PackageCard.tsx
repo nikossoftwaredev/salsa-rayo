@@ -1,8 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import Card from "@/components/Card";
-import Button from "@/components/Button";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { FaBolt } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -55,12 +55,12 @@ const PackageCard: React.FC<PackageCardProps> = ({
       transition={{ duration: 0.6 }}
       className="w-full max-w-sm mx-auto"
     >
-      <Card className={`relative overflow-hidden bg-gradient-to-br from-base-300 via-base-200 to-base-300 border-2 ${isMostPopular ? 'border-accent hover:border-accent hover:shadow-2xl hover:shadow-accent/50' : 'border-primary/30 hover:border-primary/60 hover:shadow-2xl hover:shadow-primary/30'} transition-all duration-500 hover:scale-[1.02]`}>
+      <Card className={`relative overflow-hidden border-2 ${isMostPopular ? 'border-accent hover:shadow-[0_20px_50px_rgba(255,0,255,0.4)] hover:shadow-accent/50' : 'border-primary/50 hover:shadow-[0_20px_50px_rgba(139,92,246,0.3)] hover:shadow-primary/40'} transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1`}>
         {/* Most Popular Badge */}
         {isMostPopular && (
           <div className="absolute top-0 right-0 z-10">
             <div className="relative">
-              <div className="bg-gradient-to-r from-primary to-accent text-white text-xs font-bold px-4 py-2 rounded-bl-2xl animate-pulse-slow">
+              <div className="bg-gradient-to-r from-primary to-accent text-primary-foreground text-xs font-bold px-4 py-2 rounded-bl-2xl animate-pulse-slow">
                 {t("mostPopular")}
               </div>
               <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent blur-lg opacity-50"></div>
@@ -80,11 +80,11 @@ const PackageCard: React.FC<PackageCardProps> = ({
           <div className="text-center py-4">
             <div className="flex items-center justify-center gap-3">
               {isStudentDiscount && (
-                <span className="text-2xl text-white/50 line-through">
+                <span className="text-2xl text-muted-foreground line-through">
                   {price}€
                 </span>
               )}
-              <span className="text-5xl font-bold text-white">
+              <span className="text-5xl font-bold text-foreground">
                 {displayPrice}€
               </span>
             </div>
@@ -104,7 +104,7 @@ const PackageCard: React.FC<PackageCardProps> = ({
                 <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 flex items-center justify-center group-hover:from-primary/30 group-hover:to-accent/30 transition-all duration-300">
                   <FaBolt className="text-primary text-sm group-hover:text-accent transition-colors duration-300" />
                 </div>
-                <span className="text-white/80 text-sm leading-relaxed">
+                <span className="text-foreground/80 text-sm leading-relaxed">
                   {feature}
                 </span>
               </motion.div>
@@ -114,9 +114,9 @@ const PackageCard: React.FC<PackageCardProps> = ({
           {/* CTA Button */}
           <div className="pt-4">
             <Button
+              variant="gradient"
               onClick={handleClaim}
-              className="w-full bg-gradient-to-r from-primary to-accent text-white border-none hover:shadow-xl hover:shadow-primary/50 font-bold text-base md:text-lg py-3"
-              outlined={false}
+              className="w-full font-bold text-base md:text-lg py-3"
             >
               <span className="flex items-center justify-center gap-2">
                 {t("getStarted")}

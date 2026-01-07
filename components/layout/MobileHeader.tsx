@@ -36,7 +36,7 @@ const MobileHeader = () => {
       <div className="flex items-center justify-start h-full px-4">
         <button
           onClick={toggleMenu}
-          className="btn btn-circle btn-ghost text-primary hover:bg-primary/20 transition-colors duration-300"
+          className="flex items-center justify-center w-10 h-10 rounded-full text-primary hover:bg-primary/20 transition-colors duration-300"
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
           {isMenuOpen ? <MdClose size={24} /> : <MdMenu size={24} />}
