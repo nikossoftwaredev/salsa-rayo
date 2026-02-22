@@ -5,7 +5,8 @@
       "Bash(pnpm exec next lint:*)",
       "Bash(pnpm next:*)",
       "Bash(pnpm approve-builds:*)",
-      "Bash(pnpm config set:*)"
+      "Bash(pnpm config set:*)",
+      "Bash(git push:*)"
     ],
     "additionalDirectories": [
       "C:\\Users\\nikos\\Desktop\\repos\\salsa-rayo\\app\\[locale]\\(main)"
