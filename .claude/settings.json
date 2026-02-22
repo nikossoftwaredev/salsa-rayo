@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.soysalsa.co.uk)",
+      "Bash(pnpm exec next lint:*)",
+      "Bash(pnpm next:*)",
+      "Bash(pnpm approve-builds:*)",
+      "Bash(pnpm config set:*)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\nikos\\Desktop\\repos\\salsa-rayo\\app\\[locale]\\(main)"
+    ]
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true
+  }
+}
