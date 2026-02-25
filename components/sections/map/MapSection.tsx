@@ -20,7 +20,7 @@ const MapSection = () => {
         transition={{ duration: 0.6 }}
         className="w-full max-w-[600px]"
       >
-        <div className="bg-card rounded-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+        <div className="bg-card/80 backdrop-blur-sm rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 border border-border/20 hover:border-primary/20">
           {/* Address Bar */}
           <div className="px-4 py-3">
             <div className="flex items-center gap-3">

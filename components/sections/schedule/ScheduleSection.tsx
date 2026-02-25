@@ -16,7 +16,6 @@ interface ScheduleItem {
   hint?: string;
 }
 
-
 const ScheduleSection = () => {
   const t = useTranslations("Schedule");
   const [currentDayIndex, setCurrentDayIndex] = useState<number | null>(null);
@@ -38,7 +37,6 @@ const ScheduleSection = () => {
 
       <SectionTitle title={t("title")} isMainSection />
 
-
       <div className="w-full max-w-4xl space-y-4">
         {SCHEDULE.map(({ dayKey, schedule, dayIndex }, index) => (
           <motion.div
@@ -53,21 +51,14 @@ const ScheduleSection = () => {
             className="relative"
           >
             {/* Day Container */}
-            <div className="relative flex flex-col md:flex-row items-stretch bg-card backdrop-blur-xl rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-primary/20">
-              {/* Subtle pattern overlay */}
-              <div className="absolute inset-0 opacity-5" style={{
-                backgroundImage: 'radial-gradient(circle at 1px 1px, rgb(24, 160, 123) 1px, transparent 1px)',
-                backgroundSize: '20px 20px'
-              }}></div>
+            <div className="relative flex flex-col md:flex-row items-stretch bg-card/80 backdrop-blur-xl rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 border border-border/20 hover:border-primary/20">
               {/* Day Badge */}
-              <div className="relative md:w-48 p-6 md:p-8 flex items-center justify-center bg-primary/10 backdrop-blur-md border-r border-border/10">
-                {/* Glass shine effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-foreground/20 to-transparent opacity-50"></div>
-                {/* Hover shine effect */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-foreground/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
-                <h3 className="relative text-2xl md:text-3xl font-black text-foreground uppercase tracking-wider drop-shadow-lg">
-                  {/* @ts-expect-error Dynamic key access for days */}
-                  {t(`days.${dayKey}`).slice(0, 3)}
+              <div className="relative md:w-44 p-5 md:p-8 flex items-center justify-center bg-gradient-to-br from-primary/15 to-accent/10 border-b md:border-b-0 md:border-r border-border/10">
+                <h3 className="relative text-2xl md:text-3xl font-black uppercase tracking-wider">
+                  <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                    {/* @ts-expect-error Dynamic key access for days */}
+                    {t(`days.${dayKey}`).slice(0, 3)}
+                  </span>
                 </h3>
               </div>
 
@@ -102,7 +93,7 @@ const ScheduleSection = () => {
                           {instructors.map((instructor) => (
                             <div
                               key={instructor.name}
-                              className="relative w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden border-2 border-white/20 group-hover:border-primary/50 transition-all duration-300"
+                              className="relative w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden border-2 border-border/30 group-hover:border-primary/50 transition-all duration-300 shadow-sm"
                             >
                               <Image
                                 src={instructor.image}
@@ -123,7 +114,7 @@ const ScheduleSection = () => {
 
             {/* Current Day Indicator */}
             {currentDayIndex === dayIndex && (
-              <div className="absolute -top-2 -right-2 bg-primary text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+              <div className="absolute -top-2 -right-2 bg-gradient-to-r from-primary to-accent text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-lg shadow-primary/30 animate-pulse">
                 {t("today")}
               </div>
             )}

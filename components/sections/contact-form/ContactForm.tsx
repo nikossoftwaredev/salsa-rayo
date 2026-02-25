@@ -12,7 +12,6 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SectionTitle } from "@/components/SectionTitle";
 import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
 import { IoMdSend } from "react-icons/io";
 import { FaUser, FaPhone, FaEnvelope } from "react-icons/fa6";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -30,7 +29,7 @@ const formSchema = z.object({
     .min(10, "validation.invalidPhone")
     .regex(
       /^[+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{4,12}$/,
-      "validation.invalidPhone"
+      "validation.invalidPhone",
     ),
   message: z.string().optional(),
 });
@@ -62,7 +61,7 @@ const inputFields: InputFieldProps[] = [
     inputType: "text",
     placeholder: "firstName",
     required: true,
-    icon: <FaUser className="text-primary" size={18} />,
+    icon: <FaUser />,
   },
   {
     id: "lastname",
@@ -70,7 +69,7 @@ const inputFields: InputFieldProps[] = [
     inputType: "text",
     placeholder: "lastName",
     required: true,
-    icon: <FaUser className="text-primary" size={18} />,
+    icon: <FaUser />,
   },
   {
     id: "email",
@@ -78,7 +77,7 @@ const inputFields: InputFieldProps[] = [
     inputType: "email",
     placeholder: "email",
     required: true,
-    icon: <FaEnvelope className="text-primary" size={18} />,
+    icon: <FaEnvelope />,
   },
   {
     id: "phone",
@@ -86,7 +85,7 @@ const inputFields: InputFieldProps[] = [
     inputType: "tel",
     placeholder: "phone",
     required: true,
-    icon: <FaPhone className="text-primary" size={18} />,
+    icon: <FaPhone />,
   },
   {
     id: "message",
@@ -114,10 +113,10 @@ const ContactForm = ({
   const t = useTranslations("Contact");
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>(
-    initFormData(initialMessage)
+    initFormData(initialMessage),
   );
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
-    {}
+    {},
   );
   const [toast, setToast] = useState<{
     isVisible: boolean;
@@ -139,7 +138,7 @@ const ContactForm = ({
         setErrors((prev) => ({ ...prev, [dataField]: undefined }));
       }
     },
-    [errors]
+    [errors],
   );
 
   const onSendEmail = useCallback(
@@ -220,7 +219,7 @@ const ContactForm = ({
 
       setLoading(false);
     },
-    [formData, t, initialMessage, onSuccess]
+    [formData, t, initialMessage, onSuccess],
   );
 
   const disabled = inputFields.some((inputField) => {
@@ -242,9 +241,9 @@ const ContactForm = ({
         onClose={() => setToast({ ...toast, isVisible: false })}
       />
       {!hideTitle && <SectionTitle title={t("title")} isMainSection />}
-      <Card className="p-0 w-full max-w-[600px] bg-transparent border border-white/20 shadow-xl hover:bg-black/70 transition-all duration-300">
-        <form className="p-4 flex flex-col gap-10">
-          <div className="grid  gap-6 grid-cols-1 md:grid-cols-2">
+      <Card className="p-0 w-full max-w-[600px] bg-card/60 backdrop-blur-md border border-border/20 shadow-xl hover:shadow-2xl hover:shadow-primary/5 hover:border-primary/20 transition-all duration-300 rounded-2xl">
+        <form className="p-6 flex flex-col gap-8">
+          <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
             {inputFields
               .filter((field) => showTextArea || field.dataField !== "message")
               .map((inputField) => {
@@ -260,6 +259,7 @@ const ContactForm = ({
                 return inputType === "textarea" ? (
                   <Textarea
                     key={dataField}
+                    size="lg"
                     className={`col-span-1 md:col-span-2 ${
                       errors[dataField] ? "textarea-error" : ""
                     }`}
@@ -276,28 +276,34 @@ const ContactForm = ({
                     key={dataField}
                     className={
                       colSpan
-                        ? "col-span-1 md:col-span-full relative"
-                        : "relative"
+                        ? "col-span-1 md:col-span-full"
+                        : ""
                     }
                   >
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
-                      {inputField.icon}
-                    </div>
-                    <Input
-                      id={id}
-                      className={`pl-10 ${
+                    <div
+                      className={`flex items-center h-12 gap-3 rounded-md border border-input px-4 shadow-xs transition-[color,box-shadow] focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[3px] ${
                         errors[dataField] ? "input-error" : ""
                       }`}
-                      required={required}
-                      type={inputType}
-                      value={formData[dataField as keyof FormData]}
-                      placeholder={t(placeholder as any)}
-                      autoComplete={id}
-                      onChange={onChangeFormData(dataField)}
-                      name={id}
-                    />
+                    >
+                      {inputField.icon && (
+                        <span className="text-primary shrink-0">
+                          {inputField.icon}
+                        </span>
+                      )}
+                      <input
+                        id={id}
+                        required={required}
+                        type={inputType}
+                        value={formData[dataField as keyof FormData]}
+                        placeholder={t(placeholder as any)}
+                        autoComplete={id}
+                        onChange={onChangeFormData(dataField)}
+                        name={id}
+                        className="flex-1 h-full min-w-0 bg-transparent text-base outline-none placeholder:text-muted-foreground"
+                      />
+                    </div>
                     {errors[dataField] && (
-                      <span className="text-xs text-error absolute -bottom-5 left-3">
+                      <span className="text-xs text-error mt-1 ml-3 block">
                         {errors[dataField]}
                       </span>
                     )}
@@ -310,6 +316,7 @@ const ContactForm = ({
             onClick={onSendEmail}
             disabled={disabled || loading}
             type="submit"
+            size="lg"
           >
             <span className="flex items-center justify-center gap-2">
               {loading ? (

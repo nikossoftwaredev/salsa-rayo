@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Card } from "@/components/ui/card";
 import { FC, useState } from "react";
@@ -11,11 +10,11 @@ import { MdExpandMore, MdExpandLess } from "react-icons/md";
 
 // Highlight component for key stats/info
 const Highlight: FC<{ icon: React.ReactNode; label: string; value: string }> = ({ icon, label, value }) => (
-  <div className="flex items-center gap-3 p-3 bg-primary/5 rounded-lg">
-    <div className="text-primary">{icon}</div>
+  <div className="flex items-center gap-3 p-3 bg-primary/5 rounded-xl border border-primary/10 hover:border-primary/25 transition-colors duration-300">
+    <div className="text-primary/80">{icon}</div>
     <div>
-      <p className="text-xs text-muted-foreground">{label}</p>
-      <p className="font-semibold text-foreground">{value}</p>
+      <p className="text-xs text-muted-foreground tracking-wide uppercase">{label}</p>
+      <p className="font-bold text-foreground">{value}</p>
     </div>
   </div>
 );
@@ -27,9 +26,10 @@ const AboutCard: FC<{
 }> = ({ children, isSchool }) => (
   <Card className={`
     overflow-hidden transition-all duration-300
-    hover:shadow-xl hover:-translate-y-1
-    border-2 border-border/50 hover:border-primary/30
-    ${isSchool ? 'bg-gradient-to-br from-primary/5 to-transparent' : ''}
+    hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1
+    border border-border/30 hover:border-primary/25
+    backdrop-blur-sm
+    ${isSchool ? 'bg-gradient-to-br from-primary/[0.06] via-transparent to-accent/[0.03]' : 'bg-card/80'}
   `}>
     {children}
   </Card>
@@ -96,7 +96,7 @@ const InstructorDescription: FC<{
   );
 };
 
-const AboutSection: FC<{ [key: string]: any }> = () => {
+const AboutSection: FC = () => {
   const t = useTranslations("About");
 
   return (
@@ -158,7 +158,7 @@ const AboutSection: FC<{ [key: string]: any }> = () => {
             <AboutCard>
               <div className="p-6 space-y-6">
                 <div className="flex items-center gap-6">
-                  <div className="relative w-24 h-24 flex-shrink-0">
+                  <div className="relative w-24 h-24 flex-shrink-0 rounded-full p-[2px] bg-gradient-to-br from-primary to-accent">
                     <Image
                       src="/images/instructor-anna.jpg"
                       alt={t("annaImageAlt")}
@@ -183,7 +183,7 @@ const AboutSection: FC<{ [key: string]: any }> = () => {
             <AboutCard>
               <div className="p-6 space-y-6">
                 <div className="flex items-center gap-6">
-                  <div className="relative w-24 h-24 flex-shrink-0">
+                  <div className="relative w-24 h-24 flex-shrink-0 rounded-full p-[2px] bg-gradient-to-br from-primary to-accent">
                     <Image
                       src="/images/instructor-konstantinos.jpg"
                       alt={t("konstantinosImageAlt")}

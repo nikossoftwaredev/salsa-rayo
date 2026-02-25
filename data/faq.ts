@@ -11,15 +11,15 @@ export type FaqCategory = (typeof FAQ_CATEGORIES)[number];
 type FaqQuestionKey =
   | "q1" | "q2" | "q3" | "q4"
   | "q5" | "q6" | "q7" | "q8"
-  | "q9" | "q10" | "q11"
-  | "q12" | "q13"
+  | "q9" | "q10"
+  | "q12" | "q13" | "q17" | "q18"
   | "q14" | "q15" | "q16";
 
 type FaqAnswerKey =
   | "a1" | "a2" | "a3" | "a4"
   | "a5" | "a6" | "a7" | "a8"
-  | "a9" | "a10" | "a11"
-  | "a12" | "a13"
+  | "a9" | "a10"
+  | "a12" | "a13" | "a17" | "a18"
   | "a14" | "a15" | "a16";
 
 export interface FaqItem {
@@ -44,11 +44,12 @@ export const FAQ_ITEMS: FaqItem[] = [
   // Pricing & Packages
   { questionKey: "q9", answerKey: "a9", category: "pricingPackages" },
   { questionKey: "q10", answerKey: "a10", category: "pricingPackages" },
-  { questionKey: "q11", answerKey: "a11", category: "pricingPackages" },
 
   // Location & Logistics
   { questionKey: "q12", answerKey: "a12", category: "locationLogistics" },
   { questionKey: "q13", answerKey: "a13", category: "locationLogistics" },
+  { questionKey: "q17", answerKey: "a17", category: "locationLogistics" },
+  { questionKey: "q18", answerKey: "a18", category: "locationLogistics" },
 
   // About the School
   { questionKey: "q14", answerKey: "a14", category: "aboutSchool" },

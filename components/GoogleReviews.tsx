@@ -62,9 +62,9 @@ const GoogleReviews = ({ placeId }: ReviewsProps) => {
   }
 
   return (
-    <div className="relative bg-background w-72 overflow-hidden border border-muted rounded-lg shadow-md">
+    <div className="relative bg-card/80 backdrop-blur-sm w-72 overflow-hidden border border-border/20 rounded-2xl shadow-lg hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
       {/* Gradient top border */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500 via-yellow-500 to-orange-500" />
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500 via-yellow-400 to-orange-500" />
 
       <div className="p-6">
         <div className="flex gap-4">

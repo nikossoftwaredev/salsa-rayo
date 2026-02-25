@@ -24,25 +24,25 @@ const Footer = () => {
       title: t("schedule"),
       subtitles: [
         {
-          icon: <MdOutlineCalendarToday />,
+          icon: <MdOutlineCalendarToday size={22} />,
           value: t("workDays"),
           type: "text",
         },
-        { icon: <MdAccessTime />, value: t("workHours"), type: "text" },
+        { icon: <MdAccessTime size={22} />, value: t("workHours"), type: "text" },
       ],
     },
     {
       title: t("contactInfo"),
       subtitles: [
-        { icon: <MdLocationPin />, value: t("address"), type: "text" },
-        { icon: <MdOutlinePhone />, value: PHONE, type: "tel" },
-        { icon: <MdMailOutline />, value: MAIL, type: "email" },
+        { icon: <MdLocationPin size={22} />, value: t("address"), type: "text" },
+        { icon: <MdOutlinePhone size={22} />, value: PHONE, type: "tel" },
+        { icon: <MdMailOutline size={22} />, value: MAIL, type: "email" },
       ],
     },
   ];
 
   return (
-    <footer className="relative w-full bg-card border-t border-border overflow-hidden">
+    <footer className="relative w-full bg-card/90 backdrop-blur-sm border-t border-border/30 overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-3xl animate-float-slow"></div>

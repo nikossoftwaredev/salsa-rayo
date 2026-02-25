@@ -17,17 +17,10 @@ import { twMerge } from "tailwind-merge";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import MasonryGallery from "./MasonryGallery";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { IoClose } from "react-icons/io5";
 
-type FilterType = GalleryCategory;
-
 interface FilterTab {
-  id: FilterType;
+  id: GalleryCategory;
   label: string;
   icon: React.ReactNode;
   color: string;
@@ -42,18 +35,13 @@ interface GallerySectionProps {
   initialCategory?: GalleryCategory;
 }
 
-const getFilterTabs = (): FilterTab[] => {
-  const tabs: FilterTab[] = Object.entries(GALLERY_CATEGORIES).map(
-    ([category, { label, icon, color }]) => ({
-      id: category as GalleryCategory,
-      label,
-      icon,
-      color,
-    })
-  );
-
-  return tabs;
-};
+const getFilterTabs = (): FilterTab[] =>
+  Object.entries(GALLERY_CATEGORIES).map(([category, { label, icon, color }]) => ({
+    id: category as GalleryCategory,
+    label,
+    icon,
+    color,
+  }));
 
 const getGalleryItems = (isFullPage: boolean, category?: GalleryCategory): GalleryItem[] => {
   const images: GalleryItem[] = GALLERY_IMAGES.map(img => ({ ...img, type: "image" as const }));
@@ -86,7 +74,7 @@ const GallerySection: React.FC<GallerySectionProps> = ({
   initialCategory,
 }) => {
   const t = useTranslations('Gallery');
-  const [activeFilter, setActiveFilter] = useState<FilterType>(initialCategory || "photos");
+  const [activeFilter, setActiveFilter] = useState<GalleryCategory>(initialCategory || "photos");
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
   const router = useRouter();
 
@@ -117,8 +105,8 @@ const GallerySection: React.FC<GallerySectionProps> = ({
               "flex items-center gap-2 px-3 sm:px-6 py-2 sm:py-3 rounded-full font-semibold transition-all duration-300 cursor-pointer",
               "backdrop-blur-md border border-border/20",
               activeFilter === tab.id
-                ? "bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-lg scale-105"
-                : "bg-card text-foreground/80 hover:bg-card/80 hover:scale-105 hover:shadow-md hover:border-primary/30"
+                ? "bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-lg shadow-primary/25 scale-105"
+                : "bg-card/80 text-foreground/70 hover:text-foreground hover:scale-105 hover:shadow-md hover:border-primary/25 hover:bg-primary/5"
             )}
           >
             <span

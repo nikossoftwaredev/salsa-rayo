@@ -8,21 +8,17 @@ import { MdMenu } from "react-icons/md";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { AuthButton } from "@/components/AuthButton";
 
 const Header = () => {
-  const t = useTranslations('Common');
+  const t = useTranslations("Common");
   const locale = useLocale();
   const [open, setOpen] = useState(false);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40">
-      <nav className="h-[60px] w-full bg-background/30 backdrop-blur-md border-b border-border/20 shadow-lg">
+      <nav className="h-[60px] w-full bg-background/40 backdrop-blur-xl border-b border-border/10 shadow-lg shadow-background/10">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-4 h-full">
           {/* Logo */}
           <Logo size="md" />
@@ -36,7 +32,8 @@ const Header = () => {
                     href={linkConfig.path}
                     className="font-bold text-lg text-foreground hover:text-primary relative group transition-colors duration-200 cursor-pointer"
                   >
-                    {linkConfig.text[locale as 'en' | 'el' | 'es'] || linkConfig.text.en}
+                    {linkConfig.text[locale as "en" | "el" | "es"] ||
+                      linkConfig.text.en}
                     <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
                   </Link>
                 </li>
@@ -51,12 +48,15 @@ const Header = () => {
             <SheetTrigger asChild>
               <button
                 className="flex items-center justify-center w-10 h-10 rounded-full md:hidden text-foreground hover:bg-foreground/20 transition-colors duration-200"
-                aria-label={t('openMenu')}
+                aria-label={t("openMenu")}
               >
                 <MdMenu size={24} />
               </button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-full bg-background border-l border-border/20">
+            <SheetContent
+              side="right"
+              className="w-full bg-background border-l border-border/20"
+            >
               {/* Language Switcher & Auth */}
               <div className="flex justify-between items-center mb-12 w-full">
                 <LanguageSwitcher isMobile />
@@ -73,7 +73,7 @@ const Header = () => {
                       onClick={() => setOpen(false)}
                       className="text-2xl font-bold text-primary hover:text-accent transition-colors duration-300"
                     >
-                      {link.text[locale as 'en' | 'el' | 'es'] || link.text.en}
+                      {link.text[locale as "en" | "el" | "es"] || link.text.en}
                     </Link>
                   ))}
                 </nav>

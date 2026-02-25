@@ -6,6 +6,11 @@ This document contains important development guidelines and best practices to fo
 
 - **NEVER RUN THE DEV SERVER YOURSELF I RUN IT**
 
+## shadcn/ui Component Sizing
+
+- **Always use the component's built-in `size` variant** (e.g., `size="lg"`) for sizing shadcn/ui components. NEVER use custom Tailwind classes like `h-12 text-base` to override sizes.
+- **Before adding extra classNames to a shadcn component**, check its existing base styles first to avoid duplicating or conflicting with styles already defined in the component (e.g., don't add `text-base` if it's already in the component's CVA variants).
+
 ## Icon Library Preference
 
 **Always use `react-icons` for icons in this project. Do NOT use `lucide-react` or other icon libraries.**
