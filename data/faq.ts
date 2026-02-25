@@ -9,18 +9,18 @@ export const FAQ_CATEGORIES = [
 export type FaqCategory = (typeof FAQ_CATEGORIES)[number];
 
 type FaqQuestionKey =
-  | "q1" | "q2" | "q3" | "q4"
+  | "q3" | "q4"
   | "q5" | "q6" | "q7" | "q8"
   | "q9" | "q10"
-  | "q12" | "q13" | "q17" | "q18"
-  | "q14" | "q15" | "q16";
+  | "q12" | "q13"
+  | "q14" | "q15";
 
 type FaqAnswerKey =
-  | "a1" | "a2" | "a3" | "a4"
+  | "a3" | "a4"
   | "a5" | "a6" | "a7" | "a8"
   | "a9" | "a10"
-  | "a12" | "a13" | "a17" | "a18"
-  | "a14" | "a15" | "a16";
+  | "a12" | "a13"
+  | "a14" | "a15";
 
 export interface FaqItem {
   questionKey: FaqQuestionKey;
@@ -30,8 +30,6 @@ export interface FaqItem {
 
 export const FAQ_ITEMS: FaqItem[] = [
   // Getting Started
-  { questionKey: "q1", answerKey: "a1", category: "gettingStarted" },
-  { questionKey: "q2", answerKey: "a2", category: "gettingStarted" },
   { questionKey: "q3", answerKey: "a3", category: "gettingStarted" },
   { questionKey: "q4", answerKey: "a4", category: "gettingStarted" },
 
@@ -48,11 +46,8 @@ export const FAQ_ITEMS: FaqItem[] = [
   // Location & Logistics
   { questionKey: "q12", answerKey: "a12", category: "locationLogistics" },
   { questionKey: "q13", answerKey: "a13", category: "locationLogistics" },
-  { questionKey: "q17", answerKey: "a17", category: "locationLogistics" },
-  { questionKey: "q18", answerKey: "a18", category: "locationLogistics" },
 
   // About the School
   { questionKey: "q14", answerKey: "a14", category: "aboutSchool" },
   { questionKey: "q15", answerKey: "a15", category: "aboutSchool" },
-  { questionKey: "q16", answerKey: "a16", category: "aboutSchool" },
 ];
