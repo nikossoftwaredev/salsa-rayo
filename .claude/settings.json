@@ -6,7 +6,9 @@
       "Bash(pnpm next:*)",
       "Bash(pnpm approve-builds:*)",
       "Bash(pnpm config set:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(git add components/sections/about/AboutSection.tsx components/sections/contact-form/ContactForm.tsx components/sections/schedule/ScheduleSection.tsx components/sections/gallery/GallerySection.tsx components/sections/faq/FaqSection.tsx)",
+      "Bash(git commit:*)"
     ],
     "additionalDirectories": [
       "C:\\Users\\nikos\\Desktop\\repos\\salsa-rayo\\app\\[locale]\\(main)"

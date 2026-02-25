@@ -161,19 +161,11 @@ const FaqSection = () => {
 
                   {/* Category Items */}
                   <Accordion type="single" collapsible className="space-y-4">
-                    {group.items.map((item, index) => (
-                      <motion.div
-                        key={item.questionKey}
-                        initial={{ opacity: 0, y: 12 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{
-                          duration: 0.3,
-                          delay: groupIndex * 0.08 + index * 0.03,
-                        }}
-                      >
+                    {group.items.map((item) => (
                         <AccordionItem
+                          key={item.questionKey}
                           value={item.questionKey}
-                          className="group border border-foreground/[0.06] rounded-xl bg-card/40 backdrop-blur-sm hover:bg-card/60 hover:border-primary/15 transition-all duration-300 px-5 md:px-6 overflow-hidden shadow-sm hover:shadow-md hover:shadow-primary/5"
+                          className="group border border-foreground/[0.06] rounded-xl bg-card/40 hover:bg-card/60 hover:border-primary/15 transition-all duration-300 px-5 md:px-6 overflow-hidden shadow-sm hover:shadow-md hover:shadow-primary/5"
                         >
                           <AccordionTrigger className="text-base md:text-[17px] font-semibold text-foreground/90 hover:text-foreground hover:no-underline py-5 gap-4">
                             <span className="flex items-start gap-3">
@@ -185,7 +177,6 @@ const FaqSection = () => {
                             {t(item.answerKey)}
                           </AccordionContent>
                         </AccordionItem>
-                      </motion.div>
                     ))}
                   </Accordion>
                 </motion.div>
@@ -201,16 +192,11 @@ const FaqSection = () => {
               transition={{ duration: 0.3 }}
             >
               <Accordion type="single" collapsible className="space-y-4">
-                {filteredItems.map((item, index) => (
-                  <motion.div
-                    key={item.questionKey}
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.35, delay: index * 0.04 }}
-                  >
+                {filteredItems.map((item) => (
                     <AccordionItem
+                      key={item.questionKey}
                       value={item.questionKey}
-                      className="group border border-foreground/[0.06] rounded-xl bg-card/40 backdrop-blur-sm hover:bg-card/60 hover:border-primary/15 transition-all duration-300 px-5 md:px-6 overflow-hidden shadow-sm hover:shadow-md hover:shadow-primary/5"
+                      className="group border border-foreground/[0.06] rounded-xl bg-card/40 hover:bg-card/60 hover:border-primary/15 transition-all duration-300 px-5 md:px-6 overflow-hidden shadow-sm hover:shadow-md hover:shadow-primary/5"
                     >
                       <AccordionTrigger className="text-base md:text-[17px] font-semibold text-foreground/90 hover:text-foreground hover:no-underline py-5 gap-4">
                         {t(item.questionKey)}
@@ -219,7 +205,6 @@ const FaqSection = () => {
                         {t(item.answerKey)}
                       </AccordionContent>
                     </AccordionItem>
-                  </motion.div>
                 ))}
               </Accordion>
             </motion.div>
