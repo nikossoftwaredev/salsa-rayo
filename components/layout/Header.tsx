@@ -21,7 +21,7 @@ const Header = () => {
       <nav className="h-[60px] w-full bg-background/40 backdrop-blur-xl border-b border-border/10 shadow-lg shadow-background/10">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-4 h-full">
           {/* Logo */}
-          <Logo size="md" />
+          <Logo size="sm" />
 
           {/* Desktop Links */}
           <div className="hidden md:flex items-center gap-8">

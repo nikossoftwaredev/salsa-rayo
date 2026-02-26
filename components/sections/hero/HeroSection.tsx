@@ -1,25 +1,19 @@
 "use client";
-import { useEffect, useState } from "react";
 import GetStartedButton from "@/components/GetStartedButton";
+import Logo from "@/components/Logo";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 const HeroSection = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
   const tHero = useTranslations("Hero");
-
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
 
   return (
     <section
       id="hero"
       className="h-screen w-full flex items-center justify-center relative overflow-hidden"
     >
-      {/* Background Image with preload */}
+      {/* Background */}
       <div className="absolute inset-0">
-        {/* Mobile Image */}
         <Image
           src="/images/gallery/our-space-vertical.jpg"
           alt="Dance Studio"
@@ -29,7 +23,6 @@ const HeroSection = () => {
           sizes="100vw"
           quality={85}
         />
-        {/* Desktop Image */}
         <Image
           src="/images/gallery/our-space.jpg"
           alt="Dance Studio"
@@ -39,43 +32,30 @@ const HeroSection = () => {
           sizes="100vw"
           quality={85}
         />
-        <div className="absolute inset-0 bg-background/60"></div>
+        <div className="absolute inset-0 bg-background/80" />
       </div>
 
-      {/* Main Content Container - removed animated overlay and particles for performance */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4">
-        <div className="flex flex-col items-center justify-center text-center">
-          {/* Center Content */}
-          <div
-            className={`flex flex-col items-center text-center text-foreground space-y-2 md:space-y-6 transform transition-all duration-1000 md:bg-foreground/10 md:backdrop-blur-md md:border md:border-border/20 md:shadow-2xl md:rounded-2xl p-8 md:p-12 ${
-              isLoaded
-                ? "translate-y-0 opacity-100"
-                : "translate-y-20 opacity-0"
-            }`}
-          >
+      {/* Content */}
+      <div className="relative z-10 flex flex-col items-center text-center px-6 gap-6 md:gap-8 animate-in fade-in slide-in-from-bottom-6 duration-700">
+        <Logo size="xxl" />
 
-            {/* Main Title - Now smaller than logo */}
-            <div className="relative">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-4 tracking-tight">
-                <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                  {tHero("dance")} {tHero("and")} {tHero("connect")}
-                </span>
-              </h1>
-            </div>
+        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight">
+          <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            {tHero("dance")}
+            {tHero("and")}
+            {tHero("connect")}
+          </span>
+        </h1>
 
-            {/* Main CTA Text */}
-            <div className="text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl">
-              <p className="font-semibold text-base sm:text-lg md:text-xl">
-                {tHero("joinCommunity")}
-              </p>
-            </div>
+        <p className="text-lg sm:text-xl md:text-2xl text-foreground/70 font-medium max-w-lg leading-relaxed">
+          {tHero("tagline")}
+          <br />
+          <span className="text-foreground/40 text-sm sm:text-base tracking-wide">
+            {tHero("cta")}
+          </span>
+        </p>
 
-            {/* Call to Action */}
-            <div className="mt-2 md:mt-4">
-              <GetStartedButton />
-            </div>
-          </div>
-        </div>
+        <GetStartedButton />
       </div>
     </section>
   );
