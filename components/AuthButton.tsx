@@ -18,9 +18,9 @@ export const AuthButton = ({ showNavRoutes = false }: AuthButtonProps) => {
     return (
       <Button
         onClick={() => signIn("google")}
-        variant="ghost"
+        variant="outline"
         size="sm"
-        className="text-muted-foreground hover:text-foreground border border-border/50 hover:border-border hover:bg-muted/50 transition-all duration-300"
+        className="border-primary/40 text-primary hover:text-primary-foreground hover:bg-primary/90 hover:border-primary transition-all duration-300"
       >
         Sign In
       </Button>
