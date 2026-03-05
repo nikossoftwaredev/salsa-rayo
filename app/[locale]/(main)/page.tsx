@@ -11,8 +11,6 @@ const MapSection = lazy(() => import("@/components/sections/map/MapSection"));
 const GallerySection = lazy(() => import("@/components/sections/gallery/GallerySection"));
 const GoogleReviews = lazy(() => import("@/components/GoogleReviews"));
 
-export const revalidate = 0;
-
 const SectionLoader = () => (
   <div className="w-full h-96 animate-pulse bg-secondary/10 rounded-lg" />
 );
