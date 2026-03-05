@@ -311,7 +311,7 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                             transition={{ duration: 0.25 }}
                             className="overflow-hidden"
                           >
-                            <div className="mt-2 grid gap-4 lg:grid-cols-2">
+                            <div className="mt-2 grid h-[400px] gap-4 lg:grid-cols-2">
                               {/* Left: student picker */}
                               <AttendancePanel
                                 hideIds={hideIds}
@@ -319,7 +319,7 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                               />
 
                               {/* Right: attendees list + save */}
-                              <div className="flex h-[400px] flex-col rounded-xl border bg-card">
+                              <div className="flex h-full flex-col rounded-xl border bg-card">
                                 {/* Header — pinned top */}
                                 <p className="shrink-0 px-4 pt-4 pb-3 text-xs font-medium uppercase tracking-wider text-muted-foreground/60">
                                   Attendees ({effectiveCount})

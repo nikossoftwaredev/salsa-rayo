@@ -78,7 +78,7 @@ export const AttendancePanel = ({
   }, [])
 
   return (
-    <div className="flex flex-col rounded-xl border bg-card">
+    <div className="flex h-full flex-col rounded-xl border bg-card">
       {/* Search */}
       <div className="border-b px-4 py-3">
         <div className="relative">
@@ -94,7 +94,7 @@ export const AttendancePanel = ({
       </div>
 
       {/* Student list */}
-      <ScrollArea className="h-[320px]">
+      <ScrollArea className="min-h-0 flex-1">
         {loading ? (
           <div className="space-y-1 px-2 py-2">
             {Array.from({ length: 6 }).map((_, i) => (
