@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -13,13 +14,6 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useDialogStore } from "@/lib/stores/dialog-store"
 import { createScheduleEntry } from "@/server-actions/schedule/create-schedule-entry"
@@ -30,13 +24,12 @@ import { DAY_NAMES } from "@/data/schedule"
 interface DialogData {
   entry: ScheduleEntryWithInstructors | null
   instructors: Instructor[]
-  dayIndex?: number
+  dayIndex: number
 }
 
 export const DIALOG_KEY = "ScheduleEntryDialog"
 
 const initialForm = {
-  dayIndex: 1,
   time: "",
   title: "",
   hint: "",
@@ -49,6 +42,8 @@ export const ScheduleEntryDialog = () => {
   const data = dialogData as DialogData | null
   const entry = data?.entry ?? null
   const instructors = data?.instructors ?? []
+  const dayIndex = data?.dayIndex ?? entry?.dayIndex ?? 1
+  const dayName = DAY_NAMES[dayIndex - 1] ?? ""
   const isEdit = !!entry?.id
 
   const [form, setForm] = useState(initialForm)
@@ -81,7 +76,7 @@ export const ScheduleEntryDialog = () => {
 
     try {
       const payload = {
-        dayIndex: form.dayIndex,
+        dayIndex,
         time: form.time,
         title: form.title,
         hint: form.hint || undefined,
@@ -110,51 +105,28 @@ export const ScheduleEntryDialog = () => {
   useEffect(() => {
     if (entry) {
       setForm({
-        dayIndex: entry.dayIndex,
         time: entry.time,
         title: entry.title,
         hint: entry.hint ?? "",
         instructorIds: entry.instructors.map((i) => i.id),
       })
     } else {
-      setForm({
-        ...initialForm,
-        dayIndex: data?.dayIndex ?? 1,
-      })
+      setForm(initialForm)
     }
     setError(null)
-  }, [entry, data?.dayIndex])
+  }, [entry])
 
   return (
     <Dialog open onOpenChange={(open) => { if (!open) handleClose() }}>
       <DialogContent className="max-w-md" onInteractOutside={isEdit ? (e) => e.preventDefault() : undefined}>
         <DialogHeader>
-          <DialogTitle>{isEdit ? "Edit Class" : "Add New Class"}</DialogTitle>
+          <DialogTitle>{isEdit ? `Edit Class — ${dayName}` : `Add Class — ${dayName}`}</DialogTitle>
           <DialogDescription>
             {isEdit ? "Update the class details below." : "Fill in the class details below."}
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="grid gap-4">
-          <div className="grid gap-2">
-            <Label htmlFor="dayIndex">Day *</Label>
-            <Select
-              value={String(form.dayIndex)}
-              onValueChange={(value) => setForm((prev) => ({ ...prev, dayIndex: Number(value) }))}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select a day" />
-              </SelectTrigger>
-              <SelectContent>
-                {DAY_NAMES.map((day, index) => (
-                  <SelectItem key={index + 1} value={String(index + 1)}>
-                    {day}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
           <div className="grid gap-2">
             <Label htmlFor="time">Time *</Label>
             <Input
@@ -204,6 +176,13 @@ export const ScheduleEntryDialog = () => {
                       onCheckedChange={(checked) =>
                         handleInstructorToggle(instructor.id, checked === true)
                       }
+                    />
+                    <Image
+                      src={instructor.image}
+                      alt={instructor.name}
+                      width={24}
+                      height={24}
+                      className="size-6 rounded-full object-cover"
                     />
                     <label
                       htmlFor={`instructor-${instructor.id}`}

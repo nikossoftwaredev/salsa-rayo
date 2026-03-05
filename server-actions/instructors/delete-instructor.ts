@@ -10,19 +10,10 @@ export const deleteInstructor = async (id: string) => {
     if (!adminCheck)
       return { success: false as const, error: "Unauthorized: Admin access required" }
 
-    const instructor = await prisma.instructor.findUnique({
-      where: { id },
-      include: { _count: { select: { scheduleEntries: true } } },
-    })
+    const instructor = await prisma.instructor.findUnique({ where: { id } })
 
     if (!instructor)
       return { success: false as const, error: "Instructor not found" }
-
-    if (instructor._count.scheduleEntries > 0)
-      return {
-        success: false as const,
-        error: `Cannot delete instructor with ${instructor._count.scheduleEntries} connected schedule ${instructor._count.scheduleEntries === 1 ? "entry" : "entries"}. Remove them from the schedule first.`,
-      }
 
     await prisma.instructor.delete({ where: { id } })
 

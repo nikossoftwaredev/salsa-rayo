@@ -35,7 +35,7 @@ export const ScheduleEditor = ({ entries, instructors }: ScheduleEditorProps) =>
   }
 
   const handleEdit = (entry: ScheduleEntryWithInstructors) => {
-    openDialog(DIALOG_KEY, { entry, instructors })
+    openDialog(DIALOG_KEY, { entry, instructors, dayIndex: entry.dayIndex })
   }
 
   const handleDelete = (id: string) => {
