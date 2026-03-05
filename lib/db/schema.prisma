@@ -55,6 +55,7 @@ model Student {
   phone         String?
   address       String?
   notes         String?
+  bio           String?
   isActive      Boolean        @default(true)
   rayoPoints    Int            @default(0)
   subscriptions Subscription[]

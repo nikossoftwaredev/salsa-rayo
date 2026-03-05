@@ -45,7 +45,44 @@ interface LanguageSwitcherProps {
   isMobile?: boolean;
 }
 
-export default function LanguageSwitcher({ isMobile = false }: LanguageSwitcherProps) {
+export { languages };
+
+export const LanguageSwitcherTabs = () => {
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+  const [isPending, startTransition] = useTransition();
+
+  const handleLanguageChange = (newLocale: string) => {
+    startTransition(() => {
+      router.replace(pathname, { locale: newLocale as typeof SUPPORTED_LOCALES[number] });
+    });
+  };
+
+  return (
+    <div className="flex items-center gap-1 px-2 py-1.5">
+      {SUPPORTED_LOCALES.map((lang) => {
+        const isActive = locale === lang;
+        return (
+          <button
+            key={lang}
+            onClick={() => handleLanguageChange(lang)}
+            disabled={isPending}
+            className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors cursor-pointer ${
+              isActive
+                ? "bg-primary/20 text-primary"
+                : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+            } ${isPending ? "opacity-50" : ""}`}
+          >
+            <span>{languages[lang].shortCode}</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+};
+
+const LanguageSwitcher = ({ isMobile = false }: LanguageSwitcherProps) => {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
@@ -62,12 +99,12 @@ export default function LanguageSwitcher({ isMobile = false }: LanguageSwitcherP
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="relative w-12 h-12 p-0 rounded-full text-foreground hover:text-primary hover:bg-transparent group"
+          className="relative size-12 p-0 rounded-full text-foreground hover:text-primary hover:bg-transparent group"
           aria-label="Change language"
           disabled={isPending}
         >
-          <MdLanguage size={24} className="size-6 transition-transform group-hover:scale-110" />
-          <span className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full animate-pulse" />
+          <MdLanguage size={24} className="transition-transform group-hover:scale-110" />
+          <span className="absolute -top-1 -right-1 size-2 bg-primary rounded-full animate-pulse" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
@@ -95,7 +132,7 @@ export default function LanguageSwitcher({ isMobile = false }: LanguageSwitcherP
                 <p className="text-xs opacity-70">{languages[lang].name}</p>
               </div>
               {isActive && (
-                <MdCheck className="h-5 w-5 text-primary" />
+                <MdCheck size={20} className="text-primary" />
               )}
             </DropdownMenuItem>
           );
@@ -103,4 +140,6 @@ export default function LanguageSwitcher({ isMobile = false }: LanguageSwitcherP
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+};
+
+export default LanguageSwitcher;

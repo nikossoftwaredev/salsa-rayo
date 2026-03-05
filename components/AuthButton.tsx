@@ -4,14 +4,17 @@ import { signIn, useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { ProfileDropdown } from "@/components/admin/ProfileDropdown";
 
-export const AuthButton = () => {
+interface AuthButtonProps {
+  showNavRoutes?: boolean;
+}
+
+export const AuthButton = ({ showNavRoutes = false }: AuthButtonProps) => {
   const { data: session, status } = useSession();
 
-  if (status === "loading") {
+  if (status === "loading")
     return <div className="size-8 rounded-full bg-muted animate-pulse" />;
-  }
 
-  if (!session) {
+  if (!session && !showNavRoutes) {
     return (
       <Button
         onClick={() => signIn("google")}
@@ -24,5 +27,5 @@ export const AuthButton = () => {
     );
   }
 
-  return <ProfileDropdown />;
+  return <ProfileDropdown showNavRoutes={showNavRoutes} />;
 };

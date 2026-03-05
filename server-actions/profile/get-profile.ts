@@ -2,8 +2,8 @@
 
 import { prisma } from "@/lib/db";
 
-export const getProfile = async (userId: string) => {
-  const user = await prisma.user.findUnique({
+export const getProfile = async (userId: string) =>
+  prisma.user.findUnique({
     where: { id: userId },
     select: {
       name: true,
@@ -11,6 +11,7 @@ export const getProfile = async (userId: string) => {
       student: {
         select: {
           name: true,
+          bio: true,
           rayoPoints: true,
           createdAt: true,
           _count: {
@@ -20,6 +21,3 @@ export const getProfile = async (userId: string) => {
       },
     },
   });
-
-  return user;
-};
