@@ -43,25 +43,101 @@ model User {
   name          String?
   accounts      Account[]
   sessions      Session[]
-  client        Client?
+  student       Student?
 }
 
-// Client model for business logic
-model Client {
-  id         String   @id @default(cuid())
-  userId     String   @unique
-  user       User     @relation(fields: [userId], references: [id])
-  name       String
-  email      String
-  phone      String?
-  company    String?
-  address    String?
-  city       String?
-  state      String?
-  postalCode String?
-  country    String?
-  notes      String?
-  isActive   Boolean  @default(true)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+model Student {
+  id            String         @id @default(cuid())
+  userId        String?        @unique
+  user          User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
+  name          String
+  email         String
+  phone         String?
+  address       String?
+  notes         String?
+  isActive      Boolean        @default(true)
+  rayoPoints    Int            @default(0)
+  subscriptions Subscription[]
+  transactions  Transaction[]
+  attendances   Attendance[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Subscription {
+  id             String        @id @default(cuid())
+  studentId      String
+  student        Student       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  packageName    String
+  lessonsPerWeek Int
+  amountPaid     Float
+  startDate      DateTime      @default(now())
+  expiresAt      DateTime
+  isActive       Boolean       @default(true)
+  transactions   Transaction[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model Transaction {
+  id             String        @id @default(cuid())
+  studentId      String
+  student        Student       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  subscriptionId String?
+  subscription   Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
+  amount         Float
+  type           String
+  paymentMethod  String
+  description    String?
+  createdAt      DateTime      @default(now())
+}
+
+model DanceClass {
+  id          String       @id @default(cuid())
+  date        DateTime
+  timeSlot    String
+  title       String
+  level       String?
+  instructor  String
+  attendances Attendance[]
+  createdAt   DateTime     @default(now())
+}
+
+model Attendance {
+  id           String     @id @default(cuid())
+  danceClassId String
+  danceClass   DanceClass @relation(fields: [danceClassId], references: [id], onDelete: Cascade)
+  studentId    String
+  student      Student    @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+
+  @@unique([danceClassId, studentId])
+}
+
+model Expense {
+  id            String          @id @default(cuid())
+  amount        Float
+  date          DateTime        @default(now())
+  categoryId    String
+  category      ExpenseCategory @relation(fields: [categoryId], references: [id])
+  paymentMethod String
+  description   String?
+  createdAt     DateTime        @default(now())
+}
+
+model ExpenseCategory {
+  id       String    @id @default(cuid())
+  name     String    @unique
+  expenses Expense[]
+}
+
+model PromoCode {
+  id            String    @id @default(cuid())
+  code          String    @unique
+  discountType  String
+  discountValue Float
+  expiresAt     DateTime?
+  usageCount    Int       @default(0)
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
 }

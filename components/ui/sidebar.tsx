@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
-import { PanelLeftIcon } from "lucide-react"
+import { IoMenu } from "react-icons/io5"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
@@ -256,6 +256,7 @@ function Sidebar({
 function SidebarTrigger({
   className,
   onClick,
+  variant = "ghost",
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { toggleSidebar } = useSidebar()
@@ -264,7 +265,7 @@ function SidebarTrigger({
     <Button
       data-sidebar="trigger"
       data-slot="sidebar-trigger"
-      variant="ghost"
+      variant={variant}
       size="icon"
       className={cn("size-7", className)}
       onClick={(event) => {
@@ -273,7 +274,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <PanelLeftIcon />
+      <IoMenu />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )
@@ -607,9 +608,9 @@ function SidebarMenuSkeleton({
   showIcon?: boolean
 }) {
   // Random width between 50 to 90%.
-  const width = React.useMemo(() => {
-    return `${Math.floor(Math.random() * 40) + 50}%`
-  }, [])
+  const [width] = React.useState(
+    () => `${Math.floor(Math.random() * 40) + 50}%`
+  )
 
   return (
     <div

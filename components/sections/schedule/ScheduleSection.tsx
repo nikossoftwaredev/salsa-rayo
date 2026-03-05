@@ -5,7 +5,6 @@ import { SectionTitle } from "@/components/SectionTitle";
 import { motion } from "framer-motion";
 import { SCHEDULE, INSTRUCTORS } from "@/data/schedule";
 import Image from "next/image";
-import { useState, useEffect } from "react";
 
 type Instructor = typeof INSTRUCTORS[keyof typeof INSTRUCTORS];
 
@@ -16,13 +15,10 @@ interface ScheduleItem {
   hint?: string;
 }
 
+const currentDayIndex = new Date().getDay();
+
 const ScheduleSection = () => {
   const t = useTranslations("Schedule");
-  const [currentDayIndex, setCurrentDayIndex] = useState<number | null>(null);
-  
-  useEffect(() => {
-    setCurrentDayIndex(new Date().getDay());
-  }, []);
 
   return (
     <section

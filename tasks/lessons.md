@@ -30,6 +30,15 @@ Rules and patterns captured from user corrections. Review at session start.
 **Mistake**: Used raw inline-styled `<Link>` with gradient classes instead of the existing `Button` component.
 **Rule**: Always use the `Button` component with `variant="gradient"` and `asChild` + `<Link>` when a link needs to look like a button. Don't reinvent styles that already exist in the design system.
 
+## Prefer shadcn/ui Over Native Elements
+
+**Rule**: Always use shadcn/ui components (`Button`, `Input`, `Badge`, `Table`, etc.) instead of native HTML elements (`<button>`, `<input>`, `<table>`) when a shadcn component exists for that purpose.
+**Rule**: Before adding custom Tailwind classes to a shadcn component, check its default styles and CVA variants first. Don't add classes that duplicate what the component already provides.
+
+## Use Prisma Generated Types
+
+**Rule**: If a Prisma model exists for data coming from the DB, ALWAYS use the Prisma generated type (e.g., `Student`, `Subscription` from `@prisma/client`). NEVER create redundant interfaces like `StudentRow` that duplicate the Prisma schema — it's unsafe and causes drift when the schema changes.
+
 ## Don't Over-Engineer
 
 **Mistake**: Added question mark icons to every FAQ item, numbered items, etc.

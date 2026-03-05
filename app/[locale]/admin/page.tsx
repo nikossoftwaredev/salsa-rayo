@@ -1,26 +1,46 @@
+import { IoSchool } from "react-icons/io5";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { prisma } from "@/lib/db";
 
-export default async function AdminDashboard() {
-  // Get actual client count from database
-  const clientCount = await prisma.client.count();
+const AdminDashboard = async () => {
+  const studentCount = await prisma.student.count();
+
+  const stats = [
+    {
+      title: "Total Students",
+      value: studentCount.toString(),
+      description: "Registered students",
+      icon: IoSchool,
+    },
+  ];
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-6">Admin Dashboard</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="bg-card border rounded-lg p-6">
-          <h3 className="text-lg font-semibold mb-2">Total Clients</h3>
-          <p className="text-3xl font-bold text-primary">{clientCount}</p>
-        </div>
-        <div className="bg-card border rounded-lg p-6">
-          <h3 className="text-lg font-semibold mb-2">Active Products</h3>
-          <p className="text-3xl font-bold text-primary">0</p>
-        </div>
-        <div className="bg-card border rounded-lg p-6">
-          <h3 className="text-lg font-semibold mb-2">Total Orders</h3>
-          <p className="text-3xl font-bold text-primary">0</p>
-        </div>
+      <div className="mb-6 flex items-center justify-between">
+        <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {stats.map((stat) => (
+          <Card key={stat.title}>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                {stat.title}
+              </CardTitle>
+              <stat.icon size={16} className="text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stat.value}</div>
+              <p className="text-xs text-muted-foreground">
+                {stat.description}
+              </p>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </div>
   );
-}
+};
+
+export default AdminDashboard;

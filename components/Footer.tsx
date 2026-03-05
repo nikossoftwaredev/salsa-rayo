@@ -10,11 +10,34 @@ import {
   MdLocationPin,
   MdAccessTime,
 } from "react-icons/md";
-import { FaHeart } from "react-icons/fa";
 import AppLink from "./AppLink";
 import SocialsSection from "./sections/socials/SocialsSection";
 import Logo from "./Logo";
 import { CircleIcon } from "./CircleIcon";
+
+const renderSubtitleValue = (value: string, type: string) => {
+  if (type === "tel")
+    return (
+      <a
+        href={`tel:${value}`}
+        className="hover:text-accent transition-colors duration-300"
+      >
+        {value}
+      </a>
+    );
+
+  if (type === "email")
+    return (
+      <a
+        href={`mailto:${value}`}
+        className="hover:text-accent transition-colors duration-300"
+      >
+        {value}
+      </a>
+    );
+
+  return <span>{value}</span>;
+};
 
 const Footer = () => {
   const t = useTranslations("Footer");
@@ -82,23 +105,7 @@ const Footer = () => {
                       color="#18A07B"
                       size={48}
                     />
-                    {subtitle.type === "tel" ? (
-                      <a
-                        href={`tel:${subtitle.value}`}
-                        className="hover:text-accent transition-colors duration-300"
-                      >
-                        {subtitle.value}
-                      </a>
-                    ) : subtitle.type === "email" ? (
-                      <a
-                        href={`mailto:${subtitle.value}`}
-                        className="hover:text-accent transition-colors duration-300"
-                      >
-                        {subtitle.value}
-                      </a>
-                    ) : (
-                      <span>{subtitle.value}</span>
-                    )}
+                    {renderSubtitleValue(subtitle.value, subtitle.type)}
                   </div>
                 ))}
               </div>
@@ -118,16 +125,12 @@ const Footer = () => {
             <span>{t("copyright", { year: new Date().getFullYear() })}</span>
             <span className="hidden md:inline">•</span>
             <span className="flex items-center gap-2">
-              {t("madeWith")}
-              <span className="w-6 h-6 flex items-center justify-center rounded-full bg-red-500/20">
-                <FaHeart className="text-red-500" size={12} />
-              </span>
-              {t("by")}
+              {t("madeBy")}
               <AppLink
                 className="text-primary hover:text-accent transition-colors duration-300 font-medium"
-                href="https://www.linkedin.com/in/nikosdim97/"
+                href="https://hexaigon.gr"
               >
-                Nikos Dimitrakopoulos
+                hexaigon.gr
               </AppLink>
             </span>
           </div>
