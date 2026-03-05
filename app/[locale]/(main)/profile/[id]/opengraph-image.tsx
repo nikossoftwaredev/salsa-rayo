@@ -8,12 +8,19 @@ export const runtime = "nodejs"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
-const logoDataPromise = readFile(join(process.cwd(), "public/images/logo.png"))
+const loadLogo = async () => {
+  try {
+    const data = await readFile(join(process.cwd(), "public/images/logo.png"))
+    return `data:image/png;base64,${data.toString("base64")}`
+  } catch {
+    return null
+  }
+}
 
 const OGImage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params
 
-  const [user, logoData] = await Promise.all([
+  const [user, logoSrc] = await Promise.all([
     prisma.user.findUnique({
       where: { id },
       select: {
@@ -29,10 +36,8 @@ const OGImage = async ({ params }: { params: Promise<{ id: string }> }) => {
         },
       },
     }),
-    logoDataPromise,
+    loadLogo(),
   ])
-
-  const logoSrc = `data:image/png;base64,${logoData.toString("base64")}`
 
   if (!user) {
     return new ImageResponse(
@@ -103,7 +108,7 @@ const OGImage = async ({ params }: { params: Promise<{ id: string }> }) => {
           gap: 12,
         }}
       >
-        <img src={logoSrc} width={36} height={36} />
+        {logoSrc && <img src={logoSrc} width={36} height={36} />}
         <span style={{ fontSize: 18, fontWeight: 600, color: "rgba(255,255,255,0.5)" }}>
           Salsa Rayo
         </span>

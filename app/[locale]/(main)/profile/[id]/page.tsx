@@ -19,9 +19,8 @@ export const generateMetadata = async ({ params }: ProfilePageProps): Promise<Me
   if (!user) return { title: "Profile not found" }
 
   const name = user.name || user.student?.name || "Dancer"
-  const points = user.student?.rayoPoints ?? 0
   const classes = user.student?._count.attendances ?? 0
-  const description = `${name} on Salsa Rayo — ${points} rayo points, ${classes} classes attended`
+  const description = `Check out ${name}'s dance profile on Salsa Rayo! ${classes} classes attended. Join me and try to beat my stats!`
 
   return {
     title: `${name} | Salsa Rayo`,

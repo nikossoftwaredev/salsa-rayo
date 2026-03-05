@@ -19,7 +19,7 @@ const APPLICATION_DESCRIPTION =
   "Salsa Rayo is a dance school that offers Salsa and Bachata classes for all levels. We are based in Agios Dimitrios, Athens, Greece";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://salsa-rayo.com"),
+  metadataBase: new URL("https://www.salsarayo.com"),
   title: APPLICATION_NAME,
   description: APPLICATION_DESCRIPTION,
   applicationName: APPLICATION_NAME,
