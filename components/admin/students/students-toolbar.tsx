@@ -1,13 +1,12 @@
 "use client"
 
-import { useState } from "react"
 import { type Table } from "@tanstack/react-table"
 import { IoClose, IoPersonAdd } from "react-icons/io5"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DataTableFacetedFilter } from "@/components/data-table/data-table-faceted-filter"
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options"
-import { AddStudentModal } from "./AddStudentModal"
+import { useDialogStore } from "@/lib/stores/dialog-store"
 import { type StudentWithSubscriptions } from "./types"
 
 const statusOptions = [
@@ -21,8 +20,7 @@ interface StudentsToolbarProps {
 
 export const StudentsToolbar = ({ table }: StudentsToolbarProps) => {
   const isFiltered = table.getState().columnFilters.length > 0
-
-  const [addModalOpen, setAddModalOpen] = useState(false)
+  const openDialog = useDialogStore((state) => state.openDialog)
 
   return (
     <div className="flex items-center justify-between">
@@ -56,13 +54,11 @@ export const StudentsToolbar = ({ table }: StudentsToolbarProps) => {
       </div>
       <div className="flex items-center space-x-2">
         <DataTableViewOptions table={table} />
-        <Button size="sm" onClick={() => setAddModalOpen(true)}>
+        <Button size="sm" onClick={() => openDialog("StudentDialog")}>
           <IoPersonAdd size={14} className="mr-2" />
           Add Student
         </Button>
       </div>
-
-      <AddStudentModal open={addModalOpen} onOpenChange={setAddModalOpen} />
     </div>
   )
 }

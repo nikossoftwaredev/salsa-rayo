@@ -12,6 +12,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
+import { useDialogStore } from "@/lib/stores/dialog-store"
 import { type StudentWithSubscriptions } from "./types"
 
 const copyToClipboard = (value: string, label: string) => {
@@ -158,10 +159,16 @@ export const columns: ColumnDef<StudentWithSubscriptions>[] = [
   },
   {
     id: "actions",
-    cell: () => (
+    cell: ({ row }) => (
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="icon-sm">
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={() =>
+              useDialogStore.getState().openDialog("StudentDialog", row.original)
+            }
+          >
             <MdEdit size={16} />
           </Button>
         </TooltipTrigger>

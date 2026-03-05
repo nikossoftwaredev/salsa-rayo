@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { AdminAuthGuard } from "@/components/admin/AdminAuthGuard";
 import { AdminHeader } from "@/components/admin/AdminHeader";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
+import { DialogProvider } from "@/components/dialogs/DialogProvider";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { authOptions } from "@/lib/auth";
@@ -31,6 +32,7 @@ const AdminLayout = async ({ children }: BaseLayoutProps) => {
           </main>
         </ScrollArea>
       </SidebarInset>
+      <DialogProvider />
       <Toaster theme="dark" position="bottom-right" />
     </SidebarProvider>
   );

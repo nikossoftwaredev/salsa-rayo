@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import {
@@ -14,12 +14,12 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { useDialogStore } from "@/lib/stores/dialog-store"
 import { createStudent } from "@/server-actions/students/create-student"
+import { updateStudent } from "@/server-actions/students/update-student"
+import { type StudentWithSubscriptions } from "./types"
 
-interface AddStudentModalProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-}
+const DIALOG_KEY = "StudentDialog"
 
 const initialForm = {
   name: "",
@@ -29,26 +29,40 @@ const initialForm = {
   notes: "",
 }
 
-export const AddStudentModal = ({ open, onOpenChange }: AddStudentModalProps) => {
+export const StudentDialog = () => {
   const router = useRouter()
+  const { closeDialog, dialogData, onSuccess } = useDialogStore()
+  const student = dialogData as StudentWithSubscriptions | null
+  const isEdit = !!student?.id
+
   const [form, setForm] = useState(initialForm)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (student) {
+      setForm({
+        name: student.name,
+        email: student.email,
+        phone: student.phone ?? "",
+        address: student.address ?? "",
+        notes: student.notes ?? "",
+      })
+    } else {
+      setForm(initialForm)
+    }
+    setError(null)
+  }, [student])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  const handleOpenChange = useCallback(
-    (open: boolean) => {
-      if (!open) {
-        setForm(initialForm)
-        setError(null)
-      }
-      onOpenChange(open)
-    },
-    [onOpenChange]
-  )
+  const handleClose = () => {
+    setForm(initialForm)
+    setError(null)
+    closeDialog(DIALOG_KEY)
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -56,21 +70,25 @@ export const AddStudentModal = ({ open, onOpenChange }: AddStudentModalProps) =>
     setError(null)
 
     try {
-      const result = await createStudent({
+      const payload = {
         name: form.name,
         email: form.email,
         phone: form.phone || undefined,
         address: form.address || undefined,
         notes: form.notes || undefined,
-      })
+      }
+
+      const result = isEdit
+        ? await updateStudent(student.id, payload)
+        : await createStudent(payload)
 
       if (!result.success) {
         setError(result.error)
         return
       }
 
-      setForm(initialForm)
-      onOpenChange(false)
+      handleClose()
+      onSuccess?.()
       router.refresh()
     } catch {
       setError("Something went wrong. Please try again.")
@@ -80,12 +98,12 @@ export const AddStudentModal = ({ open, onOpenChange }: AddStudentModalProps) =>
   }
 
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-w-md">
+    <Dialog open onOpenChange={(open) => { if (!open) handleClose() }}>
+      <DialogContent className="max-w-md" onInteractOutside={isEdit ? (e) => e.preventDefault() : undefined}>
         <DialogHeader>
-          <DialogTitle>Add New Student</DialogTitle>
+          <DialogTitle>{isEdit ? "Edit Student" : "Add New Student"}</DialogTitle>
           <DialogDescription>
-            Fill in the student details below.
+            {isEdit ? "Update the student details below." : "Fill in the student details below."}
           </DialogDescription>
         </DialogHeader>
 
@@ -158,12 +176,12 @@ export const AddStudentModal = ({ open, onOpenChange }: AddStudentModalProps) =>
             <Button
               type="button"
               variant="outline"
-              onClick={() => handleOpenChange(false)}
+              onClick={handleClose}
             >
               Cancel
             </Button>
             <Button type="submit" disabled={loading}>
-              {loading ? "Adding..." : "Add Student"}
+              {loading ? (isEdit ? "Saving..." : "Adding...") : (isEdit ? "Save Changes" : "Add Student")}
             </Button>
           </DialogFooter>
         </form>
