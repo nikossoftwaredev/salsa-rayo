@@ -2,12 +2,12 @@ import { lazy, Suspense } from "react";
 import HeroSection from "@/components/sections/hero/HeroSection";
 import AboutSection from "@/components/sections/about/AboutSection";
 import ContactForm from "@/components/sections/contact-form/ContactForm";
+import ScheduleLoader from "@/components/sections/schedule/ScheduleLoader";
+import ScheduleSkeleton from "@/components/sections/schedule/ScheduleSkeleton";
 import { GOOGLE_PLACE_ID } from "@/data/config";
 
-// Lazy load non-critical sections for performance while keeping SEO-important content
 const BackgroundEffects = lazy(() => import("@/components/BackgroundEffects"));
 const MapSection = lazy(() => import("@/components/sections/map/MapSection"));
-const ScheduleSection = lazy(() => import("@/components/sections/schedule/ScheduleSection"));
 const GallerySection = lazy(() => import("@/components/sections/gallery/GallerySection"));
 const GoogleReviews = lazy(() => import("@/components/GoogleReviews"));
 
@@ -30,8 +30,8 @@ const Home = () => {
             <AboutSection />
           </div>
           <div className="w-full py-24 px-4 md:px-8 relative">
-            <Suspense fallback={<SectionLoader />}>
-              <ScheduleSection />
+            <Suspense fallback={<ScheduleSkeleton />}>
+              <ScheduleLoader />
             </Suspense>
           </div>
           <div className="w-full py-24 px-4 md:px-8 relative">

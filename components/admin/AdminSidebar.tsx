@@ -69,8 +69,9 @@ export const AdminSidebar = () => {
               <SidebarMenu>
                 {group.items.map((item) => {
                   const active =
-                    pathname === item.href ||
-                    pathname.startsWith(`${item.href}/`);
+                    item.href === "/admin"
+                      ? pathname === "/admin"
+                      : pathname === item.href || pathname.startsWith(`${item.href}/`);
 
                   return (
                     <SidebarMenuItem key={item.href}>

@@ -3,6 +3,7 @@ import {
   PutObjectCommand,
   S3Client,
 } from "@aws-sdk/client-s3";
+import sharp from "sharp";
 
 // S3-compatible storage configuration
 const s3Client = new S3Client({
@@ -17,16 +18,38 @@ const s3Client = new S3Client({
 
 export const IMAGES_BUCKET = "images";
 
+const MAX_DIMENSION = 1200;
+const WEBP_QUALITY = 85;
+
+const compressImage = async (buffer: Buffer): Promise<Buffer> => {
+  const image = sharp(buffer);
+  const metadata = await image.metadata();
+
+  const needsResize =
+    (metadata.width && metadata.width > MAX_DIMENSION) ||
+    (metadata.height && metadata.height > MAX_DIMENSION);
+
+  let pipeline = image;
+
+  if (needsResize) {
+    pipeline = pipeline.resize(MAX_DIMENSION, MAX_DIMENSION, { fit: "inside", withoutEnlargement: true });
+  }
+
+  return pipeline.webp({ quality: WEBP_QUALITY }).toBuffer();
+};
+
 export const uploadFile = async (
   file: Buffer,
   fileName: string,
-  contentType: string,
 ): Promise<string> => {
+  const compressed = await compressImage(file);
+  const webpFileName = fileName.replace(/\.\w+$/, ".webp");
+
   const command = new PutObjectCommand({
     Bucket: IMAGES_BUCKET,
-    Key: fileName,
-    Body: file,
-    ContentType: contentType,
+    Key: webpFileName,
+    Body: compressed,
+    ContentType: "image/webp",
   });
 
   await s3Client.send(command);
@@ -35,7 +58,7 @@ export const uploadFile = async (
     .SUPABASE_S3_ENDPOINT!.replace("https://", "")
     .replace(".storage.supabase.co/storage/v1/s3", "");
 
-  return `https://${projectRef}.supabase.co/storage/v1/object/public/${IMAGES_BUCKET}/${fileName}`;
+  return `https://${projectRef}.supabase.co/storage/v1/object/public/${IMAGES_BUCKET}/${webpFileName}`;
 };
 
 export const deleteFile = async (fileUrl: string): Promise<void> => {

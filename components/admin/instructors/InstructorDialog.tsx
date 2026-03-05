@@ -14,26 +14,25 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { ImageUpload } from "@/components/ui/image-upload"
 import { useDialogStore } from "@/lib/stores/dialog-store"
-import { createStudent } from "@/server-actions/students/create-student"
-import { updateStudent } from "@/server-actions/students/update-student"
-import { type StudentWithSubscriptions } from "./types"
+import { createInstructor } from "@/server-actions/instructors/create-instructor"
+import { updateInstructor } from "@/server-actions/instructors/update-instructor"
+import { type Instructor } from "@/lib/db"
 
-const DIALOG_KEY = "StudentDialog"
+export const DIALOG_KEY = "InstructorDialog"
 
 const initialForm = {
   name: "",
-  email: "",
-  phone: "",
-  address: "",
-  notes: "",
+  image: "",
+  bio: "",
 }
 
-export const StudentDialog = () => {
+export const InstructorDialog = () => {
   const router = useRouter()
   const { closeDialog, dialogData, onSuccess } = useDialogStore()
-  const student = dialogData as StudentWithSubscriptions | null
-  const isEdit = !!student?.id
+  const instructor = dialogData as Instructor | null
+  const isEdit = !!instructor?.id
 
   const [form, setForm] = useState(initialForm)
   const [loading, setLoading] = useState(false)
@@ -57,15 +56,13 @@ export const StudentDialog = () => {
     try {
       const payload = {
         name: form.name,
-        email: form.email,
-        phone: form.phone || undefined,
-        address: form.address || undefined,
-        notes: form.notes || undefined,
+        image: form.image,
+        bio: form.bio || undefined,
       }
 
       const result = isEdit
-        ? await updateStudent(student.id, payload)
-        : await createStudent(payload)
+        ? await updateInstructor(instructor.id, payload)
+        : await createInstructor(payload)
 
       if (!result.success) {
         setError(result.error)
@@ -83,27 +80,25 @@ export const StudentDialog = () => {
   }
 
   useEffect(() => {
-    if (student) {
+    if (instructor) {
       setForm({
-        name: student.name,
-        email: student.email,
-        phone: student.phone ?? "",
-        address: student.address ?? "",
-        notes: student.notes ?? "",
+        name: instructor.name,
+        image: instructor.image,
+        bio: instructor.bio ?? "",
       })
     } else {
       setForm(initialForm)
     }
     setError(null)
-  }, [student])
+  }, [instructor])
 
   return (
     <Dialog open onOpenChange={(open) => { if (!open) handleClose() }}>
       <DialogContent className="max-w-md" onInteractOutside={isEdit ? (e) => e.preventDefault() : undefined}>
         <DialogHeader>
-          <DialogTitle>{isEdit ? "Edit Student" : "Add New Student"}</DialogTitle>
+          <DialogTitle>{isEdit ? "Edit Instructor" : "Add New Instructor"}</DialogTitle>
           <DialogDescription>
-            {isEdit ? "Update the student details below." : "Fill in the student details below."}
+            {isEdit ? "Update the instructor details below." : "Fill in the instructor details below."}
           </DialogDescription>
         </DialogHeader>
 
@@ -115,55 +110,29 @@ export const StudentDialog = () => {
               name="name"
               value={form.name}
               onChange={handleChange}
-              placeholder="Full name"
+              placeholder="Instructor name"
               required
             />
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="email">Email *</Label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="student@example.com"
-              required
+            <Label>Image *</Label>
+            <ImageUpload
+              value={form.image}
+              onChange={(url) => setForm((prev) => ({ ...prev, image: url }))}
+              folder="instructors"
+              size={120}
             />
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="phone">Phone</Label>
-            <Input
-              id="phone"
-              name="phone"
-              type="tel"
-              value={form.phone}
-              onChange={handleChange}
-              placeholder="+30 123 456 7890"
-            />
-          </div>
-
-          <div className="grid gap-2">
-            <Label htmlFor="address">Address</Label>
-            <Input
-              id="address"
-              name="address"
-              value={form.address}
-              onChange={handleChange}
-              placeholder="Street address"
-            />
-          </div>
-
-          <div className="grid gap-2">
-            <Label htmlFor="notes">Notes</Label>
+            <Label htmlFor="bio">Bio</Label>
             <Textarea
-              id="notes"
-              name="notes"
-              value={form.notes}
+              id="bio"
+              name="bio"
+              value={form.bio}
               onChange={handleChange}
-              placeholder="Any additional notes..."
+              placeholder="A short bio about the instructor..."
               rows={3}
             />
           </div>
@@ -181,7 +150,7 @@ export const StudentDialog = () => {
               Cancel
             </Button>
             <Button type="submit" disabled={loading}>
-              {loading ? (isEdit ? "Saving..." : "Adding...") : (isEdit ? "Save Changes" : "Add Student")}
+              {loading ? (isEdit ? "Saving..." : "Adding...") : (isEdit ? "Save Changes" : "Add Instructor")}
             </Button>
           </DialogFooter>
         </form>

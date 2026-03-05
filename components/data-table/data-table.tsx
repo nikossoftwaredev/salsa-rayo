@@ -23,6 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { DataTablePagination } from "./data-table-pagination"
 
 interface DataTableProps<TData, TValue> {
@@ -58,7 +59,7 @@ export const DataTable = <TData, TValue>({
     <div className="space-y-4">
       {toolbar?.(table)}
 
-      <div className="rounded-md border">
+      <ScrollArea className="rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -105,7 +106,8 @@ export const DataTable = <TData, TValue>({
             )}
           </TableBody>
         </Table>
-      </div>
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
 
       <DataTablePagination table={table} />
     </div>

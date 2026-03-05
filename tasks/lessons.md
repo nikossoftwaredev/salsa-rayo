@@ -44,3 +44,22 @@ Rules and patterns captured from user corrections. Review at session start.
 
 **Mistake**: Added question mark icons to every FAQ item, numbered items, etc.
 **Rule**: Less is more. Small decorative dots > heavy icons when items are repeated many times. Avoid visual clutter.
+
+## Never Use Native alert/confirm
+
+**Mistake**: Used `window.confirm()` and `alert()` for delete confirmations and error messages.
+**Rule**: ALWAYS use the zustand `useConfirmStore` + shadcn `AlertDialog` based `ConfirmDialog`. Never use native browser dialogs — they're ugly and inconsistent.
+**Usage**: `confirm({ title, description, actionLabel?, onConfirm })`
+
+## Image Upload/Preview Shape Must Match
+
+**Mistake**: Made the upload dropzone square but the preview circular (different `rounded` values).
+**Rule**: The image preview shape should always match the dropzone shape. Use the same `rounded` prop for both states.
+
+## Server-Side Image Compression
+
+**Rule**: Use `sharp` server-side for image compression (in `lib/files/upload.ts`), NOT client-side Canvas API. All images go through `uploadFile` → compressed to WebP at quality 85, max 1200px.
+
+## Delete Actions Should Clean Up Storage
+
+**Rule**: When deleting a record that has an uploaded image (e.g., Instructor), also delete the image from Supabase storage. Use `.catch(console.error)` so storage failures don't block the DB delete.

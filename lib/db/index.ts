@@ -19,6 +19,11 @@ export const prisma =
 
 export * from "./generated/prisma/client/client";
 
+// Composite types used across admin + public components
+export type { Instructor, ScheduleEntry } from "./generated/prisma/client/client";
+import type { Instructor, ScheduleEntry } from "./generated/prisma/client/client";
+export type ScheduleEntryWithInstructors = ScheduleEntry & { instructors: Instructor[] };
+
 if (process.env.NODE_ENV !== "production") {
   globalThis.prisma = prisma;
 }

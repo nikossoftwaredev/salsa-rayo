@@ -3,22 +3,32 @@
 import { useTranslations } from "next-intl";
 import { SectionTitle } from "@/components/SectionTitle";
 import { motion } from "framer-motion";
-import { SCHEDULE, INSTRUCTORS } from "@/data/schedule";
 import Image from "next/image";
+import { type ScheduleEntryWithInstructors } from "@/lib/db";
 
-type Instructor = typeof INSTRUCTORS[keyof typeof INSTRUCTORS];
-
-interface ScheduleItem {
-  time: string;
-  title: string;
-  instructors: Instructor[];
-  hint?: string;
+interface ScheduleSectionProps {
+  entries: ScheduleEntryWithInstructors[]
 }
 
-const currentDayIndex = new Date().getDay();
+const DAY_KEYS = ["", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 
-const ScheduleSection = () => {
+const getTodayDayIndex = () => {
+  const day = new Date().getDay();
+  return day === 0 ? 7 : day;
+}
+
+const ScheduleSection = ({ entries }: ScheduleSectionProps) => {
+  const todayDayIndex = getTodayDayIndex();
   const t = useTranslations("Schedule");
+
+  const days = Array.from(
+    entries.reduce((map, entry) => {
+      const existing = map.get(entry.dayIndex) ?? []
+      existing.push(entry)
+      map.set(entry.dayIndex, existing)
+      return map
+    }, new Map<number, ScheduleEntryWithInstructors[]>())
+  ).sort(([a], [b]) => a - b)
 
   return (
     <section
@@ -33,90 +43,85 @@ const ScheduleSection = () => {
       <SectionTitle title={t("title")} isMainSection />
 
       <div className="w-full max-w-4xl space-y-4">
-        {SCHEDULE.map(({ dayKey, schedule, dayIndex }, index) => (
-          <motion.div
-            key={dayKey}
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{
-              duration: 0.5,
-              ease: "easeOut",
-              delay: index * 0.1,
-            }}
-            className="relative"
-          >
-            {/* Day Container */}
-            <div className="relative flex flex-col md:flex-row items-stretch bg-card/80 backdrop-blur-xl rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 border border-border/20 hover:border-primary/20">
-              {/* Day Badge */}
-              <div className="relative md:w-44 p-5 md:p-8 flex items-center justify-center bg-gradient-to-br from-primary/15 to-brand-pink/10 border-b md:border-b-0 md:border-r border-border/10">
-                <h3 className="relative text-2xl md:text-3xl font-black uppercase tracking-wider">
-                  <span className="bg-gradient-to-r from-primary to-brand-pink bg-clip-text text-transparent">
-                    {/* @ts-expect-error Dynamic key access for days */}
-                    {t(`days.${dayKey}`).slice(0, 3)}
-                  </span>
-                </h3>
-              </div>
+        {days.map(([dayIndex, schedule], index) => {
+          const dayKey = DAY_KEYS[dayIndex] ?? "unknown"
 
-              {/* Classes Container */}
-              <div className="relative flex-1 p-4 md:p-6 flex items-center">
-                <div className="space-y-3 w-full">
-                  {schedule.map(({ time, title, hint, instructors }: ScheduleItem) => (
-                    <div
-                      key={`${dayKey}-${time}`}
-                      className="flex items-center justify-between gap-4 group"
-                    >
-                      {/* Time */}
-                      <div className="w-24 md:w-28 text-xs md:text-sm font-bold text-foreground/70 group-hover:text-primary transition-colors duration-300 whitespace-nowrap">
-                        {time}
-                      </div>
+          return (
+            <motion.div
+              key={dayKey}
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{
+                duration: 0.5,
+                ease: "easeOut",
+                delay: index * 0.1,
+              }}
+              className="relative"
+            >
+              <div className="relative flex flex-col md:flex-row items-stretch bg-card/80 backdrop-blur-xl rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 border border-border/20 hover:border-primary/20">
+                <div className="relative md:w-44 p-5 md:p-8 flex items-center justify-center bg-gradient-to-br from-primary/15 to-brand-pink/10 border-b md:border-b-0 md:border-r border-border/10">
+                  <h3 className="relative text-2xl md:text-3xl font-black uppercase tracking-wider">
+                    <span className="bg-gradient-to-r from-primary to-brand-pink bg-clip-text text-transparent">
+                      {/* @ts-expect-error Dynamic key access for days */}
+                      {t(`days.${dayKey}`).slice(0, 3)}
+                    </span>
+                  </h3>
+                </div>
 
-                      {/* Title with hint */}
-                      <div className="flex-1">
-                        <div className="text-sm md:text-base font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
-                          {title}
+                <div className="relative flex-1 p-4 md:p-6 flex items-center">
+                  <div className="space-y-3 w-full">
+                    {schedule.map((entry) => (
+                      <div
+                        key={entry.id}
+                        className="flex items-center justify-between gap-4 group"
+                      >
+                        <div className="w-24 md:w-28 text-xs md:text-sm font-bold text-foreground/70 group-hover:text-primary transition-colors duration-300 whitespace-nowrap">
+                          {entry.time}
                         </div>
-                        {hint && (
-                          <div className="text-xs md:text-sm font-normal text-muted-foreground">
-                            ({hint})
+
+                        <div className="flex-1">
+                          <div className="text-sm md:text-base font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
+                            {entry.title}
+                          </div>
+                          {entry.hint && (
+                            <div className="text-xs md:text-sm font-normal text-muted-foreground">
+                              ({entry.hint})
+                            </div>
+                          )}
+                        </div>
+
+                        {entry.instructors.length > 0 && (
+                          <div className="flex -space-x-2">
+                            {entry.instructors.map((instructor) => (
+                              <div
+                                key={instructor.id}
+                                className="relative w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden border-2 border-border/30 group-hover:border-primary/50 transition-all duration-300 shadow-sm"
+                              >
+                                <Image
+                                  src={instructor.image}
+                                  alt={instructor.name}
+                                  fill
+                                  className="object-cover object-top scale-125 -translate-y-1"
+                                />
+                              </div>
+                            ))}
                           </div>
                         )}
                       </div>
-
-                      {/* Instructors */}
-                      {instructors && instructors.length > 0 && (
-                        <div className="flex -space-x-2">
-                          {instructors.map((instructor) => (
-                            <div
-                              key={instructor.name}
-                              className="relative w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden border-2 border-border/30 group-hover:border-primary/50 transition-all duration-300 shadow-sm"
-                            >
-                              <Image
-                                src={instructor.image}
-                                alt={instructor.name}
-                                fill
-                                className="object-cover object-top scale-125 -translate-y-1"
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      )}
-
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Current Day Indicator */}
-            {currentDayIndex === dayIndex && (
-              <div className="absolute -top-2 -right-2 bg-gradient-to-r from-primary to-brand-pink text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-lg shadow-primary/30 animate-pulse">
-                {t("today")}
-              </div>
-            )}
-          </motion.div>
-        ))}
+              {todayDayIndex === dayIndex && (
+                <div className="absolute -top-2 -right-2 bg-gradient-to-r from-primary to-brand-pink text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-lg shadow-primary/30 animate-pulse">
+                  {t("today")}
+                </div>
+              )}
+            </motion.div>
+          )
+        })}
       </div>
-
     </section>
   );
 };
