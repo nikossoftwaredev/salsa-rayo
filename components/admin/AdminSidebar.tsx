@@ -43,7 +43,7 @@ export const AdminSidebar = () => {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <Link href="/admin" onClick={() => setOpenMobile(false)}>
+              <Link href="/" onClick={() => setOpenMobile(false)}>
                 <Image
                   src="/images/logo.png"
                   alt="Salsa Rayo"
