@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import { getInitials } from "@/lib/format";
 import { ProfileDropdown } from "@/components/admin/ProfileDropdown";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -30,12 +31,7 @@ export const AdminSidebar = () => {
   const firstName = fullName.split(" ")[0];
   const userEmail = session?.user?.email || "admin@example.com";
   const userImage = session?.user?.image;
-  const userInitials = fullName
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
+  const userInitials = getInitials(fullName);
 
   return (
     <Sidebar collapsible="icon">

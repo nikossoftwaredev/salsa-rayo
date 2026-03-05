@@ -94,14 +94,16 @@ model Transaction {
 }
 
 model DanceClass {
-  id          String       @id @default(cuid())
-  date        DateTime
-  timeSlot    String
-  title       String
-  level       String?
-  instructor  String
-  attendances Attendance[]
-  createdAt   DateTime     @default(now())
+  id              String          @id @default(cuid())
+  date            DateTime
+  scheduleEntryId String
+  scheduleEntry   ScheduleEntry   @relation(fields: [scheduleEntryId], references: [id], onDelete: Cascade)
+  instructors     Instructor[]    @relation("DanceClassInstructors")
+  attendances     Attendance[]
+  createdAt       DateTime        @default(now())
+
+  @@unique([scheduleEntryId, date])
+  @@index([scheduleEntryId])
 }
 
 model Attendance {
@@ -113,6 +115,7 @@ model Attendance {
   createdAt    DateTime   @default(now())
 
   @@unique([danceClassId, studentId])
+  @@index([studentId])
 }
 
 model Expense {
@@ -149,6 +152,7 @@ model Instructor {
   image           String
   bio             String?
   scheduleEntries ScheduleEntry[] @relation("ScheduleEntryInstructors")
+  danceClasses    DanceClass[]    @relation("DanceClassInstructors")
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
 }
@@ -160,6 +164,7 @@ model ScheduleEntry {
   title       String
   hint        String?
   instructors Instructor[] @relation("ScheduleEntryInstructors")
+  danceClasses DanceClass[]
   isActive    Boolean      @default(true)
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt

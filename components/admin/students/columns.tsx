@@ -1,7 +1,7 @@
 "use client"
 
 import { type ColumnDef } from "@tanstack/react-table"
-import { IoFlash } from "react-icons/io5"
+import { RayoPoints } from "@/components/ui/rayo-points"
 import { MdEdit } from "react-icons/md"
 import { toast } from "sonner"
 import { Badge } from "@/components/ui/badge"
@@ -151,10 +151,7 @@ export const columns: ColumnDef<StudentWithSubscriptions>[] = [
       <DataTableColumnHeader column={column} title="Rayo Points" />
     ),
     cell: ({ row }) => (
-      <div className="flex items-center gap-1">
-        <IoFlash size={14} className="text-yellow-500" />
-        <span className="font-medium">{row.getValue("rayoPoints")}</span>
-      </div>
+      <RayoPoints points={row.getValue("rayoPoints")} />
     ),
   },
   {

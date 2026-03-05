@@ -2,6 +2,12 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import {
+  IoPersonOutline,
+  IoMailOutline,
+  IoCallOutline,
+  IoLocationOutline,
+} from "react-icons/io5"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -13,6 +19,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
 import { useDialogStore } from "@/lib/stores/dialog-store"
 import { createStudent } from "@/server-actions/students/create-student"
@@ -27,6 +34,7 @@ const initialForm = {
   phone: "",
   address: "",
   notes: "",
+  isActive: true,
 }
 
 export const StudentDialog = () => {
@@ -61,6 +69,7 @@ export const StudentDialog = () => {
         phone: form.phone || undefined,
         address: form.address || undefined,
         notes: form.notes || undefined,
+        ...(isEdit && { isActive: form.isActive }),
       }
 
       const result = isEdit
@@ -90,6 +99,7 @@ export const StudentDialog = () => {
         phone: student.phone ?? "",
         address: student.address ?? "",
         notes: student.notes ?? "",
+        isActive: student.isActive,
       })
     } else {
       setForm(initialForm)
@@ -110,50 +120,67 @@ export const StudentDialog = () => {
         <form onSubmit={handleSubmit} className="grid gap-4">
           <div className="grid gap-2">
             <Label htmlFor="name">Name *</Label>
-            <Input
-              id="name"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              placeholder="Full name"
-              required
-            />
+            <div className="relative">
+              <IoPersonOutline size={16} className="absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                id="name"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                placeholder="Full name"
+                className="pl-9"
+                required
+              />
+            </div>
           </div>
 
           <div className="grid gap-2">
             <Label htmlFor="email">Email *</Label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="student@example.com"
-              required
-            />
+            <div className="relative">
+              <IoMailOutline size={16} className="absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                value={form.email}
+                onChange={handleChange}
+                placeholder="student@example.com"
+                className="pl-9"
+                required
+              />
+            </div>
           </div>
 
           <div className="grid gap-2">
             <Label htmlFor="phone">Phone</Label>
-            <Input
-              id="phone"
-              name="phone"
-              type="tel"
-              value={form.phone}
-              onChange={handleChange}
-              placeholder="+30 123 456 7890"
-            />
+            <div className="relative">
+              <IoCallOutline size={16} className="absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                id="phone"
+                name="phone"
+                type="tel"
+                value={form.phone}
+                onChange={handleChange}
+                placeholder="6912345678"
+                maxLength={10}
+                className="pl-9"
+              />
+            </div>
           </div>
 
           <div className="grid gap-2">
             <Label htmlFor="address">Address</Label>
-            <Input
-              id="address"
-              name="address"
-              value={form.address}
-              onChange={handleChange}
-              placeholder="Street address"
-            />
+            <div className="relative">
+              <IoLocationOutline size={16} className="absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                id="address"
+                name="address"
+                value={form.address}
+                onChange={handleChange}
+                placeholder="Street address"
+                className="pl-9"
+              />
+            </div>
           </div>
 
           <div className="grid gap-2">
@@ -167,6 +194,20 @@ export const StudentDialog = () => {
               rows={3}
             />
           </div>
+
+          {isEdit && (
+            <div className="flex items-center justify-between rounded-lg border px-4 py-3">
+              <div>
+                <Label htmlFor="isActive" className="text-sm font-medium">Active Student</Label>
+                <p className="text-xs text-muted-foreground">Inactive students are hidden from attendance</p>
+              </div>
+              <Switch
+                id="isActive"
+                checked={form.isActive}
+                onCheckedChange={(checked) => setForm((prev) => ({ ...prev, isActive: checked }))}
+              />
+            </div>
+          )}
 
           {error && (
             <p className="text-sm text-destructive">{error}</p>

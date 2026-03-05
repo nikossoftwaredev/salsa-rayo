@@ -4,7 +4,15 @@ import { useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { IoCalendar, IoFlame, IoFlash, IoPencil, IoCheckmark, IoClose } from "react-icons/io5";
+import { IoCalendar, IoFlame, IoPencil, IoCheckmark, IoClose, IoShareOutline } from "react-icons/io5";
+import { RayoPoints } from "@/components/ui/rayo-points";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { getInitials } from "@/lib/format";
 import { updateBio } from "@/server-actions/profile/update-bio";
 import type { getProfile } from "@/server-actions/profile/get-profile";
 
@@ -19,17 +27,12 @@ const BIO_MAX_LENGTH = 150;
 
 const STATS_CONFIG = [
   { key: "classes", icon: IoFlame, label: "Classes", color: "#fb923c" },
-  { key: "joined", icon: IoCalendar, label: "Joined", color: "#5b4fdb" },
+  { key: "joined", icon: IoCalendar, label: "Member Since", color: "#5b4fdb" },
 ] as const;
 
 export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentProps) => {
   const fullName = user.name || user.student?.name || "Dancer";
-  const userInitials = fullName
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
+  const userInitials = getInitials(fullName);
 
   const student = user.student;
   const totalClasses = student?._count.attendances ?? 0;
@@ -38,6 +41,7 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
   const [isEditingBio, setIsEditingBio] = useState(false);
   const [bioValue, setBioValue] = useState(bio);
   const [isSaving, setIsSaving] = useState(false);
+  const [copied, setCopied] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleEditBio = useCallback(() => {
@@ -50,6 +54,19 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
     setIsEditingBio(false);
     setBioValue(bio);
   }, [bio]);
+
+  const handleShare = useCallback(async () => {
+    const url = window.location.href;
+    const title = `${fullName} | Salsa Rayo`;
+
+    if (navigator.share) {
+      navigator.share({ title, url }).catch(() => {});
+    } else {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  }, [fullName]);
 
   const handleSaveBio = useCallback(async () => {
     setIsSaving(true);
@@ -93,7 +110,7 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
         </div>
       </motion.div>
 
-      {/* Name + Rayo Points */}
+      {/* Name + Rayo Points + Share */}
       <motion.div
         initial={{ y: 12, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -103,12 +120,22 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
         <h1 className="text-2xl font-bold tracking-tight text-foreground">
           {fullName}
         </h1>
-        {student && (
-          <span className="flex items-center gap-1 text-yellow-400 text-sm font-semibold">
-            <IoFlash size={14} />
-            {student.rayoPoints}
-          </span>
-        )}
+        {student && <RayoPoints points={student.rayoPoints} />}
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                onClick={handleShare}
+                className="inline-flex items-center justify-center size-7 rounded-full text-muted-foreground/50 hover:text-primary hover:bg-primary/10 transition-colors cursor-pointer"
+              >
+                <IoShareOutline size={15} />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>
+              {copied ? "Link copied!" : "Share profile"}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </motion.div>
 
       {/* Bio */}

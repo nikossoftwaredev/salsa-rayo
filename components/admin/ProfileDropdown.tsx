@@ -1,6 +1,7 @@
 "use client";
 
 import { signIn, signOut, useSession } from "next-auth/react";
+import { getInitials } from "@/lib/format";
 import { IoHome, IoLogInOutline, IoLogOutOutline, IoPerson, IoCalendar, IoImages, IoHelpCircle } from "react-icons/io5";
 import { MdAdminPanelSettings, MdInfo, MdAttachMoney, MdMenu } from "react-icons/md";
 import { GiOrbDirection } from "react-icons/gi";
@@ -57,12 +58,7 @@ export const ProfileDropdown = ({
   const firstName = fullName.split(" ")[0];
   const userImage = session?.user?.image;
   const userEmail = session?.user?.email || "";
-  const userInitials = fullName
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
+  const userInitials = getInitials(fullName);
 
   const defaultTrigger = isAuthenticated ? (
     <Button variant="ghost" className="relative size-8 rounded-full">

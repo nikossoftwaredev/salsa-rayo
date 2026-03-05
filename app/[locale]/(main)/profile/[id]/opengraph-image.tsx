@@ -1,28 +1,38 @@
-import { ImageResponse } from "next/og";
-import { prisma } from "@/lib/db";
+import { ImageResponse } from "next/og"
+import { readFile } from "fs/promises"
+import { join } from "path"
+import { prisma } from "@/lib/db"
+import { compactFormatter, getInitials } from "@/lib/format"
 
-export const runtime = "nodejs";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+export const runtime = "nodejs"
+export const size = { width: 1200, height: 630 }
+export const contentType = "image/png"
+
+const logoDataPromise = readFile(join(process.cwd(), "public/images/logo.png"))
 
 const OGImage = async ({ params }: { params: Promise<{ id: string }> }) => {
-  const { id } = await params;
+  const { id } = await params
 
-  const user = await prisma.user.findUnique({
-    where: { id },
-    select: {
-      name: true,
-      image: true,
-      student: {
-        select: {
-          name: true,
-          rayoPoints: true,
-          createdAt: true,
-          _count: { select: { attendances: true } },
+  const [user, logoData] = await Promise.all([
+    prisma.user.findUnique({
+      where: { id },
+      select: {
+        name: true,
+        image: true,
+        student: {
+          select: {
+            name: true,
+            rayoPoints: true,
+            createdAt: true,
+            _count: { select: { attendances: true } },
+          },
         },
       },
-    },
-  });
+    }),
+    logoDataPromise,
+  ])
+
+  const logoSrc = `data:image/png;base64,${logoData.toString("base64")}`
 
   if (!user) {
     return new ImageResponse(
@@ -41,24 +51,19 @@ const OGImage = async ({ params }: { params: Promise<{ id: string }> }) => {
         User not found
       </div>,
       { ...size }
-    );
+    )
   }
 
-  const fullName = user.name || user.student?.name || "Dancer";
-  const initials = fullName
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
-  const student = user.student;
-  const totalClasses = student?._count.attendances ?? 0;
+  const fullName = user.name || user.student?.name || "Dancer"
+  const initials = getInitials(fullName)
+  const student = user.student
+  const totalClasses = student?._count.attendances ?? 0
   const memberSince = student
     ? new Date(student.createdAt).toLocaleDateString("en", {
         month: "short",
         year: "numeric",
       })
-    : null;
+    : null
 
   return new ImageResponse(
     <div
@@ -69,105 +74,159 @@ const OGImage = async ({ params }: { params: Promise<{ id: string }> }) => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        background: "linear-gradient(135deg, #0f0a1a 0%, #1a1030 50%, #0f0a1a 100%)",
+        background: "linear-gradient(145deg, #0f0a1a 0%, #1a1030 40%, #120e22 100%)",
         color: "white",
-        gap: 32,
+        position: "relative",
       }}
     >
+      {/* Subtle gradient orb behind avatar */}
+      <div
+        style={{
+          position: "absolute",
+          top: 100,
+          width: 400,
+          height: 400,
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(91,79,219,0.15) 0%, transparent 70%)",
+          display: "flex",
+        }}
+      />
+
+      {/* Logo top-left */}
+      <div
+        style={{
+          position: "absolute",
+          top: 32,
+          left: 40,
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
+        }}
+      >
+        <img src={logoSrc} width={36} height={36} />
+        <span style={{ fontSize: 18, fontWeight: 600, color: "rgba(255,255,255,0.5)" }}>
+          Salsa Rayo
+        </span>
+      </div>
+
       {/* Avatar */}
-      {user.image ? (
-        <img
-          src={user.image}
-          width={160}
-          height={160}
-          style={{
-            borderRadius: "50%",
-            border: "4px solid rgba(91, 79, 219, 0.4)",
-          }}
-        />
-      ) : (
-        <div
-          style={{
-            width: 160,
-            height: 160,
-            borderRadius: "50%",
-            border: "4px solid rgba(91, 79, 219, 0.4)",
-            background: "#1a1030",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 56,
-            fontWeight: 700,
-            color: "rgba(255,255,255,0.7)",
-          }}
-        >
-          {initials}
-        </div>
-      )}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: 148,
+          height: 148,
+          borderRadius: "50%",
+          background: "linear-gradient(135deg, #5b4fdb, #e84393)",
+          padding: 4,
+        }}
+      >
+        {user.image ? (
+          <img
+            src={user.image}
+            width={140}
+            height={140}
+            style={{ borderRadius: "50%", objectFit: "cover" }}
+          />
+        ) : (
+          <div
+            style={{
+              width: 140,
+              height: 140,
+              borderRadius: "50%",
+              background: "#1a1030",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 48,
+              fontWeight: 700,
+              color: "rgba(255,255,255,0.7)",
+            }}
+          >
+            {initials}
+          </div>
+        )}
+      </div>
 
-      {/* Name */}
-      <div style={{ fontSize: 48, fontWeight: 700 }}>{fullName}</div>
+      {/* Name + rayo points */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 14,
+          marginTop: 28,
+        }}
+      >
+        <span style={{ fontSize: 44, fontWeight: 700 }}>{fullName}</span>
+        {student && student.rayoPoints > 0 && (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+              color: "#facc15",
+              fontSize: 28,
+              fontWeight: 600,
+            }}
+          >
+            <span>⚡</span>
+            <span>{compactFormatter.format(student.rayoPoints)}</span>
+          </div>
+        )}
+      </div>
 
-      {/* Stats */}
+      {/* Stats row */}
       {student && (
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 40,
-            fontSize: 24,
-            color: "rgba(255,255,255,0.6)",
+            gap: 32,
+            marginTop: 24,
+            fontSize: 22,
+            color: "rgba(255,255,255,0.5)",
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <span style={{ color: "#eab308" }}>⚡</span>
-            <span style={{ color: "white", fontWeight: 600 }}>
-              {student.rayoPoints}
-            </span>
-            <span>points</span>
+            <span style={{ color: "#fb923c" }}>🔥</span>
+            <span style={{ color: "white", fontWeight: 600 }}>{totalClasses}</span>
+            <span>{totalClasses === 1 ? "class" : "classes"}</span>
           </div>
-          <div
-            style={{
-              width: 1,
-              height: 24,
-              background: "rgba(255,255,255,0.2)",
-            }}
-          />
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <span style={{ color: "#f97316" }}>🔥</span>
-            <span style={{ color: "white", fontWeight: 600 }}>
-              {totalClasses}
-            </span>
-            <span>classes</span>
-          </div>
-          <div
-            style={{
-              width: 1,
-              height: 24,
-              background: "rgba(255,255,255,0.2)",
-            }}
-          />
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <span>📅</span>
-            <span>Joined {memberSince}</span>
-          </div>
+          {memberSince && (
+            <>
+              <div
+                style={{
+                  width: 1,
+                  height: 22,
+                  background: "rgba(255,255,255,0.15)",
+                  display: "flex",
+                }}
+              />
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span>📅</span>
+                <span>Since {memberSince}</span>
+              </div>
+            </>
+          )}
         </div>
       )}
 
-      {/* Branding */}
+      {/* Bottom bar */}
       <div
         style={{
           position: "absolute",
-          bottom: 32,
-          fontSize: 20,
-          color: "rgba(255,255,255,0.3)",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 4,
+          background: "linear-gradient(90deg, #5b4fdb, #e84393, #5b4fdb)",
+          display: "flex",
         }}
-      >
-        Salsa Rayo Dance School
-      </div>
+      />
     </div>,
     { ...size }
-  );
-};
+  )
+}
 
-export default OGImage;
+export default OGImage

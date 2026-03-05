@@ -1,0 +1,415 @@
+"use client"
+
+import { useState, useMemo, useCallback, useRef, useEffect } from "react"
+import Image from "next/image"
+import { motion, AnimatePresence } from "framer-motion"
+import {
+  IoCalendarOutline,
+  IoTimeOutline,
+  IoCloseCircle,
+  IoPersonOutline,
+  IoChevronDown,
+} from "react-icons/io5"
+import { RayoPoints } from "@/components/ui/rayo-points"
+import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Separator } from "@/components/ui/separator"
+import { type ScheduleEntryWithInstructors } from "@/lib/db"
+import { DAY_NAMES } from "@/data/schedule"
+import { getAttendances, type AttendanceRecord } from "@/server-actions/attendance/get-attendances"
+import { submitAttendance } from "@/server-actions/attendance/submit-attendance"
+import { removeAttendance } from "@/server-actions/attendance/remove-attendance"
+import { AttendancePanel, type StudentForAttendance } from "./AttendancePanel"
+
+interface AttendanceViewProps {
+  entries: ScheduleEntryWithInstructors[]
+}
+
+const toDayIndex = (date: Date) => {
+  const jsDay = date.getDay()
+  return jsDay === 0 ? 7 : jsDay
+}
+
+const toDateString = (date: Date) => {
+  const d = new Date(date)
+  d.setHours(0, 0, 0, 0)
+  return d.toISOString()
+}
+
+export const AttendanceView = ({ entries }: AttendanceViewProps) => {
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date())
+  const [expandedEntryId, setExpandedEntryId] = useState<string | null>(null)
+
+  // Map of scheduleEntryId -> AttendanceRecord[]
+  const [attendancesMap, setAttendancesMap] = useState<Record<string, AttendanceRecord[]> | null>(null)
+  const fetchIdRef = useRef(0)
+
+  // Pending local changes (not yet saved)
+  const [pendingAdds, setPendingAdds] = useState<StudentForAttendance[]>([])
+  const [pendingRemoveIds, setPendingRemoveIds] = useState<Set<string>>(new Set())
+  const [submitting, setSubmitting] = useState(false)
+
+  const dayIndex = toDayIndex(selectedDate)
+  const dayName = DAY_NAMES[dayIndex - 1]
+
+  const activeDayIndices = useMemo(
+    () => new Set(entries.map((e) => e.dayIndex)),
+    [entries]
+  )
+
+  const disabledDays = useMemo(
+    () => (date: Date) => !activeDayIndices.has(toDayIndex(date)),
+    [activeDayIndices]
+  )
+
+  const lessonsForDay = useMemo(
+    () => entries.filter((e) => e.dayIndex === dayIndex),
+    [entries, dayIndex]
+  )
+
+  const formattedDate = selectedDate.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  })
+
+  const loadAttendances = useCallback(async () => {
+    if (lessonsForDay.length === 0) return
+    setAttendancesMap(null)
+    const currentFetchId = ++fetchIdRef.current
+    const dateStr = toDateString(selectedDate)
+
+    const results = await Promise.all(
+      lessonsForDay.map(async (entry) => {
+        const result = await getAttendances({ scheduleEntryId: entry.id, date: dateStr })
+        return { entryId: entry.id, data: result.success ? result.data ?? [] : [] }
+      })
+    )
+
+    if (fetchIdRef.current === currentFetchId) {
+      const map: Record<string, AttendanceRecord[]> = {}
+      for (const r of results) map[r.entryId] = r.data
+      setAttendancesMap(map)
+    }
+  }, [lessonsForDay, selectedDate])
+
+  const loadingAttendances = attendancesMap === null
+
+  const resetPending = useCallback(() => {
+    setPendingAdds([])
+    setPendingRemoveIds(new Set())
+  }, [])
+
+  const handleCardClick = useCallback(
+    (entryId: string) => {
+      setExpandedEntryId((prev) => (prev === entryId ? null : entryId))
+      resetPending()
+    },
+    [resetPending]
+  )
+
+  const handleDateSelect = useCallback(
+    (date: Date | undefined) => {
+      if (!date) return
+      setSelectedDate(date)
+      setExpandedEntryId(null)
+      resetPending()
+    },
+    [resetPending]
+  )
+
+  const handleAddStudent = useCallback(
+    (student: StudentForAttendance) => {
+      setPendingAdds((prev) => [...prev, student])
+    },
+    []
+  )
+
+  const handleUndoAdd = useCallback(
+    (studentId: string) => {
+      setPendingAdds((prev) => prev.filter((s) => s.id !== studentId))
+    },
+    []
+  )
+
+  const handleMarkRemove = useCallback(
+    (attendanceId: string) => {
+      setPendingRemoveIds((prev) => new Set([...prev, attendanceId]))
+    },
+    []
+  )
+
+  const handleGlobalSubmit = useCallback(async () => {
+    if (!expandedEntryId) return
+    setSubmitting(true)
+
+    try {
+      const promises: Promise<unknown>[] = []
+
+      // Remove attendances
+      for (const attendanceId of pendingRemoveIds) {
+        promises.push(removeAttendance(attendanceId))
+      }
+
+      // Add new attendances
+      if (pendingAdds.length > 0) {
+        const entry = lessonsForDay.find((e) => e.id === expandedEntryId)
+        if (entry) {
+          promises.push(submitAttendance({
+            scheduleEntryId: expandedEntryId,
+            date: toDateString(selectedDate),
+            studentIds: pendingAdds.map((s) => s.id),
+            instructorIds: entry.instructors.map((ins) => ins.id),
+          }))
+        }
+      }
+
+      await Promise.all(promises)
+      resetPending()
+      loadAttendances()
+    } catch {
+      // Silent fail — the user can retry
+    } finally {
+      setSubmitting(false)
+    }
+  }, [expandedEntryId, pendingAdds, pendingRemoveIds, lessonsForDay, selectedDate, resetPending, loadAttendances])
+
+  const hasPendingChanges = pendingAdds.length > 0 || pendingRemoveIds.size > 0
+
+  useEffect(() => {
+    loadAttendances()
+  }, [loadAttendances])
+
+  return (
+    <div className="flex flex-col gap-8 lg:flex-row">
+      {/* Calendar panel */}
+      <div className="shrink-0">
+        <div className="rounded-xl border bg-card p-2">
+          <Calendar
+            mode="single"
+            selected={selectedDate}
+            onSelect={handleDateSelect}
+            weekStartsOn={1}
+            disabled={disabledDays}
+          />
+        </div>
+      </div>
+
+      {/* Lessons panel */}
+      <div className="flex-1">
+        <div className="mb-6 flex items-baseline gap-3">
+          <h3 className="text-2xl font-bold tracking-tight">{dayName}</h3>
+          <span className="text-sm text-muted-foreground">{formattedDate}</span>
+        </div>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={dayIndex}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+          >
+            {lessonsForDay.length === 0 ? (
+              <div className="flex flex-col items-center justify-center rounded-xl border border-dashed py-16 text-muted-foreground">
+                <IoCalendarOutline size={32} className="mb-3 opacity-40" />
+                <p className="text-sm">No classes scheduled for {dayName}.</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {lessonsForDay.map((entry, i) => {
+                  const attendees = attendancesMap?.[entry.id] ?? []
+                  const isExpanded = expandedEntryId === entry.id
+
+                  // Effective attendees: existing (minus pending removes) + pending adds
+                  const existingVisible = isExpanded
+                    ? attendees.filter((a) => !pendingRemoveIds.has(a.id))
+                    : attendees
+                  const effectiveCount = isExpanded
+                    ? existingVisible.length + pendingAdds.length
+                    : attendees.length
+
+                  // IDs to hide from the left panel
+                  const hideIds = isExpanded
+                    ? [
+                        ...existingVisible.map((a) => a.studentId),
+                        ...pendingAdds.map((s) => s.id),
+                      ]
+                    : []
+
+                  return (
+                    <motion.div
+                      key={entry.id}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.25, delay: i * 0.06 }}
+                    >
+                      {/* Lesson card */}
+                      <div
+                        onClick={() => handleCardClick(entry.id)}
+                        className={`group relative cursor-pointer overflow-hidden rounded-xl border bg-card transition-colors ${isExpanded ? "border-primary/40" : "hover:border-primary/30"}`}
+                      >
+                        {/* Accent bar */}
+                        <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-primary to-brand-pink" />
+
+                        <div className="flex items-center gap-3 py-4 pr-4 pl-5">
+                          {/* Left: title block */}
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-2">
+                              <span className="truncate font-semibold">{entry.title}</span>
+                              {entry.hint && (
+                                <span className="shrink-0 rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
+                                  {entry.hint}
+                                </span>
+                              )}
+                            </div>
+                            <div className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
+                              <IoTimeOutline size={12} className="shrink-0 opacity-60" />
+                              <span>{entry.time}</span>
+                            </div>
+                          </div>
+
+                          {/* Right: badge + avatars + chevron */}
+                          <div className="flex shrink-0 items-center gap-2.5">
+                            {effectiveCount > 0 && (
+                              <span className="rounded-full bg-primary/15 px-2.5 py-0.5 text-xs font-semibold tabular-nums text-primary">
+                                {effectiveCount}
+                              </span>
+                            )}
+                            <div className="hidden sm:flex shrink-0 -space-x-2">
+                              {entry.instructors.map((instructor) => (
+                                <div
+                                  key={instructor.id}
+                                  className="relative size-7 rounded-full ring-2 ring-card"
+                                  title={instructor.name}
+                                >
+                                  <Image
+                                    src={instructor.image}
+                                    alt={instructor.name}
+                                    fill
+                                    className="rounded-full object-cover"
+                                  />
+                                </div>
+                              ))}
+                            </div>
+                            <IoChevronDown
+                              size={16}
+                              className={`shrink-0 text-muted-foreground/50 transition-transform ${isExpanded ? "rotate-180" : ""}`}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Expanded panel: search left + attendees right */}
+                      <AnimatePresence>
+                        {isExpanded && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="mt-2 grid gap-4 lg:grid-cols-2">
+                              {/* Left: student picker */}
+                              <AttendancePanel
+                                hideIds={hideIds}
+                                onAddStudent={handleAddStudent}
+                              />
+
+                              {/* Right: attendees list + save */}
+                              <div className="flex h-[400px] flex-col rounded-xl border bg-card">
+                                {/* Header — pinned top */}
+                                <p className="shrink-0 px-4 pt-4 pb-3 text-xs font-medium uppercase tracking-wider text-muted-foreground/60">
+                                  Attendees ({effectiveCount})
+                                </p>
+
+                                {/* Scrollable body */}
+                                <ScrollArea className="min-h-0 flex-1 px-4">
+                                  {loadingAttendances ? (
+                                    <p className="py-8 text-center text-xs text-muted-foreground/60">Loading...</p>
+                                  ) : effectiveCount === 0 ? (
+                                    <div className="flex flex-col items-center justify-center py-8 text-muted-foreground/50">
+                                      <IoPersonOutline size={24} className="mb-2 opacity-40" />
+                                      <p className="text-xs">No attendees for this date</p>
+                                    </div>
+                                  ) : (
+                                    <div className="space-y-1">
+                                      {existingVisible.map((a) => (
+                                        <AttendeeRow
+                                          key={a.id}
+                                          name={a.student.name}
+                                          points={a.student.rayoPoints}
+                                          onRemove={() => handleMarkRemove(a.id)}
+                                        />
+                                      ))}
+                                      {pendingAdds.map((s) => (
+                                        <AttendeeRow
+                                          key={s.id}
+                                          name={s.name}
+                                          points={s.rayoPoints}
+                                          onRemove={() => handleUndoAdd(s.id)}
+                                        />
+                                      ))}
+                                    </div>
+                                  )}
+                                </ScrollArea>
+
+                                {/* Footer — pinned bottom */}
+                                <Separator />
+                                <div className="flex shrink-0 items-center justify-between px-4 py-3">
+                                  <p className="text-xs text-muted-foreground">
+                                    {!hasPendingChanges
+                                      ? "No changes"
+                                      : [
+                                          pendingAdds.length > 0 && `+${pendingAdds.length} added`,
+                                          pendingRemoveIds.size > 0 && `${pendingRemoveIds.size} removed`,
+                                        ].filter(Boolean).join(", ")}
+                                  </p>
+                                  <Button
+                                    size="sm"
+                                    disabled={!hasPendingChanges || submitting}
+                                    onClick={handleGlobalSubmit}
+                                  >
+                                    {submitting ? "Saving..." : "Save Changes"}
+                                  </Button>
+                                </div>
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  )
+                })}
+              </div>
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </div>
+  )
+}
+
+interface AttendeeRowProps {
+  name: string
+  points: number
+  onRemove: () => void
+}
+
+const AttendeeRow = ({ name, points, onRemove }: AttendeeRowProps) => (
+  <div className="flex items-center justify-between rounded-lg px-3 py-2 transition-colors hover:bg-accent">
+    <div className="flex items-center gap-2">
+      <span className="text-sm font-medium">{name}</span>
+      <RayoPoints points={points} size="sm" />
+    </div>
+    <button
+      type="button"
+      onClick={onRemove}
+      className="cursor-pointer text-muted-foreground/40 transition-colors hover:text-destructive"
+    >
+      <IoCloseCircle size={16} />
+    </button>
+  </div>
+)
