@@ -47,13 +47,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+const RootLayout = async ({
   children,
   params,
 }: Readonly<{
   params: Promise<{ locale: string }>;
   children: React.ReactNode;
-}>) {
+}>) => {
   const messages = await getMessages();
   const locale = (await params).locale;
   const session = await getServerSession(authOptions);
@@ -136,3 +136,5 @@ export default async function RootLayout({
     </html>
   );
 }
+
+export default RootLayout

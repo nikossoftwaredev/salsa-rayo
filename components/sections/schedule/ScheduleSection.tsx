@@ -25,7 +25,6 @@ const ScheduleSection = () => {
       id="schedule"
       className="flex items-center justify-center flex-col space-y-12 relative scroll-mt-20"
     >
-      {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-1/4 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-brand-pink/10 rounded-full blur-3xl"></div>

@@ -35,10 +35,9 @@ const GoogleReviews = ({ placeId }: ReviewsProps) => {
     if (placeId) fetchReviews();
   }, [placeId]);
 
-  if (loading) {
+  if (loading)
     return (
       <div className="relative bg-background w-72 overflow-hidden border border-muted rounded-lg shadow-md">
-        {/* Gradient top border */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500 via-yellow-500 to-orange-500" />
         <div className="p-6">
           <div className="flex items-center justify-center">
@@ -49,11 +48,8 @@ const GoogleReviews = ({ placeId }: ReviewsProps) => {
         </div>
       </div>
     );
-  }
 
-  if (!reviewsData) {
-    return null;
-  }
+  if (!reviewsData) return null;
 
   const { rating, user_ratings_total, url, reviews } = reviewsData;
 

@@ -46,33 +46,25 @@ const getFilterTabs = (): FilterTab[] =>
 const getGalleryItems = (isFullPage: boolean, category?: GalleryCategory): GalleryItem[] => {
   const images: GalleryItem[] = GALLERY_IMAGES.map(img => ({ ...img, type: "image" as const }));
   const videos: GalleryItem[] = GALLERY_VIDEOS.map(vid => ({ ...vid, type: "video" as const }));
-  
-  // Mix images and videos for better layout
-  const allItems = [];
+
+  const allItems: GalleryItem[] = [];
   const maxLength = Math.max(images.length, videos.length);
-  
+
   for (let i = 0; i < maxLength; i++) {
     if (i < images.length) allItems.push(images[i]);
     if (i < videos.length) allItems.push(videos[i]);
   }
-  
-  // If category is specified, filter items
-  if (category) {
-    const filteredItems = allItems.filter(item => item.category === category);
-    // For homepage, limit to 4 items per category
-    if (!isFullPage) {
-      return filteredItems.slice(0, 4);
-    }
-    return filteredItems;
-  }
-  
-  return allItems;
+
+  if (!category) return allItems;
+
+  const filteredItems = allItems.filter(item => item.category === category);
+  return isFullPage ? filteredItems : filteredItems.slice(0, 4);
 };
 
-const GallerySection: React.FC<GallerySectionProps> = ({
+const GallerySection = ({
   isFullPage = false,
   initialCategory,
-}) => {
+}: GallerySectionProps) => {
   const t = useTranslations('Gallery');
   const [activeFilter, setActiveFilter] = useState<GalleryCategory>(initialCategory || "photos");
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);

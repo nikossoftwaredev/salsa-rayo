@@ -10,7 +10,6 @@ import {
 import { FaFacebook, FaInstagram, FaSpotify, FaYoutube } from "react-icons/fa";
 import { SectionTitle } from "@/components/SectionTitle";
 
-// CHANGE THE COLORS OF THE ICONS
 const SOCIALS_INFO = [
   {
     url: INSTAGRAM_URL,

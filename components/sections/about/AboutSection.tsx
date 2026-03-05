@@ -1,6 +1,6 @@
 "use client";
 import { Card } from "@/components/ui/card";
-import { FC, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { SectionTitle } from "@/components/SectionTitle";
 import { useTranslations } from "next-intl";
@@ -8,8 +8,13 @@ import Logo from "@/components/Logo";
 import { IoCalendarOutline, IoTrophyOutline, IoSchoolOutline, IoHeartOutline } from "react-icons/io5";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
 
-// Highlight component for key stats/info
-const Highlight: FC<{ icon: React.ReactNode; label: string; value: string }> = ({ icon, label, value }) => (
+interface HighlightProps {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+}
+
+const Highlight = ({ icon, label, value }: HighlightProps) => (
   <div className="flex items-center gap-3 p-3 bg-primary/5 rounded-xl border border-primary/10 hover:border-primary/25 transition-colors duration-300">
     <div className="text-primary/80">{icon}</div>
     <div>
@@ -19,11 +24,12 @@ const Highlight: FC<{ icon: React.ReactNode; label: string; value: string }> = (
   </div>
 );
 
-// Improved card component with better styling
-const AboutCard: FC<{
+interface AboutCardProps {
   children: React.ReactNode;
   isSchool?: boolean;
-}> = ({ children, isSchool }) => (
+}
+
+const AboutCard = ({ children, isSchool }: AboutCardProps) => (
   <Card className={`
     overflow-hidden transition-all duration-300
     hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1
@@ -35,11 +41,12 @@ const AboutCard: FC<{
   </Card>
 );
 
-// Improved instructor description with better readability
-const InstructorDescription: FC<{
+interface InstructorDescriptionProps {
   description: string;
   name: string;
-}> = ({ description, name }) => {
+}
+
+const InstructorDescription = ({ description, name }: InstructorDescriptionProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const paragraphs = description.split('\n\n');
   const firstParagraph = paragraphs[0];
@@ -96,7 +103,7 @@ const InstructorDescription: FC<{
   );
 };
 
-const AboutSection: FC = () => {
+const AboutSection = () => {
   const t = useTranslations("About");
 
   return (

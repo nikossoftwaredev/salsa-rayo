@@ -12,7 +12,7 @@ import { useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 
-export default function PricingPage() {
+const PricingPage = () => {
   const t = useTranslations("Pricing");
   const [isStudentDiscount, setIsStudentDiscount] = useState(false);
 
@@ -100,3 +100,5 @@ export default function PricingPage() {
     </div>
   );
 }
+
+export default PricingPage

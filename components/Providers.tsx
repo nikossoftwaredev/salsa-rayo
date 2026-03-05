@@ -12,7 +12,7 @@ interface ProvidersProps {
   locale: (typeof SUPPORTED_LOCALES)[number];
 }
 
-export function Providers({ children, session, messages, locale }: ProvidersProps) {
+export const Providers = ({ children, session, messages, locale }: ProvidersProps) => {
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <SessionProvider session={session}>
@@ -20,4 +20,4 @@ export function Providers({ children, session, messages, locale }: ProvidersProp
       </SessionProvider>
     </NextIntlClientProvider>
   );
-}
+};

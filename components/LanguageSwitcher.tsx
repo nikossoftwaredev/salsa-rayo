@@ -47,7 +47,7 @@ interface LanguageSwitcherProps {
 
 export { languages };
 
-export const LanguageSwitcherTabs = () => {
+const useLanguageSwitch = () => {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
@@ -58,6 +58,12 @@ export const LanguageSwitcherTabs = () => {
       router.replace(pathname, { locale: newLocale as typeof SUPPORTED_LOCALES[number] });
     });
   };
+
+  return { locale, isPending, handleLanguageChange };
+};
+
+export const LanguageSwitcherTabs = () => {
+  const { locale, isPending, handleLanguageChange } = useLanguageSwitch();
 
   return (
     <div className="flex items-center gap-1 px-2 py-1.5">
@@ -83,16 +89,7 @@ export const LanguageSwitcherTabs = () => {
 };
 
 const LanguageSwitcher = ({ isMobile = false }: LanguageSwitcherProps) => {
-  const locale = useLocale();
-  const router = useRouter();
-  const pathname = usePathname();
-  const [isPending, startTransition] = useTransition();
-
-  const handleLanguageChange = (newLocale: string) => {
-    startTransition(() => {
-      router.replace(pathname, { locale: newLocale as typeof SUPPORTED_LOCALES[number] });
-    });
-  };
+  const { locale, isPending, handleLanguageChange } = useLanguageSwitch();
 
   return (
     <DropdownMenu modal={false}>

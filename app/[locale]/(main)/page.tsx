@@ -13,12 +13,11 @@ const GoogleReviews = lazy(() => import("@/components/GoogleReviews"));
 
 export const revalidate = 0;
 
-// Loading placeholder component
 const SectionLoader = () => (
   <div className="w-full h-96 animate-pulse bg-secondary/10 rounded-lg" />
 );
 
-export default function Home() {
+const Home = () => {
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden">
       <Suspense fallback={null}>
@@ -57,3 +56,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default Home

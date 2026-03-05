@@ -1,4 +1,3 @@
-// Define instructors separately for reusability
 export const INSTRUCTORS = {
   konstantinos: {
     name: "Konstantinos",

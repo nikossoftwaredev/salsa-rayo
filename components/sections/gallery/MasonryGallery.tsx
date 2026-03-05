@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 
@@ -20,11 +20,9 @@ interface MasonryGalleryProps {
   onItemClick: (item: MasonryItem) => void;
 }
 
-const MasonryGallery: React.FC<MasonryGalleryProps> = ({ items, onItemClick }) => {
+const MasonryGallery = ({ items, onItemClick }: MasonryGalleryProps) => {
   const [columns, setColumns] = useState(3);
-  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Calculate number of columns based on screen size
   useEffect(() => {
     const updateColumns = () => {
       const width = window.innerWidth;
@@ -38,7 +36,6 @@ const MasonryGallery: React.FC<MasonryGalleryProps> = ({ items, onItemClick }) =
     return () => window.removeEventListener("resize", updateColumns);
   }, []);
 
-  // Distribute items across columns
   const getColumns = () => {
     const cols: MasonryItem[][] = Array.from({ length: columns }, () => []);
     
@@ -53,10 +50,7 @@ const MasonryGallery: React.FC<MasonryGalleryProps> = ({ items, onItemClick }) =
   const columnItems = getColumns();
 
   return (
-    <div 
-      ref={containerRef}
-      className="flex gap-4 w-full"
-    >
+    <div className="flex gap-4 w-full">
       {columnItems.map((column, colIndex) => (
         <div key={colIndex} className="flex-1 flex flex-col gap-4">
           {column.map((item) => (

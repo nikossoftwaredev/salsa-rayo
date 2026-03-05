@@ -3,7 +3,7 @@ import OrishasGrid from '@/components/sections/orishas/OrishasGrid'
 import BackgroundEffects from '@/components/BackgroundEffects'
 import { BasePageProps } from '@/types/pageprops'
 
-export async function generateMetadata({ params }: BasePageProps): Promise<Metadata> {
+export const generateMetadata = async ({ params }: BasePageProps): Promise<Metadata> => {
   const locale = (await params).locale
   
   const titles = {
@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: BasePageProps): Promise<Metad
   }
 }
 
-export default function OrishasPage() {
+const OrishasPage = () => {
   return (
     <main className="min-h-screen bg-background">
       <BackgroundEffects />
@@ -40,3 +40,5 @@ export default function OrishasPage() {
     </main>
   )
 }
+
+export default OrishasPage

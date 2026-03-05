@@ -7,7 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { GalleryCategory } from "@/data/gallery";
 import { Suspense } from "react";
 
-function GalleryContent() {
+const GalleryContent = () => {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category');
   
@@ -48,7 +48,7 @@ function GalleryContent() {
   );
 }
 
-export default function GalleryPage() {
+const GalleryPage = () => {
   return (
     <Suspense fallback={
       <div className="relative min-h-screen w-full overflow-x-hidden">
@@ -62,3 +62,5 @@ export default function GalleryPage() {
     </Suspense>
   );
 }
+
+export default GalleryPage

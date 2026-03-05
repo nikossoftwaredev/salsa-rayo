@@ -16,8 +16,6 @@ export const SPOTIFY_URL =
 export const YOUTUBE_URL = "https://www.youtube.com/@SalsaRayoDanceSchool";
 export const PHONE = "+30 2109700730";
 
-export const TIKTOK_URL = "";
-
 export const FACEBOOK_URL =
   "https://www.facebook.com/profile.php?id=61579636514978";
 export const ADDRESS = "Θερμοπυλών 19, Άγιος Δημήτριος";

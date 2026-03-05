@@ -14,7 +14,7 @@ export const AuthButton = ({ showNavRoutes = false }: AuthButtonProps) => {
   if (status === "loading")
     return <div className="size-8 rounded-full bg-muted animate-pulse" />;
 
-  if (!session && !showNavRoutes) {
+  if (!session && !showNavRoutes)
     return (
       <Button
         onClick={() => signIn("google")}
@@ -25,7 +25,6 @@ export const AuthButton = ({ showNavRoutes = false }: AuthButtonProps) => {
         Sign In
       </Button>
     );
-  }
 
   return <ProfileDropdown showNavRoutes={showNavRoutes} />;
 };

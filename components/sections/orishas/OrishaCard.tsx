@@ -14,7 +14,7 @@ interface OrishaCardProps {
   orisha: Orisha
 }
 
-export default function OrishaCard({ orisha }: OrishaCardProps) {
+const OrishaCard = ({ orisha }: OrishaCardProps) => {
   const locale = useLocale() as 'en' | 'el' | 'es'
   
   const getOrishaIcon = (id: string) => {
@@ -119,3 +119,5 @@ export default function OrishaCard({ orisha }: OrishaCardProps) {
     </div>
   )
 }
+
+export default OrishaCard

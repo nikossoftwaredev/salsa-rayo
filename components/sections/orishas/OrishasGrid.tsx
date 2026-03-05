@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { orishas } from "@/data/orishas";
 import OrishaCard from "./OrishaCard";
 
-export default function OrishasGrid() {
+const OrishasGrid = () => {
   const t = useTranslations("Orishas");
   return (
     <section className="py-20 px-4 bg-gray-900 min-h-screen">
@@ -30,3 +30,5 @@ export default function OrishasGrid() {
     </section>
   );
 }
+
+export default OrishasGrid

@@ -17,12 +17,7 @@ const ContactFormModal = ({
   initialMessage = "I am interested about the summer offer",
 }: ContactFormModalProps) => {
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-
+    document.body.style.overflow = isOpen ? "hidden" : "unset";
     return () => {
       document.body.style.overflow = "unset";
     };

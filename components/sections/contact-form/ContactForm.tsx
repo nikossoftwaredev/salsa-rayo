@@ -195,12 +195,7 @@ const ContactForm = ({
           setFormData(initFormData(initialMessage));
           setErrors({});
 
-          // Call onSuccess callback if provided
-          if (onSuccess) {
-            setTimeout(() => {
-              onSuccess();
-            }, 1500); // Wait a bit for user to see success message
-          }
+          if (onSuccess) setTimeout(onSuccess, 1500);
         } else {
           setToast({
             isVisible: true,

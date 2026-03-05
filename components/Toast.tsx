@@ -12,13 +12,13 @@ interface ToastProps {
   duration?: number;
 }
 
-const Toast: React.FC<ToastProps> = ({
+const Toast = ({
   message,
   type,
   isVisible,
   onClose,
   duration = 5000,
-}) => {
+}: ToastProps) => {
   useEffect(() => {
     if (isVisible && duration > 0) {
       const timer = setTimeout(() => {

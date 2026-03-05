@@ -17,23 +17,20 @@ interface PackageCardProps {
   onClaim?: () => void;
 }
 
-const PackageCard: React.FC<PackageCardProps> = ({
+const PackageCard = ({
   title,
   price,
   numberOfLessons,
   isMostPopular,
   isStudentDiscount = false,
   onClaim,
-}) => {
+}: PackageCardProps) => {
   const t = useTranslations("Package");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleClaim = () => {
-    if (onClaim) {
-      onClaim();
-    } else {
-      setIsModalOpen(true);
-    }
+    if (onClaim) onClaim();
+    else setIsModalOpen(true);
   };
 
   const lessonsPerMonth = numberOfLessons * 4;

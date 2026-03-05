@@ -5,13 +5,6 @@ import {
   FaCamera,
 } from "react-icons/fa";
 
-export const YOUTUBE_VIDEOS = [
-  "kR-lwIGdiOA",
-  "1LI82It0cbU",
-  "1-RSFcqptRQ",
-  "26-FojKUri4",
-];
-
 export interface GalleryImage {
   id: string;
   src: string;
@@ -246,17 +239,3 @@ export const GALLERY_VIDEOS: GalleryVideo[] = [
     category: "social",
   },
 ];
-
-export const getItemsByCategory = (category: GalleryCategory) => {
-  return {
-    images: GALLERY_IMAGES.filter((img) => img.category === category),
-    videos: GALLERY_VIDEOS.filter((vid) => vid.category === category),
-  };
-};
-
-export const getAllGalleryItems = () => {
-  return {
-    images: GALLERY_IMAGES,
-    videos: GALLERY_VIDEOS,
-  };
-};
