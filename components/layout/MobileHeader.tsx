@@ -54,7 +54,7 @@ const MobileHeader = () => {
                   key={link.path}
                   href={link.path}
                   onClick={closeMenu}
-                  className="text-2xl font-bold text-primary hover:text-accent transition-colors duration-300"
+                  className="text-2xl font-bold text-primary hover:text-brand-pink transition-colors duration-300"
                 >
                   {link.text.en}
                 </a>

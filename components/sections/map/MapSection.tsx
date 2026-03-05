@@ -24,7 +24,7 @@ const MapSection = () => {
           {/* Address Bar */}
           <div className="px-4 py-3">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-accent/20">
+              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-brand-pink/20">
                 <MdLocationPin className="text-primary" size={20} />
               </div>
               <div className="flex-1">

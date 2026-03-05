@@ -40,7 +40,7 @@ const HeroSection = () => {
         <Logo size="xxl" />
 
         <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight">
-          <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-primary to-brand-pink bg-clip-text text-transparent">
             {tHero("dance")}
             {tHero("and")}
             {tHero("connect")}

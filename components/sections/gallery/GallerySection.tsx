@@ -105,7 +105,7 @@ const GallerySection: React.FC<GallerySectionProps> = ({
               "flex items-center gap-2 px-3 sm:px-6 py-2 sm:py-3 rounded-full font-semibold transition-all duration-300 cursor-pointer",
               "backdrop-blur-md border border-border/20",
               activeFilter === tab.id
-                ? "bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-lg shadow-primary/25 scale-105"
+                ? "bg-gradient-to-r from-primary to-brand-pink text-primary-foreground shadow-lg shadow-primary/25 scale-105"
                 : "bg-card/80 text-foreground/70 hover:text-foreground hover:scale-105 hover:shadow-md hover:border-primary/25 hover:bg-primary/5"
             )}
           >

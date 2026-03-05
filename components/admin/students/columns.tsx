@@ -1,19 +1,23 @@
 "use client"
 
 import { type ColumnDef } from "@tanstack/react-table"
-import { IoEllipsisHorizontal, IoFlash } from "react-icons/io5"
+import { IoFlash } from "react-icons/io5"
+import { MdEdit } from "react-icons/md"
+import { toast } from "sonner"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { type StudentWithSubscriptions } from "./types"
+
+const copyToClipboard = (value: string, label: string) => {
+  navigator.clipboard.writeText(value)
+  toast.success(`${label} copied`, { description: value })
+}
 
 const formatDate = (date: Date | null | undefined) => {
   if (!date) return "—"
@@ -37,52 +41,54 @@ const getSubStatus = (student: StudentWithSubscriptions) => {
 
 export const columns: ColumnDef<StudentWithSubscriptions>[] = [
   {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-        className="translate-y-[2px]"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-        className="translate-y-[2px]"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
     accessorKey: "name",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Name" />
     ),
-    cell: ({ row }) => (
-      <div className="font-medium">{row.getValue("name")}</div>
-    ),
+    cell: ({ row }) => {
+      const name: string = row.getValue("name")
+      return (
+        <button
+          className="font-medium cursor-pointer hover:text-primary transition-colors"
+          onClick={() => copyToClipboard(name, "Name")}
+        >
+          {name}
+        </button>
+      )
+    },
   },
   {
     accessorKey: "email",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Email" />
     ),
+    cell: ({ row }) => {
+      const email: string = row.getValue("email")
+      return (
+        <button
+          className="cursor-pointer hover:text-primary transition-colors"
+          onClick={() => copyToClipboard(email, "Email")}
+        >
+          {email}
+        </button>
+      )
+    },
   },
   {
     accessorKey: "phone",
     header: "Phone",
-    cell: ({ row }) => (
-      <span className="text-muted-foreground">
-        {row.getValue("phone") || "—"}
-      </span>
-    ),
+    cell: ({ row }) => {
+      const phone: string = row.getValue("phone")
+      if (!phone) return <span className="text-muted-foreground">—</span>
+      return (
+        <button
+          className="text-muted-foreground cursor-pointer hover:text-primary transition-colors"
+          onClick={() => copyToClipboard(phone, "Phone")}
+        >
+          {phone}
+        </button>
+      )
+    },
   },
   {
     accessorKey: "address",
@@ -152,28 +158,15 @@ export const columns: ColumnDef<StudentWithSubscriptions>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
-      const student = row.original
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon-sm">
-              <IoEllipsisHorizontal size={16} />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(student.email)}
-            >
-              Copy email
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View profile</DropdownMenuItem>
-            <DropdownMenuItem>Edit student</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
+    cell: () => (
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button variant="ghost" size="icon-sm">
+            <MdEdit size={16} />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>Edit</TooltipContent>
+      </Tooltip>
+    ),
   },
 ]

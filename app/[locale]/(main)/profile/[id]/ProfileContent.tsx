@@ -83,7 +83,7 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         className="relative"
       >
-        <div className="rounded-full p-1 bg-gradient-to-br from-primary to-accent shadow-[0_0_30px_rgba(91,79,219,0.3)]">
+        <div className="rounded-full p-1 bg-gradient-to-br from-primary to-brand-pink shadow-[0_0_30px_rgba(91,79,219,0.3)]">
           <Avatar className="size-28 border-2 border-background">
             {user.image && <AvatarImage src={user.image} alt={fullName} />}
             <AvatarFallback className="text-3xl font-bold bg-card text-foreground">

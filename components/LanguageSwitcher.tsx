@@ -103,8 +103,7 @@ const LanguageSwitcher = ({ isMobile = false }: LanguageSwitcherProps) => {
           aria-label="Change language"
           disabled={isPending}
         >
-          <MdLanguage size={24} className="transition-transform group-hover:scale-110" />
-          <span className="absolute -top-1 -right-1 size-2 bg-primary rounded-full animate-pulse" />
+          <MdLanguage className="!size-7 transition-transform group-hover:scale-110" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent

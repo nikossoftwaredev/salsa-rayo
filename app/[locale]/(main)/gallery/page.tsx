@@ -27,7 +27,7 @@ function GalleryContent() {
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent text-center mb-4"
+            className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary to-brand-pink bg-clip-text text-transparent text-center mb-4"
           >
             Gallery
           </motion.h1>

@@ -12,8 +12,9 @@ Rules and patterns captured from user corrections. Review at session start.
 
 ## Icon Sizing (react-icons)
 
-**Mistake**: Tried sizing icons with Tailwind classes (`w-5 h-5`, `text-xl`, `[&>svg]:size-5`).
-**Rule**: Use the `size` prop on react-icons: `<MdIcon size={22} />`. This is the reliable way.
+**Mistake**: Used `size` prop inside shadcn Button — it sets HTML attributes but Button's CSS `[&_svg:not([class*='size-'])]:size-4` overrides them (CSS properties always beat HTML attributes).
+**Rule**: Inside shadcn Button, use a Tailwind `!size-*` class: `<MdIcon className="!size-7" />`. The `size-*` class opts out of Button's forced sizing AND sets dimensions via CSS.
+**Rule**: Outside shadcn Button (or components without SVG CSS overrides), the `size` prop works fine: `<MdIcon size={22} />`.
 
 ## Icon Alignment in Inputs
 

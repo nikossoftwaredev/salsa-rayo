@@ -74,10 +74,10 @@ const FaqSection = () => {
       >
         <div className="flex justify-center items-center gap-3 mb-4">
           <FaBolt className="text-primary text-3xl" />
-          <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent leading-tight">
+          <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-primary to-brand-pink bg-clip-text text-transparent leading-tight">
             {t("pageTitle")}
           </h1>
-          <FaBolt className="text-accent text-3xl" />
+          <FaBolt className="text-brand-pink text-3xl" />
         </div>
         <p className="text-lg text-muted-foreground mt-4">
           {t("pageSubtitle")}
@@ -109,7 +109,7 @@ const FaqSection = () => {
               {isActive && (
                 <motion.span
                   layoutId="activePill"
-                  className="absolute inset-0 rounded-full bg-gradient-to-r from-primary to-accent"
+                  className="absolute inset-0 rounded-full bg-gradient-to-r from-primary to-brand-pink"
                   transition={{
                     type: "spring",
                     stiffness: 380,
@@ -156,7 +156,7 @@ const FaqSection = () => {
                         {t(CATEGORY_KEYS[group.category])}
                       </h2>
                     </div>
-                    <div className="flex-1 h-px bg-gradient-to-r from-primary/20 via-accent/10 to-transparent" />
+                    <div className="flex-1 h-px bg-gradient-to-r from-primary/20 via-brand-pink/10 to-transparent" />
                   </div>
 
                   {/* Category Items */}
@@ -169,7 +169,7 @@ const FaqSection = () => {
                         >
                           <AccordionTrigger className="text-base md:text-[17px] font-semibold text-foreground/90 hover:text-foreground hover:no-underline py-5 gap-4">
                             <span className="flex items-start gap-3">
-                              <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-gradient-to-br from-primary to-accent opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
+                              <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-gradient-to-br from-primary to-brand-pink opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
                               <span>{t(item.questionKey)}</span>
                             </span>
                           </AccordionTrigger>
@@ -220,7 +220,7 @@ const FaqSection = () => {
         transition={{ duration: 0.6, delay: 0.4 }}
       >
         <div className="relative overflow-hidden rounded-2xl border border-primary/20 p-8 shadow-lg shadow-primary/10">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-accent/5 to-primary/10" />
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-brand-pink/5 to-primary/10" />
           <div className="relative">
             <h3 className="text-2xl font-bold text-foreground mb-4">
               {t("stillHaveQuestions")}

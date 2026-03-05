@@ -8,6 +8,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { authOptions } from "@/lib/auth";
 import { isAdmin } from "@/server-actions/is-admin";
 import { BaseLayoutProps } from "@/types/pageprops";
+import { Toaster } from "sonner";
 
 const AdminLayout = async ({ children }: BaseLayoutProps) => {
   const [isUserAdmin, session] = await Promise.all([
@@ -30,6 +31,7 @@ const AdminLayout = async ({ children }: BaseLayoutProps) => {
           </main>
         </ScrollArea>
       </SidebarInset>
+      <Toaster theme="dark" position="bottom-right" />
     </SidebarProvider>
   );
 };

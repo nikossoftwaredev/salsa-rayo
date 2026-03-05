@@ -20,7 +20,7 @@ const renderSubtitleValue = (value: string, type: string) => {
     return (
       <a
         href={`tel:${value}`}
-        className="hover:text-accent transition-colors duration-300"
+        className="hover:text-brand-pink transition-colors duration-300"
       >
         {value}
       </a>
@@ -30,7 +30,7 @@ const renderSubtitleValue = (value: string, type: string) => {
     return (
       <a
         href={`mailto:${value}`}
-        className="hover:text-accent transition-colors duration-300"
+        className="hover:text-brand-pink transition-colors duration-300"
       >
         {value}
       </a>
@@ -69,7 +69,7 @@ const Footer = () => {
       {/* Animated background elements */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-3xl animate-float-slow"></div>
-        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-accent/20 to-transparent rounded-full blur-3xl animate-float-medium"></div>
+        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-brand-pink/20 to-transparent rounded-full blur-3xl animate-float-medium"></div>
       </div>
 
       <div className="relative flex items-center flex-col py-20 px-8 w-full font-sans z-10">
@@ -91,7 +91,7 @@ const Footer = () => {
           {/* Footer Sections */}
           {footerSections.map((footerSection) => (
             <section key={footerSection.title} className="text-left">
-              <h4 className="text-2xl pb-6 font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              <h4 className="text-2xl pb-6 font-bold bg-gradient-to-r from-primary to-brand-pink bg-clip-text text-transparent">
                 {footerSection.title}
               </h4>
               <div className="space-y-3">
@@ -116,7 +116,7 @@ const Footer = () => {
         {/* Animated Divider */}
         <div className="w-full max-w-6xl mb-8 relative">
           <div className="h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
-          <div className="absolute inset-0 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent animate-pulse"></div>
+          <div className="absolute inset-0 h-px bg-gradient-to-r from-transparent via-brand-pink/50 to-transparent animate-pulse"></div>
         </div>
 
         {/* Copyright Section */}
@@ -127,7 +127,7 @@ const Footer = () => {
             <span className="flex items-center gap-2">
               {t("madeBy")}
               <AppLink
-                className="text-primary hover:text-accent transition-colors duration-300 font-medium"
+                className="text-primary hover:text-brand-pink transition-colors duration-300 font-medium"
                 href="https://hexaigon.gr"
               >
                 hexaigon.gr
@@ -145,7 +145,7 @@ const Footer = () => {
                 style={{ animationDelay: "0ms" }}
               ></span>
               <span
-                className="w-2 h-2 bg-accent rounded-full animate-bounce"
+                className="w-2 h-2 bg-brand-pink rounded-full animate-bounce"
                 style={{ animationDelay: "200ms" }}
               ></span>
               <span

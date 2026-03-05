@@ -55,15 +55,15 @@ const PackageCard: React.FC<PackageCardProps> = ({
       transition={{ duration: 0.6 }}
       className="w-full max-w-sm mx-auto"
     >
-      <Card className={`relative overflow-hidden border-2 ${isMostPopular ? 'border-accent hover:shadow-[0_20px_50px_rgba(255,0,255,0.4)] hover:shadow-accent/50' : 'border-primary/50 hover:shadow-[0_20px_50px_rgba(139,92,246,0.3)] hover:shadow-primary/40'} transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1`}>
+      <Card className={`relative overflow-hidden border-2 ${isMostPopular ? 'border-brand-pink hover:shadow-[0_20px_50px_rgba(255,0,255,0.4)] hover:shadow-brand-pink/50' : 'border-primary/50 hover:shadow-[0_20px_50px_rgba(139,92,246,0.3)] hover:shadow-primary/40'} transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1`}>
         {/* Most Popular Badge */}
         {isMostPopular && (
           <div className="absolute top-0 right-0 z-10">
             <div className="relative">
-              <div className="bg-gradient-to-r from-primary to-accent text-primary-foreground text-xs font-bold px-4 py-2 rounded-bl-2xl animate-pulse-slow">
+              <div className="bg-gradient-to-r from-primary to-brand-pink text-primary-foreground text-xs font-bold px-4 py-2 rounded-bl-2xl animate-pulse-slow">
                 {t("mostPopular")}
               </div>
-              <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent blur-lg opacity-50"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-primary to-brand-pink blur-lg opacity-50"></div>
             </div>
           </div>
         )}
@@ -71,7 +71,7 @@ const PackageCard: React.FC<PackageCardProps> = ({
         <div className="p-8 space-y-6">
           {/* Title */}
           <div className="text-center pt-4">
-            <h3 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            <h3 className="text-2xl font-bold bg-gradient-to-r from-primary to-brand-pink bg-clip-text text-transparent">
               {title}
             </h3>
           </div>
@@ -101,8 +101,8 @@ const PackageCard: React.FC<PackageCardProps> = ({
                 transition={{ delay: index * 0.1 }}
                 className="flex items-start gap-3 group"
               >
-                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 flex items-center justify-center group-hover:from-primary/30 group-hover:to-accent/30 transition-all duration-300">
-                  <FaBolt className="text-primary text-sm group-hover:text-accent transition-colors duration-300" />
+                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-primary/20 to-brand-pink/20 flex items-center justify-center group-hover:from-primary/30 group-hover:to-brand-pink/30 transition-all duration-300">
+                  <FaBolt className="text-primary text-sm group-hover:text-brand-pink transition-colors duration-300" />
                 </div>
                 <span className="text-foreground/80 text-sm leading-relaxed">
                   {feature}
@@ -127,7 +127,7 @@ const PackageCard: React.FC<PackageCardProps> = ({
 
         {/* Background decoration */}
         <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
-        <div className="absolute -top-20 -left-20 w-40 h-40 bg-accent/10 rounded-full blur-3xl"></div>
+        <div className="absolute -top-20 -left-20 w-40 h-40 bg-brand-pink/10 rounded-full blur-3xl"></div>
       </Card>
       
       <ContactFormModal 

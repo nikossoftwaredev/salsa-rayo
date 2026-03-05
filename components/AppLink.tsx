@@ -7,7 +7,7 @@ const AppLink: FC<AppLinkProps> = (props) => {
   return (
     <Link
       {...props}
-      className={`text-accent hover:text-accent-focus font-bold ${props.className}`}
+      className={`text-brand-pink hover:text-brand-pink-foreground font-bold ${props.className}`}
     >
       {props.children}
     </Link>

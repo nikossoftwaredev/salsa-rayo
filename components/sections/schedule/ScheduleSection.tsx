@@ -28,7 +28,7 @@ const ScheduleSection = () => {
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-1/4 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-brand-pink/10 rounded-full blur-3xl"></div>
       </div>
 
       <SectionTitle title={t("title")} isMainSection />
@@ -49,9 +49,9 @@ const ScheduleSection = () => {
             {/* Day Container */}
             <div className="relative flex flex-col md:flex-row items-stretch bg-card/80 backdrop-blur-xl rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 border border-border/20 hover:border-primary/20">
               {/* Day Badge */}
-              <div className="relative md:w-44 p-5 md:p-8 flex items-center justify-center bg-gradient-to-br from-primary/15 to-accent/10 border-b md:border-b-0 md:border-r border-border/10">
+              <div className="relative md:w-44 p-5 md:p-8 flex items-center justify-center bg-gradient-to-br from-primary/15 to-brand-pink/10 border-b md:border-b-0 md:border-r border-border/10">
                 <h3 className="relative text-2xl md:text-3xl font-black uppercase tracking-wider">
-                  <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-primary to-brand-pink bg-clip-text text-transparent">
                     {/* @ts-expect-error Dynamic key access for days */}
                     {t(`days.${dayKey}`).slice(0, 3)}
                   </span>
@@ -110,7 +110,7 @@ const ScheduleSection = () => {
 
             {/* Current Day Indicator */}
             {currentDayIndex === dayIndex && (
-              <div className="absolute -top-2 -right-2 bg-gradient-to-r from-primary to-accent text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-lg shadow-primary/30 animate-pulse">
+              <div className="absolute -top-2 -right-2 bg-gradient-to-r from-primary to-brand-pink text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-lg shadow-primary/30 animate-pulse">
                 {t("today")}
               </div>
             )}

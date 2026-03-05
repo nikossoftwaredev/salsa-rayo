@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
-import { IoMenu } from "react-icons/io5"
+import { FiSidebar } from "react-icons/fi"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
@@ -274,7 +274,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <IoMenu />
+      <FiSidebar />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )

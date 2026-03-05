@@ -29,7 +29,7 @@ const AboutCard: FC<{
     hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1
     border border-border/30 hover:border-primary/25
     backdrop-blur-sm
-    ${isSchool ? 'bg-gradient-to-br from-primary/[0.06] via-transparent to-accent/[0.03]' : 'bg-card/80'}
+    ${isSchool ? 'bg-gradient-to-br from-primary/[0.06] via-transparent to-brand-pink/[0.03]' : 'bg-card/80'}
   `}>
     {children}
   </Card>
@@ -158,7 +158,7 @@ const AboutSection: FC = () => {
             <AboutCard>
               <div className="p-6 space-y-6">
                 <div className="flex items-center gap-6">
-                  <div className="relative w-24 h-24 flex-shrink-0 rounded-full p-[2px] bg-gradient-to-br from-primary to-accent">
+                  <div className="relative w-24 h-24 flex-shrink-0 rounded-full p-[2px] bg-gradient-to-br from-primary to-brand-pink">
                     <Image
                       src="/images/instructor-anna.jpg"
                       alt={t("annaImageAlt")}
@@ -183,7 +183,7 @@ const AboutSection: FC = () => {
             <AboutCard>
               <div className="p-6 space-y-6">
                 <div className="flex items-center gap-6">
-                  <div className="relative w-24 h-24 flex-shrink-0 rounded-full p-[2px] bg-gradient-to-br from-primary to-accent">
+                  <div className="relative w-24 h-24 flex-shrink-0 rounded-full p-[2px] bg-gradient-to-br from-primary to-brand-pink">
                     <Image
                       src="/images/instructor-konstantinos.jpg"
                       alt={t("konstantinosImageAlt")}

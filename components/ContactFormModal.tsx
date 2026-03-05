@@ -55,7 +55,7 @@ const ContactFormModal = ({
             onClick={onClose}
           >
             <div
-              className="relative max-w-[600px] w-full max-h-[90vh] overflow-y-auto bg-gradient-to-br from-primary/20 via-background to-accent/20 backdrop-blur-lg rounded-2xl shadow-2xl border border-border/20"
+              className="relative max-w-[600px] w-full max-h-[90vh] overflow-y-auto bg-gradient-to-br from-primary/20 via-background to-brand-pink/20 backdrop-blur-lg rounded-2xl shadow-2xl border border-border/20"
               onClick={(e) => e.stopPropagation()}
             >
               <button

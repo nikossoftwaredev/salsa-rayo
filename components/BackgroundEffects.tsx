@@ -51,14 +51,14 @@ const BackgroundEffects = () => {
   return (
     <>
       {/* Subtle Gradient Background */}
-      <div className="fixed inset-0 z-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-70" />
+      <div className="fixed inset-0 z-0 bg-gradient-to-br from-primary/5 via-transparent to-brand-pink/5 opacity-70" />
 
       {/* Ambient Lighting Effects */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         {/* Main ambient light */}
         <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
         <div
-          className="absolute bottom-1/4 right-1/3 w-80 h-80 bg-accent/10 rounded-full blur-3xl animate-pulse"
+          className="absolute bottom-1/4 right-1/3 w-80 h-80 bg-brand-pink/10 rounded-full blur-3xl animate-pulse"
           style={{ animationDelay: "2s" }}
         />
 
@@ -68,7 +68,7 @@ const BackgroundEffects = () => {
           style={{ animation: "glow 8s ease-in-out infinite" }}
         />
         <div
-          className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-accent/8 rounded-full blur-2xl"
+          className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-brand-pink/8 rounded-full blur-2xl"
           style={{
             animation: "glow 10s ease-in-out infinite",
             animationDelay: "3s",
@@ -81,7 +81,7 @@ const BackgroundEffects = () => {
           style={{ animation: "shimmer 12s ease-in-out infinite" }}
         />
         <div
-          className="absolute top-0 right-1/3 w-1 h-full bg-gradient-to-b from-accent/15 via-accent/3 to-transparent opacity-40"
+          className="absolute top-0 right-1/3 w-1 h-full bg-gradient-to-b from-brand-pink/15 via-brand-pink/3 to-transparent opacity-40"
           style={{
             animation: "shimmer 15s ease-in-out infinite",
             animationDelay: "4s",

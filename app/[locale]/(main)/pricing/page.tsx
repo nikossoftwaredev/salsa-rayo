@@ -25,10 +25,10 @@ export default function PricingPage() {
         <div className="text-center mb-16 max-w-3xl mx-auto">
           <div className="flex justify-center items-center gap-3 mb-4">
             <FaBolt className="text-primary text-3xl" />
-            <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent leading-tight">
+            <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-primary to-brand-pink bg-clip-text text-transparent leading-tight">
               {t("pageTitle")}
             </h1>
-            <FaBolt className="text-accent text-3xl" />
+            <FaBolt className="text-brand-pink text-3xl" />
           </div>
           <p className="text-xl text-muted-foreground mt-4">{t("pageSubtitle")}</p>
         </div>
@@ -82,14 +82,14 @@ export default function PricingPage() {
 
         {/* Additional Info Section */}
         <div className="text-center mt-20 max-w-2xl mx-auto">
-          <div className="bg-gradient-to-br from-primary/10 via-accent/10 to-primary/10 backdrop-blur-md rounded-2xl p-8 border border-primary/20 shadow-lg shadow-primary/20">
+          <div className="bg-gradient-to-br from-primary/10 via-brand-pink/10 to-primary/10 backdrop-blur-md rounded-2xl p-8 border border-primary/20 shadow-lg shadow-primary/20">
             <h3 className="text-2xl font-bold text-foreground mb-4">
               {t("needHelp")}
             </h3>
             <p className="text-foreground/70 mb-6">{t("contactUs")}</p>
             <Link
               href="/#contact-form"
-              className="inline-flex items-center gap-2 text-primary hover:text-accent transition-colors duration-300 font-semibold"
+              className="inline-flex items-center gap-2 text-primary hover:text-brand-pink transition-colors duration-300 font-semibold"
             >
               {t("getInTouch")}
               <span className="animate-bounce-x">→</span>

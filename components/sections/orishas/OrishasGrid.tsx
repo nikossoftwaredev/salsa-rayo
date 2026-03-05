@@ -11,7 +11,7 @@ export default function OrishasGrid() {
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-16">
           <h1 className="text-5xl md:text-6xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary to-brand-pink bg-clip-text text-transparent">
               {t("title")}
             </span>
           </h1>
