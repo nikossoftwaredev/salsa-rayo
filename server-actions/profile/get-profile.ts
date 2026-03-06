@@ -13,6 +13,8 @@ export const getProfile = cache(async (userId: string) =>
         select: {
           name: true,
           bio: true,
+          instagram: true,
+          website: true,
           rayoPoints: true,
           createdAt: true,
           _count: {

@@ -145,8 +145,8 @@ const GallerySection = ({
         <div className="mt-12">
           <Button
             variant="gradient"
+            size="lg"
             onClick={handleSeeMore}
-            className="px-8 py-3 text-lg"
           >
             {t('seeMore')}
           </Button>

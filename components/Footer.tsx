@@ -135,25 +135,9 @@ const Footer = () => {
             </span>
           </div>
 
-          <div className="mt-6 relative">
-            <p className="text-sm text-foreground/50 font-light tracking-widest uppercase">
-              {t("slogan")}
-            </p>
-            <div className="mt-2 flex justify-center gap-1">
-              <span
-                className="w-2 h-2 bg-primary rounded-full animate-bounce"
-                style={{ animationDelay: "0ms" }}
-              ></span>
-              <span
-                className="w-2 h-2 bg-brand-pink rounded-full animate-bounce"
-                style={{ animationDelay: "200ms" }}
-              ></span>
-              <span
-                className="w-2 h-2 bg-primary rounded-full animate-bounce"
-                style={{ animationDelay: "400ms" }}
-              ></span>
-            </div>
-          </div>
+          <p className="mt-3 text-sm text-foreground/50 font-light tracking-widest uppercase">
+            {t("slogan")}
+          </p>
         </section>
       </div>
     </footer>

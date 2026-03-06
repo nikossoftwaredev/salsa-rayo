@@ -1,9 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { getInitials } from "@/lib/format";
 import { IoHome, IoLogInOutline, IoLogOutOutline, IoPerson, IoCalendar, IoImages, IoHelpCircle } from "react-icons/io5";
-import { MdAdminPanelSettings, MdInfo, MdAttachMoney, MdMenu } from "react-icons/md";
+import { MdAdminPanelSettings, MdInfo, MdAttachMoney, MdMenu, MdOutlineEdit } from "react-icons/md";
+import { EditProfileSheet } from "@/components/EditProfileSheet";
 import { GiOrbDirection } from "react-icons/gi";
 import { usePathname } from "next/navigation";
 import { useLocale } from "next-intl";
@@ -48,6 +50,7 @@ export const ProfileDropdown = ({
   sideOffset = 4,
   showNavRoutes = false,
 }: ProfileDropdownProps) => {
+  const [editOpen, setEditOpen] = useState(false);
   const { data: session } = useSession();
   const pathname = usePathname();
   const locale = useLocale();
@@ -143,6 +146,10 @@ export const ProfileDropdown = ({
                   </Link>
                 </DropdownMenuItem>
               )}
+              <DropdownMenuItem onClick={() => setEditOpen(true)}>
+                <MdOutlineEdit size={16} />
+                Edit Profile
+              </DropdownMenuItem>
               {isOnAdmin && (
                 <DropdownMenuItem asChild>
                   <Link href="/">
@@ -176,6 +183,9 @@ export const ProfileDropdown = ({
           </DropdownMenuItem>
         )}
       </DropdownMenuContent>
+      {isAuthenticated && (
+        <EditProfileSheet open={editOpen} onOpenChange={setEditOpen} />
+      )}
     </DropdownMenu>
   );
 };

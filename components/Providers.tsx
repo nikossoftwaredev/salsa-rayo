@@ -3,6 +3,7 @@
 import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { NextIntlClientProvider } from "next-intl";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import type { SUPPORTED_LOCALES } from "@/i18n/routing";
 
 interface ProvidersProps {
@@ -16,7 +17,9 @@ export const Providers = ({ children, session, messages, locale }: ProvidersProp
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <SessionProvider session={session}>
-        {children}
+        <TooltipProvider>
+          {children}
+        </TooltipProvider>
       </SessionProvider>
     </NextIntlClientProvider>
   );

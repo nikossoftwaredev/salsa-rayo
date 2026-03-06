@@ -47,7 +47,9 @@
       "Bash(pnpm prisma validate:*)",
       "WebFetch(domain:pris.ly)",
       "WebFetch(domain:www.prisma.io)",
-      "Bash(pnpm prisma generate:*)"
+      "Bash(pnpm prisma generate:*)",
+      "Bash(pnpm prisma migrate dev --name add-student-social-fields)",
+      "Bash(pnpm prisma db push)"
     ],
     "deny": []
   }

@@ -58,7 +58,7 @@ const ScheduleSection = ({ entries }: ScheduleSectionProps) => {
               }}
               className="relative"
             >
-              <div className="relative flex flex-col md:flex-row items-stretch bg-card/80 backdrop-blur-xl rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 border border-border/20 hover:border-primary/20">
+              <div className="relative flex flex-col md:flex-row items-stretch bg-card/80 backdrop-blur-xl rounded-2xl overflow-hidden border border-border/20">
                 <div className="relative md:w-44 p-5 md:p-8 flex items-center justify-center bg-gradient-to-br from-primary/15 to-brand-pink/10 border-b md:border-b-0 md:border-r border-border/10">
                   <h3 className="relative text-2xl md:text-3xl font-black uppercase tracking-wider">
                     <span className="bg-gradient-to-r from-primary to-brand-pink bg-clip-text text-transparent">
@@ -73,14 +73,14 @@ const ScheduleSection = ({ entries }: ScheduleSectionProps) => {
                     {schedule.map((entry) => (
                       <div
                         key={entry.id}
-                        className="flex items-center justify-between gap-4 group"
+                        className="flex items-center justify-between gap-4"
                       >
-                        <div className="w-24 md:w-28 text-xs md:text-sm font-bold text-foreground/70 group-hover:text-primary transition-colors duration-300 whitespace-nowrap">
+                        <div className="w-24 md:w-28 text-xs md:text-sm font-bold text-foreground/70 whitespace-nowrap">
                           {entry.time}
                         </div>
 
                         <div className="flex-1">
-                          <div className="text-sm md:text-base font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
+                          <div className="text-sm md:text-base font-semibold text-foreground">
                             {entry.title}
                           </div>
                           {entry.hint && (
@@ -95,7 +95,7 @@ const ScheduleSection = ({ entries }: ScheduleSectionProps) => {
                             {entry.instructors.map((instructor) => (
                               <div
                                 key={instructor.id}
-                                className="relative w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden border-2 border-border/30 group-hover:border-primary/50 transition-all duration-300 shadow-sm"
+                                className="relative w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden border-2 border-border/30 shadow-sm"
                               >
                                 <Image
                                   src={instructor.image}

@@ -50,56 +50,43 @@ const InstructorDescription = ({ description, name }: InstructorDescriptionProps
   const [isExpanded, setIsExpanded] = useState(false);
   const paragraphs = description.split('\n\n');
   const firstParagraph = paragraphs[0];
-  const remainingParagraphs = paragraphs.slice(1).join('\n\n');
 
   return (
-    <>
-      {/* Desktop: Show full description with better formatting */}
-      <div className="hidden md:block space-y-4">
-        {paragraphs.map((paragraph, index) => (
-          <p key={index} className="text-foreground/90 leading-relaxed">
-            {paragraph}
-          </p>
-        ))}
-      </div>
-      
-      {/* Mobile: Show accordion */}
-      <div className="md:hidden">
-        <p className="text-foreground/90 leading-relaxed">{firstParagraph}</p>
-        {paragraphs.length > 1 && (
-          <div className="mt-4">
-            {!isExpanded ? (
+    <div>
+      <p className="text-foreground/90 leading-relaxed">{firstParagraph}</p>
+      {paragraphs.length > 1 && (
+        <div className="mt-4">
+          {!isExpanded ? (
+            <button
+              onClick={() => setIsExpanded(true)}
+              className="flex items-center gap-2 text-primary font-medium hover:text-primary/80 transition-colors"
+              aria-label={`Show more about ${name}`}
+            >
+              <span>Read more</span>
+              <MdExpandMore className="w-5 h-5" />
+            </button>
+          ) : (
+            <>
+              <div className="mt-4 space-y-4 animate-fadeIn">
+                {paragraphs.slice(1).map((paragraph, index) => (
+                  <p key={index} className="text-foreground/90 leading-relaxed">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
               <button
-                onClick={() => setIsExpanded(true)}
-                className="flex items-center gap-2 text-primary font-medium hover:text-primary/80 transition-colors"
-                aria-label={`Show more about ${name}`}
+                onClick={() => setIsExpanded(false)}
+                className="mt-4 flex items-center gap-2 text-primary font-medium hover:text-primary/80 transition-colors"
+                aria-label="Show less"
               >
-                <span>Read more</span>
-                <MdExpandMore className="w-5 h-5" />
+                <span>Show less</span>
+                <MdExpandLess className="w-5 h-5" />
               </button>
-            ) : (
-              <>
-                <div className="mt-4 space-y-4 animate-fadeIn">
-                  {remainingParagraphs.split('\n\n').map((paragraph, index) => (
-                    <p key={index} className="text-foreground/90 leading-relaxed">
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
-                <button
-                  onClick={() => setIsExpanded(false)}
-                  className="mt-4 flex items-center gap-2 text-primary font-medium hover:text-primary/80 transition-colors"
-                  aria-label="Show less"
-                >
-                  <span>Show less</span>
-                  <MdExpandLess className="w-5 h-5" />
-                </button>
-              </>
-            )}
-          </div>
-        )}
-      </div>
-    </>
+            </>
+          )}
+        </div>
+      )}
+    </div>
   );
 };
 

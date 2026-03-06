@@ -4,17 +4,17 @@ import { useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { IoCalendar, IoFlame, IoPencil, IoCheckmark, IoClose, IoShareOutline } from "react-icons/io5";
+import { IoCalendar, IoFlame, IoPencil, IoCheckmark, IoClose, IoArrowRedoOutline, IoLogoInstagram, IoGlobeOutline } from "react-icons/io5";
 import { RayoPoints } from "@/components/ui/rayo-points";
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { getInitials } from "@/lib/format";
-import { updateBio } from "@/server-actions/profile/update-bio";
+import { updateProfile } from "@/server-actions/profile/update-profile";
 import type { getProfile } from "@/server-actions/profile/get-profile";
+import { BIO_MAX_LENGTH } from "@/data/config";
 
 type User = NonNullable<Awaited<ReturnType<typeof getProfile>>>;
 
@@ -22,8 +22,6 @@ interface ProfileContentProps {
   user: User;
   isOwnProfile?: boolean;
 }
-
-const BIO_MAX_LENGTH = 150;
 
 const STATS_CONFIG = [
   { key: "classes", icon: IoFlame, label: "Classes", color: "#fb923c" },
@@ -71,7 +69,7 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
   const handleSaveBio = useCallback(async () => {
     setIsSaving(true);
     try {
-      await updateBio(bioValue);
+      await updateProfile({ bio: bioValue });
       setBio(bioValue.trim().slice(0, BIO_MAX_LENGTH));
       setIsEditingBio(false);
     } catch {
@@ -110,7 +108,8 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
         </div>
       </motion.div>
 
-      {/* Name + Rayo Points + Share */}
+      {/* Name + Rayo Points + Social Icons */}
+      {/* Name + Rayo Points */}
       <motion.div
         initial={{ y: 12, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -120,22 +119,59 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
         <h1 className="text-2xl font-bold tracking-tight text-foreground">
           {fullName}
         </h1>
-        {student && <RayoPoints points={student.rayoPoints} />}
-        <TooltipProvider>
+        {student && <RayoPoints points={student.rayoPoints} showTooltip />}
+      </motion.div>
+
+      {/* Social Icons */}
+      <motion.div
+        initial={{ y: 8, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.4, delay: 0.2 }}
+        className="mt-2 flex items-center gap-0.5"
+      >
+        {student?.instagram && (
           <Tooltip>
             <TooltipTrigger asChild>
-              <button
-                onClick={handleShare}
-                className="inline-flex items-center justify-center size-7 rounded-full text-muted-foreground/50 hover:text-primary hover:bg-primary/10 transition-colors cursor-pointer"
+              <a
+                href={`https://instagram.com/${student.instagram}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center size-7 rounded-full text-muted-foreground/50 hover:text-pink-500 hover:bg-pink-500/10 transition-colors"
               >
-                <IoShareOutline size={15} />
-              </button>
+                <IoLogoInstagram size={15} />
+              </a>
             </TooltipTrigger>
-            <TooltipContent>
-              {copied ? "Link copied!" : "Share profile"}
-            </TooltipContent>
+            <TooltipContent>@{student.instagram}</TooltipContent>
           </Tooltip>
-        </TooltipProvider>
+        )}
+        {student?.website && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <a
+                href={student.website.startsWith("http") ? student.website : `https://${student.website}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center size-7 rounded-full text-muted-foreground/50 hover:text-primary hover:bg-primary/10 transition-colors"
+              >
+                <IoGlobeOutline size={15} />
+              </a>
+            </TooltipTrigger>
+            <TooltipContent>{student.website}</TooltipContent>
+          </Tooltip>
+        )}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              onClick={handleShare}
+              className="inline-flex items-center justify-center size-7 rounded-full text-muted-foreground/50 hover:text-primary hover:bg-primary/10 transition-colors cursor-pointer"
+            >
+              <IoArrowRedoOutline size={15} />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent>
+            {copied ? "Link copied!" : "Share profile"}
+          </TooltipContent>
+        </Tooltip>
       </motion.div>
 
       {/* Bio */}

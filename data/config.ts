@@ -31,3 +31,6 @@ export const NAVIGATION = "https://maps.app.goo.gl/TMKKekvqWxn3fhA16";
 
 // Google Place ID
 export const GOOGLE_PLACE_ID = "ChIJ7cUoWgC9oRQRgJWfWy3mRpA";
+
+// Profile limits
+export const BIO_MAX_LENGTH = 150;
