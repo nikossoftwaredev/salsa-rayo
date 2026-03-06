@@ -21,6 +21,7 @@ import { getAttendances, type AttendanceRecord } from "@/server-actions/attendan
 import { submitAttendance } from "@/server-actions/attendance/submit-attendance"
 import { removeAttendance } from "@/server-actions/attendance/remove-attendance"
 import { AttendancePanel, type StudentForAttendance } from "./AttendancePanel"
+import { ESTABLISHED_DATE } from "@/data/config"
 
 interface AttendanceViewProps {
   entries: ScheduleEntryWithInstructors[]
@@ -58,9 +59,18 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
     [entries]
   )
 
+  const today = useMemo(() => {
+    const d = new Date()
+    d.setHours(23, 59, 59, 999)
+    return d
+  }, [])
+
   const disabledDays = useMemo(
-    () => (date: Date) => !activeDayIndices.has(toDayIndex(date)),
-    [activeDayIndices]
+    () => [
+      (date: Date) => !activeDayIndices.has(toDayIndex(date)),
+      { before: ESTABLISHED_DATE, after: today },
+    ],
+    [activeDayIndices, today]
   )
 
   const lessonsForDay = useMemo(
@@ -191,6 +201,8 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
             selected={selectedDate}
             onSelect={handleDateSelect}
             weekStartsOn={1}
+            startMonth={ESTABLISHED_DATE}
+            endMonth={today}
             disabled={disabledDays}
           />
         </div>
@@ -311,15 +323,17 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                             transition={{ duration: 0.25 }}
                             className="overflow-hidden"
                           >
-                            <div className="mt-2 grid h-[400px] gap-4 lg:grid-cols-2">
+                            <div className="mt-2 grid gap-4 lg:h-[400px] lg:grid-cols-2">
                               {/* Left: student picker */}
-                              <AttendancePanel
-                                hideIds={hideIds}
-                                onAddStudent={handleAddStudent}
-                              />
+                              <div className="h-[300px] lg:h-full">
+                                <AttendancePanel
+                                  hideIds={hideIds}
+                                  onAddStudent={handleAddStudent}
+                                />
+                              </div>
 
                               {/* Right: attendees list + save */}
-                              <div className="flex h-full flex-col rounded-xl border bg-card">
+                              <div className="flex h-[300px] flex-col rounded-xl border bg-card lg:h-full">
                                 {/* Header — pinned top */}
                                 <p className="shrink-0 px-4 pt-4 pb-3 text-xs font-medium uppercase tracking-wider text-muted-foreground/60">
                                   Attendees ({effectiveCount})

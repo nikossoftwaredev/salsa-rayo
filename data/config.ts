@@ -32,5 +32,8 @@ export const NAVIGATION = "https://maps.app.goo.gl/TMKKekvqWxn3fhA16";
 // Google Place ID
 export const GOOGLE_PLACE_ID = "ChIJ7cUoWgC9oRQRgJWfWy3mRpA";
 
+// Salsa Rayo established date
+export const ESTABLISHED_DATE = new Date(2025, 8, 1); // September 1, 2025
+
 // Profile limits
 export const BIO_MAX_LENGTH = 150;
