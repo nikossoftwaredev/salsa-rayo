@@ -74,13 +74,16 @@ export const StudentDialog = () => {
     setError(null)
 
     try {
+      const editedJoinedDate = isEdit &&
+        form.joinedDate !== toLocalDateString(new Date(student.createdAt))
+
       const payload = {
         name: form.name,
         email: form.email,
         phone: form.phone || undefined,
         address: form.address || undefined,
         notes: form.notes || undefined,
-        createdAt: new Date(form.joinedDate),
+        ...(editedJoinedDate && { createdAt: new Date(form.joinedDate) }),
         ...(isEdit && { isActive: form.isActive, rayoPoints: form.rayoPoints }),
       }
 

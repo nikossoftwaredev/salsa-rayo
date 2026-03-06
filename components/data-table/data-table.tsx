@@ -26,27 +26,53 @@ import {
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { DataTablePagination } from "./data-table-pagination"
 
+const readCookieVisibility = (key: string): VisibilityState | null => {
+  try {
+    const match = document.cookie.match(new RegExp(`(?:^|; )${key}=([^;]*)`))
+    if (match) return JSON.parse(decodeURIComponent(match[1]))
+  } catch { /* ignore malformed cookie */ }
+  return null
+}
+
+const writeCookieVisibility = (key: string, value: VisibilityState) => {
+  document.cookie = `${key}=${encodeURIComponent(JSON.stringify(value))}; path=/; max-age=31536000`
+}
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   toolbar?: (table: ReturnType<typeof useReactTable<TData>>) => React.ReactNode
+  initialColumnVisibility?: VisibilityState
+  initialSorting?: SortingState
+  storageKey?: string
 }
 
 export const DataTable = <TData, TValue>({
   columns,
   data,
   toolbar,
+  initialColumnVisibility,
+  initialSorting,
+  storageKey,
 }: DataTableProps<TData, TValue>) => {
-  const [sorting, setSorting] = useState<SortingState>([])
+  const [sorting, setSorting] = useState<SortingState>(initialSorting ?? [])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
+    () => (storageKey && readCookieVisibility(storageKey)) || initialColumnVisibility || {}
+  )
   const table = useReactTable({
     data,
     columns,
     state: { sorting, columnFilters, columnVisibility },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
-    onColumnVisibilityChange: setColumnVisibility,
+    onColumnVisibilityChange: (updater) => {
+      setColumnVisibility((prev) => {
+        const next = typeof updater === "function" ? updater(prev) : updater
+        if (storageKey) writeCookieVisibility(storageKey, next)
+        return next
+      })
+    },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),

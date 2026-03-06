@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import { prisma, type Student } from "@/lib/db"
 import { isAdmin } from "../is-admin"
 
@@ -16,6 +17,7 @@ export const createStudent = async (data: CreateStudentInput) => {
 
     const student = await prisma.student.create({ data })
 
+    revalidatePath("/admin/students")
     return { success: true as const, data: student }
   } catch (error) {
     console.error("Database Error:", error)

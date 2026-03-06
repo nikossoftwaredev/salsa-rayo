@@ -14,5 +14,7 @@ export const StudentsTable = ({ data }: StudentsTableProps) => (
     columns={columns}
     data={data}
     toolbar={(table) => <StudentsToolbar table={table} />}
+    initialColumnVisibility={{ address: false, joinedAt: false }}
+    storageKey="dt-col-students"
   />
 )

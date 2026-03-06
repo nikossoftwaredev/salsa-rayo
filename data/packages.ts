@@ -25,3 +25,16 @@ export const PACKAGES: PackageCardData[] = [
     isMostPopular: false,
   },
 ];
+
+export interface AdminPackage {
+  title: string;
+  price: number;
+  lessonsPerWeek: number;
+  durationDays: number;
+}
+
+export const ADMIN_PACKAGES: AdminPackage[] = [
+  { title: "Rayo 8", price: 50, lessonsPerWeek: 2, durationDays: 30 },
+  { title: "Rayo 16", price: 75, lessonsPerWeek: 4, durationDays: 30 },
+  { title: "Rayo 24", price: 99, lessonsPerWeek: 6, durationDays: 30 },
+];

@@ -3,7 +3,7 @@
 import { type ColumnDef } from "@tanstack/react-table"
 import { RayoPoints } from "@/components/ui/rayo-points"
 import { MdEdit } from "react-icons/md"
-import { toast } from "sonner"
+import { IoWalletOutline, IoReceiptOutline } from "react-icons/io5"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -12,22 +12,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
+import { copyToClipboard, formatDate } from "@/lib/format"
 import { useDialogStore } from "@/lib/stores/dialog-store"
 import { type StudentWithSubscriptions } from "./types"
-
-const copyToClipboard = (value: string, label: string) => {
-  navigator.clipboard.writeText(value)
-  toast.success(`${label} copied`, { description: value })
-}
-
-const formatDate = (date: Date | null | undefined) => {
-  if (!date) return "—"
-  return new Date(date).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  })
-}
 
 const getActiveSubscription = (student: StudentWithSubscriptions) =>
   student.subscriptions.find((sub) => sub.isActive) ?? student.subscriptions[0]
@@ -49,12 +36,15 @@ export const columns: ColumnDef<StudentWithSubscriptions>[] = [
     cell: ({ row }) => {
       const name: string = row.getValue("name")
       return (
-        <button
-          className="font-medium cursor-pointer hover:text-primary transition-colors"
-          onClick={() => copyToClipboard(name, "Name")}
-        >
-          {name}
-        </button>
+        <div className="flex items-center gap-1.5">
+          <button
+            className="font-medium cursor-pointer hover:text-primary transition-colors"
+            onClick={() => copyToClipboard(name, "Name")}
+          >
+            {name}
+          </button>
+          <RayoPoints points={row.original.rayoPoints} size="sm" />
+        </div>
       )
     },
   },
@@ -101,6 +91,19 @@ export const columns: ColumnDef<StudentWithSubscriptions>[] = [
     ),
   },
   {
+    id: "joinedAt",
+    accessorKey: "createdAt",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Joined" />
+    ),
+    cell: ({ row }) => (
+      <span className="text-muted-foreground">
+        {formatDate(row.getValue("joinedAt"))}
+      </span>
+    ),
+    sortingFn: "datetime",
+  },
+  {
     id: "subStartDate",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Sub Started" />
@@ -127,9 +130,9 @@ export const columns: ColumnDef<StudentWithSubscriptions>[] = [
   {
     id: "subStatus",
     header: "Sub Status",
-    accessorFn: (row) => getSubStatus(row).active,
+    accessorFn: (row) => getSubStatus(row),
     cell: ({ row }) => {
-      const status = getSubStatus(row.original)
+      const status = row.getValue("subStatus") as { label: string; active: boolean }
       return (
         <Badge
           className={
@@ -142,35 +145,58 @@ export const columns: ColumnDef<StudentWithSubscriptions>[] = [
         </Badge>
       )
     },
-    filterFn: (row, id, value: string[]) =>
-      value.includes(String(row.getValue(id))),
-  },
-  {
-    accessorKey: "rayoPoints",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Rayo Points" />
-    ),
-    cell: ({ row }) => (
-      <RayoPoints points={row.getValue("rayoPoints")} />
-    ),
+    filterFn: (row, id, value: string[]) => {
+      const status = row.getValue(id) as { active: boolean }
+      return value.includes(String(status.active))
+    },
   },
   {
     id: "actions",
     cell: ({ row }) => (
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            onClick={() =>
-              useDialogStore.getState().openDialog("StudentDialog", row.original)
-            }
-          >
-            <MdEdit size={16} />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>Edit</TooltipContent>
-      </Tooltip>
+      <div className="flex items-center gap-1">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              onClick={() =>
+                useDialogStore.getState().openDialog("TransactionHistoryDialog", row.original)
+              }
+            >
+              <IoReceiptOutline size={16} />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Payment History</TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              onClick={() =>
+                useDialogStore.getState().openDialog("PaymentDialog", row.original)
+              }
+            >
+              <IoWalletOutline size={16} />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Add Payment</TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              onClick={() =>
+                useDialogStore.getState().openDialog("StudentDialog", row.original)
+              }
+            >
+              <MdEdit size={16} />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Edit</TooltipContent>
+        </Tooltip>
+      </div>
     ),
   },
 ]
