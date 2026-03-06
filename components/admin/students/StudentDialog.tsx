@@ -7,6 +7,8 @@ import {
   IoMailOutline,
   IoCallOutline,
   IoLocationOutline,
+  IoFlash,
+  IoCalendarOutline,
 } from "react-icons/io5"
 import { Button } from "@/components/ui/button"
 import {
@@ -28,14 +30,23 @@ import { type StudentWithSubscriptions } from "./types"
 
 const DIALOG_KEY = "StudentDialog"
 
-const initialForm = {
+const toLocalDateString = (date: Date) => {
+  const y = date.getFullYear()
+  const m = String(date.getMonth() + 1).padStart(2, "0")
+  const d = String(date.getDate()).padStart(2, "0")
+  return `${y}-${m}-${d}`
+}
+
+const getInitialForm = () => ({
   name: "",
   email: "",
   phone: "",
   address: "",
   notes: "",
   isActive: true,
-}
+  rayoPoints: 0,
+  joinedDate: toLocalDateString(new Date()),
+})
 
 export const StudentDialog = () => {
   const router = useRouter()
@@ -43,7 +54,7 @@ export const StudentDialog = () => {
   const student = dialogData as StudentWithSubscriptions | null
   const isEdit = !!student?.id
 
-  const [form, setForm] = useState(initialForm)
+  const [form, setForm] = useState(getInitialForm())
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -52,7 +63,7 @@ export const StudentDialog = () => {
   }
 
   const handleClose = () => {
-    setForm(initialForm)
+    setForm(getInitialForm())
     setError(null)
     closeDialog(DIALOG_KEY)
   }
@@ -69,7 +80,8 @@ export const StudentDialog = () => {
         phone: form.phone || undefined,
         address: form.address || undefined,
         notes: form.notes || undefined,
-        ...(isEdit && { isActive: form.isActive }),
+        createdAt: new Date(form.joinedDate),
+        ...(isEdit && { isActive: form.isActive, rayoPoints: form.rayoPoints }),
       }
 
       const result = isEdit
@@ -100,9 +112,11 @@ export const StudentDialog = () => {
         address: student.address ?? "",
         notes: student.notes ?? "",
         isActive: student.isActive,
+        rayoPoints: student.rayoPoints,
+        joinedDate: toLocalDateString(new Date(student.createdAt)),
       })
     } else {
-      setForm(initialForm)
+      setForm(getInitialForm())
     }
     setError(null)
   }, [student])
@@ -194,6 +208,39 @@ export const StudentDialog = () => {
               rows={3}
             />
           </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="joinedDate">Joined Date</Label>
+            <div className="relative">
+              <IoCalendarOutline size={16} className="absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                id="joinedDate"
+                name="joinedDate"
+                type="date"
+                value={form.joinedDate}
+                onChange={handleChange}
+                className="pl-9"
+              />
+            </div>
+          </div>
+
+          {isEdit && (
+            <div className="grid gap-2">
+              <Label htmlFor="rayoPoints">Rayo Points</Label>
+              <div className="relative">
+                <IoFlash size={16} className="absolute top-1/2 left-3 -translate-y-1/2 text-yellow-400" />
+                <Input
+                  id="rayoPoints"
+                  name="rayoPoints"
+                  type="number"
+                  min={0}
+                  value={form.rayoPoints}
+                  onChange={(e) => setForm((prev) => ({ ...prev, rayoPoints: Math.max(0, parseInt(e.target.value) || 0) }))}
+                  className="pl-9"
+                />
+              </div>
+            </div>
+          )}
 
           {isEdit && (
             <div className="flex items-center justify-between rounded-lg border px-4 py-3">

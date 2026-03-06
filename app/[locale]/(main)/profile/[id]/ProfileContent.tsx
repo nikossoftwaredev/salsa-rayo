@@ -108,7 +108,6 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
         </div>
       </motion.div>
 
-      {/* Name + Rayo Points + Social Icons */}
       {/* Name + Rayo Points */}
       <motion.div
         initial={{ y: 12, opacity: 0 }}
