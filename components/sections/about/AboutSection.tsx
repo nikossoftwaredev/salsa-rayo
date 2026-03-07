@@ -97,6 +97,8 @@ const AboutSection = () => {
     <div id="about" className="scroll-mt-20">
       <SectionTitle title={t("title")} isMainSection />
       <section className="w-full max-w-6xl mx-auto px-4">
+        {/* Definition block for AI crawlers — hidden visually, present in DOM */}
+        <p className="sr-only">{t("definition")}</p>
         <div className="space-y-8">
           {/* School Card - Now full width with better layout */}
           <AboutCard isSchool>

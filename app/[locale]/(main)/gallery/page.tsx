@@ -1,6 +1,9 @@
 import { Metadata } from "next";
 import { BasePageProps } from "@/types/pageprops";
 import GalleryClient from "./GalleryClient";
+import JsonLd from "@/components/JsonLd";
+import { getBreadcrumbSchema, getVideoObjectSchemas } from "@/lib/schema";
+import { GALLERY_VIDEOS } from "@/data/gallery";
 
 const BASE_URL = "https://www.salsarayo.com";
 
@@ -45,8 +48,23 @@ export const generateMetadata = async ({
   };
 };
 
-const GalleryPage = () => {
-  return <GalleryClient />;
+const GalleryPage = async ({ params }: BasePageProps) => {
+  const locale = (await params).locale;
+
+  return (
+    <>
+      <JsonLd
+        data={[
+          getBreadcrumbSchema([
+            { name: "Home", url: `${BASE_URL}/${locale}` },
+            { name: "Gallery", url: `${BASE_URL}/${locale}/gallery` },
+          ]),
+          ...getVideoObjectSchemas(GALLERY_VIDEOS),
+        ]}
+      />
+      <GalleryClient />
+    </>
+  );
 }
 
 export default GalleryPage

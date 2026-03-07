@@ -306,6 +306,25 @@ export const getPricingSchemas = () => ({
 });
 
 // ============================================================
+// VideoObject schemas for gallery YouTube embeds
+// ============================================================
+export const getVideoObjectSchemas = (
+  videos: { youtubeId: string; title: string }[]
+) =>
+  videos.map((video) => ({
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name: video.title,
+    thumbnailUrl: `https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`,
+    contentUrl: `https://www.youtube.com/watch?v=${video.youtubeId}`,
+    embedUrl: `https://www.youtube.com/embed/${video.youtubeId}`,
+    uploadDate: "2025-09-01",
+    publisher: {
+      "@id": `${BASE_URL}/#organization`,
+    },
+  }));
+
+// ============================================================
 // Article schema for Orishas educational page
 // ============================================================
 export const getOrishasArticleSchema = (locale: string) => ({

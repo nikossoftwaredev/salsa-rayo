@@ -5,6 +5,7 @@ import BackgroundEffects from "@/components/BackgroundEffects";
 import { BasePageProps } from "@/types/pageprops";
 import JsonLd from "@/components/JsonLd";
 import { getBreadcrumbSchema } from "@/lib/schema";
+import { FAQ_ITEMS } from "@/data/faq";
 
 export const generateMetadata = async ({
   params,
@@ -50,7 +51,7 @@ export const generateMetadata = async ({
 
 const FaqPage = async ({ params }: BasePageProps) => {
   const locale = (await params).locale;
-  await getTranslations("Faq");
+  const t = await getTranslations("Faq");
 
   return (
     <main className="min-h-screen bg-background">
@@ -60,6 +61,15 @@ const FaqPage = async ({ params }: BasePageProps) => {
           { name: "FAQ", url: `https://www.salsarayo.com/${locale}/faq` },
         ])}
       />
+      {/* Server-rendered FAQ content for AI crawlers (hidden visually, present in DOM) */}
+      <div className="sr-only" aria-hidden="true">
+        {FAQ_ITEMS.map((item) => (
+          <div key={item.questionKey}>
+            <h2>{t(item.questionKey)}</h2>
+            <p>{t(item.answerKey)}</p>
+          </div>
+        ))}
+      </div>
       <BackgroundEffects />
       <FaqSection />
     </main>

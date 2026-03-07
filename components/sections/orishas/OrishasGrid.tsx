@@ -19,6 +19,9 @@ const OrishasGrid = () => {
           <p className="max-w-3xl mx-auto text-base text-gray-300 mt-6">
             {t("intro")}
           </p>
+          <time dateTime="2025-09-01" className="block text-sm text-gray-500 mt-4">
+            Published: September 2025
+          </time>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
