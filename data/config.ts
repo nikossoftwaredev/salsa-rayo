@@ -8,7 +8,6 @@ export const headerLinks = [
   { path: `/#gallery`, text: { en: "Gallery", el: "Gallery", es: "Galería" } },
   { path: `/faq`, text: { en: "FAQ", el: "FAQ", es: "FAQ" } },
   { path: `/orishas`, text: { en: "Orishas", el: "Orishas", es: "Orishas" } },
-  { path: `/blog`, text: { en: "Blog", el: "Blog", es: "Blog" } },
 ];
 
 export const INSTAGRAM_URL = "https://www.instagram.com/salsarayo_ds/";

@@ -219,7 +219,7 @@ This 50-word block answers "What is Salsa Rayo?" directly.
 **Current:** No clear definition of the business.
 **Suggested:** Add a visible, server-rendered paragraph at the start of the About section:
 
-> "Salsa Rayo is a dance school in Agios Dimitrios, Athens, Greece, specializing in Cuban Salsa and Bachata. Founded in 2025 by instructors Konstantinos Bitsis and Anna Lontou, we offer beginner and intermediate classes Monday through Thursday. With monthly packages from EUR 50 to EUR 99 and a welcoming community atmosphere, Salsa Rayo makes learning Latin dance accessible to everyone."
+> "Salsa Rayo is a dance school in Agios Dimitrios, Athens, Greece, specializing in New York Style Salsa (On2) and Bachata. Founded in 2025 by instructors Konstantinos Bitsis and Anna Lontou, we offer beginner and intermediate classes Monday through Thursday. With monthly packages from EUR 50 to EUR 99 and a welcoming community atmosphere, Salsa Rayo makes learning Latin dance accessible to everyone."
 
 (~55 words - optimal for direct citation)
 

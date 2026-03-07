@@ -129,7 +129,7 @@ export const getCourseSchemas = () => [
     "@type": "Course",
     name: "Salsa Dance Classes",
     description:
-      "Learn Cuban Salsa from beginner to intermediate level. Classes cover technique, timing, partner work, and musicality.",
+      "Learn New York Style Salsa (On2) from beginner to intermediate level. Classes cover technique, timing, partner work, and musicality.",
     provider: {
       "@id": `${BASE_URL}/#organization`,
     },

@@ -58,6 +58,21 @@ export const BlogArticle = ({ post, locale }: BlogArticleProps) => {
         </div>
       </section>
 
+      {/* Featured Image */}
+      {post.frontmatter.image && (
+        <section className="px-4 pb-8">
+          <div className="mx-auto max-w-3xl">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={post.frontmatter.image}
+              alt={post.frontmatter.title}
+              className="w-full rounded-xl shadow-lg"
+              loading="eager"
+            />
+          </div>
+        </section>
+      )}
+
       {/* Content */}
       <section className="px-4 pb-16">
         <article className="mx-auto max-w-3xl prose prose-lg prose-invert prose-headings:text-foreground prose-p:text-foreground/80 prose-strong:text-foreground prose-a:text-primary hover:prose-a:text-primary/80 prose-li:text-foreground/80 prose-th:text-foreground prose-td:text-foreground/70 [word-break:break-word] overflow-wrap-anywhere">
