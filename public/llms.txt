@@ -3,6 +3,10 @@
 
 ## Pages
 - [Homepage](https://www.salsarayo.com/en): School overview, instructor bios, class schedule, and contact
+- [Salsa Classes in Athens](https://www.salsarayo.com/en/salsa-classes-athens): Cuban Salsa classes for beginners to intermediate — levels, schedule, instructors, pricing
+- [Bachata Classes in Athens](https://www.salsarayo.com/en/bachata-classes-athens): Bachata classes for beginners to intermediate — levels, schedule, instructors, pricing
+- [Salsa vs Bachata](https://www.salsarayo.com/en/salsa-vs-bachata): Comparison guide — music, difficulty, social scene, which to learn first
+- [About Us](https://www.salsarayo.com/en/about): School story, instructor bios, studio, teaching philosophy
 - [Pricing](https://www.salsarayo.com/en/pricing): Monthly packages from EUR 50-99 (Rayo 8, 16, 24)
 - [FAQ](https://www.salsarayo.com/en/faq): Common questions about classes, pricing, location
 - [Gallery](https://www.salsarayo.com/en/gallery): Photos and videos from classes, shows, and socials

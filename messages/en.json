@@ -174,6 +174,110 @@
     "stillHaveQuestionsText": "Can't find the answer you're looking for? We'd love to hear from you.",
     "contactUs": "Contact Us"
   },
+  "SalsaVsBachata": {
+    "hero": {
+      "title": "Salsa vs Bachata",
+      "subtitle": "Two incredible Latin dances, one big question — which one should you learn first?"
+    },
+    "quickAnswer": {
+      "title": "The Quick Answer",
+      "text": "Both salsa and bachata are amazing dances that will transform your social life, fitness, and confidence. The best choice depends on your personality and what draws you to dance. Here is everything you need to know to decide — or better yet, learn both!"
+    },
+    "whatIsSalsa": {
+      "title": "What Is Salsa?",
+      "text": "Salsa is an energetic partner dance with roots in Cuban Son, Afro-Cuban rhythms, and New York mambo. Danced to infectious 4/4 time music with congas, timbales, and brass, salsa is all about timing, turns, and connection. Dancers move in circular patterns with dynamic partner exchanges, cross-body leads, and expressive body isolations. The energy is electric — fast footwork, sharp spins, and an unmistakable sense of joy fill every social dance floor."
+    },
+    "whatIsBachata": {
+      "title": "What Is Bachata?",
+      "text": "Bachata is a romantic partner dance born in the Dominican Republic. Set to slower, guitar-driven melodies with a distinctive \"derecho\" bass rhythm, bachata emphasizes close connection, smooth hip movement, and emotional expression. The basic step is a simple side-to-side pattern with a signature tap on the fourth beat. Modern bachata incorporates sensual body waves and intricate turn patterns while staying grounded in its intimate, heartfelt origins."
+    },
+    "comparison": {
+      "title": "Side-by-Side Comparison",
+      "category": "Category",
+      "salsa": "Salsa",
+      "bachata": "Bachata",
+      "musicTempo": "Music Tempo",
+      "salsaTempo": "Fast (150-250 BPM)",
+      "bachataTempo": "Slow to mid (120-150 BPM)",
+      "difficulty": "Difficulty",
+      "salsaDifficulty": "Moderate — timing takes practice",
+      "bachataDifficulty": "Easier to start — simpler basic step",
+      "partnerHold": "Partner Hold",
+      "salsaHold": "Open frame, dynamic exchanges",
+      "bachataHold": "Close embrace, intimate connection",
+      "energyLevel": "Energy Level",
+      "salsaEnergy": "High energy, fast & explosive",
+      "bachataEnergy": "Smooth, sensual & relaxed",
+      "socialScene": "Social Scene",
+      "salsaScene": "Huge worldwide community",
+      "bachataScene": "Rapidly growing global scene",
+      "bestFor": "Best For",
+      "salsaBestFor": "People who love rhythm & excitement",
+      "bachataBestFor": "People who love connection & feeling"
+    },
+    "noPartner": {
+      "title": "Do I Need a Partner?",
+      "text": "This is the number one question we hear — and the answer is a firm NO. At Salsa Rayo, we rotate partners in every class so you dance with everyone. You will learn to lead or follow with multiple partners, which actually makes you a better dancer faster. Come alone, bring a friend, or bring a partner — everyone is welcome."
+    },
+    "learnBoth": {
+      "title": "Can I Learn Both?",
+      "text": "Absolutely — and we highly recommend it! Many of our students take both salsa and bachata classes. The dances complement each other beautifully: salsa sharpens your timing and footwork while bachata deepens your body movement and connection. Together, they make you a more complete, versatile dancer. At most social events, DJs play both salsa and bachata, so knowing both means you never sit out a song."
+    },
+    "cta": {
+      "title": "Ready to Start Dancing?",
+      "text": "Whether you choose salsa, bachata, or both — your dance journey starts here. Join Salsa Rayo in Athens and discover the magic of Latin dance.",
+      "salsaClasses": "Salsa Classes",
+      "bachataClasses": "Bachata Classes",
+      "viewPricing": "View Pricing"
+    }
+  },
+  "AboutPage": {
+    "hero": {
+      "title": "About Salsa Rayo"
+    },
+    "story": {
+      "title": "Our Story",
+      "p1": "Salsa Rayo was born from the shared dream of two passionate dancers. Konstantinos Bitsis and Anna Lontou met in 2018 — teenagers with a fire for dance and a vision to build something of their own.",
+      "p2": "What started as a dance partnership quickly became something bigger. Together they traveled to festivals across Europe and New York, competing in salsa competitions and earning awards in both duo and group performances. Their stage presence, chemistry, and authenticity set them apart.",
+      "p3": "In 2025, the dream became reality. Salsa Rayo opened its doors in Agios Dimitrios, Athens — a space where world-class technique meets heartfelt passion, and where every student is treated like family.",
+      "p4": "The name \"Rayo\" — meaning lightning in Spanish — was chosen to represent strength, speed, and explosive energy. These are the qualities that define both their dance style and the school's philosophy."
+    },
+    "konstantinos": {
+      "name": "Konstantinos Bitsis",
+      "role": "Co-Founder & Senior Instructor",
+      "bio": "Konstantinos discovered salsa at 16 in his small hometown and immediately knew it would shape his life. Since then, he has trained with the world's top salsa instructors across multiple countries, building a deep technical foundation combined with infectious energy and warmth.",
+      "philosophy": "His teaching philosophy centers on creating a welcoming environment from the very first class while maintaining professional standards in advanced levels. He believes every student deserves both comfort and challenge — a space to feel at ease and the push to reach the next level.",
+      "imageAlt": "Konstantinos Bitsis - Co-Founder of Salsa Rayo"
+    },
+    "anna": {
+      "name": "Anna Lontou",
+      "role": "Co-Founder & Lead Instructor",
+      "bio": "Anna has been dancing since age 6, starting with modern dance before dedicating herself fully to Salsa and Bachata in 2016. She continuously enriches her skills by traveling to workshops and classes with renowned instructors around the world. Her love for choreography and stage performance shines through in every class.",
+      "philosophy": "Anna's teaching combines positive energy with rigorous technical guidance, emphasizing strong foundations and personal expression. Her specialty is Movement and Styling classes that build confidence and cultivate an authentic, personalized solo style.",
+      "imageAlt": "Anna Lontou - Co-Founder of Salsa Rayo"
+    },
+    "studio": {
+      "title": "Our Studio",
+      "text": "Located at Thermopylon 19, Agios Dimitrios, our studio is easily accessible by Athens Metro (Line 2 — Red Line, Agios Dimitrios station) and by car with convenient street parking. The space was designed with dancers in mind — a professional-grade floor, mirrors, and a sound system that brings every rhythm to life.",
+      "imageAlt": "Salsa Rayo dance studio in Agios Dimitrios, Athens"
+    },
+    "philosophy": {
+      "title": "Our Teaching Philosophy",
+      "levels": "Structured Levels",
+      "levelsText": "Clear progression from beginner to advanced, so you always know your next step.",
+      "technique": "Technique & Fun",
+      "techniqueText": "We believe strong foundations and genuine enjoyment go hand in hand — never one without the other.",
+      "community": "Community First",
+      "communityText": "Dance is social. We foster a warm, inclusive environment where friendships form naturally on and off the floor.",
+      "rotation": "Partner Rotation",
+      "rotationText": "We rotate partners in every class. No partner needed — and you will become a better dancer by dancing with everyone."
+    },
+    "cta": {
+      "title": "Join Our Community",
+      "text": "Ready to start your dance journey? Get in touch and take your first step onto the dance floor.",
+      "contact": "Contact Us"
+    }
+  },
   "Package": {
     "validUntilBadge": "Valid until August 31st",
     "subscriptionRequest": "Subscription Request",
@@ -182,5 +286,245 @@
     "classesPerWeek": "{classes} classes per week",
     "mostPopular": "Most Popular",
     "getStarted": "Get Started"
+  },
+  "SalsaClasses": {
+    "hero": {
+      "title": "Salsa Classes in Athens",
+      "subtitle": "Learn Cuban Salsa at Salsa Rayo in Agios Dimitrios. From your very first step to advanced technique, our classes will have you dancing with confidence and joy.",
+      "cta": "Book Your First Class"
+    },
+    "benefits": {
+      "title": "Why Learn Salsa?",
+      "social": {
+        "title": "Social Connection",
+        "description": "Salsa is the ultimate social dance. Meet new people, build friendships, and become part of a vibrant worldwide community."
+      },
+      "fitness": {
+        "title": "Full-Body Fitness",
+        "description": "Burn up to 400 calories per hour while having fun. Salsa improves coordination, balance, posture, and cardiovascular health."
+      },
+      "cultural": {
+        "title": "Cultural Richness",
+        "description": "Dive into the Afro-Cuban roots of salsa. Understand the rhythms, the history, and the cultural traditions behind every movement."
+      },
+      "fun": {
+        "title": "Pure Joy",
+        "description": "There is nothing quite like the feeling of dancing salsa to live music. The energy, the rhythm, the connection — it is addictive in the best way."
+      }
+    },
+    "classes": {
+      "title": "Our Salsa Classes",
+      "subtitle": "We offer structured levels so you always know your next step. Each class is 50 minutes with a 10-minute break between sessions.",
+      "level1": {
+        "title": "Salsa Level 1",
+        "description": "Perfect for complete beginners. Learn the basic step, timing, fundamental turns, and partner connection. No experience needed."
+      },
+      "level2": {
+        "title": "Salsa Level 2",
+        "description": "For dancers with solid basics. Expand your repertoire with more complex turn patterns, styling, and musicality."
+      },
+      "mambo": {
+        "title": "Mambo",
+        "description": "Explore the roots of salsa through Mambo. Focus on body movement, rhythm interpretation, and the classic New York style."
+      },
+      "techniques": {
+        "title": "Salsa Techniques",
+        "description": "Refine your footwork, spins, and body isolations. A technique-focused class for dancers who want to level up their skills."
+      }
+    },
+    "instructors": {
+      "title": "Your Salsa Instructors",
+      "konstantinos": {
+        "name": "Konstantinos Bitsis",
+        "role": "Co-Founder & Senior Instructor",
+        "bio": "Award-winning salsa dancer who has trained with the world's top instructors. Konstantinos brings technical precision, infectious energy, and a warm teaching style to every class."
+      },
+      "anna": {
+        "name": "Anna Lontou",
+        "role": "Co-Founder & Lead Instructor",
+        "bio": "Dancing since age 6, Anna combines rigorous technique with positive energy. She specializes in body movement, styling, and helping dancers find their personal expression."
+      }
+    },
+    "schedule": {
+      "title": "Schedule & Location",
+      "hours": {
+        "title": "Class Hours",
+        "days": "Monday — Thursday",
+        "time": "19:00 — 23:00"
+      },
+      "location": {
+        "title": "Our Studio",
+        "address": "Thermopylon 19, Agios Dimitrios 17341, Athens. 5 min from Agios Dimitrios Metro (Line 2).",
+        "mapLink": "Get Directions →"
+      }
+    },
+    "pricing": {
+      "title": "Pricing Plans",
+      "rayo8": {
+        "name": "Rayo 8",
+        "classes": "8 classes/month"
+      },
+      "rayo16": {
+        "name": "Rayo 16",
+        "classes": "16 classes/month"
+      },
+      "rayo24": {
+        "name": "Rayo 24",
+        "classes": "24 classes/month"
+      },
+      "perMonth": "month",
+      "viewAll": "View All Plans"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "q1": {
+        "question": "Do I need dance experience to start salsa?",
+        "answer": "No! Our Salsa Level 1 class is designed for complete beginners with no prior dance experience. We start from the very basics."
+      },
+      "q2": {
+        "question": "Do I need to bring a dance partner?",
+        "answer": "No, you don't need a partner. In our classes, we rotate partners so everyone dances with everyone. Come alone or with friends!"
+      },
+      "q3": {
+        "question": "How much do salsa classes cost?",
+        "answer": "Monthly packages range from €50 (8 classes/month) to €99 (24 classes/month). Student discounts are available."
+      },
+      "q4": {
+        "question": "What should I wear to salsa class?",
+        "answer": "Wear comfortable clothes that allow movement. Dance shoes with suede soles are ideal, or just wear socks. Avoid sneakers."
+      }
+    },
+    "cta": {
+      "title": "Start Your Salsa Journey",
+      "subtitle": "Join our welcoming community and discover the magic of Cuban Salsa. Your first class is just a click away.",
+      "button": "Get in Touch",
+      "bachataLink": "Explore Bachata"
+    }
+  },
+  "BachataClasses": {
+    "hero": {
+      "title": "Bachata Classes in Athens",
+      "subtitle": "Discover the art of Bachata at Salsa Rayo. From sensual basics to expressive body movement, our classes in Agios Dimitrios will have you dancing with confidence.",
+      "cta": "Book Your First Class"
+    },
+    "whyLearn": {
+      "title": "Why Learn Bachata?",
+      "connection": {
+        "title": "Connection & Intimacy",
+        "description": "Bachata is one of the most expressive partner dances. Learn to communicate through movement and build deep connection with your partner."
+      },
+      "accessible": {
+        "title": "Accessible for Beginners",
+        "description": "With its simple basic step and slower tempo, Bachata is the perfect entry point into Latin dance. You'll be dancing from day one."
+      },
+      "community": {
+        "title": "Global Community",
+        "description": "Join a worldwide community of Bachata dancers. Social dancing events, festivals, and congresses await you across the globe."
+      },
+      "expression": {
+        "title": "Expression & Musicality",
+        "description": "Develop your musical interpretation and personal style. Bachata encourages creativity and emotional expression in every step."
+      }
+    },
+    "classes": {
+      "title": "Our Bachata Classes",
+      "level1": {
+        "title": "Bachata Level 1",
+        "description": "Perfect for beginners with no prior dance experience. Build a solid foundation in Bachata basics.",
+        "points": {
+          "0": "Basic step, timing, and rhythm fundamentals",
+          "1": "Lead and follow techniques for partner connection",
+          "2": "Simple turns and combinations",
+          "3": "Introduction to Bachata musicality"
+        }
+      },
+      "level2": {
+        "title": "Bachata Level 2",
+        "description": "For dancers with foundational knowledge looking to expand their repertoire and styling.",
+        "points": {
+          "0": "Advanced turn patterns and combinations",
+          "1": "Body movement and isolation techniques",
+          "2": "Sensual Bachata fundamentals",
+          "3": "Musical interpretation and improvisation"
+        }
+      }
+    },
+    "instructors": {
+      "title": "Your Instructors",
+      "konstantinos": {
+        "name": "Konstantinos Bitsis",
+        "role": "Co-Founder & Instructor",
+        "bio": "With years of experience in Latin dance and training from world-renowned instructors, Konstantinos brings technical precision and infectious energy to every Bachata class."
+      },
+      "anna": {
+        "name": "Anna Lontou",
+        "role": "Co-Founder & Instructor",
+        "bio": "Anna's passion for movement and styling shines through her Bachata teaching. Her classes emphasize body movement, musicality, and personal expression."
+      }
+    },
+    "schedule": {
+      "title": "Schedule & Location",
+      "days": {
+        "title": "Class Days",
+        "description": "Bachata classes run on Monday and Thursday evenings, 19:00-21:00. Check our full schedule for all available time slots."
+      },
+      "address": {
+        "title": "Our Studio",
+        "description": "Thermopylon 19, Agios Dimitrios 17341, Athens, Greece. A modern, air-conditioned studio with professional dance flooring."
+      },
+      "transport": {
+        "title": "Getting Here",
+        "description": "5 minutes walk from Agios Dimitrios Metro Station (Line 2). Bus lines 550, A2, and B2 stop nearby. Free street parking available."
+      }
+    },
+    "pricing": {
+      "title": "Pricing Plans",
+      "rayo8": {
+        "name": "Rayo 8",
+        "price": "\u20ac50",
+        "period": "/month",
+        "description": "8 classes per month \u2014 2 classes per week. Perfect for getting started with Bachata."
+      },
+      "rayo12": {
+        "name": "Rayo 12",
+        "price": "\u20ac65",
+        "period": "/month",
+        "description": "12 classes per month \u2014 3 classes per week. Mix Bachata with other dance styles."
+      },
+      "rayo16": {
+        "name": "Rayo 16",
+        "price": "\u20ac75",
+        "period": "/month",
+        "description": "16 classes per month \u2014 4 classes per week. Our most popular package for dedicated dancers."
+      },
+      "cta": "View All Plans"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "items": {
+        "0": {
+          "question": "Is bachata hard to learn as a beginner?",
+          "answer": "Not at all! Bachata is actually one of the most beginner-friendly Latin dances. The basic step is simple, and our Level 1 class builds your confidence from day one."
+        },
+        "1": {
+          "question": "Do I need a dance partner for bachata?",
+          "answer": "No partner needed! We rotate partners in class so everyone practices with different people. Come alone or bring friends."
+        },
+        "2": {
+          "question": "What's the difference between bachata and salsa?",
+          "answer": "Bachata is slower and more romantic, danced in a closer embrace. Salsa is faster and more energetic. Many students learn both \u2014 they complement each other beautifully."
+        },
+        "3": {
+          "question": "How often should I take bachata classes?",
+          "answer": "We recommend at least 2 classes per week for steady progress. Our Rayo 16 package (\u20ac75/month) gives you 4 classes per week across all styles."
+        }
+      }
+    },
+    "cta": {
+      "title": "Start Your Bachata Journey",
+      "subtitle": "Join our welcoming community and discover the joy of Bachata. Your first class is just a click away.",
+      "button": "Get in Touch",
+      "salsaLink": "Explore Salsa"
+    }
   }
 }

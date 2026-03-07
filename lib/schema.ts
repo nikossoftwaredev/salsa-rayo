@@ -325,6 +325,49 @@ export const getVideoObjectSchemas = (
   }));
 
 // ============================================================
+// FAQPage schema - reusable for any page with inline FAQs
+// ============================================================
+export const getFAQPageSchema = (
+  items: { question: string; answer: string }[]
+) => ({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: items.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
+    },
+  })),
+});
+
+// ============================================================
+// Person schema for instructor pages
+// ============================================================
+export const getPersonSchema = ({
+  name,
+  jobTitle,
+  description,
+  image,
+}: {
+  name: string;
+  jobTitle: string;
+  description: string;
+  image: string;
+}) => ({
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name,
+  jobTitle,
+  description,
+  image: `${BASE_URL}${image}`,
+  worksFor: {
+    "@id": `${BASE_URL}/#organization`,
+  },
+});
+
+// ============================================================
 // Article schema for Orishas educational page
 // ============================================================
 export const getOrishasArticleSchema = (locale: string) => ({

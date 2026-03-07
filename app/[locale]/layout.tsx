@@ -17,18 +17,30 @@ const inter = Inter({
 
 const BASE_URL = "https://www.salsarayo.com";
 const APPLICATION_NAME = "Salsa Rayo Dance School";
-const APPLICATION_DESCRIPTION =
-  "Salsa Rayo is a dance school that offers Salsa and Bachata classes for all levels. We are based in Agios Dimitrios, Athens, Greece";
+
+const TITLES: Record<string, string> = {
+  en: "Salsa Rayo Dance School | Salsa & Bachata Classes in Athens, Greece",
+  el: "Salsa Rayo | Μαθήματα Salsa & Bachata στην Αθήνα — Άγιος Δημήτριος",
+  es: "Salsa Rayo | Clases de Salsa y Bachata en Atenas, Grecia",
+};
+
+const DESCRIPTIONS: Record<string, string> = {
+  en: "Salsa Rayo is a dance school offering Salsa and Bachata classes for all levels in Agios Dimitrios, Athens, Greece. Expert instructors, welcoming community. From €50/month.",
+  el: "Η Salsa Rayo είναι σχολή χορού με μαθήματα Salsa και Bachata για όλα τα επίπεδα στον Άγιο Δημήτριο, Αθήνα. Έμπειροι δάσκαλοι, φιλόξενη κοινότητα. Από €50/μήνα.",
+  es: "Salsa Rayo es una escuela de baile que ofrece clases de Salsa y Bachata para todos los niveles en Agios Dimitrios, Atenas, Grecia. Instructores expertos. Desde €50/mes.",
+};
 
 export const generateMetadata = async ({
   params,
 }: BasePageProps): Promise<Metadata> => {
   const locale = (await params).locale;
+  const title = TITLES[locale] || TITLES.en;
+  const description = DESCRIPTIONS[locale] || DESCRIPTIONS.en;
 
   return {
     metadataBase: new URL(BASE_URL),
-    title: APPLICATION_NAME,
-    description: APPLICATION_DESCRIPTION,
+    title,
+    description,
     applicationName: APPLICATION_NAME,
     robots: "index, follow",
     alternates: {
@@ -42,7 +54,7 @@ export const generateMetadata = async ({
     },
     openGraph: {
       title: APPLICATION_NAME,
-      description: APPLICATION_DESCRIPTION,
+      description,
       url: `${BASE_URL}/${locale}`,
       images: [
         {
@@ -59,7 +71,7 @@ export const generateMetadata = async ({
     twitter: {
       card: "summary_large_image",
       title: APPLICATION_NAME,
-      description: APPLICATION_DESCRIPTION,
+      description,
       images: [`${BASE_URL}/images/gallery/our-space.jpg`],
     },
   };

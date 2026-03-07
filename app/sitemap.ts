@@ -11,6 +11,10 @@ const routes: {
   { path: '', priority: 1.0, changeFrequency: 'monthly' },
   { path: '/pricing', priority: 0.9, changeFrequency: 'monthly' },
   { path: '/gallery', priority: 0.8, changeFrequency: 'weekly' },
+  { path: '/salsa-classes-athens', priority: 0.9, changeFrequency: 'monthly' },
+  { path: '/bachata-classes-athens', priority: 0.9, changeFrequency: 'monthly' },
+  { path: '/salsa-vs-bachata', priority: 0.8, changeFrequency: 'monthly' },
+  { path: '/about', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/faq', priority: 0.7, changeFrequency: 'monthly' },
   { path: '/orishas', priority: 0.7, changeFrequency: 'monthly' },
 ]

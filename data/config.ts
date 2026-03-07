@@ -1,11 +1,8 @@
 export const headerLinks = [
-  { path: `/#about`, text: { en: "About", el: "Σχετικά", es: "Acerca de" } },
-  {
-    path: `/#schedule`,
-    text: { en: "Schedule", el: "Πρόγραμμα", es: "Horario" },
-  },
+  { path: `/salsa-classes-athens`, text: { en: "Salsa", el: "Salsa", es: "Salsa" } },
+  { path: `/bachata-classes-athens`, text: { en: "Bachata", el: "Bachata", es: "Bachata" } },
   { path: `/pricing`, text: { en: "Pricing", el: "Τιμές", es: "Precios" } },
-  { path: `/#gallery`, text: { en: "Gallery", el: "Gallery", es: "Galería" } },
+  { path: `/about`, text: { en: "About", el: "Σχετικά", es: "Acerca de" } },
   { path: `/faq`, text: { en: "FAQ", el: "FAQ", es: "FAQ" } },
   { path: `/orishas`, text: { en: "Orishas", el: "Orishas", es: "Orishas" } },
 ];
