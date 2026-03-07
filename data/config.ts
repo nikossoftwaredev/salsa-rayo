@@ -1,10 +1,14 @@
 export const headerLinks = [
-  { path: `/salsa-classes-athens`, text: { en: "Salsa", el: "Salsa", es: "Salsa" } },
-  { path: `/bachata-classes-athens`, text: { en: "Bachata", el: "Bachata", es: "Bachata" } },
+  { path: `/#about`, text: { en: "About", el: "Σχετικά", es: "Acerca de" } },
+  {
+    path: `/#schedule`,
+    text: { en: "Schedule", el: "Πρόγραμμα", es: "Horario" },
+  },
   { path: `/pricing`, text: { en: "Pricing", el: "Τιμές", es: "Precios" } },
-  { path: `/about`, text: { en: "About", el: "Σχετικά", es: "Acerca de" } },
+  { path: `/#gallery`, text: { en: "Gallery", el: "Gallery", es: "Galería" } },
   { path: `/faq`, text: { en: "FAQ", el: "FAQ", es: "FAQ" } },
   { path: `/orishas`, text: { en: "Orishas", el: "Orishas", es: "Orishas" } },
+  { path: `/blog`, text: { en: "Blog", el: "Blog", es: "Blog" } },
 ];
 
 export const INSTAGRAM_URL = "https://www.instagram.com/salsarayo_ds/";

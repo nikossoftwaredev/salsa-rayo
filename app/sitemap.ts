@@ -1,7 +1,9 @@
 import { MetadataRoute } from 'next'
+import { getAllSlugs } from '@/lib/blog'
 
 const BASE_URL = 'https://www.salsarayo.com'
 const LOCALES = ['en', 'el', 'es'] as const
+const BLOG_LOCALES = ['en', 'el'] as const
 
 const routes: {
   path: string
@@ -11,16 +13,13 @@ const routes: {
   { path: '', priority: 1.0, changeFrequency: 'monthly' },
   { path: '/pricing', priority: 0.9, changeFrequency: 'monthly' },
   { path: '/gallery', priority: 0.8, changeFrequency: 'weekly' },
-  { path: '/salsa-classes-athens', priority: 0.9, changeFrequency: 'monthly' },
-  { path: '/bachata-classes-athens', priority: 0.9, changeFrequency: 'monthly' },
-  { path: '/salsa-vs-bachata', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/about', priority: 0.8, changeFrequency: 'monthly' },
+  { path: '/blog', priority: 0.8, changeFrequency: 'weekly' },
   { path: '/faq', priority: 0.7, changeFrequency: 'monthly' },
   { path: '/orishas', priority: 0.7, changeFrequency: 'monthly' },
 ]
 
-const sitemap = (): MetadataRoute.Sitemap =>
-  routes.map(route => ({
+const sitemap = (): MetadataRoute.Sitemap => {
+  const staticRoutes = routes.map(route => ({
     url: `${BASE_URL}/en${route.path}`,
     lastModified: new Date(),
     changeFrequency: route.changeFrequency,
@@ -31,5 +30,21 @@ const sitemap = (): MetadataRoute.Sitemap =>
       ),
     },
   }))
+
+  const blogSlugs = getAllSlugs()
+  const blogRoutes = blogSlugs.map(slug => ({
+    url: `${BASE_URL}/en/blog/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+    alternates: {
+      languages: Object.fromEntries(
+        BLOG_LOCALES.map(locale => [locale, `${BASE_URL}/${locale}/blog/${slug}`])
+      ),
+    },
+  }))
+
+  return [...staticRoutes, ...blogRoutes]
+}
 
 export default sitemap
