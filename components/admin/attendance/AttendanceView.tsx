@@ -14,6 +14,14 @@ import { RayoPoints } from "@/components/ui/rayo-points"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 import { type ScheduleEntryWithInstructors } from "@/lib/db"
 import { DAY_NAMES } from "@/data/schedule"
 import { getAttendances, type AttendanceRecord } from "@/server-actions/attendance/get-attendances"
@@ -49,6 +57,8 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
   const [pendingAdds, setPendingAdds] = useState<StudentForAttendance[]>([])
   const [pendingRemoveIds, setPendingRemoveIds] = useState<Set<string>>(new Set())
   const [submitting, setSubmitting] = useState(false)
+  const [showUnsavedDialog, setShowUnsavedDialog] = useState(false)
+  const unsavedActionRef = useRef<(() => void) | null>(null)
 
   const dayIndex = toDayIndex(selectedDate)
   const dayName = DAY_NAMES[dayIndex - 1]
@@ -110,10 +120,20 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
     setPendingRemoveIds(new Set())
   }, [])
 
+  const hasPendingChanges = pendingAdds.length > 0 || pendingRemoveIds.size > 0
+  const hasPendingRef = useRef(hasPendingChanges)
+  hasPendingRef.current = hasPendingChanges
+
   const handleCardClick = useCallback(
     (entryId: string) => {
-      setExpandedEntryId((prev) => (prev === entryId ? null : entryId))
-      resetPending()
+      const action = () => {
+        setExpandedEntryId((prev) => (prev === entryId ? null : entryId))
+        resetPending()
+      }
+      if (hasPendingRef.current) {
+        unsavedActionRef.current = action
+        setShowUnsavedDialog(true)
+      } else action()
     },
     [resetPending]
   )
@@ -121,9 +141,15 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
   const handleDateSelect = useCallback(
     (date: Date | undefined) => {
       if (!date) return
-      setSelectedDate(date)
-      setExpandedEntryId(null)
-      resetPending()
+      const action = () => {
+        setSelectedDate(date)
+        setExpandedEntryId(null)
+        resetPending()
+      }
+      if (hasPendingRef.current) {
+        unsavedActionRef.current = action
+        setShowUnsavedDialog(true)
+      } else action()
     },
     [resetPending]
   )
@@ -184,7 +210,19 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
     }
   }, [expandedEntryId, pendingAdds, pendingRemoveIds, lessonsForDay, selectedDate, resetPending, loadAttendances])
 
-  const hasPendingChanges = pendingAdds.length > 0 || pendingRemoveIds.size > 0
+  const handleUnsavedSave = useCallback(async () => {
+    await handleGlobalSubmit()
+    setShowUnsavedDialog(false)
+    unsavedActionRef.current?.()
+    unsavedActionRef.current = null
+  }, [handleGlobalSubmit])
+
+  const handleUnsavedDiscard = useCallback(() => {
+    setShowUnsavedDialog(false)
+    resetPending()
+    unsavedActionRef.current?.()
+    unsavedActionRef.current = null
+  }, [resetPending])
 
   useEffect(() => {
     loadAttendances()
@@ -226,6 +264,10 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
               <div className="flex flex-col items-center justify-center rounded-xl border border-dashed py-16 text-muted-foreground">
                 <IoCalendarOutline size={32} className="mb-3 opacity-40" />
                 <p className="text-sm">No classes scheduled for {dayName}.</p>
+              </div>
+            ) : loadingAttendances ? (
+              <div className="flex items-center justify-center py-16">
+                <span className="size-8 animate-spin rounded-full border-3 border-primary/30 border-t-primary" />
               </div>
             ) : (
               <div className="space-y-4">
@@ -284,7 +326,7 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                           {/* Right: badge + avatars + chevron */}
                           <div className="flex shrink-0 items-center gap-2.5">
                             {effectiveCount > 0 && (
-                              <span className="rounded-full bg-primary/15 px-2.5 py-0.5 text-xs font-semibold tabular-nums text-primary">
+                              <span className="rounded-full bg-yellow-500/10 px-2.5 py-0.5 text-xs font-semibold tabular-nums text-yellow-500">
                                 {effectiveCount}
                               </span>
                             )}
@@ -349,7 +391,9 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                                 {/* Scrollable body */}
                                 <ScrollArea className="min-h-0 flex-1 px-4">
                                   {loadingAttendances ? (
-                                    <p className="py-8 text-center text-xs text-muted-foreground/60">Loading...</p>
+                                    <div className="flex h-full items-center justify-center py-8">
+                                      <span className="size-6 animate-spin rounded-full border-2 border-primary/30 border-t-primary" />
+                                    </div>
                                   ) : effectiveCount === 0 ? (
                                     <div className="flex flex-col items-center justify-center py-8 text-muted-foreground/50">
                                       <IoPersonOutline size={24} className="mb-2 opacity-40" />
@@ -389,6 +433,25 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
           </motion.div>
         </AnimatePresence>
       </div>
+
+      <AlertDialog open={showUnsavedDialog} onOpenChange={(o) => { if (!o) { setShowUnsavedDialog(false); unsavedActionRef.current = null } }}>
+        <AlertDialogContent className="max-w-sm">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Unsaved changes</AlertDialogTitle>
+            <AlertDialogDescription>
+              You have unsaved attendance changes. Would you like to save or discard them?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="flex-row justify-end gap-2 sm:justify-end">
+            <Button variant="outline" onClick={handleUnsavedDiscard}>
+              Discard
+            </Button>
+            <Button onClick={handleUnsavedSave} disabled={submitting}>
+              {submitting ? "Saving..." : "Save"}
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }

@@ -3,7 +3,7 @@ import {
   IoCalendar,
   IoCard,
   IoCheckboxOutline,
-  IoHome,
+  IoGridOutline,
   IoPeople,
   IoSchool,
   IoSettings,
@@ -35,7 +35,7 @@ export interface AdminNavGroup {
 export const adminNavGroups: AdminNavGroup[] = [
   {
     groupLabel: "Overview",
-    items: [{ label: "Dashboard", href: "/admin", icon: IoHome }],
+    items: [{ label: "Dashboard", href: "/admin", icon: IoGridOutline }],
   },
   {
     groupLabel: "Classes",
