@@ -3,6 +3,7 @@
 import { signIn, useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { ProfileDropdown } from "@/components/admin/ProfileDropdown";
+import { IoLogInOutline } from "react-icons/io5";
 
 interface AuthButtonProps {
   showNavRoutes?: boolean;
@@ -20,8 +21,9 @@ export const AuthButton = ({ showNavRoutes = false }: AuthButtonProps) => {
         onClick={() => signIn("google")}
         variant="outline"
         size="sm"
-        className="border-primary/40 text-primary hover:text-primary-foreground hover:bg-primary/90 hover:border-primary transition-all duration-300"
+        className="rounded-full border-primary/40 text-primary hover:text-primary-foreground hover:bg-primary/90 hover:border-primary transition-all duration-300"
       >
+        <IoLogInOutline />
         Sign In
       </Button>
     );

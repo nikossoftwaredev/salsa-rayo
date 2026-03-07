@@ -4,11 +4,13 @@ import { headerLinks } from "@/data/config";
 import Logo from "../Logo";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useLocale } from "next-intl";
+import { useSession } from "next-auth/react";
 import { Link } from "@/i18n/navigation";
 import { AuthButton } from "@/components/AuthButton";
 
 const Header = () => {
   const locale = useLocale();
+  const { data: session } = useSession();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40">
@@ -33,8 +35,10 @@ const Header = () => {
                 </li>
               ))}
             </ul>
-            <LanguageSwitcher />
-            <AuthButton />
+            <div className="flex items-center gap-1">
+              {!session && <LanguageSwitcher />}
+              <AuthButton />
+            </div>
           </div>
 
           {/* Mobile Menu */}

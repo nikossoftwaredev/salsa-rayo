@@ -14,7 +14,6 @@ import { RayoPoints } from "@/components/ui/rayo-points"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Separator } from "@/components/ui/separator"
 import { type ScheduleEntryWithInstructors } from "@/lib/db"
 import { DAY_NAMES } from "@/data/schedule"
 import { getAttendances, type AttendanceRecord } from "@/server-actions/attendance/get-attendances"
@@ -317,27 +316,35 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                       <AnimatePresence>
                         {isExpanded && (
                           <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.25 }}
-                            className="overflow-hidden"
+                            initial={{ opacity: 0, y: -8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -8 }}
+                            transition={{ duration: 0.2 }}
                           >
-                            <div className="mt-2 grid gap-4 lg:h-[400px] lg:grid-cols-2">
+                            <div className="mt-2 grid max-h-[70vh] gap-4 lg:grid-cols-2">
                               {/* Left: student picker */}
-                              <div className="h-[300px] lg:h-full">
+                              <div className="h-[300px] lg:h-[400px]">
                                 <AttendancePanel
                                   hideIds={hideIds}
                                   onAddStudent={handleAddStudent}
                                 />
                               </div>
 
-                              {/* Right: attendees list + save */}
-                              <div className="flex h-[300px] flex-col rounded-xl border bg-card lg:h-full">
-                                {/* Header — pinned top */}
-                                <p className="shrink-0 px-4 pt-4 pb-3 text-xs font-medium uppercase tracking-wider text-muted-foreground/60">
-                                  Attendees ({effectiveCount})
-                                </p>
+                              {/* Right: attendees list */}
+                              <div className="flex h-[300px] flex-col overflow-hidden rounded-xl border bg-card lg:h-[400px]">
+                                {/* Header with save */}
+                                <div className="flex h-14 shrink-0 items-center justify-between border-b px-4">
+                                  <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground/60">
+                                    Attendees ({effectiveCount})
+                                  </p>
+                                  <Button
+                                    size="sm"
+                                    disabled={!hasPendingChanges || submitting}
+                                    onClick={handleGlobalSubmit}
+                                  >
+                                    {submitting ? "Saving..." : "Save"}
+                                  </Button>
+                                </div>
 
                                 {/* Scrollable body */}
                                 <ScrollArea className="min-h-0 flex-1 px-4">
@@ -349,7 +356,7 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                                       <p className="text-xs">No attendees for this date</p>
                                     </div>
                                   ) : (
-                                    <div className="space-y-1">
+                                    <div className="space-y-1 py-2">
                                       {existingVisible.map((a) => (
                                         <AttendeeRow
                                           key={a.id}
@@ -369,26 +376,6 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                                     </div>
                                   )}
                                 </ScrollArea>
-
-                                {/* Footer — pinned bottom */}
-                                <Separator />
-                                <div className="flex shrink-0 items-center justify-between px-4 py-3">
-                                  <p className="text-xs text-muted-foreground">
-                                    {!hasPendingChanges
-                                      ? "No changes"
-                                      : [
-                                          pendingAdds.length > 0 && `+${pendingAdds.length} added`,
-                                          pendingRemoveIds.size > 0 && `${pendingRemoveIds.size} removed`,
-                                        ].filter(Boolean).join(", ")}
-                                  </p>
-                                  <Button
-                                    size="sm"
-                                    disabled={!hasPendingChanges || submitting}
-                                    onClick={handleGlobalSubmit}
-                                  >
-                                    {submitting ? "Saving..." : "Save Changes"}
-                                  </Button>
-                                </div>
                               </div>
                             </div>
                           </motion.div>

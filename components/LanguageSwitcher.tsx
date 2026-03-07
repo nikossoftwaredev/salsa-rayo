@@ -5,6 +5,7 @@ import { useRouter, usePathname } from "@/i18n/routing";
 import { SUPPORTED_LOCALES } from "@/i18n/routing";
 import { useTransition } from "react";
 import { MdLanguage, MdCheck } from "react-icons/md";
+import Image from "next/image";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,27 +24,23 @@ const languages: Record<typeof SUPPORTED_LOCALES[number], {
 }> = {
   en: {
     name: "English",
-    flag: "🇺🇸",
+    flag: "/flags/us.svg",
     nativeName: "English",
     shortCode: "EN"
   },
   el: {
     name: "Ελληνικά",
-    flag: "🇬🇷",
+    flag: "/flags/gr.svg",
     nativeName: "Greek",
     shortCode: "EL"
   },
   es: {
     name: "Español",
-    flag: "🇪🇸",
+    flag: "/flags/es.svg",
     nativeName: "Spanish",
     shortCode: "ES"
   },
 };
-
-interface LanguageSwitcherProps {
-  isMobile?: boolean;
-}
 
 export { languages };
 
@@ -66,7 +63,7 @@ export const LanguageSwitcherTabs = () => {
   const { locale, isPending, handleLanguageChange } = useLanguageSwitch();
 
   return (
-    <div className="flex items-center gap-1 px-2 py-1.5">
+    <div className="flex items-center px-2 py-1.5">
       {SUPPORTED_LOCALES.map((lang) => {
         const isActive = locale === lang;
         return (
@@ -74,13 +71,11 @@ export const LanguageSwitcherTabs = () => {
             key={lang}
             onClick={() => handleLanguageChange(lang)}
             disabled={isPending}
-            className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors cursor-pointer ${
-              isActive
-                ? "bg-primary/20 text-primary"
-                : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-            } ${isPending ? "opacity-50" : ""}`}
+            className={`flex-1 flex items-center justify-center py-2 cursor-pointer transition-opacity ${
+              isActive ? "opacity-100" : "opacity-40 hover:opacity-70"
+            } ${isPending ? "pointer-events-none" : ""}`}
           >
-            <span>{languages[lang].shortCode}</span>
+            <Image src={languages[lang].flag} alt={languages[lang].name} width={24} height={16} className="rounded-sm" />
           </button>
         );
       })}
@@ -88,7 +83,7 @@ export const LanguageSwitcherTabs = () => {
   );
 };
 
-const LanguageSwitcher = ({ isMobile = false }: LanguageSwitcherProps) => {
+const LanguageSwitcher = () => {
   const { locale, isPending, handleLanguageChange } = useLanguageSwitch();
 
   return (
@@ -96,15 +91,16 @@ const LanguageSwitcher = ({ isMobile = false }: LanguageSwitcherProps) => {
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="relative size-12 p-0 rounded-full text-foreground hover:text-primary hover:bg-transparent group"
+          size="icon-sm"
+          className="text-muted-foreground hover:text-primary hover:bg-transparent transition-all duration-300"
           aria-label="Change language"
           disabled={isPending}
         >
-          <MdLanguage className="!size-7 transition-transform group-hover:scale-110" />
+          <MdLanguage />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        align={isMobile ? "start" : "end"}
+        align="end"
         className="w-56 bg-background/95 backdrop-blur-md border-primary/20"
       >
         <DropdownMenuLabel className="text-xs font-medium text-foreground/60 uppercase tracking-wider">
@@ -122,7 +118,7 @@ const LanguageSwitcher = ({ isMobile = false }: LanguageSwitcherProps) => {
               } ${isPending ? 'opacity-50' : ''}`}
               disabled={isPending}
             >
-              <span className="text-2xl">{languages[lang].flag}</span>
+              <Image src={languages[lang].flag} alt={languages[lang].name} width={28} height={19} className="rounded-[3px]" />
               <div className="flex-1">
                 <p className="font-semibold">{languages[lang].shortCode}</p>
                 <p className="text-xs opacity-70">{languages[lang].name}</p>

@@ -181,8 +181,8 @@ const Lightning: React.FC<LightningProps> = ({
     const uSizeLocation = gl.getUniformLocation(program, "uSize");
 
     const startTime = performance.now();
+    let animId: number;
     const render = () => {
-      resizeCanvas();
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.uniform2f(iResolutionLocation, canvas.width, canvas.height);
       const currentTime = performance.now();
@@ -193,11 +193,12 @@ const Lightning: React.FC<LightningProps> = ({
       gl.uniform1f(uIntensityLocation, intensity);
       gl.uniform1f(uSizeLocation, size);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
-      requestAnimationFrame(render);
+      animId = requestAnimationFrame(render);
     };
-    requestAnimationFrame(render);
+    animId = requestAnimationFrame(render);
 
     return () => {
+      cancelAnimationFrame(animId);
       window.removeEventListener("resize", resizeCanvas);
     };
   }, [hue, xOffset, speed, intensity, size]);

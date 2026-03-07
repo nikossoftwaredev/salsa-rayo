@@ -27,7 +27,7 @@ const AdminLayout = async ({ children }: BaseLayoutProps) => {
       <SidebarInset className="h-svh max-h-svh overflow-hidden">
         <AdminHeader />
         <ScrollArea className="h-0 flex-1">
-          <main className="mx-auto max-w-6xl px-6 py-6">
+          <main className="mx-auto min-w-0 max-w-6xl px-6 py-6">
             {children}
           </main>
         </ScrollArea>

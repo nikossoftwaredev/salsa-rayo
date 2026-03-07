@@ -78,10 +78,10 @@ export const AttendancePanel = ({
   }, [])
 
   return (
-    <div className="flex h-full flex-col rounded-xl border bg-card">
+    <div className="flex h-full flex-col overflow-hidden rounded-xl border bg-card">
       {/* Search */}
-      <div className="border-b px-4 py-3">
-        <div className="relative">
+      <div className="flex h-14 shrink-0 items-center border-b px-4">
+        <div className="relative w-full">
           <IoSearchOutline size={16} className="absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground" />
           <Input
             value={search}

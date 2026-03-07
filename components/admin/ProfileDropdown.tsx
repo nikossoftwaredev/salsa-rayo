@@ -167,11 +167,16 @@ export const ProfileDropdown = ({
                 </DropdownMenuItem>
               )}
             </DropdownMenuGroup>
-            <DropdownMenuSeparator />
             <DropdownMenuItem variant="destructive" onClick={() => signOut()}>
               <IoLogOutOutline size={16} />
               Sign out
             </DropdownMenuItem>
+            {!showNavRoutes && (
+              <>
+                <DropdownMenuSeparator />
+                <LanguageSwitcherTabs />
+              </>
+            )}
           </>
         )}
 
