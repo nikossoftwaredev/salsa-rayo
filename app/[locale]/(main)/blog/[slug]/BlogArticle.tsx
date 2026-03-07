@@ -60,63 +60,59 @@ export const BlogArticle = ({ post, locale }: BlogArticleProps) => {
 
       {/* Content */}
       <section className="px-4 pb-16">
-        <div className="mx-auto max-w-3xl">
-          <article className="rounded-2xl border border-border/30 bg-card/80 p-6 sm:p-8 md:p-12">
-            <div className="prose prose-lg prose-invert max-w-none prose-headings:text-foreground prose-p:text-foreground/80 prose-strong:text-foreground prose-a:text-primary hover:prose-a:text-primary/80 prose-li:text-foreground/80 prose-th:text-foreground prose-td:text-foreground/70 [word-break:break-word] overflow-wrap-anywhere">
-              <Markdown
-                remarkPlugins={[remarkGfm]}
-                components={{
-                  img: ({ src, alt }) => (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={src}
-                      alt={alt || ""}
-                      className="rounded-lg shadow-md max-w-full h-auto"
-                      loading="lazy"
-                    />
-                  ),
-                  table: ({ children }) => (
-                    <div className="overflow-x-auto -mx-4 sm:mx-0">
-                      <table className="w-full">{children}</table>
-                    </div>
-                  ),
-                  tr: ({ children }) => (
-                    <tr className="hover:bg-card/60 transition-colors">
+        <article className="mx-auto max-w-3xl prose prose-lg prose-invert prose-headings:text-foreground prose-p:text-foreground/80 prose-strong:text-foreground prose-a:text-primary hover:prose-a:text-primary/80 prose-li:text-foreground/80 prose-th:text-foreground prose-td:text-foreground/70 [word-break:break-word] overflow-wrap-anywhere">
+          <Markdown
+            remarkPlugins={[remarkGfm]}
+            components={{
+              img: ({ src, alt }) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={src}
+                  alt={alt || ""}
+                  className="rounded-lg shadow-md max-w-full h-auto"
+                  loading="lazy"
+                />
+              ),
+              table: ({ children }) => (
+                <div className="overflow-x-auto -mx-4 sm:mx-0">
+                  <table className="w-full">{children}</table>
+                </div>
+              ),
+              tr: ({ children }) => (
+                <tr className="hover:bg-card/60 transition-colors">
+                  {children}
+                </tr>
+              ),
+              th: ({ children }) => (
+                <th className="bg-card/40 p-3 text-left font-semibold">
+                  {children}
+                </th>
+              ),
+              td: ({ children }) => (
+                <td className="p-3 border-t border-border/20">
+                  {children}
+                </td>
+              ),
+              a: ({ href, children }) => {
+                const isExternal =
+                  href?.startsWith("http") || href?.startsWith("//");
+                if (isExternal)
+                  return (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       {children}
-                    </tr>
-                  ),
-                  th: ({ children }) => (
-                    <th className="bg-card/40 p-3 text-left font-semibold">
-                      {children}
-                    </th>
-                  ),
-                  td: ({ children }) => (
-                    <td className="p-3 border-t border-border/20">
-                      {children}
-                    </td>
-                  ),
-                  a: ({ href, children }) => {
-                    const isExternal =
-                      href?.startsWith("http") || href?.startsWith("//");
-                    if (isExternal)
-                      return (
-                        <a
-                          href={href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {children}
-                        </a>
-                      );
-                    return <a href={href}>{children}</a>;
-                  },
-                }}
-              >
-                {post.content}
-              </Markdown>
-            </div>
-          </article>
-        </div>
+                    </a>
+                  );
+                return <a href={href}>{children}</a>;
+              },
+            }}
+          >
+            {post.content}
+          </Markdown>
+        </article>
       </section>
 
       {/* CTA */}
