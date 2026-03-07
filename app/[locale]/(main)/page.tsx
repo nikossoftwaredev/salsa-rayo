@@ -5,6 +5,9 @@ import ContactForm from "@/components/sections/contact-form/ContactForm";
 import ScheduleLoader from "@/components/sections/schedule/ScheduleLoader";
 import ScheduleSkeleton from "@/components/sections/schedule/ScheduleSkeleton";
 import { GOOGLE_PLACE_ID } from "@/data/config";
+import JsonLd from "@/components/JsonLd";
+import { getCourseSchemas, getBreadcrumbSchema } from "@/lib/schema";
+import { BasePageProps } from "@/types/pageprops";
 
 const BackgroundEffects = lazy(() => import("@/components/BackgroundEffects"));
 const MapSection = lazy(() => import("@/components/sections/map/MapSection"));
@@ -15,9 +18,19 @@ const SectionLoader = () => (
   <div className="w-full h-96 animate-pulse bg-secondary/10 rounded-lg" />
 );
 
-const Home = () => {
+const Home = async ({ params }: BasePageProps) => {
+  const locale = (await params).locale;
+
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden">
+      <JsonLd
+        data={[
+          getBreadcrumbSchema([
+            { name: "Home", url: `https://www.salsarayo.com/${locale}` },
+          ]),
+          ...getCourseSchemas(),
+        ]}
+      />
       <Suspense fallback={null}>
         <BackgroundEffects />
       </Suspense>

@@ -101,6 +101,8 @@ const ScheduleSection = ({ entries }: ScheduleSectionProps) => {
                                   src={instructor.image}
                                   alt={instructor.name}
                                   fill
+                                  sizes="40px"
+                                  loading="lazy"
                                   className="object-cover object-top scale-125 -translate-y-1"
                                 />
                               </div>

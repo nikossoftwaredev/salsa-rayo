@@ -157,6 +157,7 @@ const AboutSection = () => {
                       src="/images/instructor-anna.jpg"
                       alt={t("annaImageAlt")}
                       fill
+                      sizes="96px"
                       className="rounded-full object-cover object-[center_30%]"
                       loading="lazy"
                     />
@@ -182,6 +183,7 @@ const AboutSection = () => {
                       src="/images/instructor-konstantinos.jpg"
                       alt={t("konstantinosImageAlt")}
                       fill
+                      sizes="96px"
                       className="rounded-full object-cover object-[center_30%]"
                       loading="lazy"
                     />

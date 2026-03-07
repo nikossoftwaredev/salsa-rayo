@@ -1,66 +1,52 @@
-"use client";
+import { Metadata } from "next";
+import { BasePageProps } from "@/types/pageprops";
+import GalleryClient from "./GalleryClient";
 
-import GallerySection from "@/components/sections/gallery/GallerySection";
-import BackgroundEffects from "@/components/BackgroundEffects";
-import { motion } from "framer-motion";
-import { useSearchParams } from "next/navigation";
-import { GalleryCategory } from "@/data/gallery";
-import { Suspense } from "react";
+const BASE_URL = "https://www.salsarayo.com";
 
-const GalleryContent = () => {
-  const searchParams = useSearchParams();
-  const categoryParam = searchParams.get('category');
-  
-  // Validate category parameter
-  const validCategories: GalleryCategory[] = ["photos", "shows", "social", "workshop"];
-  const initialCategory = validCategories.includes(categoryParam as GalleryCategory) 
-    ? (categoryParam as GalleryCategory) 
-    : undefined;
-  
-  return (
-    <div className="relative min-h-screen w-full overflow-x-hidden">
-      <BackgroundEffects />
-      
-      <div className="relative pt-20 pb-16 px-4 md:px-8">
-        {/* Header */}
-        <div className="max-w-7xl mx-auto mb-12">
-          <motion.h1
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary to-brand-pink bg-clip-text text-transparent text-center mb-4"
-          >
-            Gallery
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-xl text-muted-foreground text-center"
-          >
-            Explore our dance journey through photos and videos
-          </motion.p>
-        </div>
+export const generateMetadata = async ({
+  params,
+}: BasePageProps): Promise<Metadata> => {
+  const locale = (await params).locale;
 
-        {/* Gallery Section Component */}
-        <GallerySection isFullPage initialCategory={initialCategory} />
-      </div>
-    </div>
-  );
-}
+  const titles = {
+    en: "Gallery | Dance Photos & Videos - Salsa Rayo Athens",
+    el: "Γκαλερί | Φωτογραφίες & Βίντεο Χορού - Salsa Rayo Αθήνα",
+    es: "Galeria | Fotos y Videos de Baile - Salsa Rayo Atenas",
+  };
+
+  const descriptions = {
+    en: "Explore photos and videos from Salsa Rayo dance school in Athens. See our performances, social dancing nights, workshops, and studio space.",
+    el: "Εξερευνήστε φωτογραφίες και βίντεο από τη σχολή χορού Salsa Rayo στην Αθήνα. Δείτε τις παραστάσεις, τις βραδιές social, τα workshops και τον χώρο μας.",
+    es: "Explora fotos y videos de la escuela de baile Salsa Rayo en Atenas. Mira nuestras presentaciones, noches de baile social, talleres y nuestro estudio.",
+  };
+
+  const title = titles[locale as keyof typeof titles] || titles.en;
+  const description = descriptions[locale as keyof typeof descriptions] || descriptions.en;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `${BASE_URL}/${locale}/gallery`,
+      languages: {
+        en: `${BASE_URL}/en/gallery`,
+        el: `${BASE_URL}/el/gallery`,
+        es: `${BASE_URL}/es/gallery`,
+        "x-default": `${BASE_URL}/en/gallery`,
+      },
+    },
+    openGraph: {
+      title,
+      description,
+      url: `${BASE_URL}/${locale}/gallery`,
+      type: "website",
+    },
+  };
+};
 
 const GalleryPage = () => {
-  return (
-    <Suspense fallback={
-      <div className="relative min-h-screen w-full overflow-x-hidden">
-        <BackgroundEffects />
-        <div className="flex items-center justify-center h-screen">
-          <span className="loading loading-spinner loading-lg text-primary"></span>
-        </div>
-      </div>
-    }>
-      <GalleryContent />
-    </Suspense>
-  );
+  return <GalleryClient />;
 }
 
 export default GalleryPage

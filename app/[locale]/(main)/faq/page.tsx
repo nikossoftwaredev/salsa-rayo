@@ -3,7 +3,8 @@ import { getTranslations } from "next-intl/server";
 import FaqSection from "@/components/sections/faq/FaqSection";
 import BackgroundEffects from "@/components/BackgroundEffects";
 import { BasePageProps } from "@/types/pageprops";
-import { FAQ_ITEMS } from "@/data/faq";
+import JsonLd from "@/components/JsonLd";
+import { getBreadcrumbSchema } from "@/lib/schema";
 
 export const generateMetadata = async ({
   params,
@@ -29,35 +30,35 @@ export const generateMetadata = async ({
   return {
     title,
     description,
+    alternates: {
+      canonical: `https://www.salsarayo.com/${locale}/faq`,
+      languages: {
+        en: "https://www.salsarayo.com/en/faq",
+        el: "https://www.salsarayo.com/el/faq",
+        es: "https://www.salsarayo.com/es/faq",
+        "x-default": "https://www.salsarayo.com/en/faq",
+      },
+    },
     openGraph: {
       title,
       description,
+      url: `https://www.salsarayo.com/${locale}/faq`,
       type: "website",
     },
   };
 };
 
-const FaqPage = async () => {
-  const t = await getTranslations("Faq");
-
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: FAQ_ITEMS.map((item) => ({
-      "@type": "Question",
-      name: t(item.questionKey),
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: t(item.answerKey),
-      },
-    })),
-  };
+const FaqPage = async ({ params }: BasePageProps) => {
+  const locale = (await params).locale;
+  await getTranslations("Faq");
 
   return (
     <main className="min-h-screen bg-background">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      <JsonLd
+        data={getBreadcrumbSchema([
+          { name: "Home", url: `https://www.salsarayo.com/${locale}` },
+          { name: "FAQ", url: `https://www.salsarayo.com/${locale}/faq` },
+        ])}
       />
       <BackgroundEffects />
       <FaqSection />

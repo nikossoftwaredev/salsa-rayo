@@ -22,7 +22,7 @@ const Logo = ({ size = "sm" }: LogoProps) => {
     <Link href="/" className={`${className} flex items-center cursor-pointer`}>
       <Image
         src={isLarge ? "/images/logo-big.png" : "/images/logo.png"}
-        alt="Logo"
+        alt="Salsa Rayo Dance School logo"
         width={width}
         height={height}
         className={`${isLarge ? "object-contain" : "rounded-full"} hover:opacity-80 transition-opacity`}

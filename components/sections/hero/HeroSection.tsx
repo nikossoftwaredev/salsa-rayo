@@ -16,7 +16,7 @@ const HeroSection = () => {
       <div className="absolute inset-0">
         <Image
           src="/images/gallery/our-space-vertical.jpg"
-          alt="Dance Studio"
+          alt="Salsa Rayo dance studio interior in Agios Dimitrios, Athens"
           fill
           className="object-cover md:hidden"
           priority
@@ -25,7 +25,7 @@ const HeroSection = () => {
         />
         <Image
           src="/images/gallery/our-space.jpg"
-          alt="Dance Studio"
+          alt="Salsa Rayo dance studio with hardwood floor in Athens, Greece"
           fill
           className="object-cover hidden md:block"
           priority

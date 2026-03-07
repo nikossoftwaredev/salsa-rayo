@@ -7,6 +7,7 @@ import { Inter } from "next/font/google";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { Providers } from "@/components/Providers";
+import { BasePageProps } from "@/types/pageprops";
 
 const inter = Inter({
   subsets: ["latin", "greek", "latin-ext"],
@@ -14,37 +15,54 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const BASE_URL = "https://www.salsarayo.com";
 const APPLICATION_NAME = "Salsa Rayo Dance School";
 const APPLICATION_DESCRIPTION =
   "Salsa Rayo is a dance school that offers Salsa and Bachata classes for all levels. We are based in Agios Dimitrios, Athens, Greece";
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://www.salsarayo.com"),
-  title: APPLICATION_NAME,
-  description: APPLICATION_DESCRIPTION,
-  applicationName: APPLICATION_NAME,
-  robots: "index, follow",
-  openGraph: {
+export const generateMetadata = async ({
+  params,
+}: BasePageProps): Promise<Metadata> => {
+  const locale = (await params).locale;
+
+  return {
+    metadataBase: new URL(BASE_URL),
     title: APPLICATION_NAME,
     description: APPLICATION_DESCRIPTION,
-    images: [
-      {
-        url: "https://salsa-rayo.com/images/gallery/our-space.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Salsa Rayo Dance Studio - Professional dance floor in Athens",
+    applicationName: APPLICATION_NAME,
+    robots: "index, follow",
+    alternates: {
+      canonical: `${BASE_URL}/${locale}`,
+      languages: {
+        en: `${BASE_URL}/en`,
+        el: `${BASE_URL}/el`,
+        es: `${BASE_URL}/es`,
+        "x-default": `${BASE_URL}/en`,
       },
-    ],
-    siteName: APPLICATION_NAME,
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: APPLICATION_NAME,
-    description: APPLICATION_DESCRIPTION,
-    images: ["https://salsa-rayo.com/images/gallery/our-space.jpg"],
-  },
+    },
+    openGraph: {
+      title: APPLICATION_NAME,
+      description: APPLICATION_DESCRIPTION,
+      url: `${BASE_URL}/${locale}`,
+      images: [
+        {
+          url: `${BASE_URL}/images/gallery/our-space.jpg`,
+          width: 1200,
+          height: 630,
+          alt: "Salsa Rayo Dance Studio - Professional dance floor in Athens",
+        },
+      ],
+      siteName: APPLICATION_NAME,
+      locale: "en_US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: APPLICATION_NAME,
+      description: APPLICATION_DESCRIPTION,
+      images: [`${BASE_URL}/images/gallery/our-space.jpg`],
+    },
+  };
 };
 
 const RootLayout = async ({
@@ -69,19 +87,7 @@ const RootLayout = async ({
           name="facebook-domain-verification"
           content="p7lcpq9nkt4pup3w2e9piy3e2lsak2"
         />
-        {/* Preload critical images */}
-        <link
-          rel="preload"
-          as="image"
-          href="/images/gallery/our-space.jpg"
-          media="(min-width: 768px)"
-        />
-        <link
-          rel="preload"
-          as="image"
-          href="/images/gallery/our-space-vertical.jpg"
-          media="(max-width: 767px)"
-        />
+        {/* Hero image preloads — only 2 (responsive: desktop + mobile) */}
         <script
           defer
           dangerouslySetInnerHTML={{

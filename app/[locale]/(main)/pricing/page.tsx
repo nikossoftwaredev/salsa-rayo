@@ -1,103 +1,68 @@
-"use client";
+import { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
+import { getBreadcrumbSchema, getPricingSchemas } from "@/lib/schema";
+import PricingContent from "./PricingContent";
+import { BasePageProps } from "@/types/pageprops";
 
-import { useTranslations } from "next-intl";
-import BackgroundEffects from "@/components/BackgroundEffects";
-import PackageCard from "@/components/PackageCard";
-import { motion } from "framer-motion";
-import { FaBolt } from "react-icons/fa";
-import Logo from "@/components/Logo";
-import { Link } from "@/i18n/routing";
-import { PACKAGES } from "@/data/packages";
-import { useState } from "react";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
+const BASE_URL = "https://www.salsarayo.com";
 
-const PricingPage = () => {
-  const t = useTranslations("Pricing");
-  const [isStudentDiscount, setIsStudentDiscount] = useState(false);
+export const generateMetadata = async ({
+  params,
+}: BasePageProps): Promise<Metadata> => {
+  const locale = (await params).locale;
+
+  const titles = {
+    en: "Pricing | Salsa & Bachata Class Packages - Salsa Rayo Athens",
+    el: "Τιμές | Πακέτα Μαθημάτων Salsa & Bachata - Salsa Rayo Αθήνα",
+    es: "Precios | Paquetes de Clases de Salsa y Bachata - Salsa Rayo Atenas",
+  };
+
+  const descriptions = {
+    en: "Choose from our Rayo 8, 16, or 24 dance class packages starting at €50/month. Salsa, Bachata, Mambo & Styling classes in Agios Dimitrios, Athens.",
+    el: "Επιλέξτε από τα πακέτα μαθημάτων Rayo 8, 16 ή 24 από €50/μήνα. Μαθήματα Salsa, Bachata, Mambo & Styling στον Άγιο Δημήτριο, Αθήνα.",
+    es: "Elige entre nuestros paquetes de clases Rayo 8, 16 o 24 desde €50/mes. Clases de Salsa, Bachata, Mambo y Styling en Agios Dimitrios, Atenas.",
+  };
+
+  const title = titles[locale as keyof typeof titles] || titles.en;
+  const description = descriptions[locale as keyof typeof descriptions] || descriptions.en;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `${BASE_URL}/${locale}/pricing`,
+      languages: {
+        en: `${BASE_URL}/en/pricing`,
+        el: `${BASE_URL}/el/pricing`,
+        es: `${BASE_URL}/es/pricing`,
+        "x-default": `${BASE_URL}/en/pricing`,
+      },
+    },
+    openGraph: {
+      title,
+      description,
+      url: `${BASE_URL}/${locale}/pricing`,
+      type: "website",
+    },
+  };
+};
+
+const PricingPage = async ({ params }: BasePageProps) => {
+  const locale = (await params).locale;
 
   return (
-    <div className="relative min-h-screen w-full overflow-x-hidden">
-      <BackgroundEffects />
-
-      <div className="relative pt-32 pb-16 px-4 md:px-8">
-        {/* Page Header */}
-        <div className="text-center mb-16 max-w-3xl mx-auto">
-          <div className="flex justify-center items-center gap-3 mb-4">
-            <FaBolt className="text-primary text-3xl" />
-            <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-primary to-brand-pink bg-clip-text text-transparent leading-tight">
-              {t("pageTitle")}
-            </h1>
-            <FaBolt className="text-brand-pink text-3xl" />
-          </div>
-          <p className="text-xl text-muted-foreground mt-4">{t("pageSubtitle")}</p>
-        </div>
-
-        {/* Student Discount Toggle */}
-        <div className="flex justify-center items-center gap-3 mb-8">
-          <div className="flex items-center gap-3">
-            <Switch
-              id="student-discount"
-              checked={isStudentDiscount}
-              onCheckedChange={setIsStudentDiscount}
-            />
-            <Label
-              htmlFor="student-discount"
-              className="text-foreground/80 cursor-pointer"
-            >
-              {t("studentOrYouth")}
-            </Label>
-          </div>
-        </div>
-
-        {/* Packages Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {PACKAGES.map((pkg, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-            >
-              <PackageCard
-                title={pkg.title}
-                price={pkg.price}
-                numberOfLessons={pkg.numberOfLessons}
-                isMostPopular={pkg.isMostPopular}
-                isStudentDiscount={isStudentDiscount}
-              />
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Logo with Dance School text - Temporary for Screenshot */}
-        <div className="flex justify-center mt-12 mb-8">
-          <div className="relative">
-            <Logo size="xxl" />
-            <p className="absolute bottom-0 right-0 top-[95px] text-sm font-light text-foreground/90 tracking-wider">
-              Dance School
-            </p>
-          </div>
-        </div>
-
-        {/* Additional Info Section */}
-        <div className="text-center mt-20 max-w-2xl mx-auto">
-          <div className="bg-gradient-to-br from-primary/10 via-brand-pink/10 to-primary/10 backdrop-blur-md rounded-2xl p-8 border border-primary/20 shadow-lg shadow-primary/20">
-            <h3 className="text-2xl font-bold text-foreground mb-4">
-              {t("needHelp")}
-            </h3>
-            <p className="text-foreground/70 mb-6">{t("contactUs")}</p>
-            <Link
-              href="/#contact-form"
-              className="inline-flex items-center gap-2 text-primary hover:text-brand-pink transition-colors duration-300 font-semibold"
-            >
-              {t("getInTouch")}
-              <span className="animate-bounce-x">→</span>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </div>
+    <>
+      <JsonLd
+        data={[
+          getBreadcrumbSchema([
+            { name: "Home", url: `${BASE_URL}/${locale}` },
+            { name: "Pricing", url: `${BASE_URL}/${locale}/pricing` },
+          ]),
+          getPricingSchemas(),
+        ]}
+      />
+      <PricingContent />
+    </>
   );
 }
 
