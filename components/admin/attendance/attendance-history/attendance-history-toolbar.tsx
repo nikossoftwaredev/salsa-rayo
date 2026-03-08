@@ -29,8 +29,8 @@ export const AttendanceHistoryToolbar = ({ table }: AttendanceHistoryToolbarProp
   }, [coreRows])
 
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex flex-1 items-center space-x-2">
+    <div className="flex flex-wrap items-center justify-between gap-2">
+      <div className="flex flex-1 flex-wrap items-center gap-2">
         <StudentFilter
           value={column?.getFilterValue() as string | undefined}
           onSelect={(id) => column?.setFilterValue(id)}

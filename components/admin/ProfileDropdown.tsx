@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { getInitials } from "@/lib/format";
-import { IoHome, IoLogInOutline, IoLogOutOutline, IoPerson, IoCalendar, IoImages, IoHelpCircle } from "react-icons/io5";
+import { IoHome, IoLogInOutline, IoLogOutOutline, IoPerson, IoCalendar, IoImages, IoHelpCircle, IoNewspaper } from "react-icons/io5";
 import { MdAdminPanelSettings, MdInfo, MdAttachMoney, MdMenu, MdOutlineEdit } from "react-icons/md";
 import { EditProfileSheet } from "@/components/EditProfileSheet";
 import { GiOrbDirection } from "react-icons/gi";
@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation";
 import { useLocale } from "next-intl";
 import { headerLinks } from "@/data/config";
 import { LanguageSwitcherTabs } from "@/components/LanguageSwitcher";
-import { SubscriptionBadge } from "@/components/ui/subscription-badge";
+import { UserCard } from "@/components/ui/user-card";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -25,7 +25,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Link } from "@/i18n/navigation";
-import { getAvatarUrl } from "@/lib/avatar";
+import { resolveAvatarSrc } from "@/lib/avatar";
 import type { ReactNode } from "react";
 
 const NAV_ICONS: Record<string, ReactNode> = {
@@ -35,6 +35,7 @@ const NAV_ICONS: Record<string, ReactNode> = {
   "/#gallery": <IoImages size={16} />,
   "/faq": <IoHelpCircle size={16} />,
   "/orishas": <GiOrbDirection size={16} />,
+  "/blog": <IoNewspaper size={16} />,
 };
 
 interface ProfileDropdownProps {
@@ -61,7 +62,7 @@ export const ProfileDropdown = ({
 
   const fullName = session?.user?.name || "Admin";
   const firstName = fullName.split(" ")[0];
-  const userImage = session?.user?.image ? getAvatarUrl(session.user.image) : undefined;
+  const userImage = resolveAvatarSrc(session?.user?.avatarImage, session?.user?.image);
   const userEmail = session?.user?.email || "";
   const userInitials = getInitials(fullName);
 
@@ -98,23 +99,12 @@ export const ProfileDropdown = ({
         {isAuthenticated && (
           <>
             <DropdownMenuLabel className="font-normal">
-              <div className="flex items-center gap-2 text-left text-sm">
-                <Avatar className="size-8 rounded-lg">
-                  {userImage && <AvatarImage src={userImage} alt={firstName} />}
-                  <AvatarFallback className="rounded-lg text-xs">
-                    {userInitials}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="grid min-w-0 flex-1 leading-tight">
-                  <div className="flex items-center gap-1.5">
-                    <span className="truncate font-semibold">{firstName}</span>
-                    <SubscriptionBadge expiresAt={session?.user?.subscriptionExpiresAt ?? null} />
-                  </div>
-                  <span className="truncate text-xs text-muted-foreground">
-                    {userEmail}
-                  </span>
-                </div>
-              </div>
+              <UserCard
+                name={fullName}
+                email={userEmail}
+                image={userImage}
+                subscriptionExpiresAt={session?.user?.subscriptionExpiresAt}
+              />
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
           </>
@@ -133,8 +123,6 @@ export const ProfileDropdown = ({
                 </DropdownMenuItem>
               ))}
             </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <LanguageSwitcherTabs />
             <DropdownMenuSeparator />
           </>
         )}
@@ -176,12 +164,6 @@ export const ProfileDropdown = ({
               <IoLogOutOutline size={16} />
               Sign out
             </DropdownMenuItem>
-            {!showNavRoutes && (
-              <>
-                <DropdownMenuSeparator />
-                <LanguageSwitcherTabs />
-              </>
-            )}
           </>
         )}
 
@@ -192,6 +174,10 @@ export const ProfileDropdown = ({
             Sign in
           </DropdownMenuItem>
         )}
+
+        {/* Language switcher — always at the bottom */}
+        <DropdownMenuSeparator />
+        <LanguageSwitcherTabs />
       </DropdownMenuContent>
       {isAuthenticated && (
         <EditProfileSheet open={editOpen} onOpenChange={setEditOpen} />

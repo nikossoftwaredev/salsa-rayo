@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -11,6 +12,7 @@ interface UpdateProfileData {
   phone?: string;
   instagram?: string;
   website?: string;
+  avatarImage?: string | null;
 }
 
 export const updateProfile = async (data: UpdateProfileData) => {
@@ -39,11 +41,16 @@ export const updateProfile = async (data: UpdateProfileData) => {
     const website = data.website.trim().slice(0, 200);
     update.website = website || null;
   }
+  if (data.avatarImage !== undefined) {
+    update.avatarImage = data.avatarImage || null;
+  }
 
   await prisma.student.updateMany({
     where: { userId: session.user.id },
     data: update,
   });
+
+  revalidatePath(`/profile/${session.user.id}`);
 
   return { success: true };
 };

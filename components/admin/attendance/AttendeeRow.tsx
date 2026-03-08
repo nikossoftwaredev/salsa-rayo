@@ -24,7 +24,7 @@ export const AttendeeRow = ({ student, onRemove, onClick }: AttendeeRowProps) =>
       type={onClick ? "button" : undefined}
       onClick={onClick}
       className={cn(
-        "flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition-colors hover:bg-accent",
+        "flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left transition-colors hover:bg-accent sm:gap-3 sm:px-3 sm:py-2",
         onClick && "cursor-pointer"
       )}
     >

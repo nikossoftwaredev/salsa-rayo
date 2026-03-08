@@ -73,9 +73,9 @@ const ScheduleSection = ({ entries }: ScheduleSectionProps) => {
                     {schedule.map((entry) => (
                       <div
                         key={entry.id}
-                        className="flex items-center justify-between gap-4"
+                        className="flex items-center justify-between gap-2 sm:gap-4"
                       >
-                        <div className="w-24 md:w-28 text-xs md:text-sm font-bold text-foreground/70 whitespace-nowrap">
+                        <div className="w-20 sm:w-24 md:w-28 text-xs md:text-sm font-bold text-foreground/70 whitespace-nowrap">
                           {entry.time}
                         </div>
 

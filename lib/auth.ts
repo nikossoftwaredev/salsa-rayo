@@ -31,6 +31,8 @@ export const authOptions: NextAuthOptions = {
           },
         });
 
+        const googleImage = (user as { image?: string }).image || null;
+
         if (!student) {
           const studentByEmail = user.email
             ? await prisma.student.findFirst({ where: { email: user.email, userId: null } })
@@ -39,7 +41,10 @@ export const authOptions: NextAuthOptions = {
           if (studentByEmail) {
             student = await prisma.student.update({
               where: { id: studentByEmail.id },
-              data: { userId: user.id },
+              data: {
+                userId: user.id,
+                ...(!studentByEmail.avatarImage && googleImage ? { avatarImage: googleImage } : {}),
+              },
               include: {
                 subscriptions: {
                   where: { isActive: true },
@@ -55,6 +60,7 @@ export const authOptions: NextAuthOptions = {
                 userId: user.id,
                 name: user.name || "",
                 email: user.email || "",
+                ...(googleImage ? { avatarImage: googleImage } : {}),
               },
               include: {
                 subscriptions: {
@@ -68,7 +74,16 @@ export const authOptions: NextAuthOptions = {
           }
         }
 
+        if (!student.avatarImage && googleImage) {
+          await prisma.student.update({
+            where: { id: student.id },
+            data: { avatarImage: googleImage },
+          });
+          student.avatarImage = googleImage;
+        }
+
         session.user.rayoPoints = student.rayoPoints;
+        session.user.avatarImage = student.avatarImage;
         session.user.subscriptionExpiresAt =
           student.subscriptions[0]?.expiresAt?.toISOString() ?? null;
       }

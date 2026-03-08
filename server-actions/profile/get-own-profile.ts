@@ -19,6 +19,7 @@ export const getOwnProfile = async () => {
           phone: true,
           instagram: true,
           website: true,
+          avatarImage: true,
         },
       },
     },
@@ -32,5 +33,6 @@ export const getOwnProfile = async () => {
     phone: user.student.phone,
     instagram: user.student.instagram,
     website: user.student.website,
+    avatarImage: user.student.avatarImage,
   };
 };

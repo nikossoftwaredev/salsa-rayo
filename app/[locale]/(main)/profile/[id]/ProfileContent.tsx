@@ -1,21 +1,20 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { IoCalendar, IoFlame, IoPencil, IoCheckmark, IoClose, IoArrowRedoOutline, IoLogoInstagram, IoGlobeOutline } from "react-icons/io5";
+import { IoCalendar, IoFlame, IoPencil, IoArrowRedoOutline, IoLogoInstagram, IoGlobeOutline } from "react-icons/io5";
 import { RayoPoints } from "@/components/ui/rayo-points";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { EditProfileSheet } from "@/components/EditProfileSheet";
 import { getInitials } from "@/lib/format";
-import { getAvatarUrl } from "@/lib/avatar";
-import { updateProfile } from "@/server-actions/profile/update-profile";
+import { resolveAvatarSrc } from "@/lib/avatar";
 import type { getProfile } from "@/server-actions/profile/get-profile";
-import { BIO_MAX_LENGTH } from "@/data/config";
 
 type User = NonNullable<Awaited<ReturnType<typeof getProfile>>>;
 
@@ -35,24 +34,11 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
 
   const student = user.student;
   const totalClasses = student?._count.attendances ?? 0;
+  const bio = student?.bio || "";
+  const avatarSrc = resolveAvatarSrc(student?.avatarImage, user.image);
 
-  const [bio, setBio] = useState(student?.bio || "");
-  const [isEditingBio, setIsEditingBio] = useState(false);
-  const [bioValue, setBioValue] = useState(bio);
-  const [isSaving, setIsSaving] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
   const [copied, setCopied] = useState(false);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  const handleEditBio = useCallback(() => {
-    setBioValue(bio);
-    setIsEditingBio(true);
-    setTimeout(() => textareaRef.current?.focus(), 0);
-  }, [bio]);
-
-  const handleCancelBio = useCallback(() => {
-    setIsEditingBio(false);
-    setBioValue(bio);
-  }, [bio]);
 
   const handleShare = useCallback(async () => {
     const url = window.location.href;
@@ -66,19 +52,6 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
       setTimeout(() => setCopied(false), 2000);
     }
   }, [fullName]);
-
-  const handleSaveBio = useCallback(async () => {
-    setIsSaving(true);
-    try {
-      await updateProfile({ bio: bioValue });
-      setBio(bioValue.trim().slice(0, BIO_MAX_LENGTH));
-      setIsEditingBio(false);
-    } catch {
-      // silent fail — keep editing state
-    } finally {
-      setIsSaving(false);
-    }
-  }, [bioValue]);
 
   const statsValues = student
     ? [
@@ -97,11 +70,10 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="relative"
       >
         <div className="rounded-full p-1 bg-gradient-to-br from-primary to-brand-pink shadow-[0_0_30px_rgba(91,79,219,0.3)]">
           <Avatar className="size-28 border-2 border-background">
-            {user.image && <AvatarImage src={getAvatarUrl(user.image)} alt={fullName} />}
+            {avatarSrc && <AvatarImage src={avatarSrc} alt={fullName} />}
             <AvatarFallback className="text-3xl font-bold bg-card text-foreground">
               {userInitials}
             </AvatarFallback>
@@ -175,71 +147,16 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
       </motion.div>
 
       {/* Bio */}
-      <motion.div
-        initial={{ y: 8, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.4, delay: 0.25 }}
-        className="mt-2 min-h-[2rem] text-center max-w-xs"
-      >
-        {isEditingBio ? (
-          <div className="space-y-2">
-            <textarea
-              ref={textareaRef}
-              value={bioValue}
-              onChange={(e) => setBioValue(e.target.value.slice(0, BIO_MAX_LENGTH))}
-              placeholder="Tell us about yourself..."
-              className="w-full resize-none rounded-lg border border-border/50 bg-card px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50"
-              rows={3}
-              maxLength={BIO_MAX_LENGTH}
-            />
-            <div className="flex items-center justify-between">
-              <span className="text-xs text-muted-foreground">
-                {bioValue.length}/{BIO_MAX_LENGTH}
-              </span>
-              <div className="flex gap-1.5">
-                <Button
-                  variant="ghost"
-                  size="icon-xs"
-                  onClick={handleCancelBio}
-                  disabled={isSaving}
-                >
-                  <IoClose size={14} />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon-xs"
-                  onClick={handleSaveBio}
-                  disabled={isSaving}
-                  className="text-primary hover:text-primary"
-                >
-                  <IoCheckmark size={14} />
-                </Button>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="inline-flex items-center gap-1.5">
-            {bio && (
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {bio}
-              </p>
-            )}
-            {!bio && isOwnProfile && (
-              <p className="text-sm text-muted-foreground/40 italic">
-                Add a bio...
-              </p>
-            )}
-            {isOwnProfile && (
-              <button
-                onClick={handleEditBio}
-                className="inline-flex items-center justify-center size-5 rounded-full text-muted-foreground/40 hover:text-primary hover:bg-primary/10 transition-colors cursor-pointer"
-              >
-                <IoPencil size={10} />
-              </button>
-            )}
-          </div>
-        )}
-      </motion.div>
+      {bio && (
+        <motion.p
+          initial={{ y: 8, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.25 }}
+          className="mt-3 text-center text-sm text-muted-foreground leading-relaxed max-w-xs"
+        >
+          {bio}
+        </motion.p>
+      )}
 
       {/* Stats */}
       {student && (
@@ -265,6 +182,28 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
             );
           })}
         </div>
+      )}
+
+      {/* Edit Profile */}
+      {isOwnProfile && (
+        <motion.div
+          initial={{ y: 16, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.45 }}
+          className="mt-8"
+        >
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setEditOpen(true)}
+          >
+            <IoPencil size={14} />
+            Edit Profile
+          </Button>
+        </motion.div>
+      )}
+      {isOwnProfile && (
+        <EditProfileSheet open={editOpen} onOpenChange={setEditOpen} />
       )}
     </div>
   );

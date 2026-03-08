@@ -15,11 +15,11 @@ interface HighlightProps {
 }
 
 const Highlight = ({ icon, label, value }: HighlightProps) => (
-  <div className="flex items-center gap-3 p-3 bg-primary/5 rounded-xl border border-primary/10 hover:border-primary/25 transition-colors duration-300">
-    <div className="text-primary/80">{icon}</div>
-    <div>
+  <div className="flex items-center gap-2.5 p-3 bg-primary/5 rounded-xl border border-primary/10 hover:border-primary/25 transition-colors duration-300">
+    <div className="text-primary/80 shrink-0">{icon}</div>
+    <div className="min-w-0">
       <p className="text-xs text-muted-foreground tracking-wide uppercase">{label}</p>
-      <p className="font-bold text-foreground">{value}</p>
+      <p className="font-bold text-foreground text-sm leading-snug">{value}</p>
     </div>
   </div>
 );

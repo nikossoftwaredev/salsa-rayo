@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { IoPersonOutline, IoCallOutline, IoLogoInstagram, IoGlobeOutline } from "react-icons/io5";
 import { MdOutlineEdit } from "react-icons/md";
 import {
@@ -12,6 +13,11 @@ import {
   SheetDescription,
   SheetFooter,
 } from "@/components/ui/sheet";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -21,6 +27,8 @@ import { updateProfile } from "@/server-actions/profile/update-profile";
 import { getOwnProfile } from "@/server-actions/profile/get-own-profile";
 import { toast } from "sonner";
 import { BIO_MAX_LENGTH } from "@/data/config";
+import { orishas } from "@/data/orishas";
+import { cn } from "@/lib/utils";
 
 interface ProfileData {
   name: string;
@@ -28,6 +36,7 @@ interface ProfileData {
   phone: string;
   instagram: string;
   website: string;
+  avatarImage: string | null;
 }
 
 interface EditProfileSheetProps {
@@ -42,7 +51,12 @@ const FIELDS = [
   { key: "website", label: "Website", icon: IoGlobeOutline, placeholder: "https://yoursite.com", maxLength: 200 },
 ] as const;
 
-const EMPTY_FORM: ProfileData = { name: "", bio: "", phone: "", instagram: "", website: "" };
+const AVATAR_OPTIONS = [
+  { id: "default", name: "Default", image: null },
+  ...orishas.map((o) => ({ id: o.id, name: o.name, image: o.image })),
+];
+
+const EMPTY_FORM: ProfileData = { name: "", bio: "", phone: "", instagram: "", website: "", avatarImage: null };
 
 export const EditProfileSheet = ({ open, onOpenChange }: EditProfileSheetProps) => {
   const [form, setForm] = useState<ProfileData>(EMPTY_FORM);
@@ -87,6 +101,7 @@ export const EditProfileSheet = ({ open, onOpenChange }: EditProfileSheetProps) 
             phone: data.phone || "",
             instagram: data.instagram || "",
             website: data.website || "",
+            avatarImage: data.avatarImage || null,
           });
         }
       } finally {
@@ -126,6 +141,71 @@ export const EditProfileSheet = ({ open, onOpenChange }: EditProfileSheetProps) 
             </div>
           ) : (
             <>
+              {/* Avatar Picker */}
+              <div className="space-y-2">
+                <Label className="text-xs text-muted-foreground">
+                  Profile Avatar
+                </Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <button
+                      type="button"
+                      className="flex items-center gap-3 cursor-pointer rounded-lg border border-border/50 px-3 py-2 transition-colors hover:bg-accent"
+                    >
+                      <div className="relative size-10 shrink-0 overflow-hidden rounded-full border-2 border-primary/30">
+                        {form.avatarImage ? (
+                          <Image
+                            src={form.avatarImage}
+                            alt="Avatar"
+                            fill
+                            className="object-cover"
+                            sizes="40px"
+                          />
+                        ) : (
+                          <div className="flex size-full items-center justify-center bg-muted text-xs text-muted-foreground">
+                            ?
+                          </div>
+                        )}
+                      </div>
+                      <span className="text-sm text-muted-foreground">
+                        {AVATAR_OPTIONS.find((o) => o.image === form.avatarImage)?.name || "Default"}
+                      </span>
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent align="start" side="bottom" className="p-3">
+                    <div className="flex flex-wrap gap-2">
+                      {AVATAR_OPTIONS.map((option) => (
+                        <button
+                          key={option.id}
+                          type="button"
+                          onClick={() => setForm((prev) => ({ ...prev, avatarImage: option.image }))}
+                          className={cn(
+                            "relative size-12 cursor-pointer overflow-hidden rounded-full border-2 transition-all hover:scale-110",
+                            form.avatarImage === option.image
+                              ? "border-primary ring-2 ring-primary/30"
+                              : "border-border/30 hover:border-border"
+                          )}
+                        >
+                          {option.image ? (
+                            <Image
+                              src={option.image}
+                              alt={option.name}
+                              fill
+                              className="object-cover"
+                              sizes="48px"
+                            />
+                          ) : (
+                            <div className="flex size-full items-center justify-center bg-muted text-[9px] text-muted-foreground">
+                              Default
+                            </div>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </div>
+
               {FIELDS.map(({ key, label, icon: Icon, placeholder, maxLength }) => (
                 <div key={key} className="space-y-1.5">
                   <Label htmlFor={key} className="text-xs text-muted-foreground">

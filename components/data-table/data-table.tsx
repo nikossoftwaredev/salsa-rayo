@@ -23,7 +23,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { DataTablePagination } from "./data-table-pagination"
 
 const readCookieVisibility = (key: string): VisibilityState | null => {
@@ -89,7 +88,7 @@ export const DataTable = <TData, TValue>({
     <div className="space-y-4">
       {toolbar?.(table)}
 
-      <ScrollArea className="rounded-md border">
+      <div className="overflow-x-auto rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -136,8 +135,7 @@ export const DataTable = <TData, TValue>({
             )}
           </TableBody>
         </Table>
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
+      </div>
 
       <DataTablePagination table={table} />
     </div>

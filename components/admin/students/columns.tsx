@@ -1,9 +1,12 @@
 "use client"
 
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { type ColumnDef } from "@tanstack/react-table"
+import { toast } from "sonner"
 import { RayoPoints } from "@/components/ui/rayo-points"
 import { MdEdit } from "react-icons/md"
-import { IoWalletOutline, IoReceiptOutline } from "react-icons/io5"
+import { IoWalletOutline, IoReceiptOutline, IoRefreshOutline } from "react-icons/io5"
 import { SubscriptionBadge } from "@/components/ui/subscription-badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -14,10 +17,75 @@ import {
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { copyToClipboard, formatDate } from "@/lib/format"
 import { useDialogStore } from "@/lib/stores/dialog-store"
+import { useConfirmStore } from "@/lib/stores/confirm-store"
+import { createPayment } from "@/server-actions/payments/create-payment"
+import { ADMIN_PACKAGES } from "@/data/packages"
 import { type StudentWithSubscriptions } from "./types"
 
 const getActiveSubscription = (student: StudentWithSubscriptions) =>
   student.subscriptions.find((sub) => sub.isActive) ?? student.subscriptions[0]
+
+const RenewAction = ({ student }: { student: StudentWithSubscriptions }) => {
+  const router = useRouter()
+  const { confirm } = useConfirmStore()
+  const [loading, setLoading] = useState(false)
+
+  const sub = getActiveSubscription(student)
+  const hasSub = !!sub
+  const pkg = sub
+    ? ADMIN_PACKAGES.find((p) => p.title === sub.packageName) ?? ADMIN_PACKAGES[0]
+    : ADMIN_PACKAGES[0]
+
+  const handleRenew = () => {
+    if (!hasSub) return
+    confirm({
+      title: "Renew Subscription",
+      description: `Renew ${student.name}'s ${pkg.title} subscription for ${pkg.durationDays} days at €${pkg.price} (${pkg.lessonsPerWeek}x/week, cash)?`,
+      actionLabel: "Renew",
+      variant: "default",
+      onConfirm: async () => {
+        setLoading(true)
+        try {
+          const result = await createPayment({
+            studentId: student.id,
+            type: "subscription",
+            paymentMethod: "cash",
+            amount: pkg.price,
+            packageName: pkg.title,
+            lessonsPerWeek: pkg.lessonsPerWeek,
+            durationDays: pkg.durationDays,
+          })
+          if (result.success) {
+            toast.success("Subscription renewed", {
+              description: `${pkg.title} - €${pkg.price} for ${student.name}`,
+            })
+            router.refresh()
+          } else {
+            toast.error(result.error ?? "Failed to renew subscription")
+          }
+        } finally {
+          setLoading(false)
+        }
+      },
+    })
+  }
+
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          onClick={handleRenew}
+          disabled={!hasSub || loading}
+        >
+          <IoRefreshOutline size={16} />
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>{hasSub ? "Renew Subscription" : "No subscription"}</TooltipContent>
+    </Tooltip>
+  )
+}
 
 export const columns: ColumnDef<StudentWithSubscriptions>[] = [
   {
@@ -142,6 +210,7 @@ export const columns: ColumnDef<StudentWithSubscriptions>[] = [
     id: "actions",
     cell: ({ row }) => (
       <div className="flex items-center gap-1">
+        <RenewAction student={row.original} />
         <Tooltip>
           <TooltipTrigger asChild>
             <Button

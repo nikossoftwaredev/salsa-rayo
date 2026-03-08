@@ -14,10 +14,10 @@ import { buttonVariants } from "@/components/ui/button"
 import { useConfirmStore } from "@/lib/stores/confirm-store"
 
 export const ConfirmDialog = () => {
-  const { open, title, description, actionLabel, onConfirm, close } = useConfirmStore()
+  const { open, title, description, actionLabel, variant, onConfirm, close } = useConfirmStore()
 
-  const handleConfirm = () => {
-    onConfirm?.()
+  const handleConfirm = async () => {
+    await onConfirm?.()
     close()
   }
 
@@ -32,7 +32,7 @@ export const ConfirmDialog = () => {
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={handleConfirm}
-            className={buttonVariants({ variant: "destructive" })}
+            className={buttonVariants({ variant })}
           >
             {actionLabel}
           </AlertDialogAction>

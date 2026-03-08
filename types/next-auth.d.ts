@@ -7,6 +7,7 @@ declare module "next-auth" {
       isAdmin: boolean
       rayoPoints: number
       subscriptionExpiresAt: string | null
+      avatarImage: string | null
     } & DefaultSession["user"]
   }
 }

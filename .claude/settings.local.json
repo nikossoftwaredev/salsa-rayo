@@ -51,7 +51,9 @@
       "Bash(pnpm prisma migrate dev --name add-student-social-fields)",
       "Bash(pnpm prisma db push)",
       "WebFetch(domain:bandbeat.com)",
-      "Bash(grep -E \"\\\\.\\(ts|tsx|js|jsx\\)$\")"
+      "Bash(grep -E \"\\\\.\\(ts|tsx|js|jsx\\)$\")",
+      "Bash(grep -E \"\\\\.\\(ts|tsx\\)$\")",
+      "Read(//c/Users/nikos/.claude/plugins/cache/claude-plugins-official/superpowers/4.3.0/skills/subagent-driven-development/**)"
     ],
     "deny": []
   }

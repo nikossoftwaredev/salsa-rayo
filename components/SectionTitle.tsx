@@ -11,7 +11,7 @@ export const SectionTitle = ({
     <div className="w-full flex justify-center">
       <span
         className={twMerge(
-          "bg-gradient-to-r from-primary to-brand-pink text-transparent text-4xl font-extrabold text-center bg-clip-text my-4",
+          "bg-gradient-to-r from-primary to-brand-pink text-transparent text-3xl sm:text-4xl font-extrabold text-center bg-clip-text my-4",
           isMainSection ? "my-10 uppercase" : ""
         )}
       >

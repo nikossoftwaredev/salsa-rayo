@@ -15,6 +15,7 @@ export const getProfile = cache(async (userId: string) =>
           bio: true,
           instagram: true,
           website: true,
+          avatarImage: true,
           rayoPoints: true,
           createdAt: true,
           _count: {

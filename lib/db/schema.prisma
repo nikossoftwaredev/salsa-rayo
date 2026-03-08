@@ -58,6 +58,7 @@ model Student {
   bio           String?
   instagram     String?
   website       String?
+  avatarImage   String?
   isActive      Boolean        @default(true)
   rayoPoints    Int            @default(0)
   subscriptions Subscription[]

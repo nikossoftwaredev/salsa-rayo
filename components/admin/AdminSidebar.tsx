@@ -2,11 +2,7 @@
 
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { getInitials } from "@/lib/format";
-import { ProfileDropdown } from "@/components/admin/ProfileDropdown";
-import { RayoPoints } from "@/components/ui/rayo-points";
-import { SubscriptionBadge } from "@/components/ui/subscription-badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { UserCard } from "@/components/ui/user-card";
 import {
   Sidebar,
   SidebarContent,
@@ -23,7 +19,7 @@ import {
 } from "@/components/ui/sidebar";
 import { adminNavGroups } from "@/lib/admin/config";
 import { Link, usePathname } from "@/i18n/navigation";
-import { getAvatarUrl } from "@/lib/avatar";
+import { resolveAvatarSrc } from "@/lib/avatar";
 
 export const AdminSidebar = () => {
   const pathname = usePathname();
@@ -31,10 +27,8 @@ export const AdminSidebar = () => {
   const { data: session } = useSession();
 
   const fullName = session?.user?.name || "Admin User";
-  const firstName = fullName.split(" ")[0];
   const userEmail = session?.user?.email || "admin@example.com";
-  const userImage = session?.user?.image ? getAvatarUrl(session.user.image) : undefined;
-  const userInitials = getInitials(fullName);
+  const userImage = resolveAvatarSrc(session?.user?.avatarImage, session?.user?.image);
 
   return (
     <Sidebar collapsible="icon">
@@ -99,33 +93,14 @@ export const AdminSidebar = () => {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <ProfileDropdown side="top" align="start" sideOffset={8}>
-              <SidebarMenuButton
-                size="lg"
-                className="cursor-pointer data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-              >
-                <Avatar className="size-8 rounded-lg">
-                  {userImage && (
-                    <AvatarImage src={userImage} alt={firstName} />
-                  )}
-                  <AvatarFallback className="rounded-lg text-xs">
-                    {userInitials}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <div className="flex items-center gap-1.5">
-                    <span className="truncate font-semibold">{firstName}</span>
-                    <RayoPoints points={session?.user?.rayoPoints ?? 0} size="sm" />
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="truncate text-xs text-muted-foreground">
-                      {userEmail}
-                    </span>
-                    <SubscriptionBadge expiresAt={session?.user?.subscriptionExpiresAt ?? null} />
-                  </div>
-                </div>
-              </SidebarMenuButton>
-            </ProfileDropdown>
+            <SidebarMenuButton size="lg" className="cursor-default hover:bg-transparent active:bg-transparent">
+              <UserCard
+                name={fullName}
+                email={userEmail}
+                image={userImage}
+                subscriptionExpiresAt={session?.user?.subscriptionExpiresAt}
+              />
+            </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>

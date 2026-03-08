@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useMemo, useCallback, useRef, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import {
@@ -45,6 +46,7 @@ const toDateString = (date: Date) => {
 }
 
 export const AttendanceView = ({ entries }: AttendanceViewProps) => {
+  const router = useRouter()
   const [selectedDate, setSelectedDate] = useState<Date>(new Date())
   const [expandedEntryId, setExpandedEntryId] = useState<string | null>(null)
 
@@ -202,12 +204,13 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
       await Promise.all(promises)
       resetPending()
       loadAttendances()
+      router.refresh()
     } catch {
       // Silent fail — the user can retry
     } finally {
       setSubmitting(false)
     }
-  }, [expandedEntryId, pendingAdds, pendingRemoveIds, lessonsForDay, selectedDate, resetPending, loadAttendances])
+  }, [expandedEntryId, pendingAdds, pendingRemoveIds, lessonsForDay, selectedDate, resetPending, loadAttendances, router])
 
   const handleUnsavedSave = useCallback(async () => {
     await handleGlobalSubmit()
@@ -362,9 +365,9 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                             exit={{ opacity: 0, y: -8 }}
                             transition={{ duration: 0.2 }}
                           >
-                            <div className="mt-2 grid max-h-[70vh] gap-4 lg:grid-cols-2">
+                            <div className="mt-2 grid gap-3 lg:grid-cols-2 lg:gap-4">
                               {/* Left: student picker */}
-                              <div className="h-[300px] lg:h-[400px]">
+                              <div className="h-[220px] sm:h-[300px] lg:h-[400px]">
                                 <AttendancePanel
                                   hideIds={hideIds}
                                   onAddStudent={handleAddStudent}
@@ -372,7 +375,7 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                               </div>
 
                               {/* Right: attendees list */}
-                              <div className="flex h-[300px] flex-col overflow-hidden rounded-xl border bg-card lg:h-[400px]">
+                              <div className="flex h-[220px] flex-col overflow-hidden rounded-xl border bg-card sm:h-[300px] lg:h-[400px]">
                                 {/* Header with save */}
                                 <div className="flex h-14 shrink-0 items-center justify-between border-b px-4">
                                   <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground/60">
@@ -388,7 +391,7 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                                 </div>
 
                                 {/* Scrollable body */}
-                                <ScrollArea className="min-h-0 flex-1 px-4">
+                                <ScrollArea className="min-h-0 flex-1 px-1 sm:px-4">
                                   {loadingAttendances ? (
                                     <div className="flex h-full items-center justify-center py-8">
                                       <span className="size-6 animate-spin rounded-full border-2 border-primary/30 border-t-primary" />

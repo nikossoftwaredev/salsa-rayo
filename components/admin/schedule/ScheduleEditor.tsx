@@ -74,35 +74,35 @@ export const ScheduleEditor = ({ entries, instructors }: ScheduleEditorProps) =>
                 {dayEntries.map((entry) => (
                   <div
                     key={entry.id}
-                    className="flex items-center gap-4 px-4 py-3"
+                    className="flex items-center gap-3 px-3 py-2.5 sm:gap-4 sm:px-4 sm:py-3"
                   >
-                    <span className="w-32 shrink-0 text-sm font-medium text-muted-foreground">
-                      {entry.time}
-                    </span>
-
-                    <div className="flex min-w-0 flex-1 items-center gap-2">
-                      <span className="font-medium">{entry.title}</span>
-                      {entry.hint && (
-                        <span className="text-sm text-muted-foreground">
-                          ({entry.hint})
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="flex shrink-0 items-center gap-1">
-                      {entry.instructors.map((instructor) => (
-                        <div key={instructor.id} className="relative size-7" title={instructor.name}>
-                          <Image
-                            src={instructor.image}
-                            alt={instructor.name}
-                            fill
-                            className="rounded-full object-cover"
-                          />
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="truncate font-medium">{entry.title}</span>
+                        {entry.hint && (
+                          <span className="shrink-0 text-sm text-muted-foreground">
+                            ({entry.hint})
+                          </span>
+                        )}
+                      </div>
+                      <div className="mt-0.5 flex items-center gap-2">
+                        <span className="text-sm text-muted-foreground">{entry.time}</span>
+                        <div className="flex shrink-0 items-center -space-x-1">
+                          {entry.instructors.map((instructor) => (
+                            <div key={instructor.id} className="relative size-5 ring-1 ring-card rounded-full" title={instructor.name}>
+                              <Image
+                                src={instructor.image}
+                                alt={instructor.name}
+                                fill
+                                className="rounded-full object-cover"
+                              />
+                            </div>
+                          ))}
                         </div>
-                      ))}
+                      </div>
                     </div>
 
-                    <div className="flex shrink-0 items-center gap-1">
+                    <div className="flex shrink-0 items-center gap-0.5">
                       <Button
                         size="sm"
                         variant="ghost"

@@ -56,10 +56,12 @@ const Home = async ({ params }: BasePageProps) => {
               <MapSection />
             </Suspense>
           </div>
-          <Suspense fallback={<SectionLoader />}>
-            <GoogleReviews placeId={GOOGLE_PLACE_ID} />
-          </Suspense>
-          <div className="w-full  items-center py-24 px-4 md:px-8 relative">
+          <div className="w-full py-16 px-4 md:px-8 flex justify-center">
+            <Suspense fallback={<SectionLoader />}>
+              <GoogleReviews placeId={GOOGLE_PLACE_ID} />
+            </Suspense>
+          </div>
+          <div className="w-full py-24 px-4 md:px-8 relative">
             <ContactForm />
           </div>
         </div>
