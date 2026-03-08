@@ -4,12 +4,19 @@ import { useState } from "react"
 import { IoSchool, IoTrendingUp, IoCard, IoEyeOutline, IoEyeOffOutline } from "react-icons/io5"
 import { MdDashboard } from "react-icons/md"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Link } from "@/i18n/navigation"
 import type { IconType } from "react-icons"
 
 const STAT_ICONS: Record<string, IconType> = {
   "Total Students": IoSchool,
   "Monthly Income": IoTrendingUp,
   "Active Subscriptions": IoCard,
+}
+
+const STAT_LINKS: Record<string, string> = {
+  "Total Students": "/admin",
+  "Monthly Income": "/admin/income",
+  "Active Subscriptions": "/admin/subscriptions",
 }
 
 interface Stat {
@@ -28,7 +35,7 @@ export const DashboardStats = ({ stats }: DashboardStatsProps) => {
   return (
     <div>
       <div className="mb-6 flex items-center gap-3">
-        <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
+        <h2 className="text-2xl font-bold tracking-tight">Stats</h2>
         <button
           type="button"
           onClick={() => setVisible((prev) => !prev)}
@@ -41,21 +48,24 @@ export const DashboardStats = ({ stats }: DashboardStatsProps) => {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => {
           const Icon = STAT_ICONS[stat.title] ?? MdDashboard
+          const href = STAT_LINKS[stat.title]
           return (
-            <Card key={stat.title}>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  {stat.title}
-                </CardTitle>
-                <Icon size={16} className="text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className={`text-2xl font-bold ${!visible ? "blur-md select-none" : ""}`}>{stat.value}</div>
-                <p className="text-xs text-muted-foreground">
-                  {stat.description}
-                </p>
-              </CardContent>
-            </Card>
+            <Link key={stat.title} href={href ?? "/admin"} className="group">
+              <Card className="transition-colors group-hover:border-primary/40">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">
+                    {stat.title}
+                  </CardTitle>
+                  <Icon size={16} className="text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className={`text-2xl font-bold ${!visible ? "blur-md select-none" : ""}`}>{stat.value}</div>
+                  <p className="text-xs text-muted-foreground">
+                    {stat.description}
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
           )
         })}
       </div>

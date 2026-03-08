@@ -25,6 +25,12 @@ export const getStudentsForAttendance = async (
         name: true,
         email: true,
         rayoPoints: true,
+        subscriptions: {
+          where: { isActive: true },
+          orderBy: { expiresAt: "desc" },
+          take: 1,
+          select: { expiresAt: true },
+        },
         attendances: {
           orderBy: { createdAt: "desc" },
           take: 1,

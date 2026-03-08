@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { getInitials } from "@/lib/format";
 import { ProfileDropdown } from "@/components/admin/ProfileDropdown";
+import { RayoPoints } from "@/components/ui/rayo-points";
+import { SubscriptionBadge } from "@/components/ui/subscription-badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Sidebar,
@@ -21,6 +23,7 @@ import {
 } from "@/components/ui/sidebar";
 import { adminNavGroups } from "@/lib/admin/config";
 import { Link, usePathname } from "@/i18n/navigation";
+import { getAvatarUrl } from "@/lib/avatar";
 
 export const AdminSidebar = () => {
   const pathname = usePathname();
@@ -30,7 +33,7 @@ export const AdminSidebar = () => {
   const fullName = session?.user?.name || "Admin User";
   const firstName = fullName.split(" ")[0];
   const userEmail = session?.user?.email || "admin@example.com";
-  const userImage = session?.user?.image;
+  const userImage = session?.user?.image ? getAvatarUrl(session.user.image) : undefined;
   const userInitials = getInitials(fullName);
 
   return (
@@ -110,10 +113,16 @@ export const AdminSidebar = () => {
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{firstName}</span>
-                  <span className="truncate text-xs text-muted-foreground">
-                    {userEmail}
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="truncate font-semibold">{firstName}</span>
+                    <RayoPoints points={session?.user?.rayoPoints ?? 0} size="sm" />
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="truncate text-xs text-muted-foreground">
+                      {userEmail}
+                    </span>
+                    <SubscriptionBadge expiresAt={session?.user?.subscriptionExpiresAt ?? null} />
+                  </div>
                 </div>
               </SidebarMenuButton>
             </ProfileDropdown>

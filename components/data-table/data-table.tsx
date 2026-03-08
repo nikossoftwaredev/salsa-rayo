@@ -45,6 +45,8 @@ interface DataTableProps<TData, TValue> {
   initialColumnVisibility?: VisibilityState
   initialSorting?: SortingState
   storageKey?: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  meta?: Record<string, any>
 }
 
 export const DataTable = <TData, TValue>({
@@ -54,6 +56,7 @@ export const DataTable = <TData, TValue>({
   initialColumnVisibility,
   initialSorting,
   storageKey,
+  meta,
 }: DataTableProps<TData, TValue>) => {
   const [sorting, setSorting] = useState<SortingState>(initialSorting ?? [])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -79,6 +82,7 @@ export const DataTable = <TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
+    meta,
   })
 
   return (

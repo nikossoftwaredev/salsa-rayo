@@ -3,9 +3,9 @@
 import { type Table } from "@tanstack/react-table"
 import { IoClose, IoPersonAdd } from "react-icons/io5"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { DataTableFacetedFilter } from "@/components/data-table/data-table-faceted-filter"
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options"
+import { StudentFilter } from "@/components/data-table/student-filter"
 import { useDialogStore } from "@/lib/stores/dialog-store"
 import { type StudentWithSubscriptions } from "./types"
 
@@ -21,18 +21,14 @@ interface StudentsToolbarProps {
 export const StudentsToolbar = ({ table }: StudentsToolbarProps) => {
   const isFiltered = table.getState().columnFilters.length > 0
   const openDialog = useDialogStore((state) => state.openDialog)
+  const nameColumn = table.getColumn("name")
 
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
-        <Input
-          placeholder="Filter students..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          size="sm"
-          className="w-[150px] lg:w-[250px]"
+        <StudentFilter
+          value={nameColumn?.getFilterValue() as string | undefined}
+          onSelect={(id) => nameColumn?.setFilterValue(id)}
         />
         {table.getColumn("subStatus") && (
           <DataTableFacetedFilter

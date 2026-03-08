@@ -33,20 +33,48 @@ export const createPayment = async (data: CreatePaymentInput) => {
         return { success: false as const, error: "Subscription requires package details" }
 
       await prisma.$transaction(async (tx) => {
-        const subscription = await tx.subscription.create({
-          data: {
+        const existingSub = await tx.subscription.findFirst({
+          where: {
             studentId: data.studentId,
-            packageName: data.packageName!,
-            lessonsPerWeek: data.lessonsPerWeek!,
-            amountPaid: data.amount,
-            expiresAt: new Date(Date.now() + data.durationDays! * 24 * 60 * 60 * 1000),
+            isActive: true,
+            expiresAt: { gt: new Date() },
           },
+          orderBy: { expiresAt: "desc" },
         })
+
+        let subscriptionId: string
+
+        if (existingSub) {
+          const newExpiry = new Date(
+            existingSub.expiresAt.getTime() + data.durationDays! * 24 * 60 * 60 * 1000
+          )
+          await tx.subscription.update({
+            where: { id: existingSub.id },
+            data: {
+              expiresAt: newExpiry,
+              packageName: data.packageName!,
+              lessonsPerWeek: data.lessonsPerWeek!,
+              amountPaid: data.amount,
+            },
+          })
+          subscriptionId = existingSub.id
+        } else {
+          const subscription = await tx.subscription.create({
+            data: {
+              studentId: data.studentId,
+              packageName: data.packageName!,
+              lessonsPerWeek: data.lessonsPerWeek!,
+              amountPaid: data.amount,
+              expiresAt: new Date(Date.now() + data.durationDays! * 24 * 60 * 60 * 1000),
+            },
+          })
+          subscriptionId = subscription.id
+        }
 
         await tx.transaction.create({
           data: {
             studentId: data.studentId,
-            subscriptionId: subscription.id,
+            subscriptionId,
             amount: data.amount,
             type: "subscription",
             paymentMethod: data.paymentMethod,
@@ -68,6 +96,7 @@ export const createPayment = async (data: CreatePaymentInput) => {
 
     revalidatePath("/admin/students")
     revalidatePath("/admin/income")
+    revalidatePath("/admin/subscriptions")
     return { success: true as const }
   } catch (error) {
     console.error("Database Error:", error)

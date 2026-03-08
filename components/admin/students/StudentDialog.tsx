@@ -9,8 +9,20 @@ import {
   IoLocationOutline,
   IoFlash,
   IoCalendarOutline,
+  IoTrash,
 } from "react-icons/io5"
 import { Button } from "@/components/ui/button"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import {
   Dialog,
   DialogContent,
@@ -26,6 +38,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { useDialogStore } from "@/lib/stores/dialog-store"
 import { createStudent } from "@/server-actions/students/create-student"
 import { updateStudent } from "@/server-actions/students/update-student"
+import { softDeleteStudent } from "@/server-actions/students/soft-delete-student"
 import { type StudentWithSubscriptions } from "./types"
 
 const DIALOG_KEY = "StudentDialog"
@@ -56,6 +69,7 @@ export const StudentDialog = () => {
 
   const [form, setForm] = useState(getInitialForm())
   const [loading, setLoading] = useState(false)
+  const [deleting, setDeleting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -103,6 +117,26 @@ export const StudentDialog = () => {
       setError("Something went wrong. Please try again.")
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleDelete = async () => {
+    if (!student?.id) return
+    setDeleting(true)
+    setError(null)
+    try {
+      const result = await softDeleteStudent(student.id)
+      if (!result.success) {
+        setError(result.error)
+        return
+      }
+      handleClose()
+      onSuccess?.()
+      router.refresh()
+    } catch {
+      setError("Something went wrong. Please try again.")
+    } finally {
+      setDeleting(false)
     }
   }
 
@@ -263,17 +297,41 @@ export const StudentDialog = () => {
             <p className="text-sm text-destructive">{error}</p>
           )}
 
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleClose}
-            >
-              Cancel
-            </Button>
-            <Button type="submit" disabled={loading}>
-              {loading ? (isEdit ? "Saving..." : "Adding...") : (isEdit ? "Save Changes" : "Add Student")}
-            </Button>
+          <DialogFooter className="flex-row justify-between sm:justify-between">
+            {isEdit ? (
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button type="button" variant="ghost" className="text-destructive hover:text-destructive" disabled={deleting}>
+                    <IoTrash size={14} />
+                    {deleting ? "Deleting..." : "Delete"}
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent size="sm">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Delete student?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This will anonymize {student?.name}&apos;s personal data and mark them as inactive. Income and attendance records will be preserved.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction variant="destructive" onClick={handleDelete}>
+                      Delete
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            ) : (
+              <div />
+            )}
+            <div className="flex gap-2">
+              <Button type="button" variant="outline" onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button type="submit" disabled={loading}>
+                {loading ? (isEdit ? "Saving..." : "Adding...") : (isEdit ? "Save Changes" : "Add Student")}
+              </Button>
+            </div>
           </DialogFooter>
         </form>
       </DialogContent>

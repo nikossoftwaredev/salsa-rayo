@@ -6,11 +6,9 @@ import { motion, AnimatePresence } from "framer-motion"
 import {
   IoCalendarOutline,
   IoTimeOutline,
-  IoCloseCircle,
   IoPersonOutline,
   IoChevronDown,
 } from "react-icons/io5"
-import { RayoPoints } from "@/components/ui/rayo-points"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -28,6 +26,7 @@ import { getAttendances, type AttendanceRecord } from "@/server-actions/attendan
 import { submitAttendance } from "@/server-actions/attendance/submit-attendance"
 import { removeAttendance } from "@/server-actions/attendance/remove-attendance"
 import { AttendancePanel, type StudentForAttendance } from "./AttendancePanel"
+import { AttendeeRow } from "./AttendeeRow"
 import { ESTABLISHED_DATE } from "@/data/config"
 
 interface AttendanceViewProps {
@@ -404,16 +403,22 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                                       {existingVisible.map((a) => (
                                         <AttendeeRow
                                           key={a.id}
-                                          name={a.student.name}
-                                          points={a.student.rayoPoints}
+                                          student={{
+                                            name: a.student.name,
+                                            rayoPoints: a.student.rayoPoints,
+                                            subscriptionExpiresAt: a.student.subscriptions[0]?.expiresAt ?? null,
+                                          }}
                                           onRemove={() => handleMarkRemove(a.id)}
                                         />
                                       ))}
                                       {pendingAdds.map((s) => (
                                         <AttendeeRow
                                           key={s.id}
-                                          name={s.name}
-                                          points={s.rayoPoints}
+                                          student={{
+                                            name: s.name,
+                                            rayoPoints: s.rayoPoints,
+                                            subscriptionExpiresAt: s.subscriptions[0]?.expiresAt ?? null,
+                                          }}
                                           onRemove={() => handleUndoAdd(s.id)}
                                         />
                                       ))}
@@ -455,25 +460,3 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
     </div>
   )
 }
-
-interface AttendeeRowProps {
-  name: string
-  points: number
-  onRemove: () => void
-}
-
-const AttendeeRow = ({ name, points, onRemove }: AttendeeRowProps) => (
-  <div className="flex items-center justify-between rounded-lg px-3 py-2 transition-colors hover:bg-accent">
-    <div className="flex items-center gap-2">
-      <span className="text-sm font-medium">{name}</span>
-      <RayoPoints points={points} size="sm" />
-    </div>
-    <button
-      type="button"
-      onClick={onRemove}
-      className="cursor-pointer text-muted-foreground/40 transition-colors hover:text-destructive"
-    >
-      <IoCloseCircle size={16} />
-    </button>
-  </div>
-)

@@ -1,41 +1,21 @@
-import { DashboardStats } from "@/components/admin/DashboardStats";
-import { prisma } from "@/lib/db";
+import { StudentsTable } from "@/components/admin/students/StudentsTable";
+import { getStudents } from "@/server-actions/students/get-students";
 
-const AdminDashboard = async () => {
-  const startOfMonth = new Date();
-  startOfMonth.setDate(1);
-  startOfMonth.setHours(0, 0, 0, 0);
+const AdminPage = async () => {
+  const result = await getStudents();
+  const students = result.success ? result.data ?? [] : [];
 
-  const [studentCount, monthlyIncome, activeSubCount] = await Promise.all([
-    prisma.student.count(),
-    prisma.transaction.aggregate({
-      _sum: { amount: true },
-      where: { createdAt: { gte: startOfMonth } },
-    }),
-    prisma.subscription.count({
-      where: { isActive: true, expiresAt: { gte: new Date() } },
-    }),
-  ]);
-
-  const stats = [
-    {
-      title: "Total Students",
-      value: studentCount.toString(),
-      description: "Registered students",
-    },
-    {
-      title: "Monthly Income",
-      value: `€${(monthlyIncome._sum.amount ?? 0).toFixed(0)}`,
-      description: "This month",
-    },
-    {
-      title: "Active Subscriptions",
-      value: activeSubCount.toString(),
-      description: "Currently active",
-    },
-  ];
-
-  return <DashboardStats stats={stats} />;
+  return (
+    <div>
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold tracking-tight">Student List</h2>
+        <p className="text-muted-foreground">
+          Manage your students and their information.
+        </p>
+      </div>
+      <StudentsTable data={students} />
+    </div>
+  );
 };
 
-export default AdminDashboard;
+export default AdminPage;

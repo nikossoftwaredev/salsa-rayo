@@ -34,25 +34,27 @@ export interface AdminNavGroup {
 
 export const adminNavGroups: AdminNavGroup[] = [
   {
-    groupLabel: "Overview",
-    items: [{ label: "Dashboard", href: "/admin", icon: IoGridOutline }],
-  },
-  {
-    groupLabel: "Classes",
+    groupLabel: "School",
     items: [
-      { label: "Schedule", href: "/admin/schedule", icon: IoCalendar },
+      { label: "Students", href: "/admin", icon: IoSchool },
       {
         label: "Attendance",
         href: "/admin/attendance",
         icon: IoCheckboxOutline,
       },
+      { label: "Stats", href: "/admin/stats", icon: IoGridOutline },
+    ],
+  },
+  {
+    groupLabel: "Classes",
+    items: [
+      { label: "Schedule", href: "/admin/schedule", icon: IoCalendar },
       { label: "Instructors", href: "/admin/instructors", icon: IoPeople },
     ],
   },
   {
-    groupLabel: "Business",
+    groupLabel: "Finances",
     items: [
-      { label: "Students", href: "/admin/students", icon: IoSchool },
       {
         label: "Subscriptions",
         href: "/admin/subscriptions",

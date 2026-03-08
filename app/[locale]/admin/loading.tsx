@@ -1,5 +1,5 @@
 import LoadingPage from "@/components/common/LoadingPage";
 
-const AdminLoading = () => <LoadingPage text="Loading..." />;
+const AdminLoading = () => <LoadingPage />;
 
 export default AdminLoading;

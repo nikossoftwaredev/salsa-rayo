@@ -19,30 +19,58 @@ export const authOptions: NextAuthOptions = {
 
         session.user.isAdmin = isAdminEmail(user.email || "");
 
-        const existingStudent = await prisma.student.findUnique({
+        let student = await prisma.student.findUnique({
           where: { userId: user.id },
+          include: {
+            subscriptions: {
+              where: { isActive: true },
+              orderBy: { expiresAt: "desc" },
+              take: 1,
+              select: { expiresAt: true },
+            },
+          },
         });
 
-        if (!existingStudent) {
+        if (!student) {
           const studentByEmail = user.email
             ? await prisma.student.findFirst({ where: { email: user.email, userId: null } })
             : null;
 
           if (studentByEmail) {
-            await prisma.student.update({
+            student = await prisma.student.update({
               where: { id: studentByEmail.id },
               data: { userId: user.id },
+              include: {
+                subscriptions: {
+                  where: { isActive: true },
+                  orderBy: { expiresAt: "desc" },
+                  take: 1,
+                  select: { expiresAt: true },
+                },
+              },
             });
           } else {
-            await prisma.student.create({
+            student = await prisma.student.create({
               data: {
                 userId: user.id,
                 name: user.name || "",
                 email: user.email || "",
               },
+              include: {
+                subscriptions: {
+                  where: { isActive: true },
+                  orderBy: { expiresAt: "desc" },
+                  take: 1,
+                  select: { expiresAt: true },
+                },
+              },
             });
           }
         }
+
+        session.user.rayoPoints = student.rayoPoints;
+        session.user.subscriptionExpiresAt =
+          student.subscriptions[0]?.expiresAt?.toISOString() ?? null;
       }
 
       return session;

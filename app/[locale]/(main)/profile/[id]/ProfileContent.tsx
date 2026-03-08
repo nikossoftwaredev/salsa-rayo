@@ -12,6 +12,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { getInitials } from "@/lib/format";
+import { getAvatarUrl } from "@/lib/avatar";
 import { updateProfile } from "@/server-actions/profile/update-profile";
 import type { getProfile } from "@/server-actions/profile/get-profile";
 import { BIO_MAX_LENGTH } from "@/data/config";
@@ -100,7 +101,7 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
       >
         <div className="rounded-full p-1 bg-gradient-to-br from-primary to-brand-pink shadow-[0_0_30px_rgba(91,79,219,0.3)]">
           <Avatar className="size-28 border-2 border-background">
-            {user.image && <AvatarImage src={user.image} alt={fullName} />}
+            {user.image && <AvatarImage src={getAvatarUrl(user.image)} alt={fullName} />}
             <AvatarFallback className="text-3xl font-bold bg-card text-foreground">
               {userInitials}
             </AvatarFallback>

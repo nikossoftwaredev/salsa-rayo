@@ -5,6 +5,8 @@ declare module "next-auth" {
     user: {
       id: string
       isAdmin: boolean
+      rayoPoints: number
+      subscriptionExpiresAt: string | null
     } & DefaultSession["user"]
   }
 }

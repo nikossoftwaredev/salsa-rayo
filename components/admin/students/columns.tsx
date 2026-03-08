@@ -4,7 +4,7 @@ import { type ColumnDef } from "@tanstack/react-table"
 import { RayoPoints } from "@/components/ui/rayo-points"
 import { MdEdit } from "react-icons/md"
 import { IoWalletOutline, IoReceiptOutline } from "react-icons/io5"
-import { Badge } from "@/components/ui/badge"
+import { SubscriptionBadge } from "@/components/ui/subscription-badge"
 import { Button } from "@/components/ui/button"
 import {
   Tooltip,
@@ -18,14 +18,6 @@ import { type StudentWithSubscriptions } from "./types"
 
 const getActiveSubscription = (student: StudentWithSubscriptions) =>
   student.subscriptions.find((sub) => sub.isActive) ?? student.subscriptions[0]
-
-const getSubStatus = (student: StudentWithSubscriptions) => {
-  const sub = getActiveSubscription(student)
-  if (!sub) return { label: "No Sub", active: false }
-  if (!sub.isActive || new Date(sub.expiresAt) < new Date())
-    return { label: "Expired", active: false }
-  return { label: "Active", active: true }
-}
 
 export const columns: ColumnDef<StudentWithSubscriptions>[] = [
   {
@@ -46,6 +38,10 @@ export const columns: ColumnDef<StudentWithSubscriptions>[] = [
           <RayoPoints points={row.original.rayoPoints} size="sm" />
         </div>
       )
+    },
+    filterFn: (row, _id, value: string) => {
+      if (!value) return true
+      return row.original.id === value
     },
   },
   {
@@ -130,24 +126,16 @@ export const columns: ColumnDef<StudentWithSubscriptions>[] = [
   {
     id: "subStatus",
     header: "Sub Status",
-    accessorFn: (row) => getSubStatus(row),
+    accessorFn: (row) => getActiveSubscription(row)?.expiresAt ?? null,
     cell: ({ row }) => {
-      const status = row.getValue("subStatus") as { label: string; active: boolean }
-      return (
-        <Badge
-          className={
-            status.active
-              ? "border-transparent bg-emerald-500/15 text-emerald-500"
-              : "border-transparent bg-red-500/15 text-red-500"
-          }
-        >
-          {status.label}
-        </Badge>
-      )
+      const expiresAt = row.getValue("subStatus") as Date | null
+      return <SubscriptionBadge expiresAt={expiresAt} />
     },
     filterFn: (row, id, value: string[]) => {
-      const status = row.getValue(id) as { active: boolean }
-      return value.includes(String(status.active))
+      const expiresAt = row.getValue(id) as Date | null
+      if (!expiresAt) return value.includes("false")
+      const isActive = new Date(expiresAt) > new Date()
+      return value.includes(String(isActive))
     },
   },
   {

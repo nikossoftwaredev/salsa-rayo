@@ -15,7 +15,7 @@ interface RayoPointsProps {
 }
 
 export const RayoPoints = ({ points, size = "default", showTooltip = false, className }: RayoPointsProps) => {
-  if (points <= 0) return null
+  if (points < 0) return null
 
   const content = (
     <span

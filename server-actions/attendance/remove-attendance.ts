@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import { prisma } from "@/lib/db"
 import { isAdmin } from "../is-admin"
 
@@ -27,6 +28,7 @@ export const removeAttendance = async (attendanceId: string) => {
       })
     })
 
+    revalidatePath("/admin/attendance")
     return { success: true as const }
   } catch (error) {
     console.error("Remove attendance error:", error)

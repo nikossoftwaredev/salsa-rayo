@@ -11,6 +11,7 @@ import { usePathname } from "next/navigation";
 import { useLocale } from "next-intl";
 import { headerLinks } from "@/data/config";
 import { LanguageSwitcherTabs } from "@/components/LanguageSwitcher";
+import { SubscriptionBadge } from "@/components/ui/subscription-badge";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -24,6 +25,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Link } from "@/i18n/navigation";
+import { getAvatarUrl } from "@/lib/avatar";
 import type { ReactNode } from "react";
 
 const NAV_ICONS: Record<string, ReactNode> = {
@@ -59,7 +61,7 @@ export const ProfileDropdown = ({
 
   const fullName = session?.user?.name || "Admin";
   const firstName = fullName.split(" ")[0];
-  const userImage = session?.user?.image;
+  const userImage = session?.user?.image ? getAvatarUrl(session.user.image) : undefined;
   const userEmail = session?.user?.email || "";
   const userInitials = getInitials(fullName);
 
@@ -104,7 +106,10 @@ export const ProfileDropdown = ({
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid min-w-0 flex-1 leading-tight">
-                  <span className="truncate font-semibold">{firstName}</span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="truncate font-semibold">{firstName}</span>
+                    <SubscriptionBadge expiresAt={session?.user?.subscriptionExpiresAt ?? null} />
+                  </div>
                   <span className="truncate text-xs text-muted-foreground">
                     {userEmail}
                   </span>

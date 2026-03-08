@@ -26,7 +26,18 @@ export const getAttendances = async ({ scheduleEntryId, date }: GetAttendancesIn
           select: {
             id: true,
             studentId: true,
-            student: { select: { name: true, rayoPoints: true } },
+            student: {
+              select: {
+                name: true,
+                rayoPoints: true,
+                subscriptions: {
+                  where: { isActive: true },
+                  orderBy: { expiresAt: "desc" },
+                  take: 1,
+                  select: { expiresAt: true },
+                },
+              },
+            },
           },
           orderBy: { createdAt: "asc" },
         },
