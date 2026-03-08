@@ -11,6 +11,8 @@ interface BlogPostPageProps {
   params: Promise<{ locale: string; slug: string }>;
 }
 
+export const revalidate = 3600;
+
 export const generateStaticParams = () =>
   getAllSlugs().flatMap((slug) => [
     { locale: "en", slug },
