@@ -301,7 +301,7 @@ export const StudentDialog = () => {
             {isEdit ? (
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button type="button" variant="ghost" className="text-destructive hover:text-destructive" disabled={deleting}>
+                  <Button type="button" variant="outline" className="border-destructive/50 text-destructive hover:bg-destructive/10 hover:text-destructive" disabled={deleting}>
                     <IoTrash size={14} />
                     {deleting ? "Deleting..." : "Delete"}
                   </Button>

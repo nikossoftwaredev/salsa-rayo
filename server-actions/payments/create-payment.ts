@@ -33,11 +33,14 @@ export const createPayment = async (data: CreatePaymentInput) => {
         return { success: false as const, error: "Subscription requires package details" }
 
       await prisma.$transaction(async (tx) => {
+        const now = new Date()
+        const durationMs = data.durationDays! * 24 * 60 * 60 * 1000
+
         const existingSub = await tx.subscription.findFirst({
           where: {
             studentId: data.studentId,
             isActive: true,
-            expiresAt: { gt: new Date() },
+            expiresAt: { gt: now },
           },
           orderBy: { expiresAt: "desc" },
         })
@@ -45,9 +48,7 @@ export const createPayment = async (data: CreatePaymentInput) => {
         let subscriptionId: string
 
         if (existingSub) {
-          const newExpiry = new Date(
-            existingSub.expiresAt.getTime() + data.durationDays! * 24 * 60 * 60 * 1000
-          )
+          const newExpiry = new Date(existingSub.expiresAt.getTime() + durationMs)
           await tx.subscription.update({
             where: { id: existingSub.id },
             data: {
@@ -59,13 +60,31 @@ export const createPayment = async (data: CreatePaymentInput) => {
           })
           subscriptionId = existingSub.id
         } else {
+          const SWEET_SPOT_DAYS = 4
+          const sweetSpotCutoff = new Date(
+            now.getTime() - SWEET_SPOT_DAYS * 24 * 60 * 60 * 1000
+          )
+
+          const recentlyExpiredSub = await tx.subscription.findFirst({
+            where: {
+              studentId: data.studentId,
+              expiresAt: { gte: sweetSpotCutoff, lte: now },
+            },
+            orderBy: { expiresAt: "desc" },
+          })
+
+          const startDate = recentlyExpiredSub
+            ? recentlyExpiredSub.expiresAt
+            : now
+
           const subscription = await tx.subscription.create({
             data: {
               studentId: data.studentId,
               packageName: data.packageName!,
               lessonsPerWeek: data.lessonsPerWeek!,
               amountPaid: data.amount,
-              expiresAt: new Date(Date.now() + data.durationDays! * 24 * 60 * 60 * 1000),
+              startDate,
+              expiresAt: new Date(startDate.getTime() + durationMs),
             },
           })
           subscriptionId = subscription.id

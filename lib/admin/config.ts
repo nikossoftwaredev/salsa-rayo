@@ -3,7 +3,6 @@ import {
   IoCalendar,
   IoCard,
   IoCheckboxOutline,
-  IoGridOutline,
   IoPeople,
   IoSchool,
   IoSettings,
@@ -42,7 +41,7 @@ export const adminNavGroups: AdminNavGroup[] = [
         href: "/admin/attendance",
         icon: IoCheckboxOutline,
       },
-      { label: "Stats", href: "/admin/stats", icon: IoGridOutline },
+      { label: "Stats", href: "/admin/stats", icon: IoMdStats },
     ],
   },
   {
@@ -62,7 +61,6 @@ export const adminNavGroups: AdminNavGroup[] = [
       },
       { label: "Income", href: "/admin/income", icon: IoTrendingUp },
       { label: "Expenses", href: "/admin/expenses", icon: IoTrendingDown },
-      { label: "Reports", href: "/admin/reports", icon: IoMdStats },
     ],
   },
   {
