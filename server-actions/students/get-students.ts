@@ -1,6 +1,7 @@
 "use server"
 
 import { prisma } from "@/lib/db"
+import { DELETED_USER_NAME } from "@/data/student-constants"
 import { isAdmin } from "../is-admin"
 
 export const getStudents = async () => {
@@ -10,6 +11,7 @@ export const getStudents = async () => {
       return { success: false as const, error: "Unauthorized: Admin access required" }
 
     const students = await prisma.student.findMany({
+      where: { name: { not: DELETED_USER_NAME } },
       include: { user: true, subscriptions: true },
       orderBy: { createdAt: "desc" },
     })

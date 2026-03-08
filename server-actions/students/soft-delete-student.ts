@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 import { prisma } from "@/lib/db"
+import { DELETED_USER_NAME } from "@/data/student-constants"
 import { isAdmin } from "../is-admin"
 
 export const softDeleteStudent = async (id: string) => {
@@ -13,7 +14,7 @@ export const softDeleteStudent = async (id: string) => {
     await prisma.student.update({
       where: { id },
       data: {
-        name: "Deleted User",
+        name: DELETED_USER_NAME,
         email: "",
         phone: null,
         address: null,

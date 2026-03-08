@@ -8,7 +8,6 @@ import {
   IoCallOutline,
   IoLocationOutline,
   IoFlash,
-  IoCalendarOutline,
   IoTrash,
 } from "react-icons/io5"
 import { Button } from "@/components/ui/button"
@@ -39,6 +38,9 @@ import { useDialogStore } from "@/lib/stores/dialog-store"
 import { createStudent } from "@/server-actions/students/create-student"
 import { updateStudent } from "@/server-actions/students/update-student"
 import { softDeleteStudent } from "@/server-actions/students/soft-delete-student"
+import { updateSubscriptionDates } from "@/server-actions/subscriptions/update-subscription-dates"
+import { formatDate } from "@/lib/format"
+import { DatePicker } from "@/components/ui/date-picker"
 import { type StudentWithSubscriptions } from "./types"
 
 const DIALOG_KEY = "StudentDialog"
@@ -59,6 +61,7 @@ const getInitialForm = () => ({
   isActive: true,
   rayoPoints: 0,
   joinedDate: toLocalDateString(new Date()),
+  subscriptionStartDate: null as string | null,
 })
 
 export const StudentDialog = () => {
@@ -66,6 +69,7 @@ export const StudentDialog = () => {
   const { closeDialog, dialogData, onSuccess } = useDialogStore()
   const student = dialogData as StudentWithSubscriptions | null
   const isEdit = !!student?.id
+  const activeSubscription = student?.subscriptions?.find((s) => s.isActive) ?? null
 
   const [form, setForm] = useState(getInitialForm())
   const [loading, setLoading] = useState(false)
@@ -110,6 +114,20 @@ export const StudentDialog = () => {
         return
       }
 
+      if (isEdit && activeSubscription && form.subscriptionStartDate) {
+        const originalStart = toLocalDateString(new Date(activeSubscription.startDate))
+        if (form.subscriptionStartDate !== originalStart) {
+          const subResult = await updateSubscriptionDates(
+            activeSubscription.id,
+            new Date(form.subscriptionStartDate)
+          )
+          if (!subResult.success) {
+            setError(subResult.error)
+            return
+          }
+        }
+      }
+
       handleClose()
       onSuccess?.()
       router.refresh()
@@ -151,12 +169,13 @@ export const StudentDialog = () => {
         isActive: student.isActive,
         rayoPoints: student.rayoPoints,
         joinedDate: toLocalDateString(new Date(student.createdAt)),
+        subscriptionStartDate: activeSubscription ? toLocalDateString(new Date(activeSubscription.startDate)) : null,
       })
     } else {
       setForm(getInitialForm())
     }
     setError(null)
-  }, [student])
+  }, [student, activeSubscription])
 
   return (
     <Dialog open onOpenChange={(open) => { if (!open) handleClose() }}>
@@ -247,19 +266,41 @@ export const StudentDialog = () => {
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="joinedDate">Joined Date</Label>
-            <div className="relative">
-              <IoCalendarOutline size={16} className="absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                id="joinedDate"
-                name="joinedDate"
-                type="date"
-                value={form.joinedDate}
-                onChange={handleChange}
-                className="pl-9"
-              />
-            </div>
+            <Label>Joined Date</Label>
+            <DatePicker
+              value={new Date(form.joinedDate)}
+              onChange={(date) =>
+                setForm((prev) => ({
+                  ...prev,
+                  joinedDate: date ? toLocalDateString(date) : prev.joinedDate,
+                }))
+              }
+            />
           </div>
+
+          {isEdit && activeSubscription && (
+            <div className="grid gap-2">
+              <Label>Subscription Start Date</Label>
+              <DatePicker
+                value={form.subscriptionStartDate ? new Date(form.subscriptionStartDate) : undefined}
+                onChange={(date) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    subscriptionStartDate: date ? toLocalDateString(date) : prev.subscriptionStartDate,
+                  }))
+                }
+              />
+              {form.subscriptionStartDate && activeSubscription && (() => {
+                const durationMs = new Date(activeSubscription.expiresAt).getTime() - new Date(activeSubscription.startDate).getTime()
+                const expiryDate = new Date(new Date(form.subscriptionStartDate).getTime() + durationMs)
+                return (
+                  <p className="text-xs text-muted-foreground">
+                    Expires: {formatDate(expiryDate)}
+                  </p>
+                )
+              })()}
+            </div>
+          )}
 
           {isEdit && (
             <div className="grid gap-2">

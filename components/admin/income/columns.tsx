@@ -2,9 +2,11 @@
 
 import { type ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { copyToClipboard, formatDate } from "@/lib/format"
 import { TYPE_LABELS, METHOD_LABELS } from "@/data/payment-constants"
+import { MdDeleteOutline } from "react-icons/md"
 import { type TransactionWithStudent } from "@/server-actions/payments/get-transactions"
 
 const typeBadgeStyles: Record<string, string> = {
@@ -13,7 +15,11 @@ const typeBadgeStyles: Record<string, string> = {
   private: "border-transparent bg-purple-500/15 text-purple-500",
 }
 
-export const columns: ColumnDef<TransactionWithStudent>[] = [
+export type IncomeRowActions = {
+  onDelete: (transaction: TransactionWithStudent) => void
+}
+
+const baseColumns: ColumnDef<TransactionWithStudent>[] = [
   {
     accessorKey: "createdAt",
     header: ({ column }) => (
@@ -86,8 +92,33 @@ export const columns: ColumnDef<TransactionWithStudent>[] = [
     header: "Description",
     cell: ({ row }) => (
       <span className="text-muted-foreground max-w-[200px] truncate block">
-        {row.getValue("description") || "—"}
+        {row.getValue("description") || "-"}
       </span>
+    ),
+  },
+]
+
+// Read-only columns (used in TransactionHistoryDialog)
+export const columns = baseColumns
+
+// Columns with delete action (used in IncomeTable)
+export const createColumns = ({
+  onDelete,
+}: IncomeRowActions): ColumnDef<TransactionWithStudent>[] => [
+  ...baseColumns,
+  {
+    id: "actions",
+    cell: ({ row }) => (
+      <div className="flex items-center justify-end">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="size-8 text-destructive hover:text-destructive"
+          onClick={() => onDelete(row.original)}
+        >
+          <MdDeleteOutline size={16} />
+        </Button>
+      </div>
     ),
   },
 ]
