@@ -50,7 +50,8 @@
       "Bash(pnpm prisma generate:*)",
       "Bash(pnpm prisma migrate dev --name add-student-social-fields)",
       "Bash(pnpm prisma db push)",
-      "WebFetch(domain:bandbeat.com)"
+      "WebFetch(domain:bandbeat.com)",
+      "Bash(grep -E \"\\\\.\\(ts|tsx|js|jsx\\)$\")"
     ],
     "deny": []
   }

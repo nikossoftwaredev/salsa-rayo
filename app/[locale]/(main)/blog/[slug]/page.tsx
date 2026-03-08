@@ -26,6 +26,14 @@ export const generateMetadata = async ({
   if (!post) return { title: "Not Found" };
 
   const { title, description, image } = post.frontmatter;
+  const ogImage = image
+    ? { url: `${BASE_URL}${image}`, width: 1200, height: 630, alt: title }
+    : {
+        url: `${BASE_URL}/images/logo-big.png`,
+        width: 1200,
+        height: 630,
+        alt: "Salsa Rayo Dance School",
+      };
 
   return {
     title,
@@ -44,13 +52,13 @@ export const generateMetadata = async ({
       url: `${BASE_URL}/${locale}/blog/${slug}`,
       siteName: "Salsa Rayo",
       type: "article",
-      images: image ? [{ url: `${BASE_URL}${image}` }] : undefined,
+      images: [ogImage],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: image ? [`${BASE_URL}${image}`] : undefined,
+      images: [ogImage],
     },
   };
 };

@@ -19,15 +19,15 @@ If you want high energy and fast footwork, start with salsa. If you prefer somet
 
 Salsa has its roots in **Cuba**, with deep influences from Afro-Cuban rhythms, Son Cubano, and jazz. It exploded globally in the mid-20th century and has since evolved into several styles  - Cuban (Casino), LA-style (On1), New York-style (On2), and Colombian, among others. At Salsa Rayo, we teach **New York Style Salsa (On2)**, the smooth and musical style that emerged from the legendary NYC salsa scene.
 
-Musically, salsa is built on syncopated rhythms with a strong clave pattern. The tempo ranges from **170 to 220 BPM**, which means the music is fast and the energy is electric. Dancers work with quick footwork, turns, body isolations, and  - in New York style  - linear partner work with emphasis on musicality, shines, and smooth transitions.
+Musically, salsa is built on syncopated rhythms with a strong clave pattern. The music is fast and the energy is electric. Dancers work with quick footwork, turns, body isolations, and  - in New York style  - linear partner work with emphasis on musicality, shines, and smooth transitions.
 
 Salsa demands a bit more coordination from day one because of its syncopated timing. You're not stepping on every beat  - you step on beats 1, 2, 3, pause on 4, then 5, 6, 7, pause on 8. That pause is what gives salsa its characteristic groove, but it can feel unnatural at first. Don't worry  - it clicks faster than you think, usually within the first few classes.
 
 ## What Is Bachata?
 
-Bachata comes from the **Dominican Republic** and started as a guitar-driven genre associated with rural life and heartbreak. Over the decades it evolved into a global dance phenomenon, with modern styles like Bachata Sensual and Bachata Moderna adding body waves, isolations, and intricate musicality.
+Bachata was born in the **Dominican Republic** in the early 1960s. Its roots are a fusion of **Cuban Bolero**, **Son Cubano**, and the Dominican Republic's own **Merengue**. It started as a guitar-driven genre tied to rural life and heartbreak, and has since evolved into a global dance phenomenon with modern styles like Bachata Sensual and Bachata Moderna.
 
-The rhythm is simpler than salsa  - a clean **4-beat count** (1, 2, 3, tap) at roughly **130–140 BPM**. That slower tempo gives you more time to think, connect with your partner, and feel the music. The basic step is a side-to-side movement with a signature hip tap on beat 4, making it one of the most accessible Latin dances for complete beginners.
+The rhythm is simpler than salsa  - a clean **4-beat count** (1, 2, 3, tap). The slower tempo gives you more time to think, connect with your partner, and feel the music. The basic step is a side-to-side movement with a signature hip tap on beat 4, making it one of the most accessible Latin dances for complete beginners.
 
 Bachata tends to be danced in a **closer hold** than salsa, and the connection between partners is more intimate. The music itself is romantic  - think melancholic guitars, smooth vocals, and modern R&B-infused remixes. It's the dance you see couples gravitate toward at social nights.
 
@@ -35,7 +35,7 @@ Bachata tends to be danced in a **closer hold** than salsa, and the connection b
 
 | | **Salsa** | **Bachata** |
 |---|---|---|
-| **Music Tempo** | Fast (170–220 BPM) | Moderate (130–140 BPM) |
+| **Music Tempo** | Fast | Moderate |
 | **Difficulty for Beginners** | Moderate  - syncopated timing takes practice | Easier  - straightforward 4-beat rhythm |
 | **Partner Hold** | Open to semi-closed, lots of turns | Closer hold, more connected |
 | **Energy Level** | High  - cardio workout on the dance floor | Medium  - smooth and controlled |

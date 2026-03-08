@@ -27,8 +27,6 @@ Bad Bunny  - born Benito Antonio Martinez Ocasio in Vega Baja, Puerto Rico  - is
 
 The stage itself was designed as a **Puerto Rican village**, complete with storefronts, dancers dressed as mechanics, shopkeepers, and hairdressers  - jobs held by many Latino immigrants across the U.S. The show opened with a wide shot of people working in **sugar cane fields**, a powerful symbol of Caribbean colonial history and the legacy of slavery in the region.
 
-Guest star **Ricky Martin** performed a cover of Bad Bunny's anti-colonialist anthem "Lo Que Le Paso a Hawaii," adding another layer of Puerto Rican pride and historical awareness to the performance.
-
 ## Why Salsa Matters More Than You Think
 
 Salsa is more than a dance. It's a living, breathing expression of Afro-Caribbean identity, built on rhythms that trace back to Cuba, Puerto Rico, Colombia, and the broader African diaspora. It carries the DNA of **Son Cubano**, **mambo**, **guaguanco**, and **jazz**  - genres born from resistance, migration, and cultural survival.
@@ -61,7 +59,7 @@ Bad Bunny showed 128 million people what Latino culture looks like when it's cel
 
 ## Ready to Start?
 
-If Bad Bunny's Super Bowl performance made you curious about salsa, there's never been a better time to begin. At **Salsa Rayo** in Athens, we teach **New York Style Salsa (On2)**  - the smooth, musical style born from the legendary NYC salsa scene  - along with **Bachata** and **Reggaeton**.
+If Bad Bunny's Super Bowl performance made you curious about salsa, there's never been a better time to begin. At **Salsa Rayo** in Athens, we teach **New York Style Salsa (On2)**  - the smooth, musical style born from the legendary NYC salsa scene  - along with **Bachata**.
 
 No experience needed. No partner needed. Just show up, and let the music do what it's been doing for over a century: **bring people together**.
 
