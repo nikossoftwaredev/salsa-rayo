@@ -7,6 +7,7 @@ import { Inter } from "next/font/google";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { Providers } from "@/components/Providers";
+import { Analytics } from "@vercel/analytics/next";
 import { BasePageProps } from "@/types/pageprops";
 
 const inter = Inter({
@@ -150,6 +151,7 @@ const RootLayout = async ({
         >
           {children}
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
