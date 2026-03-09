@@ -33,7 +33,7 @@ const baseColumns: ColumnDef<TransactionWithStudent>[] = [
   },
   {
     id: "studentName",
-    accessorFn: (row) => row.student.name,
+    accessorFn: (row) => row.studentName || row.student?.name || "Deleted",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Student" />
     ),

@@ -28,6 +28,14 @@ export const createPayment = async (data: CreatePaymentInput) => {
     if (data.amount <= 0)
       return { success: false as const, error: "Amount must be greater than 0" }
 
+    const student = await prisma.student.findUnique({
+      where: { id: data.studentId },
+      select: { name: true },
+    })
+
+    if (!student)
+      return { success: false as const, error: "Student not found" }
+
     if (data.type === "subscription") {
       if (!data.packageName || !data.lessonsPerWeek || !data.durationDays)
         return { success: false as const, error: "Subscription requires package details" }
@@ -93,6 +101,7 @@ export const createPayment = async (data: CreatePaymentInput) => {
         await tx.transaction.create({
           data: {
             studentId: data.studentId,
+            studentName: student.name,
             subscriptionId,
             amount: data.amount,
             type: "subscription",
@@ -105,6 +114,7 @@ export const createPayment = async (data: CreatePaymentInput) => {
       await prisma.transaction.create({
         data: {
           studentId: data.studentId,
+          studentName: student.name,
           amount: data.amount,
           type: data.type,
           paymentMethod: data.paymentMethod,

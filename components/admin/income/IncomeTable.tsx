@@ -62,7 +62,7 @@ export const IncomeTable = ({ data }: IncomeTableProps) => {
             <AlertDialogTitle>Delete transaction?</AlertDialogTitle>
             <AlertDialogDescription>
               This will permanently delete the €{deletingTransaction?.amount.toFixed(2)}{" "}
-              {deletingTransaction?.student.name} transaction.
+              {deletingTransaction?.studentName || deletingTransaction?.student?.name} transaction.
               {deletingTransaction?.type === "subscription" && deletingTransaction?.subscriptionId && (
                 <> This will also cancel their active subscription.</>
               )}

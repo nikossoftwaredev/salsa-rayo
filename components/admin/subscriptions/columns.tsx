@@ -16,7 +16,7 @@ const packageBadgeStyles: Record<string, string> = {
 export const columns: ColumnDef<SubscriptionWithDetails>[] = [
   {
     id: "studentName",
-    accessorFn: (row) => row.student.name,
+    accessorFn: (row) => row.student?.name ?? "Deleted",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Student" />
     ),
@@ -33,7 +33,7 @@ export const columns: ColumnDef<SubscriptionWithDetails>[] = [
     },
     filterFn: (row, _id, value: string) => {
       if (!value) return true
-      return row.original.student.id === value
+      return row.original.student?.id === value
     },
   },
   {
@@ -58,7 +58,7 @@ export const columns: ColumnDef<SubscriptionWithDetails>[] = [
   {
     id: "weeklyUsage",
     header: "This Week",
-    accessorFn: (row) => row.student.attendances.length,
+    accessorFn: (row) => row.student?.attendances.length ?? 0,
     cell: ({ row }) => {
       const attended = row.getValue("weeklyUsage") as number
       const limit = row.original.lessonsPerWeek

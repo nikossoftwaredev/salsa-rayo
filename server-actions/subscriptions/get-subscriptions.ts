@@ -31,6 +31,7 @@ export const getSubscriptions = async () => {
     monthStart.setHours(0, 0, 0, 0)
 
     const subscriptions = await prisma.subscription.findMany({
+      where: { studentId: { not: null } },
       select: {
         id: true,
         packageName: true,

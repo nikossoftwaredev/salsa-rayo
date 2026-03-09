@@ -37,7 +37,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { useDialogStore } from "@/lib/stores/dialog-store"
 import { createStudent } from "@/server-actions/students/create-student"
 import { updateStudent } from "@/server-actions/students/update-student"
-import { softDeleteStudent } from "@/server-actions/students/soft-delete-student"
+import { deleteStudent } from "@/server-actions/students/delete-student"
 import { updateSubscriptionDates } from "@/server-actions/subscriptions/update-subscription-dates"
 import { formatDate } from "@/lib/format"
 import { DatePicker } from "@/components/ui/date-picker"
@@ -143,7 +143,7 @@ export const StudentDialog = () => {
     setDeleting(true)
     setError(null)
     try {
-      const result = await softDeleteStudent(student.id)
+      const result = await deleteStudent(student.id)
       if (!result.success) {
         setError(result.error)
         return
@@ -351,7 +351,7 @@ export const StudentDialog = () => {
                   <AlertDialogHeader>
                     <AlertDialogTitle>Delete student?</AlertDialogTitle>
                     <AlertDialogDescription>
-                      This will anonymize {student?.name}&apos;s personal data and mark them as inactive. Income and attendance records will be preserved.
+                      This will permanently delete {student?.name} and all their data. Payment records will be preserved.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
