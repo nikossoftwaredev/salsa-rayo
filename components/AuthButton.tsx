@@ -37,5 +37,10 @@ export const AuthButton = ({ showNavRoutes = false }: AuthButtonProps) => {
       </div>
     );
 
-  return <ProfileDropdown showNavRoutes={showNavRoutes} />;
+  return (
+    <div className="flex items-center gap-2">
+      {session && <RayoPoints points={session.user.rayoPoints} size="sm" />}
+      <ProfileDropdown showNavRoutes={showNavRoutes} />
+    </div>
+  );
 };
