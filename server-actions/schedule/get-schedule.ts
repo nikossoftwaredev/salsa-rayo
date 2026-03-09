@@ -24,10 +24,28 @@ const getCachedSchedule = unstable_cache(
   { revalidate: 300 }
 )
 
+// Cached version for public pages
 export const getSchedule = async () => {
   try {
     const data = await getCachedSchedule()
     return { success: true as const, data }
+  } catch (error) {
+    console.error("Database Error:", error)
+    return { success: false as const, error: "Failed to fetch schedule" }
+  }
+}
+
+// Uncached version for admin pages
+export const getScheduleAdmin = async () => {
+  try {
+    const entries = await prisma.scheduleEntry.findMany({
+      where: { isActive: true },
+      include: { instructors: true },
+    })
+
+    entries.sort((a, b) => a.dayIndex - b.dayIndex || parseTime(a.time) - parseTime(b.time))
+
+    return { success: true as const, data: entries }
   } catch (error) {
     console.error("Database Error:", error)
     return { success: false as const, error: "Failed to fetch schedule" }

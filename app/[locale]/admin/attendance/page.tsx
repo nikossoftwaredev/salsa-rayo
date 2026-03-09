@@ -1,11 +1,11 @@
 import { AttendanceView } from "@/components/admin/attendance/AttendanceView"
 import { AttendanceHistoryTable } from "@/components/admin/attendance/attendance-history/AttendanceHistoryTable"
-import { getSchedule } from "@/server-actions/schedule/get-schedule"
+import { getScheduleAdmin } from "@/server-actions/schedule/get-schedule"
 import { getAllAttendances } from "@/server-actions/attendance/get-all-attendances"
 
 const AttendancePage = async () => {
   const [scheduleResult, attendancesResult] = await Promise.all([
-    getSchedule(),
+    getScheduleAdmin(),
     getAllAttendances(),
   ])
   const entries = scheduleResult.success ? scheduleResult.data ?? [] : []

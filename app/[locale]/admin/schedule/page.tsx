@@ -1,10 +1,10 @@
 import { ScheduleEditor } from "@/components/admin/schedule/ScheduleEditor"
-import { getSchedule } from "@/server-actions/schedule/get-schedule"
+import { getScheduleAdmin } from "@/server-actions/schedule/get-schedule"
 import { getInstructors } from "@/server-actions/instructors/get-instructors"
 
 const SchedulePage = async () => {
   const [scheduleResult, instructorsResult] = await Promise.all([
-    getSchedule(),
+    getScheduleAdmin(),
     getInstructors(),
   ])
 

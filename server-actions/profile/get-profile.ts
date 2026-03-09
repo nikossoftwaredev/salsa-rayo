@@ -1,9 +1,8 @@
 "use server";
 
-import { cache } from "react";
 import { prisma } from "@/lib/db";
 
-export const getProfile = cache(async (userId: string) =>
+export const getProfile = async (userId: string) =>
   prisma.user.findUnique({
     where: { id: userId },
     select: {
@@ -24,4 +23,4 @@ export const getProfile = cache(async (userId: string) =>
         },
       },
     },
-  }));
+  });

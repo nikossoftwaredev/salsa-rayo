@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import { prisma, type ScheduleEntry } from "@/lib/db"
 import { isAdmin } from "../is-admin"
 
@@ -22,6 +23,7 @@ export const createScheduleEntry = async (data: CreateScheduleEntryInput) => {
       include: { instructors: true },
     })
 
+    revalidatePath("/admin/schedule")
     return { success: true as const, data: entry }
   } catch (error) {
     console.error("Database Error:", error)

@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import { prisma } from "@/lib/db"
 import { isAdmin } from "../is-admin"
 
@@ -11,6 +12,7 @@ export const deleteScheduleEntry = async (id: string) => {
 
     await prisma.scheduleEntry.delete({ where: { id } })
 
+    revalidatePath("/admin/schedule")
     return { success: true as const }
   } catch (error) {
     console.error("Database Error:", error)
