@@ -5,7 +5,7 @@ import { prisma, type Student } from "@/lib/db"
 import { isAdmin } from "../is-admin"
 
 type CreateStudentInput = Pick<Student, "name" | "email"> &
-  Partial<Pick<Student, "phone" | "address" | "notes" | "createdAt">>
+  Partial<Pick<Student, "phone" | "address" | "notes" | "dancingYears" | "createdAt">>
 
 export const createStudent = async (data: CreateStudentInput) => {
   try {

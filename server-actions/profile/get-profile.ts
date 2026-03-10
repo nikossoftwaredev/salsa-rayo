@@ -15,6 +15,7 @@ export const getProfile = async (userId: string) =>
           instagram: true,
           website: true,
           avatarImage: true,
+          dancingYears: true,
           rayoPoints: true,
           createdAt: true,
           _count: {

@@ -4,7 +4,7 @@ import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { IoCalendar, IoFlame, IoPencil, IoArrowRedoOutline, IoLogoInstagram, IoGlobeOutline } from "react-icons/io5";
+import { IoCalendar, IoFlame, IoPencil, IoArrowRedoOutline, IoLogoInstagram, IoGlobeOutline, IoMusicalNotes } from "react-icons/io5";
 import { RayoPoints } from "@/components/ui/rayo-points";
 import {
   Tooltip,
@@ -23,7 +23,7 @@ interface ProfileContentProps {
   isOwnProfile?: boolean;
 }
 
-const STATS_CONFIG = [
+const BASE_STATS = [
   { key: "classes", icon: IoFlame, label: "Classes", color: "#fb923c" },
   { key: "joined", icon: IoCalendar, label: "Member Since", color: "#5b4fdb" },
 ] as const;
@@ -158,10 +158,23 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
         </motion.p>
       )}
 
+      {/* Dancing Years */}
+      {student?.dancingYears && (
+        <motion.p
+          initial={{ y: 8, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.3 }}
+          className="mt-2 flex items-center gap-1.5 text-xs text-muted-foreground/70"
+        >
+          <IoMusicalNotes size={12} className="text-pink-500" />
+          Dancing for {student.dancingYears} {student.dancingYears === 1 ? "year" : "years"}
+        </motion.p>
+      )}
+
       {/* Stats */}
       {student && (
         <div className="mt-10 grid grid-cols-2 gap-3 w-full max-w-xs">
-          {STATS_CONFIG.map((stat, i) => {
+          {BASE_STATS.map((stat, i) => {
             const Icon = stat.icon;
             return (
               <motion.div

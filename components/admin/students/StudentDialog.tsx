@@ -9,6 +9,9 @@ import {
   IoLocationOutline,
   IoFlash,
   IoTrash,
+  IoReloadOutline,
+  IoSaveOutline,
+  IoAddOutline,
 } from "react-icons/io5"
 import { Button } from "@/components/ui/button"
 import {
@@ -58,6 +61,7 @@ const getInitialForm = () => ({
   phone: "",
   address: "",
   notes: "",
+  dancingYears: "",
   isActive: true,
   rayoPoints: 0,
   joinedDate: toLocalDateString(new Date()),
@@ -101,6 +105,7 @@ export const StudentDialog = () => {
         phone: form.phone || undefined,
         address: form.address || undefined,
         notes: form.notes || undefined,
+        dancingYears: form.dancingYears ? parseInt(form.dancingYears) : null,
         ...(editedJoinedDate && { createdAt: new Date(form.joinedDate) }),
         ...(isEdit && { isActive: form.isActive, rayoPoints: form.rayoPoints }),
       }
@@ -166,6 +171,7 @@ export const StudentDialog = () => {
         phone: student.phone ?? "",
         address: student.address ?? "",
         notes: student.notes ?? "",
+        dancingYears: student.dancingYears?.toString() ?? "",
         isActive: student.isActive,
         rayoPoints: student.rayoPoints,
         joinedDate: toLocalDateString(new Date(student.createdAt)),
@@ -266,6 +272,20 @@ export const StudentDialog = () => {
           </div>
 
           <div className="grid gap-2">
+            <Label htmlFor="dancingYears">Dancing Years</Label>
+            <Input
+              id="dancingYears"
+              name="dancingYears"
+              type="number"
+              min={0}
+              max={50}
+              value={form.dancingYears}
+              onChange={handleChange}
+              placeholder="Years of salsa experience"
+            />
+          </div>
+
+          <div className="grid gap-2">
             <Label>Joined Date</Label>
             <DatePicker
               value={new Date(form.joinedDate)}
@@ -343,8 +363,8 @@ export const StudentDialog = () => {
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button type="button" variant="outline" className="border-destructive/50 text-destructive hover:bg-destructive/10 hover:text-destructive" disabled={deleting}>
-                    <IoTrash size={14} />
-                    {deleting ? "Deleting..." : "Delete"}
+                    {deleting ? <IoReloadOutline size={14} className="animate-spin" /> : <IoTrash size={14} />}
+                    Delete
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent size="sm">
@@ -370,7 +390,8 @@ export const StudentDialog = () => {
                 Cancel
               </Button>
               <Button type="submit" disabled={loading}>
-                {loading ? (isEdit ? "Saving..." : "Adding...") : (isEdit ? "Save Changes" : "Add Student")}
+                {loading ? <IoReloadOutline size={14} className="animate-spin" /> : isEdit ? <IoSaveOutline size={14} /> : <IoAddOutline size={14} />}
+                {isEdit ? "Save Changes" : "Add Student"}
               </Button>
             </div>
           </DialogFooter>

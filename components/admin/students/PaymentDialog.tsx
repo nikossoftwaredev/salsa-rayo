@@ -6,6 +6,8 @@ import {
   IoCashOutline,
   IoCardOutline,
   IoWalletOutline,
+  IoReloadOutline,
+  IoAddOutline,
 } from "react-icons/io5"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
@@ -224,7 +226,8 @@ export const PaymentDialog = () => {
               Cancel
             </Button>
             <Button type="submit" disabled={loading || form.amount <= 0}>
-              {loading ? "Recording..." : `Record €${form.amount}`}
+              {loading ? <IoReloadOutline size={14} className="animate-spin" /> : <IoAddOutline size={14} />}
+              {`Record €${form.amount}`}
             </Button>
           </DialogFooter>
         </form>

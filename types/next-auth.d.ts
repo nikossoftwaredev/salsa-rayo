@@ -5,6 +5,7 @@ declare module "next-auth" {
     user: {
       id: string
       isAdmin: boolean
+      isNewUser?: boolean
       rayoPoints: number
       subscriptionExpiresAt: string | null
       avatarImage: string | null

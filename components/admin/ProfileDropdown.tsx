@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { getInitials } from "@/lib/format";
 import { IoHome, IoLogInOutline, IoLogOutOutline, IoPerson, IoCalendar, IoImages, IoHelpCircle, IoNewspaper } from "react-icons/io5";
 import { MdAdminPanelSettings, MdInfo, MdAttachMoney, MdMenu, MdOutlineEdit } from "react-icons/md";
 import { EditProfileSheet } from "@/components/EditProfileSheet";
 import { GiOrbDirection } from "react-icons/gi";
+import { SignInDialog } from "@/components/SignInDialog";
 import { usePathname } from "next/navigation";
 import { useLocale } from "next-intl";
 import { headerLinks } from "@/data/config";
@@ -54,13 +55,14 @@ export const ProfileDropdown = ({
   showNavRoutes = false,
 }: ProfileDropdownProps) => {
   const [editOpen, setEditOpen] = useState(false);
+  const [signInOpen, setSignInOpen] = useState(false);
   const { data: session } = useSession();
   const pathname = usePathname();
   const locale = useLocale();
   const isOnAdmin = pathname.includes("/admin");
   const isAuthenticated = !!session;
 
-  const fullName = session?.user?.name || "Admin";
+  const fullName = session?.user?.name || session?.user?.email?.split("@")[0] || "";
   const firstName = fullName.split(" ")[0];
   const userImage = resolveAvatarSrc(session?.user?.avatarImage, session?.user?.image);
   const userEmail = session?.user?.email || "";
@@ -98,7 +100,7 @@ export const ProfileDropdown = ({
         {/* User info — authenticated only */}
         {isAuthenticated && (
           <>
-            <DropdownMenuLabel className="font-normal">
+            <DropdownMenuLabel className="font-normal overflow-hidden">
               <UserCard
                 name={fullName}
                 email={userEmail}
@@ -169,7 +171,7 @@ export const ProfileDropdown = ({
 
         {/* Sign in — unauthenticated only */}
         {!isAuthenticated && (
-          <DropdownMenuItem onClick={() => signIn("google")}>
+          <DropdownMenuItem onClick={() => setSignInOpen(true)}>
             <IoLogInOutline size={16} />
             Sign in
           </DropdownMenuItem>
@@ -182,6 +184,7 @@ export const ProfileDropdown = ({
       {isAuthenticated && (
         <EditProfileSheet open={editOpen} onOpenChange={setEditOpen} />
       )}
+      <SignInDialog open={signInOpen} onOpenChange={setSignInOpen} />
     </DropdownMenu>
   );
 };

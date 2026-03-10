@@ -20,6 +20,7 @@ export const getOwnProfile = async () => {
           instagram: true,
           website: true,
           avatarImage: true,
+          dancingYears: true,
         },
       },
     },
@@ -34,5 +35,6 @@ export const getOwnProfile = async () => {
     instagram: user.student.instagram,
     website: user.student.website,
     avatarImage: user.student.avatarImage,
+    dancingYears: user.student.dancingYears,
   };
 };

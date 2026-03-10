@@ -9,6 +9,8 @@ import {
   IoTimeOutline,
   IoPersonOutline,
   IoChevronDown,
+  IoReloadOutline,
+  IoSaveOutline,
 } from "react-icons/io5"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -386,7 +388,8 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                                     disabled={!hasPendingChanges || submitting}
                                     onClick={handleGlobalSubmit}
                                   >
-                                    {submitting ? "Saving..." : "Save"}
+                                    {submitting ? <IoReloadOutline size={14} className="animate-spin" /> : <IoSaveOutline size={14} />}
+                                    Save
                                   </Button>
                                 </div>
 
@@ -455,7 +458,8 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
               Discard
             </Button>
             <Button onClick={handleUnsavedSave} disabled={submitting}>
-              {submitting ? "Saving..." : "Save"}
+              {submitting ? <IoReloadOutline size={14} className="animate-spin" /> : <IoSaveOutline size={14} />}
+              Save
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

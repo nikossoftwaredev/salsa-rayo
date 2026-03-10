@@ -14,7 +14,7 @@ import { SectionTitle } from "@/components/SectionTitle";
 import { Textarea } from "@/components/ui/textarea";
 import { IoMdSend } from "react-icons/io";
 import { FaUser, FaPhone, FaEnvelope } from "react-icons/fa6";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { IoReloadOutline } from "react-icons/io5";
 import { sendContactFormEmail } from "@/server-actions/send-email";
 import Toast from "@/components/Toast";
 import { z } from "zod";
@@ -313,19 +313,8 @@ const ContactForm = ({
             type="submit"
             size="lg"
           >
-            <span className="flex items-center justify-center gap-2">
-              {loading ? (
-                <>
-                  <AiOutlineLoading3Quarters className="animate-spin h-4 w-4" />
-                  {t("sending")}
-                </>
-              ) : (
-                <>
-                  {t("send")}
-                  <IoMdSend size={18} />
-                </>
-              )}
-            </span>
+            {loading ? <IoReloadOutline size={16} className="animate-spin" /> : <IoMdSend size={16} />}
+            {t("send")}
           </Button>
         </form>
       </Card>

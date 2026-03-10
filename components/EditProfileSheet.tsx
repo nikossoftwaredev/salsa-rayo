@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { IoPersonOutline, IoCallOutline, IoLogoInstagram, IoGlobeOutline } from "react-icons/io5";
+import { IoPersonOutline, IoCallOutline, IoLogoInstagram, IoGlobeOutline, IoReloadOutline } from "react-icons/io5";
 import { MdOutlineEdit } from "react-icons/md";
 import {
   Sheet,
@@ -37,6 +37,7 @@ interface ProfileData {
   instagram: string;
   website: string;
   avatarImage: string | null;
+  dancingYears: string;
 }
 
 interface EditProfileSheetProps {
@@ -45,10 +46,10 @@ interface EditProfileSheetProps {
 }
 
 const FIELDS = [
-  { key: "name", label: "Name", icon: IoPersonOutline, placeholder: "Your name", maxLength: 100 },
-  { key: "phone", label: "Phone", icon: IoCallOutline, placeholder: "+30 000 000 0000", maxLength: 20 },
-  { key: "instagram", label: "Instagram", icon: IoLogoInstagram, placeholder: "username", maxLength: 50 },
-  { key: "website", label: "Website", icon: IoGlobeOutline, placeholder: "https://yoursite.com", maxLength: 200 },
+  { key: "name", label: "Name", icon: IoPersonOutline, placeholder: "Your name", maxLength: 100, required: true },
+  { key: "phone", label: "Phone", icon: IoCallOutline, placeholder: "+30 000 000 0000", maxLength: 10, required: true },
+  { key: "instagram", label: "Instagram", icon: IoLogoInstagram, placeholder: "username", maxLength: 50, required: false },
+  { key: "website", label: "Website", icon: IoGlobeOutline, placeholder: "https://yoursite.com", maxLength: 200, required: false },
 ] as const;
 
 const AVATAR_OPTIONS = [
@@ -56,7 +57,7 @@ const AVATAR_OPTIONS = [
   ...orishas.map((o) => ({ id: o.id, name: o.name, image: o.image })),
 ];
 
-const EMPTY_FORM: ProfileData = { name: "", bio: "", phone: "", instagram: "", website: "", avatarImage: null };
+const EMPTY_FORM: ProfileData = { name: "", bio: "", phone: "", instagram: "", website: "", avatarImage: null, dancingYears: "" };
 
 export const EditProfileSheet = ({ open, onOpenChange }: EditProfileSheetProps) => {
   const [form, setForm] = useState<ProfileData>(EMPTY_FORM);
@@ -72,7 +73,10 @@ export const EditProfileSheet = ({ open, onOpenChange }: EditProfileSheetProps) 
   const handleSave = useCallback(async () => {
     setIsSaving(true);
     try {
-      await updateProfile(form);
+      await updateProfile({
+        ...form,
+        dancingYears: form.dancingYears ? parseInt(form.dancingYears) : null,
+      });
       toast.success("Profile updated!");
       onOpenChange(false);
       router.refresh();
@@ -102,6 +106,7 @@ export const EditProfileSheet = ({ open, onOpenChange }: EditProfileSheetProps) 
             instagram: data.instagram || "",
             website: data.website || "",
             avatarImage: data.avatarImage || null,
+            dancingYears: data.dancingYears?.toString() ?? "",
           });
         }
       } finally {
@@ -206,10 +211,10 @@ export const EditProfileSheet = ({ open, onOpenChange }: EditProfileSheetProps) 
                 </Popover>
               </div>
 
-              {FIELDS.map(({ key, label, icon: Icon, placeholder, maxLength }) => (
+              {FIELDS.map(({ key, label, icon: Icon, placeholder, maxLength, required }) => (
                 <div key={key} className="space-y-1.5">
                   <Label htmlFor={key} className="text-xs text-muted-foreground">
-                    {label}
+                    {label}{required && <span className="text-red-500 ml-0.5">*</span>}
                   </Label>
                   <div className="relative">
                     <Icon size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
@@ -223,6 +228,21 @@ export const EditProfileSheet = ({ open, onOpenChange }: EditProfileSheetProps) 
                   </div>
                 </div>
               ))}
+
+              <div className="space-y-1.5">
+                <Label htmlFor="dancingYears" className="text-xs text-muted-foreground">
+                  Dancing Years
+                </Label>
+                <Input
+                  id="dancingYears"
+                  type="number"
+                  min={0}
+                  max={50}
+                  value={form.dancingYears}
+                  onChange={(e) => handleChange("dancingYears", e.target.value)}
+                  placeholder="Years of salsa experience"
+                />
+              </div>
 
               <div className="space-y-1.5">
                 <Label htmlFor="bio" className="text-xs text-muted-foreground">
@@ -249,10 +269,11 @@ export const EditProfileSheet = ({ open, onOpenChange }: EditProfileSheetProps) 
             variant="gradient"
             size="lg"
             onClick={handleSave}
-            disabled={isSaving || isLoading || !form.name.trim()}
+            disabled={isSaving || isLoading || !form.name.trim() || !form.phone.trim()}
             className="w-full"
           >
-            {isSaving ? "Saving..." : "Save Changes"}
+            {isSaving ? <IoReloadOutline size={16} className="animate-spin" /> : <MdOutlineEdit size={16} />}
+            Save Changes
           </Button>
         </SheetFooter>
       </SheetContent>

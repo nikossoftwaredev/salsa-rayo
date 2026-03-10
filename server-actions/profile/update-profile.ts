@@ -13,13 +13,14 @@ interface UpdateProfileData {
   instagram?: string;
   website?: string;
   avatarImage?: string | null;
+  dancingYears?: number | null;
 }
 
 export const updateProfile = async (data: UpdateProfileData) => {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) throw new Error("Unauthorized");
 
-  const update: Record<string, string | null | undefined> = {};
+  const update: Record<string, string | number | null | undefined> = {};
 
   if (data.name !== undefined) {
     const name = data.name.trim().slice(0, 100);
@@ -30,7 +31,7 @@ export const updateProfile = async (data: UpdateProfileData) => {
     update.bio = bio || null;
   }
   if (data.phone !== undefined) {
-    const phone = data.phone.trim().slice(0, 20);
+    const phone = data.phone.trim().slice(0, 10);
     update.phone = phone || null;
   }
   if (data.instagram !== undefined) {
@@ -43,6 +44,10 @@ export const updateProfile = async (data: UpdateProfileData) => {
   }
   if (data.avatarImage !== undefined) {
     update.avatarImage = data.avatarImage || null;
+  }
+
+  if (data.dancingYears !== undefined) {
+    update.dancingYears = data.dancingYears ?? null;
   }
 
   await prisma.student.updateMany({
