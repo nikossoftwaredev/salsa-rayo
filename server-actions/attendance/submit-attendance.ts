@@ -48,10 +48,11 @@ export const submitAttendance = async ({
         skipDuplicates: true,
       })
 
-      await tx.student.updateMany({
-        where: { id: { in: studentIds } },
-        data: { rayoPoints: { increment: 30 } },
-      })
+      // TODO: Enable in September 2026
+      // await tx.student.updateMany({
+      //   where: { id: { in: studentIds } },
+      //   data: { rayoPoints: { increment: 30 } },
+      // })
     })
 
     return { success: true as const }

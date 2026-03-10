@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { IoPersonOutline, IoCallOutline, IoLogoInstagram, IoGlobeOutline, IoReloadOutline } from "react-icons/io5";
+import { IoPersonOutline, IoLogoInstagram, IoGlobeOutline, IoReloadOutline } from "react-icons/io5";
 import { MdOutlineEdit } from "react-icons/md";
 import {
   Sheet,
@@ -19,6 +19,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
+import { PhoneInput } from "@/components/ui/phone-input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -47,7 +48,6 @@ interface EditProfileSheetProps {
 
 const FIELDS = [
   { key: "name", label: "Name", icon: IoPersonOutline, placeholder: "Your name", maxLength: 100, required: true },
-  { key: "phone", label: "Phone", icon: IoCallOutline, placeholder: "+30 000 000 0000", maxLength: 10, required: true },
   { key: "instagram", label: "Instagram", icon: IoLogoInstagram, placeholder: "username", maxLength: 50, required: false },
   { key: "website", label: "Website", icon: IoGlobeOutline, placeholder: "https://yoursite.com", maxLength: 200, required: false },
 ] as const;
@@ -228,6 +228,18 @@ export const EditProfileSheet = ({ open, onOpenChange }: EditProfileSheetProps) 
                   </div>
                 </div>
               ))}
+
+              <div className="space-y-1.5">
+                <Label htmlFor="phone" className="text-xs text-muted-foreground">
+                  Phone<span className="text-red-500 ml-0.5">*</span>
+                </Label>
+                <PhoneInput
+                  id="phone"
+                  value={form.phone}
+                  onChange={(val) => handleChange("phone", val)}
+                  placeholder="6912345678"
+                />
+              </div>
 
               <div className="space-y-1.5">
                 <Label htmlFor="dancingYears" className="text-xs text-muted-foreground">

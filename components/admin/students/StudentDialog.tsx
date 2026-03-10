@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation"
 import {
   IoPersonOutline,
   IoMailOutline,
-  IoCallOutline,
   IoLocationOutline,
   IoFlash,
   IoTrash,
@@ -34,6 +33,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
+import { PhoneInput } from "@/components/ui/phone-input"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
@@ -63,7 +63,7 @@ const getInitialForm = () => ({
   notes: "",
   dancingYears: "",
   isActive: true,
-  rayoPoints: 0,
+  rayoPoints: "30",
   joinedDate: toLocalDateString(new Date()),
   subscriptionStartDate: null as string | null,
 })
@@ -107,7 +107,7 @@ export const StudentDialog = () => {
         notes: form.notes || undefined,
         dancingYears: form.dancingYears ? parseInt(form.dancingYears) : null,
         ...(editedJoinedDate && { createdAt: new Date(form.joinedDate) }),
-        ...(isEdit && { isActive: form.isActive, rayoPoints: form.rayoPoints }),
+        ...(isEdit && { isActive: form.isActive, rayoPoints: Math.max(0, parseInt(form.rayoPoints) || 0) }),
       }
 
       const result = isEdit
@@ -173,7 +173,7 @@ export const StudentDialog = () => {
         notes: student.notes ?? "",
         dancingYears: student.dancingYears?.toString() ?? "",
         isActive: student.isActive,
-        rayoPoints: student.rayoPoints,
+        rayoPoints: student.rayoPoints.toString(),
         joinedDate: toLocalDateString(new Date(student.createdAt)),
         subscriptionStartDate: activeSubscription ? toLocalDateString(new Date(activeSubscription.startDate)) : null,
       })
@@ -229,19 +229,13 @@ export const StudentDialog = () => {
 
           <div className="grid gap-2">
             <Label htmlFor="phone">Phone</Label>
-            <div className="relative">
-              <IoCallOutline size={16} className="absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                id="phone"
-                name="phone"
-                type="tel"
-                value={form.phone}
-                onChange={handleChange}
-                placeholder="6912345678"
-                maxLength={10}
-                className="pl-9"
-              />
-            </div>
+            <PhoneInput
+              id="phone"
+              name="phone"
+              value={form.phone}
+              onChange={(val) => setForm((prev) => ({ ...prev, phone: val }))}
+              placeholder="6912345678"
+            />
           </div>
 
           <div className="grid gap-2">
@@ -333,7 +327,7 @@ export const StudentDialog = () => {
                   type="number"
                   min={0}
                   value={form.rayoPoints}
-                  onChange={(e) => setForm((prev) => ({ ...prev, rayoPoints: Math.max(0, parseInt(e.target.value) || 0) }))}
+                  onChange={(e) => setForm((prev) => ({ ...prev, rayoPoints: e.target.value }))}
                   className="pl-9"
                 />
               </div>

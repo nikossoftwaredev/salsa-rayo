@@ -2,25 +2,26 @@ import { IoFlash } from "react-icons/io5"
 import { cn } from "@/lib/utils"
 import { compactFormatter } from "@/lib/format"
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
 interface RayoPointsProps {
   points: number
   size?: "sm" | "default"
-  showTooltip?: boolean
+  showPopover?: boolean
   className?: string
 }
 
-export const RayoPoints = ({ points, size = "default", showTooltip = false, className }: RayoPointsProps) => {
+export const RayoPoints = ({ points, size = "default", showPopover = false, className }: RayoPointsProps) => {
   if (points < 0) return null
 
   const content = (
     <span
       className={cn(
         "inline-flex items-center gap-1 text-yellow-400",
+        showPopover && "cursor-pointer rayo-shake",
         size === "sm" ? "text-xs" : "text-sm font-semibold",
         className
       )}
@@ -30,12 +31,15 @@ export const RayoPoints = ({ points, size = "default", showTooltip = false, clas
     </span>
   )
 
-  if (!showTooltip) return content
+  if (!showPopover) return content
 
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>{content}</TooltipTrigger>
-      <TooltipContent>Points earned by attending classes. Use them for gifts or discounts!</TooltipContent>
-    </Tooltip>
+    <Popover>
+      <PopoverTrigger asChild>{content}</PopoverTrigger>
+      <PopoverContent className="w-auto px-4 py-3 text-center">
+        <p className="text-sm font-semibold">Rayo Points</p>
+        <p className="text-xs text-muted-foreground">Coming Soon...</p>
+      </PopoverContent>
+    </Popover>
   )
 }

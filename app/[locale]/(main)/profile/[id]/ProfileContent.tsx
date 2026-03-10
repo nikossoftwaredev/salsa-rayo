@@ -91,7 +91,7 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
         <h1 className="text-2xl font-bold tracking-tight text-foreground">
           {fullName}
         </h1>
-        {student && <RayoPoints points={student.rayoPoints} showTooltip />}
+        {student && <RayoPoints points={student.rayoPoints} showPopover />}
       </motion.div>
 
       {/* Social Icons */}

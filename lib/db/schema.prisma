@@ -69,7 +69,7 @@ model Student {
   avatarImage   String?
   dancingYears  Int?
   isActive      Boolean        @default(true)
-  rayoPoints    Int            @default(0)
+  rayoPoints    Int            @default(30)
   subscriptions Subscription[]
   transactions  Transaction[]
   attendances   Attendance[]

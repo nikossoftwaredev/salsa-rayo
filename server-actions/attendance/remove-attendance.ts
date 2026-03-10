@@ -16,16 +16,17 @@ export const removeAttendance = async (attendanceId: string) => {
         select: { studentId: true },
       })
 
-      await tx.student.update({
-        where: { id: attendance.studentId },
-        data: { rayoPoints: { decrement: 30 } },
-      })
-
-      // Floor at 0
-      await tx.student.updateMany({
-        where: { id: attendance.studentId, rayoPoints: { lt: 0 } },
-        data: { rayoPoints: 0 },
-      })
+      // TODO: Enable in September 2026
+      // await tx.student.update({
+      //   where: { id: attendance.studentId },
+      //   data: { rayoPoints: { decrement: 30 } },
+      // })
+      //
+      // // Floor at 0
+      // await tx.student.updateMany({
+      //   where: { id: attendance.studentId, rayoPoints: { lt: 0 } },
+      //   data: { rayoPoints: 0 },
+      // })
     })
 
     revalidatePath("/admin/attendance")

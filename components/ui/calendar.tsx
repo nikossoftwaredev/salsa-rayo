@@ -14,6 +14,7 @@ import { Button, buttonVariants } from "@/components/ui/button"
 const Calendar = ({
   className,
   classNames,
+  fixedWeeks = true,
   showOutsideDays = true,
   captionLayout = "label",
   buttonVariant = "ghost",
@@ -27,6 +28,7 @@ const Calendar = ({
 
   return (
     <DayPicker
+      fixedWeeks={fixedWeeks}
       showOutsideDays={showOutsideDays}
       className={cn(
         "group/calendar p-4 [--cell-size:--spacing(10)] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent",

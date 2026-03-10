@@ -39,13 +39,13 @@ export const AuthButton = ({ showNavRoutes = false }: AuthButtonProps) => {
     return (
       <div className="flex items-center gap-2">
         <ProfileDropdown showNavRoutes={showNavRoutes} />
-        <RayoPoints points={session.user.rayoPoints} size="sm" />
+        <RayoPoints points={session.user.rayoPoints} size="sm" showPopover />
       </div>
     );
 
   return (
     <div className="flex items-center gap-2">
-      {session && <RayoPoints points={session.user.rayoPoints} size="sm" />}
+      {session && <RayoPoints points={session.user.rayoPoints} size="sm" showPopover />}
       <ProfileDropdown showNavRoutes={showNavRoutes} />
     </div>
   );
