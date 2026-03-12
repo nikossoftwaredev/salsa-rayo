@@ -4,7 +4,7 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
-import { FaArrowLeft, FaClock, FaCalendarAlt } from "react-icons/fa";
+import { FaArrowLeft, FaClock, FaCalendarAlt, FaUser } from "react-icons/fa";
 import type { Post } from "@/lib/blog";
 
 interface BlogArticleProps {
@@ -43,6 +43,10 @@ export const BlogArticle = ({ post, locale }: BlogArticleProps) => {
             <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
               <FaClock className="size-3" />
               {post.readingTime} min {locale === "el" ? "ανάγνωση" : "read"}
+            </span>
+            <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
+              <FaUser className="size-3" />
+              {post.frontmatter.author}
             </span>
           </div>
 

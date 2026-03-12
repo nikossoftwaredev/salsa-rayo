@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
-import { getBreadcrumbSchema } from "@/lib/schema";
+import { getBreadcrumbSchema, getArticleAuthorSchema } from "@/lib/schema";
 import { getPostBySlug, getAllSlugs } from "@/lib/blog";
 import { notFound } from "next/navigation";
 import { BlogArticle } from "./BlogArticle";
@@ -78,11 +78,7 @@ const BlogPostPage = async ({ params }: BlogPostPageProps) => {
     description: post.frontmatter.description,
     url: `${BASE_URL}/${locale}/blog/${slug}`,
     inLanguage: locale,
-    author: {
-      "@type": "Organization",
-      name: post.frontmatter.author,
-      "@id": `${BASE_URL}/#organization`,
-    },
+    author: getArticleAuthorSchema(post.frontmatter.author),
     publisher: {
       "@id": `${BASE_URL}/#organization`,
     },

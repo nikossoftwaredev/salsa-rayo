@@ -24,7 +24,7 @@ export const getDanceSchoolSchema = () => ({
   image: `${BASE_URL}/images/gallery/our-space.jpg`,
   logo: `${BASE_URL}/images/logo.png`,
   description:
-    "Salsa Rayo is a dance school in Athens, Greece offering Salsa, Bachata, Mambo, and Styling classes for all levels. Located in Agios Dimitrios.",
+    "Salsa Rayo is a New York Style Salsa (On2) and Bachata dance school in Agios Dimitrios, Athens, Greece. We also offer Mambo, Pachanga, and Styling classes for all levels.",
   foundingDate: "2025-09-01",
   currenciesAccepted: "EUR",
   paymentAccepted: "Cash, Credit Card",
@@ -366,6 +366,27 @@ export const getPersonSchema = ({
     "@id": `${BASE_URL}/#organization`,
   },
 });
+
+// ============================================================
+// Article author schema - enriched for GEO citability
+// ============================================================
+export const getArticleAuthorSchema = (authorName: string) => {
+  // If author is the organization, return organization reference
+  if (authorName === "Salsa Rayo" || authorName === BUSINESS_NAME)
+    return {
+      "@type": "Organization",
+      name: BUSINESS_NAME,
+      "@id": `${BASE_URL}/#organization`,
+      url: BASE_URL,
+      sameAs: [INSTAGRAM_URL, YOUTUBE_URL, FACEBOOK_URL],
+    };
+
+  return {
+    "@type": "Person",
+    name: authorName,
+    worksFor: { "@id": `${BASE_URL}/#organization` },
+  };
+};
 
 // ============================================================
 // Article schema for Orishas educational page

@@ -26,9 +26,9 @@ const TITLES: Record<string, string> = {
 };
 
 const DESCRIPTIONS: Record<string, string> = {
-  en: "Salsa Rayo is a dance school offering Salsa and Bachata classes for all levels in Agios Dimitrios, Athens, Greece. Expert instructors, welcoming community. From €50/month.",
-  el: "Η Salsa Rayo είναι σχολή χορού με μαθήματα Salsa και Bachata για όλα τα επίπεδα στον Άγιο Δημήτριο, Αθήνα. Έμπειροι δάσκαλοι, φιλόξενη κοινότητα. Από €50/μήνα.",
-  es: "Salsa Rayo es una escuela de baile que ofrece clases de Salsa y Bachata para todos los niveles en Agios Dimitrios, Atenas, Grecia. Instructores expertos. Desde €50/mes.",
+  en: "Salsa Rayo offers Salsa and Bachata classes for all levels in Agios Dimitrios, Athens, Greece. We teach New York Style Salsa (On2). Expert instructors, welcoming community. From €50/month.",
+  el: "Η Salsa Rayo προσφέρει μαθήματα Salsa και Bachata για όλα τα επίπεδα στον Άγιο Δημήτριο, Αθήνα. Διδάσκουμε New York Style Salsa (On2). Έμπειροι δάσκαλοι. Από €50/μήνα.",
+  es: "Salsa Rayo ofrece clases de Salsa y Bachata para todos los niveles en Agios Dimitrios, Atenas, Grecia. Enseñamos Salsa Estilo Nueva York (On2). Instructores expertos. Desde €50/mes.",
 };
 
 export const generateMetadata = async ({

@@ -4,7 +4,7 @@ import FaqSection from "@/components/sections/faq/FaqSection";
 import BackgroundEffects from "@/components/BackgroundEffects";
 import { BasePageProps } from "@/types/pageprops";
 import JsonLd from "@/components/JsonLd";
-import { getBreadcrumbSchema } from "@/lib/schema";
+import { getBreadcrumbSchema, getFAQPageSchema } from "@/lib/schema";
 import { FAQ_ITEMS } from "@/data/faq";
 
 export const generateMetadata = async ({
@@ -53,13 +53,21 @@ const FaqPage = async ({ params }: BasePageProps) => {
   const locale = (await params).locale;
   const t = await getTranslations("Faq");
 
+  const faqSchemaItems = FAQ_ITEMS.map((item) => ({
+    question: t(item.questionKey),
+    answer: t(item.answerKey),
+  }));
+
   return (
     <main className="min-h-screen bg-background">
       <JsonLd
-        data={getBreadcrumbSchema([
-          { name: "Home", url: `https://www.salsarayo.com/${locale}` },
-          { name: "FAQ", url: `https://www.salsarayo.com/${locale}/faq` },
-        ])}
+        data={[
+          getBreadcrumbSchema([
+            { name: "Home", url: `https://www.salsarayo.com/${locale}` },
+            { name: "FAQ", url: `https://www.salsarayo.com/${locale}/faq` },
+          ]),
+          getFAQPageSchema(faqSchemaItems),
+        ]}
       />
       {/* Server-rendered FAQ content for AI crawlers (hidden visually, present in DOM) */}
       <div className="sr-only" aria-hidden="true">
