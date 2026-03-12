@@ -23,6 +23,12 @@ import { copyToClipboard, formatDate } from "@/lib/format"
 import { removeAttendance } from "@/server-actions/attendance/remove-attendance"
 import { type AttendanceRecord } from "@/server-actions/attendance/get-all-attendances"
 
+const classTitle = (dc: AttendanceRecord["danceClass"]) =>
+  dc.title ?? dc.scheduleEntry?.title ?? "Deleted class"
+
+const classTime = (dc: AttendanceRecord["danceClass"]) =>
+  dc.time ?? dc.scheduleEntry?.time ?? ""
+
 const DeleteAction = ({ row, onSuccess }: { row: AttendanceRecord; onSuccess: () => void }) => {
   const [loading, setLoading] = useState(false)
 
@@ -93,22 +99,23 @@ export const columns: ColumnDef<AttendanceRecord>[] = [
   },
   {
     id: "class",
-    accessorFn: (row) => row.danceClass.scheduleEntry.title,
+    accessorFn: (row) => classTitle(row.danceClass),
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Class" />
     ),
     cell: ({ row }) => {
-      const { title, time } = row.original.danceClass.scheduleEntry
+      const title = classTitle(row.original.danceClass)
+      const time = classTime(row.original.danceClass)
       return (
         <div>
           <span className="font-medium">{title}</span>
-          <p className="text-xs text-muted-foreground">{time}</p>
+          {time && <p className="text-xs text-muted-foreground">{time}</p>}
         </div>
       )
     },
     filterFn: (row, _id, value: string[]) => {
       if (!value?.length) return true
-      return value.includes(row.original.danceClass.scheduleEntry.title)
+      return value.includes(classTitle(row.original.danceClass))
     },
   },
   {

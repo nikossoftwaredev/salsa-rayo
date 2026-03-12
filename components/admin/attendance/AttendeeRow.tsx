@@ -1,6 +1,5 @@
 "use client"
 
-import { IoCloseCircle } from "react-icons/io5"
 import { cn } from "@/lib/utils"
 import { RayoPoints } from "@/components/ui/rayo-points"
 import { SubscriptionBadge } from "@/components/ui/subscription-badge"
@@ -8,7 +7,6 @@ import { SubscriptionBadge } from "@/components/ui/subscription-badge"
 interface AttendeeRowProps {
   student: {
     name: string
-    email?: string
     rayoPoints: number
     subscriptionExpiresAt: Date | string | null
   }
@@ -16,41 +14,30 @@ interface AttendeeRowProps {
   onClick?: () => void
 }
 
+const shortenName = (name: string) => {
+  const parts = name.trim().split(/\s+/)
+  if (parts.length < 2) return name
+  return `${parts[0]} ${parts[parts.length - 1].slice(0, 2)}.`
+}
+
 export const AttendeeRow = ({ student, onRemove, onClick }: AttendeeRowProps) => {
-  const Wrapper = onClick ? "button" : "div"
+  const action = onClick ?? onRemove
+  const Wrapper = action ? "button" : "div"
 
   return (
     <Wrapper
-      type={onClick ? "button" : undefined}
-      onClick={onClick}
+      type={action ? "button" : undefined}
+      onClick={action}
       className={cn(
         "flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left transition-colors hover:bg-accent sm:gap-3 sm:px-3 sm:py-2",
-        onClick && "cursor-pointer"
+        action && "cursor-pointer"
       )}
     >
-      <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium">{student.name}</p>
-        {student.email && (
-          <p className="truncate text-xs text-muted-foreground">{student.email}</p>
-        )}
-      </div>
+      <p className="min-w-0 flex-1 truncate text-sm font-medium" title={student.name}>{shortenName(student.name)}</p>
 
       <SubscriptionBadge expiresAt={student.subscriptionExpiresAt} />
 
       <RayoPoints points={student.rayoPoints} size="sm" />
-
-      {onRemove && (
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation()
-            onRemove()
-          }}
-          className="shrink-0 cursor-pointer text-muted-foreground/40 transition-colors hover:text-destructive"
-        >
-          <IoCloseCircle size={18} />
-        </button>
-      )}
     </Wrapper>
   )
 }

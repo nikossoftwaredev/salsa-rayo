@@ -14,7 +14,7 @@ import { SectionTitle } from "@/components/SectionTitle";
 import { Textarea } from "@/components/ui/textarea";
 import { IoMdSend } from "react-icons/io";
 import { FaUser, FaPhone, FaEnvelope } from "react-icons/fa6";
-import { IoReloadOutline } from "react-icons/io5";
+import { ImSpinner8 } from "react-icons/im";
 import { sendContactFormEmail } from "@/server-actions/send-email";
 import Toast from "@/components/Toast";
 import { z } from "zod";
@@ -313,7 +313,7 @@ const ContactForm = ({
             type="submit"
             size="lg"
           >
-            {loading ? <IoReloadOutline size={16} className="animate-spin" /> : <IoMdSend size={16} />}
+            {loading ? <ImSpinner8 size={16} className="animate-spin" /> : <IoMdSend size={16} />}
             {t("send")}
           </Button>
         </form>

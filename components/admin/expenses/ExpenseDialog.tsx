@@ -2,7 +2,8 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { IoCashOutline, IoCardOutline, IoWalletOutline, IoReloadOutline, IoSaveOutline, IoAddOutline } from "react-icons/io5"
+import { IoCashOutline, IoCardOutline, IoWalletOutline, IoSaveOutline, IoAddOutline } from "react-icons/io5"
+import { ImSpinner8 } from "react-icons/im"
 import { toast } from "sonner"
 import { DatePicker } from "@/components/ui/date-picker"
 import { Button } from "@/components/ui/button"
@@ -219,7 +220,7 @@ export const ExpenseDialog = ({
               Cancel
             </Button>
             <Button type="submit" disabled={loading || form.amount <= 0 || !form.categoryId}>
-              {loading ? <IoReloadOutline size={14} className="animate-spin" /> : isEditing ? <IoSaveOutline size={14} /> : <IoAddOutline size={14} />}
+              {loading ? <ImSpinner8 size={14} className="animate-spin" /> : isEditing ? <IoSaveOutline size={14} /> : <IoAddOutline size={14} />}
               {isEditing ? "Update" : `Record €${form.amount}`}
             </Button>
           </DialogFooter>

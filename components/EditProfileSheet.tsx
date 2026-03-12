@@ -3,7 +3,8 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { IoPersonOutline, IoLogoInstagram, IoGlobeOutline, IoReloadOutline } from "react-icons/io5";
+import { IoPersonOutline, IoLogoInstagram, IoGlobeOutline } from "react-icons/io5";
+import { ImSpinner8 } from "react-icons/im";
 import { MdOutlineEdit } from "react-icons/md";
 import {
   Sheet,
@@ -284,7 +285,7 @@ export const EditProfileSheet = ({ open, onOpenChange }: EditProfileSheetProps) 
             disabled={isSaving || isLoading || !form.name.trim() || !form.phone.trim()}
             className="w-full"
           >
-            {isSaving ? <IoReloadOutline size={16} className="animate-spin" /> : <MdOutlineEdit size={16} />}
+            {isSaving ? <ImSpinner8 size={16} className="animate-spin" /> : <MdOutlineEdit size={16} />}
             Save Changes
           </Button>
         </SheetFooter>

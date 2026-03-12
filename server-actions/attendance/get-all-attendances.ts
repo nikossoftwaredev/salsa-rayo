@@ -15,24 +15,22 @@ export interface AttendanceRecord {
   }
   danceClass: {
     date: Date
+    title: string | null
+    time: string | null
     scheduleEntry: {
       title: string
       time: string
-    }
+    } | null
   }
 }
 
-export const getAllAttendances = async (): Promise<{
-  success: boolean
-  data?: AttendanceRecord[]
-  error?: string
-}> => {
+export const getAllAttendances = async () => {
   try {
     const adminCheck = await isAdmin()
     if (!adminCheck)
-      return { success: false, error: "Unauthorized: Admin access required" }
+      return { success: false as const, error: "Unauthorized: Admin access required" }
 
-    const attendances = await prisma.attendance.findMany({
+    const attendances: AttendanceRecord[] = await prisma.attendance.findMany({
       orderBy: { createdAt: "desc" },
       select: {
         id: true,
@@ -54,6 +52,8 @@ export const getAllAttendances = async (): Promise<{
         danceClass: {
           select: {
             date: true,
+            title: true,
+            time: true,
             scheduleEntry: {
               select: {
                 title: true,
@@ -65,9 +65,9 @@ export const getAllAttendances = async (): Promise<{
       },
     })
 
-    return { success: true, data: attendances }
+    return { success: true as const, data: attendances }
   } catch (error) {
     console.error("Get all attendances error:", error)
-    return { success: false, error: "Failed to fetch attendances" }
+    return { success: false as const, error: "Failed to fetch attendances" }
   }
 }

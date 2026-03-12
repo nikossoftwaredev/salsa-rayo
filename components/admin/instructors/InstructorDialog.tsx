@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { IoReloadOutline, IoSaveOutline, IoAddOutline } from "react-icons/io5"
+import { IoSaveOutline, IoAddOutline } from "react-icons/io5"
+import { ImSpinner8 } from "react-icons/im"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -151,7 +152,7 @@ export const InstructorDialog = () => {
               Cancel
             </Button>
             <Button type="submit" disabled={loading}>
-              {loading ? <IoReloadOutline size={14} className="animate-spin" /> : isEdit ? <IoSaveOutline size={14} /> : <IoAddOutline size={14} />}
+              {loading ? <ImSpinner8 size={14} className="animate-spin" /> : isEdit ? <IoSaveOutline size={14} /> : <IoAddOutline size={14} />}
               {isEdit ? "Save Changes" : "Add Instructor"}
             </Button>
           </DialogFooter>

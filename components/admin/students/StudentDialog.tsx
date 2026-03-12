@@ -8,10 +8,11 @@ import {
   IoLocationOutline,
   IoFlash,
   IoTrash,
-  IoReloadOutline,
+
   IoSaveOutline,
   IoAddOutline,
 } from "react-icons/io5"
+import { ImSpinner8 } from "react-icons/im"
 import { Button } from "@/components/ui/button"
 import {
   AlertDialog,
@@ -357,7 +358,7 @@ export const StudentDialog = () => {
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button type="button" variant="outline" className="border-destructive/50 text-destructive hover:bg-destructive/10 hover:text-destructive" disabled={deleting}>
-                    {deleting ? <IoReloadOutline size={14} className="animate-spin" /> : <IoTrash size={14} />}
+                    {deleting ? <ImSpinner8 size={14} className="animate-spin" /> : <IoTrash size={14} />}
                     Delete
                   </Button>
                 </AlertDialogTrigger>
@@ -384,7 +385,7 @@ export const StudentDialog = () => {
                 Cancel
               </Button>
               <Button type="submit" disabled={loading}>
-                {loading ? <IoReloadOutline size={14} className="animate-spin" /> : isEdit ? <IoSaveOutline size={14} /> : <IoAddOutline size={14} />}
+                {loading ? <ImSpinner8 size={14} className="animate-spin" /> : isEdit ? <IoSaveOutline size={14} /> : <IoAddOutline size={14} />}
                 {isEdit ? "Save Changes" : "Add Student"}
               </Button>
             </div>

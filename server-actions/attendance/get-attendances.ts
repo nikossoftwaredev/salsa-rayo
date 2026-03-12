@@ -15,12 +15,10 @@ export const getAttendances = async ({ scheduleEntryId, date }: GetAttendancesIn
       return { success: false as const, error: "Unauthorized: Admin access required" }
 
     const dateObj = new Date(date)
-    dateObj.setHours(0, 0, 0, 0)
+    dateObj.setUTCHours(0, 0, 0, 0)
 
-    const danceClass = await prisma.danceClass.findUnique({
-      where: {
-        scheduleEntryId_date: { scheduleEntryId, date: dateObj },
-      },
+    const danceClass = await prisma.danceClass.findFirst({
+      where: { scheduleEntryId, date: dateObj },
       select: {
         attendances: {
           select: {

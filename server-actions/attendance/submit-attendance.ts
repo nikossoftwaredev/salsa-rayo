@@ -25,20 +25,37 @@ export const submitAttendance = async ({
       return { success: false as const, error: "No students selected" }
 
     const dateObj = new Date(date)
-    dateObj.setHours(0, 0, 0, 0)
+    dateObj.setUTCHours(0, 0, 0, 0)
 
     await prisma.$transaction(async (tx) => {
-      const danceClass = await tx.danceClass.upsert({
-        where: {
-          scheduleEntryId_date: { scheduleEntryId, date: dateObj },
-        },
-        create: {
-          scheduleEntryId,
-          date: dateObj,
-          instructors: { connect: instructorIds.map((id) => ({ id })) },
-        },
-        update: {},
+      const scheduleEntry = await tx.scheduleEntry.findUniqueOrThrow({
+        where: { id: scheduleEntryId },
+        select: { title: true, time: true },
       })
+
+      const existing = await tx.danceClass.findFirst({
+        where: { scheduleEntryId, date: dateObj },
+        select: { id: true },
+      })
+
+      const danceClass = existing
+        ? await tx.danceClass.update({
+            where: { id: existing.id },
+            data: {
+              title: scheduleEntry.title,
+              time: scheduleEntry.time,
+              instructors: { set: instructorIds.map((id) => ({ id })) },
+            },
+          })
+        : await tx.danceClass.create({
+            data: {
+              scheduleEntryId,
+              date: dateObj,
+              title: scheduleEntry.title,
+              time: scheduleEntry.time,
+              instructors: { connect: instructorIds.map((id) => ({ id })) },
+            },
+          })
 
       await tx.attendance.createMany({
         data: studentIds.map((studentId) => ({

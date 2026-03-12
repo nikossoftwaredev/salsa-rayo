@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useMemo, useCallback, useRef, useEffect } from "react"
-import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import {
@@ -9,12 +8,13 @@ import {
   IoTimeOutline,
   IoPersonOutline,
   IoChevronDown,
-  IoReloadOutline,
+
   IoSaveOutline,
 } from "react-icons/io5"
+import { ImSpinner8 } from "react-icons/im"
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import {
   AlertDialog,
   AlertDialogContent,
@@ -26,6 +26,7 @@ import {
 import { type ScheduleEntryWithInstructors } from "@/lib/db"
 import { DAY_NAMES } from "@/data/schedule"
 import { getAttendances, type AttendanceRecord } from "@/server-actions/attendance/get-attendances"
+import { getAttendanceCounts } from "@/server-actions/attendance/get-attendance-counts"
 import { submitAttendance } from "@/server-actions/attendance/submit-attendance"
 import { removeAttendance } from "@/server-actions/attendance/remove-attendance"
 import { AttendancePanel, type StudentForAttendance } from "./AttendancePanel"
@@ -41,20 +42,21 @@ const toDayIndex = (date: Date) => {
   return jsDay === 0 ? 7 : jsDay
 }
 
-const toDateString = (date: Date) => {
-  const d = new Date(date)
-  d.setHours(0, 0, 0, 0)
-  return d.toISOString()
-}
+const toDateString = (date: Date) =>
+  new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())).toISOString()
 
 export const AttendanceView = ({ entries }: AttendanceViewProps) => {
-  const router = useRouter()
   const [selectedDate, setSelectedDate] = useState<Date>(new Date())
   const [expandedEntryId, setExpandedEntryId] = useState<string | null>(null)
 
-  // Map of scheduleEntryId -> AttendanceRecord[]
-  const [attendancesMap, setAttendancesMap] = useState<Record<string, AttendanceRecord[]> | null>(null)
-  const fetchIdRef = useRef(0)
+  // Phase 1: lightweight counts per schedule entry (fast)
+  const [countsMap, setCountsMap] = useState<Record<string, number> | null>(null)
+  const countsFetchIdRef = useRef(0)
+
+  // Phase 2: detailed attendance data per entry (lazy, on expand)
+  const [detailMap, setDetailMap] = useState<Record<string, AttendanceRecord[]>>({})
+  const [detailLoadingId, setDetailLoadingId] = useState<string | null>(null)
+  const dateFetchIdRef = useRef(0)
 
   // Pending local changes (not yet saved)
   const [pendingAdds, setPendingAdds] = useState<StudentForAttendance[]>([])
@@ -71,11 +73,13 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
     [entries]
   )
 
+  const todayKey = new Date().toDateString()
   const today = useMemo(() => {
     const d = new Date()
     d.setHours(23, 59, 59, 999)
     return d
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [todayKey])
 
   const disabledDays = useMemo(
     () => [
@@ -96,27 +100,40 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
     year: "numeric",
   })
 
-  const loadAttendances = useCallback(async () => {
+  // Phase 1: fast count fetch on date change
+  const loadCounts = useCallback(async () => {
     if (lessonsForDay.length === 0) return
-    setAttendancesMap(null)
-    const currentFetchId = ++fetchIdRef.current
+    setCountsMap(null)
+    setDetailMap({})
+    setDetailLoadingId(null)
+    const currentFetchId = ++countsFetchIdRef.current
+    ++dateFetchIdRef.current // invalidate any in-flight detail fetches
     const dateStr = toDateString(selectedDate)
 
-    const results = await Promise.all(
-      lessonsForDay.map(async (entry) => {
-        const result = await getAttendances({ scheduleEntryId: entry.id, date: dateStr })
-        return { entryId: entry.id, data: result.success ? result.data ?? [] : [] }
-      })
-    )
+    const result = await getAttendanceCounts({ date: dateStr })
 
-    if (fetchIdRef.current === currentFetchId) {
-      const map: Record<string, AttendanceRecord[]> = {}
-      for (const r of results) map[r.entryId] = r.data
-      setAttendancesMap(map)
+    if (countsFetchIdRef.current === currentFetchId) {
+      setCountsMap(result.success ? result.data ?? {} : {})
     }
   }, [lessonsForDay, selectedDate])
 
-  const loadingAttendances = attendancesMap === null
+  // Phase 2: detailed fetch for a single entry (on expand)
+  const loadDetail = useCallback(async (entryId: string) => {
+    setDetailLoadingId(entryId)
+    const dateId = dateFetchIdRef.current
+    const dateStr = toDateString(selectedDate)
+
+    const result = await getAttendances({ scheduleEntryId: entryId, date: dateStr })
+
+    if (dateFetchIdRef.current !== dateId) return // date changed, discard
+    setDetailMap((prev) => ({
+      ...prev,
+      [entryId]: result.success ? result.data ?? [] : [],
+    }))
+    setDetailLoadingId((prev) => (prev === entryId ? null : prev))
+  }, [selectedDate])
+
+  const loadingCounts = countsMap === null
 
   const resetPending = useCallback(() => {
     setPendingAdds([])
@@ -130,15 +147,17 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
   const handleCardClick = useCallback(
     (entryId: string) => {
       const action = () => {
+        const isCollapsing = expandedEntryId === entryId
         setExpandedEntryId((prev) => (prev === entryId ? null : entryId))
         resetPending()
+        if (!isCollapsing && !detailMap[entryId]) loadDetail(entryId)
       }
       if (hasPendingRef.current) {
         unsavedActionRef.current = action
         setShowUnsavedDialog(true)
       } else action()
     },
-    [resetPending]
+    [resetPending, expandedEntryId, detailMap, loadDetail]
   )
 
   const handleDateSelect = useCallback(
@@ -204,15 +223,38 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
       }
 
       await Promise.all(promises)
+
+      // Optimistic: merge pending changes into local state (no re-fetch)
+      setDetailMap((prev) => {
+        const existing = prev[expandedEntryId] ?? []
+        const afterRemoves = existing.filter((a) => !pendingRemoveIds.has(a.id))
+        const newRecords: AttendanceRecord[] = pendingAdds.map((s) => ({
+          id: crypto.randomUUID(),
+          studentId: s.id,
+          student: {
+            name: s.name,
+            rayoPoints: s.rayoPoints,
+            subscriptions: s.subscriptions,
+          },
+        }))
+        return { ...prev, [expandedEntryId]: [...afterRemoves, ...newRecords] }
+      })
+
+      setCountsMap((prev) => {
+        if (!prev) return prev
+        const existing = prev[expandedEntryId] ?? 0
+        const newCount = existing - pendingRemoveIds.size + pendingAdds.length
+        return { ...prev, [expandedEntryId]: newCount }
+      })
+
       resetPending()
-      loadAttendances()
-      router.refresh()
+      setExpandedEntryId(null)
     } catch {
-      // Silent fail — the user can retry
+      toast.error("Failed to save attendance")
     } finally {
       setSubmitting(false)
     }
-  }, [expandedEntryId, pendingAdds, pendingRemoveIds, lessonsForDay, selectedDate, resetPending, loadAttendances, router])
+  }, [expandedEntryId, pendingAdds, pendingRemoveIds, lessonsForDay, selectedDate, resetPending])
 
   const handleUnsavedSave = useCallback(async () => {
     await handleGlobalSubmit()
@@ -229,14 +271,14 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
   }, [resetPending])
 
   useEffect(() => {
-    loadAttendances()
-  }, [loadAttendances])
+    loadCounts()
+  }, [loadCounts])
 
   return (
-    <div className="flex flex-col gap-8 lg:flex-row">
+    <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
       {/* Calendar panel */}
       <div className="shrink-0">
-        <div className="rounded-xl border bg-card p-2">
+        <div className="mx-auto w-fit rounded-xl border bg-card p-2 lg:mx-0">
           <Calendar
             mode="single"
             selected={selectedDate}
@@ -245,6 +287,8 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
             startMonth={ESTABLISHED_DATE}
             endMonth={today}
             disabled={disabledDays}
+            className="lg:block"
+            classNames={{ month_grid: "lg:text-base" }}
           />
         </div>
       </div>
@@ -269,30 +313,31 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                 <IoCalendarOutline size={32} className="mb-3 opacity-40" />
                 <p className="text-sm">No classes scheduled for {dayName}.</p>
               </div>
-            ) : loadingAttendances ? (
+            ) : loadingCounts ? (
               <div className="flex items-center justify-center py-16">
                 <span className="size-8 animate-spin rounded-full border-3 border-primary/30 border-t-primary" />
               </div>
             ) : (
               <div className="space-y-4">
                 {lessonsForDay.map((entry, i) => {
-                  const attendees = attendancesMap?.[entry.id] ?? []
                   const isExpanded = expandedEntryId === entry.id
+                  const detail = detailMap[entry.id]
+                  const isDetailLoading = detailLoadingId === entry.id
 
-                  // Effective attendees: existing (minus pending removes) + pending adds
-                  const existingVisible = isExpanded
-                    ? attendees.filter((a) => !pendingRemoveIds.has(a.id))
-                    : attendees
+                  // Existing attendees (minus pending removes when expanded)
+                  const existingVisible = detail
+                    ? detail.filter((a) => isExpanded ? !pendingRemoveIds.has(a.id) : true)
+                    : []
+
+                  // Count badge: detail-aware when available, otherwise fast counts
+                  const baseCount = detail ? detail.length : (countsMap?.[entry.id] ?? 0)
                   const effectiveCount = isExpanded
                     ? existingVisible.length + pendingAdds.length
-                    : attendees.length
+                    : baseCount
 
                   // IDs to hide from the left panel
                   const hideIds = isExpanded
-                    ? [
-                        ...existingVisible.map((a) => a.studentId),
-                        ...pendingAdds.map((s) => s.id),
-                      ]
+                    ? [...existingVisible.map((a) => a.studentId), ...pendingAdds.map((s) => s.id)]
                     : []
 
                   return (
@@ -327,13 +372,8 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                             </div>
                           </div>
 
-                          {/* Right: badge + avatars + chevron */}
+                          {/* Right: avatars + badge + chevron */}
                           <div className="flex shrink-0 items-center gap-2.5">
-                            {effectiveCount > 0 && (
-                              <span className="rounded-full bg-yellow-500/10 px-2.5 py-0.5 text-xs font-semibold tabular-nums text-yellow-500">
-                                {effectiveCount}
-                              </span>
-                            )}
                             <div className="hidden sm:flex shrink-0 -space-x-2">
                               {entry.instructors.map((instructor) => (
                                 <div
@@ -350,6 +390,9 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                                 </div>
                               ))}
                             </div>
+                            <span className="min-w-7 rounded-full bg-yellow-500/10 px-2.5 py-0.5 text-center text-xs font-semibold tabular-nums text-yellow-500">
+                              {effectiveCount}
+                            </span>
                             <IoChevronDown
                               size={16}
                               className={`shrink-0 text-muted-foreground/50 transition-transform ${isExpanded ? "rotate-180" : ""}`}
@@ -359,13 +402,14 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                       </div>
 
                       {/* Expanded panel: search left + attendees right */}
-                      <AnimatePresence>
+                      <AnimatePresence initial={false}>
                         {isExpanded && (
                           <motion.div
-                            initial={{ opacity: 0, y: -8 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -8 }}
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
                             transition={{ duration: 0.2 }}
+                            className="overflow-hidden"
                           >
                             <div className="mt-2 grid gap-3 lg:grid-cols-2 lg:gap-4">
                               {/* Left: student picker */}
@@ -388,14 +432,14 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                                     disabled={!hasPendingChanges || submitting}
                                     onClick={handleGlobalSubmit}
                                   >
-                                    {submitting ? <IoReloadOutline size={14} className="animate-spin" /> : <IoSaveOutline size={14} />}
+                                    {submitting ? <ImSpinner8 size={14} className="animate-spin" /> : <IoSaveOutline size={14} />}
                                     Save
                                   </Button>
                                 </div>
 
                                 {/* Scrollable body */}
-                                <ScrollArea className="min-h-0 flex-1 px-1 sm:px-4">
-                                  {loadingAttendances ? (
+                                <div className="min-h-0 flex-1 overflow-y-auto px-1 sm:px-4">
+                                  {isDetailLoading ? (
                                     <div className="flex h-full items-center justify-center py-8">
                                       <span className="size-6 animate-spin rounded-full border-2 border-primary/30 border-t-primary" />
                                     </div>
@@ -430,7 +474,7 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                                       ))}
                                     </div>
                                   )}
-                                </ScrollArea>
+                                </div>
                               </div>
                             </div>
                           </motion.div>
@@ -458,7 +502,7 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
               Discard
             </Button>
             <Button onClick={handleUnsavedSave} disabled={submitting}>
-              {submitting ? <IoReloadOutline size={14} className="animate-spin" /> : <IoSaveOutline size={14} />}
+              {submitting ? <ImSpinner8 size={14} className="animate-spin" /> : <IoSaveOutline size={14} />}
               Save
             </Button>
           </AlertDialogFooter>

@@ -11,7 +11,7 @@ export const removeAttendance = async (attendanceId: string) => {
       return { success: false as const, error: "Unauthorized: Admin access required" }
 
     await prisma.$transaction(async (tx) => {
-      const attendance = await tx.attendance.delete({
+      await tx.attendance.delete({
         where: { id: attendanceId },
         select: { studentId: true },
       })

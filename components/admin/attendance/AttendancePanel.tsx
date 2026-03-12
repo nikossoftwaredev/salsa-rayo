@@ -80,7 +80,6 @@ export const AttendancePanel = ({
                 key={student.id}
                 student={{
                   name: student.name,
-                  email: student.email,
                   rayoPoints: student.rayoPoints,
                   subscriptionExpiresAt: student.subscriptions[0]?.expiresAt ?? null,
                 }}

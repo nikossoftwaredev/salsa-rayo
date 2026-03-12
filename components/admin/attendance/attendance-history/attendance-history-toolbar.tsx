@@ -21,7 +21,8 @@ export const AttendanceHistoryToolbar = ({ table }: AttendanceHistoryToolbarProp
   const classOptions = useMemo(() => {
     const titles = new Set<string>()
     for (const row of coreRows) {
-      titles.add(row.original.danceClass.scheduleEntry.title)
+      const dc = row.original.danceClass
+      titles.add(dc.title ?? dc.scheduleEntry?.title ?? "Deleted class")
     }
     return Array.from(titles)
       .sort()
