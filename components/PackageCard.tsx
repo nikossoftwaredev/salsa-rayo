@@ -5,8 +5,6 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FaBolt } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { useState } from "react";
-import ContactFormModal from "@/components/ContactFormModal";
 
 interface PackageCardProps {
   title: string;
@@ -14,7 +12,7 @@ interface PackageCardProps {
   numberOfLessons: number;
   isMostPopular: boolean;
   isStudentDiscount?: boolean;
-  onClaim?: () => void;
+  onGetStarted: () => void;
 }
 
 const PackageCard = ({
@@ -23,22 +21,16 @@ const PackageCard = ({
   numberOfLessons,
   isMostPopular,
   isStudentDiscount = false,
-  onClaim,
+  onGetStarted,
 }: PackageCardProps) => {
   const t = useTranslations("Package");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleClaim = () => {
-    if (onClaim) onClaim();
-    else setIsModalOpen(true);
-  };
 
   const lessonsPerMonth = numberOfLessons * 4;
-  
-  const displayPrice = isStudentDiscount 
+
+  const displayPrice = isStudentDiscount
     ? Math.floor(parseFloat(price) * 0.9).toString()
     : price;
-  
+
   const features = [
     t("hoursPerMonth", { hours: lessonsPerMonth }),
     t("classesPerWeek", { classes: numberOfLessons }),
@@ -112,7 +104,7 @@ const PackageCard = ({
           <div className="pt-4">
             <Button
               variant="gradient"
-              onClick={handleClaim}
+              onClick={onGetStarted}
               className="w-full font-bold text-base md:text-lg py-3"
             >
               <span className="flex items-center justify-center gap-2">
@@ -126,12 +118,6 @@ const PackageCard = ({
         <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
         <div className="absolute -top-20 -left-20 w-40 h-40 bg-brand-pink/10 rounded-full blur-3xl"></div>
       </Card>
-      
-      <ContactFormModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)}
-        initialMessage={`I am interested in the ${title} (${numberOfLessons} classes per week)${isStudentDiscount ? ' with student discount' : ''}`}
-      />
     </motion.div>
   );
 };

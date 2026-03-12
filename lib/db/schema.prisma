@@ -55,55 +55,62 @@ model User {
 }
 
 model Student {
-  id            String         @id @default(cuid())
-  userId        String?        @unique
-  user          User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
-  name          String
-  email         String
-  phone         String?
-  address       String?
-  notes         String?
-  bio           String?
-  instagram     String?
-  website       String?
-  avatarImage   String?
-  dancingYears  Int?
-  isActive      Boolean        @default(true)
-  rayoPoints    Int            @default(30)
-  subscriptions Subscription[]
-  transactions  Transaction[]
-  attendances   Attendance[]
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  id               String         @id @default(cuid())
+  userId           String?        @unique
+  user             User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
+  name             String
+  email            String
+  phone            String?
+  address          String?
+  notes            String?
+  bio              String?
+  instagram        String?
+  website          String?
+  avatarImage      String?
+  dancingYears     Int?
+  isActive         Boolean        @default(true)
+  rayoPoints       Int            @default(30)
+  stripeCustomerId String?        @unique
+  subscriptions    Subscription[]
+  transactions     Transaction[]
+  attendances      Attendance[]
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
 }
 
 model Subscription {
-  id             String        @id @default(cuid())
-  studentId      String?
-  student        Student?      @relation(fields: [studentId], references: [id], onDelete: SetNull)
-  packageName    String
-  lessonsPerWeek Int
-  amountPaid     Float
-  startDate      DateTime      @default(now())
-  expiresAt      DateTime
-  isActive       Boolean       @default(true)
-  transactions   Transaction[]
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
+  id                   String        @id @default(cuid())
+  studentId            String?
+  student              Student?      @relation(fields: [studentId], references: [id], onDelete: SetNull)
+  packageName          String
+  lessonsPerWeek       Int
+  amountPaid           Float
+  startDate            DateTime      @default(now())
+  expiresAt            DateTime
+  isActive             Boolean       @default(true)
+  stripeSubscriptionId String?       @unique
+  stripePriceId        String?
+  stripeStatus         String?
+  transactions         Transaction[]
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
 }
 
 model Transaction {
-  id             String        @id @default(cuid())
-  studentId      String?
-  student        Student?      @relation(fields: [studentId], references: [id], onDelete: SetNull)
-  subscriptionId String?
-  subscription   Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
-  studentName    String        @default("")
-  amount         Float
-  type           String
-  paymentMethod  String
-  description    String?
-  createdAt      DateTime      @default(now())
+  id                    String        @id @default(cuid())
+  studentId             String?
+  student               Student?      @relation(fields: [studentId], references: [id], onDelete: SetNull)
+  subscriptionId        String?
+  subscription          Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
+  studentName           String        @default("")
+  amount                Float
+  type                  String
+  paymentMethod         String
+  description           String?
+  stripePaymentIntentId String?       @unique
+  stripeInvoiceId       String?
+  invoice               Invoice?
+  createdAt             DateTime      @default(now())
 }
 
 model DanceClass {
@@ -183,4 +190,44 @@ model ScheduleEntry {
   isActive    Boolean      @default(true)
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
+}
+
+model Invoice {
+  id               String       @id @default(cuid())
+  transactionId    String?      @unique
+  transaction      Transaction? @relation(fields: [transactionId], references: [id], onDelete: SetNull)
+  mark             String?      @unique
+  uid              String?      @unique
+  authCode         String?
+  qrUrl            String?
+  series           String
+  sequenceNumber   Int
+  invoiceType      String
+  issueDate        DateTime
+  netAmount        Float
+  vatAmount        Float
+  grossAmount      Float
+  vatCategory      Int
+  paymentMethodCode Int
+  status           String       @default("pending")
+  aadeErrors       String?
+  retryCount       Int          @default(0)
+  lastRetryAt      DateTime?
+  submittedAt      DateTime?
+  cancelledAt      DateTime?
+  cancellationMark String?
+  customerName     String?
+  customerVat      String?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  @@index([status])
+  @@index([mark])
+}
+
+model InvoiceSequence {
+  id         String   @id @default(cuid())
+  series     String   @unique
+  lastNumber Int      @default(0)
+  updatedAt  DateTime @updatedAt
 }

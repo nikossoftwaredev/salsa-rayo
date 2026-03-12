@@ -133,7 +133,19 @@
     "contactUs": "Contact us for personalized guidance on selecting the right package for your dance goals.",
     "getInTouch": "Get in Touch",
     "studentOrYouth": "Student 10% Discount",
-    "studentDiscount": "10% student discount applied"
+    "studentDiscount": "10% student discount applied",
+    "payOnline": "Pay Online",
+    "contactUs2": "Contact Us",
+    "loginToPayOnline": "Log in to pay online",
+    "payNow": "Pay Now",
+    "classesPerWeek": "{count} classes per week",
+    "interestedIn": "I am interested in the {package} ({classes} classes per week)"
+  },
+  "CheckoutSuccess": {
+    "title": "Welcome to the Rayo Family!",
+    "subtitle": "Your payment was successful. See you in class!",
+    "viewSchedule": "View Schedule",
+    "backToPricing": "Back to Pricing"
   },
   "Faq": {
     "pageTitle": "Frequently Asked Questions",

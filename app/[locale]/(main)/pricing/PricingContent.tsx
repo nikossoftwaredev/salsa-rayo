@@ -8,13 +8,103 @@ import { FaBolt } from "react-icons/fa";
 import Logo from "@/components/Logo";
 import { Link } from "@/i18n/routing";
 import { PACKAGES } from "@/data/packages";
-import { useState } from "react";
+import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { useSession } from "next-auth/react";
+import { useLocale } from "next-intl";
+import { useSearchParams } from "next/navigation";
+import { toast } from "sonner";
+import type { StripePackage } from "@/lib/stripe/types";
+import { PackageChoiceDialog } from "./PackageChoiceDialog";
+import { SignInDialog } from "@/components/SignInDialog";
 
-const PricingContent = () => {
+interface PricingContentProps {
+  stripePackages?: StripePackage[];
+}
+
+const PricingContent = ({ stripePackages }: PricingContentProps) => {
   const t = useTranslations("Pricing");
   const [isStudentDiscount, setIsStudentDiscount] = useState(false);
+  const [selectedPackageIndex, setSelectedPackageIndex] = useState<number | null>(null);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [showSignIn, setShowSignIn] = useState(false);
+  const [signInPackageIndex, setSignInPackageIndex] = useState<number>(0);
+  const { data: session } = useSession();
+  const locale = useLocale();
+  const searchParams = useSearchParams();
+  const hasAutoOpenedRef = useRef(false);
+
+  const packages = useMemo(() =>
+    stripePackages?.length
+      ? stripePackages.map((sp) => ({
+          title: sp.name,
+          price: sp.priceAmount.toString(),
+          numberOfLessons: parseInt(sp.metadata.lessonsPerWeek || "2"),
+          isMostPopular: sp.metadata.mostPopular === "true",
+          priceId: sp.priceId,
+        }))
+      : PACKAGES.map((pkg) => ({
+          ...pkg,
+          priceId: undefined as string | undefined,
+        })),
+    [stripePackages]
+  );
+
+  // After login redirect: auto-open dialog for the selected package
+  useEffect(() => {
+    if (hasAutoOpenedRef.current) return;
+    const pkgParam = searchParams.get("pkg");
+    if (pkgParam === null || !session) return;
+    const idx = parseInt(pkgParam);
+    if (!isNaN(idx) && idx >= 0 && idx < packages.length) {
+      hasAutoOpenedRef.current = true;
+      requestAnimationFrame(() => setSelectedPackageIndex(idx));
+    }
+  }, [searchParams, session, packages.length]);
+
+  const handleCheckout = useCallback(
+    async (priceId: string) => {
+      setIsCheckingOut(true);
+      try {
+        const res = await fetch("/api/stripe/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ priceId, isStudentDiscount, locale }),
+        });
+
+        const data = await res.json();
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          toast.error(data.error || "Failed to start checkout");
+          setIsCheckingOut(false);
+        }
+      } catch {
+        toast.error("Failed to start checkout");
+        setIsCheckingOut(false);
+      }
+    },
+    [isStudentDiscount, locale]
+  );
+
+  const handleRequestSignIn = useCallback((packageIndex: number) => {
+    setSelectedPackageIndex(null);
+    setSignInPackageIndex(packageIndex);
+    setShowSignIn(true);
+  }, []);
+
+  const selectedPkg = selectedPackageIndex !== null ? packages[selectedPackageIndex] : null;
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "";
+  const signInCallbackUrl = `${appUrl}/${locale}/pricing?pkg=${signInPackageIndex}`;
+
+  const handleDialogOpenChange = useCallback((open: boolean) => {
+    if (!open) setSelectedPackageIndex(null);
+  }, []);
+
+  const handleDialogCheckout = useCallback(() => {
+    if (selectedPkg?.priceId) handleCheckout(selectedPkg.priceId);
+  }, [selectedPkg, handleCheckout]);
 
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden">
@@ -52,7 +142,7 @@ const PricingContent = () => {
 
         {/* Packages Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {PACKAGES.map((pkg, index) => (
+          {packages.map((pkg, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
@@ -65,6 +155,7 @@ const PricingContent = () => {
                 numberOfLessons={pkg.numberOfLessons}
                 isMostPopular={pkg.isMostPopular}
                 isStudentDiscount={isStudentDiscount}
+                onGetStarted={() => setSelectedPackageIndex(index)}
               />
             </motion.div>
           ))}
@@ -97,6 +188,30 @@ const PricingContent = () => {
           </div>
         </div>
       </div>
+
+      {/* Package Choice Dialog */}
+      {selectedPkg && (
+        <PackageChoiceDialog
+          open={selectedPackageIndex !== null}
+          onOpenChange={handleDialogOpenChange}
+          packageTitle={selectedPkg.title}
+          packageIndex={selectedPackageIndex!}
+          priceId={selectedPkg.priceId}
+          numberOfLessons={selectedPkg.numberOfLessons}
+          isStudentDiscount={isStudentDiscount}
+          isLoggedIn={!!session}
+          isCheckingOut={isCheckingOut}
+          onCheckout={handleDialogCheckout}
+          onRequestSignIn={handleRequestSignIn}
+        />
+      )}
+
+      {/* Sign-in dialog - lives here so it survives choice dialog unmount */}
+      <SignInDialog
+        open={showSignIn}
+        onOpenChange={setShowSignIn}
+        callbackUrl={signInCallbackUrl}
+      />
     </div>
   );
 }

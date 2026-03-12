@@ -17,6 +17,8 @@ import { DataTable } from "@/components/data-table/data-table"
 import { createColumns } from "./columns"
 import { IncomeToolbar } from "./income-toolbar"
 import { deleteTransaction } from "@/server-actions/payments/delete-transaction"
+import { issueInvoiceForTransaction } from "@/server-actions/invoices/issue-invoice-for-transaction"
+import { retryFailedInvoice } from "@/server-actions/invoices/retry-failed-invoice"
 import { type TransactionWithStudent } from "@/server-actions/payments/get-transactions"
 
 interface IncomeTableProps {
@@ -31,6 +33,29 @@ export const IncomeTable = ({ data }: IncomeTableProps) => {
     setDeletingTransaction(transaction)
   }, [])
 
+  const handleIssueInvoice = useCallback(async (transaction: TransactionWithStudent) => {
+    const toastId = toast.loading("Issuing invoice...")
+    const result = await issueInvoiceForTransaction(transaction.id)
+    if (result.success) {
+      toast.success("Invoice issued", { id: toastId })
+      router.refresh()
+    } else {
+      toast.error(result.error, { id: toastId })
+    }
+  }, [router])
+
+  const handleRetryInvoice = useCallback(async (transaction: TransactionWithStudent) => {
+    if (!transaction.invoice) return
+    const toastId = toast.loading("Retrying invoice...")
+    const result = await retryFailedInvoice(transaction.invoice.id)
+    if (result.success) {
+      toast.success("Invoice retried successfully", { id: toastId })
+      router.refresh()
+    } else {
+      toast.error(result.error, { id: toastId })
+    }
+  }, [router])
+
   const confirmDelete = async () => {
     if (!deletingTransaction) return
     const result = await deleteTransaction(deletingTransaction.id)
@@ -43,7 +68,14 @@ export const IncomeTable = ({ data }: IncomeTableProps) => {
     setDeletingTransaction(null)
   }
 
-  const columns = useMemo(() => createColumns({ onDelete: handleDelete }), [handleDelete])
+  const columns = useMemo(
+    () => createColumns({
+      onDelete: handleDelete,
+      onIssueInvoice: handleIssueInvoice,
+      onRetryInvoice: handleRetryInvoice,
+    }),
+    [handleDelete, handleIssueInvoice, handleRetryInvoice]
+  )
 
   return (
     <>

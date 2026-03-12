@@ -133,7 +133,19 @@
     "contactUs": "Επικοινωνήστε μαζί μας για εξατομικευμένη καθοδήγηση στην επιλογή του κατάλληλου πακέτου.",
     "getInTouch": "Επικοινωνήστε",
     "studentOrYouth": "Student 10% Discount",
-    "studentDiscount": "10% φοιτητική έκπτωση"
+    "studentDiscount": "10% φοιτητική έκπτωση",
+    "payOnline": "Πληρωμή Online",
+    "contactUs2": "Επικοινωνία",
+    "loginToPayOnline": "Συνδεθείτε για online πληρωμή",
+    "payNow": "Πληρωμή",
+    "classesPerWeek": "{count} μαθήματα την εβδομάδα",
+    "interestedIn": "Ενδιαφέρομαι για το {package} ({classes} μαθήματα την εβδομάδα)"
+  },
+  "CheckoutSuccess": {
+    "title": "Καλώς ήρθατε στην οικογένεια Rayo!",
+    "subtitle": "Η πληρωμή σας ήταν επιτυχής. Τα λέμε στο μάθημα!",
+    "viewSchedule": "Πρόγραμμα",
+    "backToPricing": "Πίσω στα Πακέτα"
   },
   "Faq": {
     "pageTitle": "Συχνές Ερωτήσεις",

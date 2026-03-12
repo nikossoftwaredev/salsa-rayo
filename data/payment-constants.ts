@@ -8,6 +8,7 @@ export const PAYMENT_METHODS = [
   { value: "cash", label: "Cash" },
   { value: "card", label: "Card" },
   { value: "bank-transfer", label: "Bank Transfer" },
+  { value: "stripe", label: "Stripe" },
 ] as const
 
 export type PaymentType = (typeof PAYMENT_TYPES)[number]["value"]
