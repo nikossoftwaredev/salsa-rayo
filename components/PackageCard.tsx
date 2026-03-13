@@ -2,9 +2,15 @@
 
 import { useTranslations } from "next-intl";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { FaBolt } from "react-icons/fa";
+import { IoCardOutline, IoChatbubblesOutline, IoReloadOutline, IoChevronDown } from "react-icons/io5";
 import { motion } from "framer-motion";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface PackageCardProps {
   title: string;
@@ -12,7 +18,9 @@ interface PackageCardProps {
   numberOfLessons: number;
   isMostPopular: boolean;
   isStudentDiscount?: boolean;
-  onGetStarted: () => void;
+  isLoading?: boolean;
+  onPayOnline: () => void;
+  onContactUs: () => void;
 }
 
 const PackageCard = ({
@@ -21,7 +29,9 @@ const PackageCard = ({
   numberOfLessons,
   isMostPopular,
   isStudentDiscount = false,
-  onGetStarted,
+  isLoading = false,
+  onPayOnline,
+  onContactUs,
 }: PackageCardProps) => {
   const t = useTranslations("Package");
 
@@ -44,22 +54,20 @@ const PackageCard = ({
       transition={{ duration: 0.6 }}
       className="w-full max-w-sm mx-auto"
     >
-      <Card className={`relative overflow-hidden border-2 ${isMostPopular ? 'border-brand-pink hover:shadow-[0_20px_50px_rgba(255,0,255,0.4)] hover:shadow-brand-pink/50' : 'border-primary/50 hover:shadow-[0_20px_50px_rgba(139,92,246,0.3)] hover:shadow-primary/40'} transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1`}>
-        {/* Most Popular Badge */}
+      <div className="relative">
+        {/* Most Popular Badge - floating pill on card border */}
         {isMostPopular && (
-          <div className="absolute top-0 right-0 z-10">
-            <div className="relative">
-              <div className="bg-gradient-to-r from-primary to-brand-pink text-primary-foreground text-xs font-bold px-4 py-2 rounded-bl-2xl animate-pulse-slow">
-                {t("mostPopular")}
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-r from-primary to-brand-pink blur-lg opacity-50"></div>
+          <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
+            <div className="backdrop-blur-sm bg-brand-pink/90 border border-brand-pink/50 rounded-full px-4 py-1 shadow-lg shadow-brand-pink/30">
+              <span className="text-xs font-bold text-white whitespace-nowrap">{t("mostPopular")}</span>
             </div>
           </div>
         )}
 
+        <Card className={`relative overflow-hidden border-2 ${isMostPopular ? 'border-brand-pink hover:shadow-[0_20px_50px_rgba(255,0,255,0.4)] hover:shadow-brand-pink/50' : 'border-primary/50 hover:shadow-[0_20px_50px_rgba(139,92,246,0.3)] hover:shadow-primary/40'} transition-all duration-500`}>
         <div className="p-8 space-y-6">
           {/* Title */}
-          <div className="text-center pt-4">
+          <div className="text-center pt-2">
             <h3 className="text-2xl font-bold bg-gradient-to-r from-primary to-brand-pink bg-clip-text text-transparent">
               {title}
             </h3>
@@ -100,17 +108,45 @@ const PackageCard = ({
             ))}
           </div>
 
-          {/* CTA Button */}
+          {/* CTA */}
           <div className="pt-4">
-            <Button
-              variant="gradient"
-              onClick={onGetStarted}
-              className="w-full font-bold text-base md:text-lg py-3"
-            >
-              <span className="flex items-center justify-center gap-2">
+            {isLoading ? (
+              <div className="h-11 w-full rounded-lg bg-gradient-to-r from-primary to-brand-pink flex items-center justify-center gap-2 text-white font-bold opacity-80">
+                <IoReloadOutline size={18} className="animate-spin" />
                 {t("getStarted")}
-              </span>
-            </Button>
+              </div>
+            ) : (
+              <DropdownMenu modal={false}>
+                <DropdownMenuTrigger asChild>
+                  <button className="group relative w-full h-11 rounded-lg bg-gradient-to-r from-primary to-brand-pink text-white font-bold text-base flex items-center overflow-hidden cursor-pointer hover:shadow-lg hover:shadow-primary/25 hover:scale-[1.03] transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                    <span className="flex-1 text-center">{t("getStarted")}</span>
+                    <span className="flex items-center justify-center w-10 h-full border-l border-white/20 group-hover:bg-white/10 transition-colors">
+                      <IoChevronDown size={16} />
+                    </span>
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" sideOffset={6} className="w-64 p-1.5">
+                  <DropdownMenuItem onClick={onPayOnline} className="cursor-pointer gap-3 px-3 py-3 rounded-md">
+                    <div className="flex-shrink-0 w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center">
+                      <IoCardOutline size={18} className="text-primary" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="font-medium text-sm">{t("payOnline")}</span>
+                      <span className="text-xs text-muted-foreground">{t("payOnlineDesc")}</span>
+                    </div>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={onContactUs} className="cursor-pointer gap-3 px-3 py-3 rounded-md">
+                    <div className="flex-shrink-0 w-9 h-9 rounded-full bg-brand-pink/10 flex items-center justify-center">
+                      <IoChatbubblesOutline size={18} className="text-brand-pink" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="font-medium text-sm">{t("contactUs")}</span>
+                      <span className="text-xs text-muted-foreground">{t("contactUsDesc")}</span>
+                    </div>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
           </div>
         </div>
 
@@ -118,6 +154,7 @@ const PackageCard = ({
         <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
         <div className="absolute -top-20 -left-20 w-40 h-40 bg-brand-pink/10 rounded-full blur-3xl"></div>
       </Card>
+      </div>
     </motion.div>
   );
 };

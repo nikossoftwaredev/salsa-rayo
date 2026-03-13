@@ -236,7 +236,7 @@ const ContactForm = ({
         onClose={() => setToast({ ...toast, isVisible: false })}
       />
       {!hideTitle && <SectionTitle title={t("title")} isMainSection />}
-      <Card className="p-0 w-full max-w-[600px] bg-card/60 backdrop-blur-md border border-border/20 shadow-xl hover:shadow-2xl hover:shadow-primary/5 hover:border-primary/20 transition-all duration-300 rounded-2xl">
+      <Card className={`p-0 w-full max-w-[600px] rounded-2xl ${hideTitle ? "bg-transparent border-0 shadow-none" : "bg-card/60 backdrop-blur-md border border-border/20 shadow-xl hover:shadow-2xl hover:shadow-primary/5 hover:border-primary/20 transition-all duration-300"}`}>
         <form className="p-6 flex flex-col gap-8">
           <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
             {inputFields

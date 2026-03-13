@@ -16,8 +16,8 @@ import { useLocale } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import type { StripePackage } from "@/lib/stripe/types";
-import { PackageChoiceDialog } from "./PackageChoiceDialog";
 import { SignInDialog } from "@/components/SignInDialog";
+import ContactFormModal from "@/components/ContactFormModal";
 
 interface PricingContentProps {
   stripePackages?: StripePackage[];
@@ -26,10 +26,11 @@ interface PricingContentProps {
 const PricingContent = ({ stripePackages }: PricingContentProps) => {
   const t = useTranslations("Pricing");
   const [isStudentDiscount, setIsStudentDiscount] = useState(false);
-  const [selectedPackageIndex, setSelectedPackageIndex] = useState<number | null>(null);
-  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [checkingOutIndex, setCheckingOutIndex] = useState<number | null>(null);
   const [showSignIn, setShowSignIn] = useState(false);
   const [signInPackageIndex, setSignInPackageIndex] = useState<number>(0);
+  const [showContact, setShowContact] = useState(false);
+  const [contactMessage, setContactMessage] = useState("");
   const { data: session } = useSession();
   const locale = useLocale();
   const searchParams = useSearchParams();
@@ -51,60 +52,54 @@ const PricingContent = ({ stripePackages }: PricingContentProps) => {
     [stripePackages]
   );
 
-  // After login redirect: auto-open dialog for the selected package
+  const handlePayOnline = useCallback(async (index: number) => {
+    const pkg = packages[index];
+    if (!session) {
+      setSignInPackageIndex(index);
+      setShowSignIn(true);
+      return;
+    }
+    if (!pkg.priceId) return;
+    setCheckingOutIndex(index);
+    try {
+      const res = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ priceId: pkg.priceId, isStudentDiscount, locale }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        toast.error(data.error || "Failed to start checkout");
+        setCheckingOutIndex(null);
+      }
+    } catch {
+      toast.error("Failed to start checkout");
+      setCheckingOutIndex(null);
+    }
+  }, [packages, session, isStudentDiscount, locale]);
+
+  const handleContactUs = useCallback((index: number) => {
+    const pkg = packages[index];
+    setContactMessage(t("interestedIn", { package: pkg.title, classes: pkg.numberOfLessons }));
+    setShowContact(true);
+  }, [packages, t]);
+
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "";
+  const signInCallbackUrl = `${appUrl}/${locale}/pricing?pkg=${signInPackageIndex}`;
+
+  // After login redirect: auto-checkout for the selected package
   useEffect(() => {
     if (hasAutoOpenedRef.current) return;
     const pkgParam = searchParams.get("pkg");
     if (pkgParam === null || !session) return;
     const idx = parseInt(pkgParam);
-    if (!isNaN(idx) && idx >= 0 && idx < packages.length) {
+    if (!isNaN(idx) && idx >= 0 && idx < packages.length && packages[idx].priceId) {
       hasAutoOpenedRef.current = true;
-      requestAnimationFrame(() => setSelectedPackageIndex(idx));
+      requestAnimationFrame(() => handlePayOnline(idx));
     }
-  }, [searchParams, session, packages.length]);
-
-  const handleCheckout = useCallback(
-    async (priceId: string) => {
-      setIsCheckingOut(true);
-      try {
-        const res = await fetch("/api/stripe/checkout", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ priceId, isStudentDiscount, locale }),
-        });
-
-        const data = await res.json();
-        if (data.url) {
-          window.location.href = data.url;
-        } else {
-          toast.error(data.error || "Failed to start checkout");
-          setIsCheckingOut(false);
-        }
-      } catch {
-        toast.error("Failed to start checkout");
-        setIsCheckingOut(false);
-      }
-    },
-    [isStudentDiscount, locale]
-  );
-
-  const handleRequestSignIn = useCallback((packageIndex: number) => {
-    setSelectedPackageIndex(null);
-    setSignInPackageIndex(packageIndex);
-    setShowSignIn(true);
-  }, []);
-
-  const selectedPkg = selectedPackageIndex !== null ? packages[selectedPackageIndex] : null;
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "";
-  const signInCallbackUrl = `${appUrl}/${locale}/pricing?pkg=${signInPackageIndex}`;
-
-  const handleDialogOpenChange = useCallback((open: boolean) => {
-    if (!open) setSelectedPackageIndex(null);
-  }, []);
-
-  const handleDialogCheckout = useCallback(() => {
-    if (selectedPkg?.priceId) handleCheckout(selectedPkg.priceId);
-  }, [selectedPkg, handleCheckout]);
+  }, [searchParams, session, packages, handlePayOnline]);
 
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden">
@@ -155,7 +150,9 @@ const PricingContent = ({ stripePackages }: PricingContentProps) => {
                 numberOfLessons={pkg.numberOfLessons}
                 isMostPopular={pkg.isMostPopular}
                 isStudentDiscount={isStudentDiscount}
-                onGetStarted={() => setSelectedPackageIndex(index)}
+                isLoading={checkingOutIndex === index}
+                onPayOnline={() => handlePayOnline(index)}
+                onContactUs={() => handleContactUs(index)}
               />
             </motion.div>
           ))}
@@ -189,28 +186,18 @@ const PricingContent = ({ stripePackages }: PricingContentProps) => {
         </div>
       </div>
 
-      {/* Package Choice Dialog */}
-      {selectedPkg && (
-        <PackageChoiceDialog
-          open={selectedPackageIndex !== null}
-          onOpenChange={handleDialogOpenChange}
-          packageTitle={selectedPkg.title}
-          packageIndex={selectedPackageIndex!}
-          priceId={selectedPkg.priceId}
-          numberOfLessons={selectedPkg.numberOfLessons}
-          isStudentDiscount={isStudentDiscount}
-          isLoggedIn={!!session}
-          isCheckingOut={isCheckingOut}
-          onCheckout={handleDialogCheckout}
-          onRequestSignIn={handleRequestSignIn}
-        />
-      )}
-
-      {/* Sign-in dialog - lives here so it survives choice dialog unmount */}
+      {/* Sign-in dialog */}
       <SignInDialog
         open={showSignIn}
         onOpenChange={setShowSignIn}
         callbackUrl={signInCallbackUrl}
+      />
+
+      {/* Contact form */}
+      <ContactFormModal
+        isOpen={showContact}
+        onClose={() => setShowContact(false)}
+        initialMessage={contactMessage}
       />
     </div>
   );

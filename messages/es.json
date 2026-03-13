@@ -133,10 +133,6 @@
     "getInTouch": "Contáctanos",
     "studentOrYouth": "Student 10% Discount",
     "studentDiscount": "10% descuento estudiante aplicado",
-    "payOnline": "Pagar Online",
-    "contactUs2": "Contáctanos",
-    "loginToPayOnline": "Inicia sesión para pagar online",
-    "payNow": "Pagar",
     "classesPerWeek": "{count} clases por semana",
     "interestedIn": "Estoy interesado/a en el {package} ({classes} clases por semana)"
   },
@@ -193,6 +189,10 @@
     "hoursPerMonth": "{hours} horas por un mes",
     "classesPerWeek": "{classes} clases por semana",
     "mostPopular": "Más Popular",
-    "getStarted": "Comenzar"
+    "getStarted": "Comenzar",
+    "payOnline": "Pagar Online",
+    "payOnlineDesc": "Pago seguro con tarjeta o Google Pay",
+    "contactUs": "Contáctanos",
+    "contactUsDesc": "Recibe orientacion personalizada"
   }
 }

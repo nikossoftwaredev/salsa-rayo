@@ -13,6 +13,7 @@ export const createCheckoutSession = async ({
     mode: "payment",
     customer: customerId,
     line_items: [{ price: priceId, quantity: 1 }],
+    payment_method_types: ["card", "link"],
     success_url: STRIPE_CONFIG.successUrl(locale),
     cancel_url: STRIPE_CONFIG.cancelUrl(locale),
     ...(couponId

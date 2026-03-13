@@ -18,7 +18,9 @@ export const listActiveProducts = async (): Promise<StripePackage[]> => {
         priceId: price.id,
         priceAmount: price.unit_amount ? price.unit_amount / 100 : 0,
         currency: price.currency,
-        metadata: product.metadata,
+        metadata: Object.fromEntries(
+          Object.entries(product.metadata).map(([k, v]) => [k.trim(), v.trim()])
+        ),
         active: product.active,
       }
     })

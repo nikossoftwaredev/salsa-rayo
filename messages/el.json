@@ -134,10 +134,6 @@
     "getInTouch": "Επικοινωνήστε",
     "studentOrYouth": "Student 10% Discount",
     "studentDiscount": "10% φοιτητική έκπτωση",
-    "payOnline": "Πληρωμή Online",
-    "contactUs2": "Επικοινωνία",
-    "loginToPayOnline": "Συνδεθείτε για online πληρωμή",
-    "payNow": "Πληρωμή",
     "classesPerWeek": "{count} μαθήματα την εβδομάδα",
     "interestedIn": "Ενδιαφέρομαι για το {package} ({classes} μαθήματα την εβδομάδα)"
   },
@@ -194,6 +190,10 @@
     "hoursPerMonth": "{hours} ώρες για έναν μήνα",
     "classesPerWeek": "{classes} μαθήματα την εβδομάδα",
     "mostPopular": "Πιο Δημοφιλές",
-    "getStarted": "Ξεκινήστε"
+    "getStarted": "Ξεκινήστε",
+    "payOnline": "Πληρωμή Online",
+    "payOnlineDesc": "Ασφαλής πληρωμή με κάρτα ή Google Pay",
+    "contactUs": "Επικοινωνία",
+    "contactUsDesc": "Λάβετε εξατομικευμένη καθοδήγηση"
   }
 }
