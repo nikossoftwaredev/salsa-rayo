@@ -1,7 +1,7 @@
 "use client"
 
 import { useMemo } from "react"
-import { IoSearchOutline, IoPersonOutline } from "react-icons/io5"
+import { IoSearchOutline, IoPersonOutline, IoClose } from "react-icons/io5"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -47,8 +47,17 @@ export const AttendancePanel = ({
             onChange={(e) => handleSearch(e.target.value)}
             placeholder="Search students..."
             maxLength={100}
-            className="pl-9"
+            className="pl-9 pr-8"
           />
+          {search && (
+            <button
+              type="button"
+              onClick={() => handleSearch("")}
+              className="absolute top-1/2 right-3 -translate-y-1/2 rounded-full p-0.5 text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+            >
+              <IoClose size={14} />
+            </button>
+          )}
         </div>
       </div>
 

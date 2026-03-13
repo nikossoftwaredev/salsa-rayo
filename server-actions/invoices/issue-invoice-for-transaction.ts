@@ -4,7 +4,7 @@ import { prisma } from "@/lib/db"
 import { isAdmin } from "../is-admin"
 import { issueInvoice } from "@/lib/invoicing/issue-invoice"
 
-export const issueInvoiceForTransaction = async (transactionId: string) => {
+export const issueInvoiceForTransaction = async (transactionId: string, customAmount?: number) => {
   const adminCheck = await isAdmin()
   if (!adminCheck)
     return { success: false as const, error: "Unauthorized" }
@@ -23,7 +23,7 @@ export const issueInvoiceForTransaction = async (transactionId: string) => {
   try {
     const result = await issueInvoice({
       transactionId: transaction.id,
-      amount: transaction.amount,
+      amount: customAmount ?? transaction.amount,
       paymentMethod: transaction.paymentMethod,
       customerName: transaction.student?.name || transaction.studentName,
       description: transaction.description || undefined,

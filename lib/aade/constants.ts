@@ -49,7 +49,7 @@ export const AADE_INCOME_CLASSIFICATION_CATEGORY = {
 } as const
 
 export const AADE_BASE_URLS = {
-  dev: "https://mydata-dev.azure-api.net",
+  dev: "https://mydataapidev.aade.gr",
   production: "https://mydatapi.aade.gr/myDATA",
 } as const
 

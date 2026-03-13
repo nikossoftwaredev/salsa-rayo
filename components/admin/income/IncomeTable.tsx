@@ -13,6 +13,16 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { DataTable } from "@/components/data-table/data-table"
 import { createColumns } from "./columns"
 import { IncomeToolbar } from "./income-toolbar"
@@ -20,6 +30,7 @@ import { deleteTransaction } from "@/server-actions/payments/delete-transaction"
 import { issueInvoiceForTransaction } from "@/server-actions/invoices/issue-invoice-for-transaction"
 import { retryFailedInvoice } from "@/server-actions/invoices/retry-failed-invoice"
 import { type TransactionWithStudent } from "@/server-actions/payments/get-transactions"
+import { openPdfInNewTab } from "@/lib/pdf"
 
 interface IncomeTableProps {
   data: TransactionWithStudent[]
@@ -28,21 +39,59 @@ interface IncomeTableProps {
 export const IncomeTable = ({ data }: IncomeTableProps) => {
   const router = useRouter()
   const [deletingTransaction, setDeletingTransaction] = useState<TransactionWithStudent | null>(null)
+  const [invoicingTransaction, setInvoicingTransaction] = useState<TransactionWithStudent | null>(null)
+  const [invoiceAmount, setInvoiceAmount] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleDelete = useCallback((transaction: TransactionWithStudent) => {
     setDeletingTransaction(transaction)
   }, [])
 
-  const handleIssueInvoice = useCallback(async (transaction: TransactionWithStudent) => {
-    const toastId = toast.loading("Issuing invoice...")
-    const result = await issueInvoiceForTransaction(transaction.id)
-    if (result.success) {
-      toast.success("Invoice issued", { id: toastId })
-      router.refresh()
-    } else {
-      toast.error(result.error, { id: toastId })
+  const handleIssueInvoice = useCallback((transaction: TransactionWithStudent) => {
+    setInvoicingTransaction(transaction)
+    setInvoiceAmount(transaction.amount.toFixed(2))
+  }, [])
+
+  const confirmIssueInvoice = async () => {
+    if (!invoicingTransaction) return
+    const amount = parseFloat(invoiceAmount)
+    if (isNaN(amount) || amount <= 0) {
+      toast.error("Invalid amount")
+      return
     }
-  }, [router])
+
+    setIsSubmitting(true)
+    const toastId = toast.loading("Issuing invoice & generating PDF...")
+    const result = await issueInvoiceForTransaction(invoicingTransaction.id, amount)
+    if (!result.success) {
+      toast.error(result.error, { id: toastId })
+      setIsSubmitting(false)
+      return
+    }
+
+    // Auto-generate and open PDF
+    try {
+      await openPdfInNewTab(`/api/invoices/${result.invoiceId}/pdf`)
+      toast.success("Invoice issued", { id: toastId })
+    } catch {
+      toast.success("Invoice issued (PDF generation failed)", { id: toastId })
+    }
+
+    setInvoicingTransaction(null)
+    setIsSubmitting(false)
+    router.refresh()
+  }
+
+  const handleViewInvoicePdf = useCallback(async (transaction: TransactionWithStudent) => {
+    if (!transaction.invoice?.id) return
+    const toastId = toast.loading("Generating PDF...")
+    try {
+      await openPdfInNewTab(`/api/invoices/${transaction.invoice.id}/pdf`)
+      toast.dismiss(toastId)
+    } catch {
+      toast.error("Failed to generate PDF", { id: toastId })
+    }
+  }, [])
 
   const handleRetryInvoice = useCallback(async (transaction: TransactionWithStudent) => {
     if (!transaction.invoice) return
@@ -73,8 +122,9 @@ export const IncomeTable = ({ data }: IncomeTableProps) => {
       onDelete: handleDelete,
       onIssueInvoice: handleIssueInvoice,
       onRetryInvoice: handleRetryInvoice,
+      onViewInvoicePdf: handleViewInvoicePdf,
     }),
-    [handleDelete, handleIssueInvoice, handleRetryInvoice]
+    [handleDelete, handleIssueInvoice, handleRetryInvoice, handleViewInvoicePdf]
   )
 
   return (
@@ -85,6 +135,43 @@ export const IncomeTable = ({ data }: IncomeTableProps) => {
         toolbar={(table) => <IncomeToolbar table={table} />}
       />
 
+      {/* Issue Invoice Dialog */}
+      <Dialog
+        open={!!invoicingTransaction}
+        onOpenChange={(open) => { if (!open && !isSubmitting) setInvoicingTransaction(null) }}
+      >
+        <DialogContent className="sm:max-w-[360px]">
+          <DialogHeader>
+            <DialogTitle>Issue Invoice</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-3 py-2">
+            <p className="text-sm text-muted-foreground">
+              {invoicingTransaction?.studentName || invoicingTransaction?.student?.name}
+            </p>
+            <div className="space-y-1.5">
+              <Label htmlFor="invoice-amount">Amount (€)</Label>
+              <Input
+                id="invoice-amount"
+                type="number"
+                step="0.01"
+                min="0.01"
+                value={invoiceAmount}
+                onChange={(e) => setInvoiceAmount(e.target.value)}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setInvoicingTransaction(null)} disabled={isSubmitting}>
+              Cancel
+            </Button>
+            <Button onClick={confirmIssueInvoice} disabled={isSubmitting}>
+              {isSubmitting ? "Issuing..." : "Issue Invoice"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Confirmation Dialog */}
       <AlertDialog
         open={!!deletingTransaction}
         onOpenChange={(open) => { if (!open) setDeletingTransaction(null) }}

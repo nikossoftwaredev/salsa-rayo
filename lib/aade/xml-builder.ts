@@ -67,9 +67,9 @@ const buildDetailsXml = (rows: AadeInvoiceInput["invoiceDetails"]) => {
     xml += `<vatAmount>${fmt(row.vatAmount)}</vatAmount>`
     if (row.incomeClassification) {
       xml += `<incomeClassification>`
-      xml += `<classificationType>${escapeXml(row.incomeClassification.classificationType)}</classificationType>`
-      xml += `<classificationCategory>${escapeXml(row.incomeClassification.classificationCategory)}</classificationCategory>`
-      xml += `<amount>${fmt(row.incomeClassification.amount)}</amount>`
+      xml += `<icls:classificationType>${escapeXml(row.incomeClassification.classificationType)}</icls:classificationType>`
+      xml += `<icls:classificationCategory>${escapeXml(row.incomeClassification.classificationCategory)}</icls:classificationCategory>`
+      xml += `<icls:amount>${fmt(row.incomeClassification.amount)}</icls:amount>`
       xml += `</incomeClassification>`
     }
     xml += `</invoiceDetails>`
@@ -95,9 +95,9 @@ const buildSummaryXml = (rows: AadeInvoiceInput["invoiceDetails"]) => {
   for (const row of rows) {
     if (row.incomeClassification) {
       xml += `<incomeClassification>`
-      xml += `<classificationType>${escapeXml(row.incomeClassification.classificationType)}</classificationType>`
-      xml += `<classificationCategory>${escapeXml(row.incomeClassification.classificationCategory)}</classificationCategory>`
-      xml += `<amount>${fmt(row.incomeClassification.amount)}</amount>`
+      xml += `<icls:classificationType>${escapeXml(row.incomeClassification.classificationType)}</icls:classificationType>`
+      xml += `<icls:classificationCategory>${escapeXml(row.incomeClassification.classificationCategory)}</icls:classificationCategory>`
+      xml += `<icls:amount>${fmt(row.incomeClassification.amount)}</icls:amount>`
       xml += `</incomeClassification>`
     }
   }
@@ -108,7 +108,7 @@ const buildSummaryXml = (rows: AadeInvoiceInput["invoiceDetails"]) => {
 
 export const buildInvoiceXml = (invoices: AadeInvoiceInput[]): string => {
   let xml = `<?xml version="1.0" encoding="UTF-8"?>`
-  xml += `<InvoicesDoc xmlns="http://www.aade.gr/myDATA/invoice/v1.0" xmlns:icls="http://www.aade.gr/myDATA/incomeClassificaton/v1.0" xmlns:ecls="http://www.aade.gr/myDATA/expensesClassificaton/v1.0">`
+  xml += `<InvoicesDoc xmlns="http://www.aade.gr/myDATA/invoice/v1.0" xmlns:icls="https://www.aade.gr/myDATA/incomeClassificaton/v1.0" xmlns:ecls="https://www.aade.gr/myDATA/expensesClassificaton/v1.0">`
 
   for (const invoice of invoices) {
     xml += `<invoice>`

@@ -2,7 +2,6 @@
 
 import { prisma } from "@/lib/db"
 import { revalidatePath } from "next/cache"
-import { issueInvoice } from "@/lib/invoicing/issue-invoice"
 
 interface FulfillSubscriptionInput {
   studentId: string
@@ -100,17 +99,6 @@ export const fulfillSubscription = async (data: FulfillSubscriptionInput) => {
   revalidatePath("/admin/students")
   revalidatePath("/admin/income")
   revalidatePath("/admin/subscriptions")
-
-  // Fire-and-forget AADE invoice issuance (after transaction committed)
-  issueInvoice({
-    transactionId: result.transactionId,
-    amount: data.amount,
-    paymentMethod: data.paymentMethod,
-    customerName: student.name,
-    description: data.description || `${data.packageName} subscription`,
-  }).catch((err) => {
-    console.error("[AADE] Invoice issuance failed:", err)
-  })
 
   return result
 }

@@ -144,6 +144,7 @@
   "CheckoutSuccess": {
     "title": "Καλώς ήρθατε στην οικογένεια Rayo!",
     "subtitle": "Η πληρωμή σας ήταν επιτυχής. Τα λέμε στο μάθημα!",
+    "viewProfile": "Δες το Προφίλ σου",
     "viewSchedule": "Πρόγραμμα",
     "backToPricing": "Πίσω στα Πακέτα"
   },

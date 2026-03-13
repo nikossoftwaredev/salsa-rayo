@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache"
 import { prisma } from "@/lib/db"
 import { isAdmin } from "../is-admin"
 import { fulfillSubscription } from "./fulfill-subscription"
-import { issueInvoice } from "@/lib/invoicing/issue-invoice"
 import {
   type PaymentType,
   type PaymentMethod,
@@ -66,17 +65,6 @@ export const createPayment = async (data: CreatePaymentInput) => {
       revalidatePath("/admin/students")
       revalidatePath("/admin/income")
       revalidatePath("/admin/subscriptions")
-
-      // Fire-and-forget AADE invoice issuance
-      issueInvoice({
-        transactionId: transaction.id,
-        amount: data.amount,
-        paymentMethod: data.paymentMethod,
-        customerName: student.name,
-        description: data.description || `${data.type} payment`,
-      }).catch((err) => {
-        console.error("[AADE] Invoice issuance failed:", err)
-      })
     }
 
     return { success: true as const }

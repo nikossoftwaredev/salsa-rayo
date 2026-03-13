@@ -7,7 +7,7 @@ import { DataTableColumnHeader } from "@/components/data-table/data-table-column
 import { copyToClipboard, formatDate } from "@/lib/format"
 import { TYPE_LABELS, METHOD_LABELS } from "@/data/payment-constants"
 import { MdDeleteOutline } from "react-icons/md"
-import { TbFileInvoice, TbRefresh } from "react-icons/tb"
+import { TbFileInvoice, TbRefresh, TbPrinter } from "react-icons/tb"
 import { type TransactionWithStudent } from "@/server-actions/payments/get-transactions"
 import {
   Tooltip,
@@ -31,6 +31,7 @@ export type IncomeRowActions = {
   onDelete: (transaction: TransactionWithStudent) => void
   onIssueInvoice: (transaction: TransactionWithStudent) => void
   onRetryInvoice: (transaction: TransactionWithStudent) => void
+  onViewInvoicePdf: (transaction: TransactionWithStudent) => void
 }
 
 const baseColumns: ColumnDef<TransactionWithStudent>[] = [
@@ -152,6 +153,7 @@ export const createColumns = ({
   onDelete,
   onIssueInvoice,
   onRetryInvoice,
+  onViewInvoicePdf,
 }: IncomeRowActions): ColumnDef<TransactionWithStudent>[] => [
   ...baseColumns,
   {
@@ -160,6 +162,23 @@ export const createColumns = ({
       const invoice = row.original.invoice
       return (
         <div className="flex items-center justify-end gap-1">
+          {/* View submitted invoice PDF */}
+          {invoice?.status === "submitted" && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="size-8"
+                  onClick={() => onViewInvoicePdf(row.original)}
+                >
+                  <TbPrinter size={16} />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Print Invoice</TooltipContent>
+            </Tooltip>
+          )}
+
           {/* Issue invoice - only if no invoice exists */}
           {!invoice && (
             <Tooltip>

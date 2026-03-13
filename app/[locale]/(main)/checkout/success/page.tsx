@@ -4,6 +4,7 @@ import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { FaBolt } from "react-icons/fa";
 import BackgroundEffects from "@/components/BackgroundEffects";
+import { CheckoutConfetti } from "./CheckoutConfetti";
 import { getTranslations } from "next-intl/server";
 
 interface CheckoutSuccessPageProps {
@@ -31,10 +32,12 @@ const CheckoutSuccessPage = async ({
 
   const lineItem = session.line_items?.data[0];
   const product = lineItem?.price?.product as import("stripe").Stripe.Product | undefined;
+  const studentId = session.metadata?.studentId;
 
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden">
       <BackgroundEffects />
+      <CheckoutConfetti />
       <div className="relative pt-32 pb-16 px-4 md:px-8 flex items-center justify-center min-h-screen">
         <div className="text-center max-w-lg mx-auto">
           <div className="flex justify-center mb-6">
@@ -58,11 +61,13 @@ const CheckoutSuccessPage = async ({
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="gradient" asChild>
-              <Link href="/schedule">{t("viewSchedule")}</Link>
-            </Button>
+            {studentId && (
+              <Button variant="gradient" asChild>
+                <Link href={`/profile/${studentId}`}>{t("viewProfile")}</Link>
+              </Button>
+            )}
             <Button variant="outline" asChild>
-              <Link href="/pricing">{t("backToPricing")}</Link>
+              <Link href="/#schedule">{t("viewSchedule")}</Link>
             </Button>
           </div>
         </div>

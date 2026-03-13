@@ -117,6 +117,10 @@ export const PaymentDialog = () => {
 
       toast.success("Payment recorded", {
         description: `€${form.amount} ${form.type} for ${student.name}`,
+        action: {
+          label: "View Payments",
+          onClick: () => router.push("/admin/income"),
+        },
       })
       handleClose()
       router.refresh()

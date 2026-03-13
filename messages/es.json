@@ -143,6 +143,7 @@
   "CheckoutSuccess": {
     "title": "Bienvenido/a a la familia Rayo!",
     "subtitle": "Tu pago fue exitoso. Nos vemos en clase!",
+    "viewProfile": "Ver Tu Perfil",
     "viewSchedule": "Ver Horario",
     "backToPricing": "Volver a Paquetes"
   },
