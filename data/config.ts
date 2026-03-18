@@ -11,6 +11,8 @@ export const headerLinks = [
   { path: `/blog`, text: { en: "Blog", el: "Blog", es: "Blog" } },
 ];
 
+export const SITE_URL = "https://www.salsarayo.com";
+
 export const INSTAGRAM_URL = "https://www.instagram.com/salsarayo_ds/";
 export const SPOTIFY_URL =
   "https://open.spotify.com/playlist/57VP2xxQHG5GMQURfYBXu9?si=4yxCqyX1RKqSIyBL-6eK0w&pi=0Tf7tlZdQQm1s&nd=1&dlsi=72c4875cc8d14a81";

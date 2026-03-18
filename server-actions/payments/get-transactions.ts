@@ -4,7 +4,7 @@ import { prisma, type Prisma } from "@/lib/db"
 import { isAdmin } from "../is-admin"
 
 export type TransactionWithStudent = Prisma.TransactionGetPayload<{
-  include: { student: true; subscription: true }
+  include: { student: true; subscription: true; invoice: true }
 }>
 
 export const getTransactions = async (studentId?: string) => {
@@ -15,7 +15,7 @@ export const getTransactions = async (studentId?: string) => {
 
     const transactions = await prisma.transaction.findMany({
       where: studentId ? { studentId } : undefined,
-      include: { student: true, subscription: true },
+      include: { student: true, subscription: true, invoice: true },
       orderBy: { createdAt: "desc" },
     })
 

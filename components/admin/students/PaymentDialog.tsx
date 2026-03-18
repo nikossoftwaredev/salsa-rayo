@@ -6,9 +6,9 @@ import {
   IoCashOutline,
   IoCardOutline,
   IoWalletOutline,
-
   IoAddOutline,
 } from "react-icons/io5"
+import { FaStripe } from "react-icons/fa6"
 import { ImSpinner8 } from "react-icons/im"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
@@ -47,6 +47,7 @@ const METHOD_ICON_MAP: Record<string, React.ComponentType<{ size: number }>> = {
   cash: IoCashOutline,
   card: IoCardOutline,
   "bank-transfer": IoWalletOutline,
+  stripe: FaStripe,
 }
 
 const getInitialForm = () => ({
@@ -117,6 +118,10 @@ export const PaymentDialog = () => {
 
       toast.success("Payment recorded", {
         description: `€${form.amount} ${form.type} for ${student.name}`,
+        action: {
+          label: "View Payments",
+          onClick: () => router.push("/admin/income"),
+        },
       })
       handleClose()
       router.refresh()

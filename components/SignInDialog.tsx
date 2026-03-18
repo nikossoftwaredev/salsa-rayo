@@ -19,30 +19,33 @@ import { Button } from "@/components/ui/button";
 interface SignInDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  callbackUrl?: string;
 }
 
-export const SignInDialog = ({ open, onOpenChange }: SignInDialogProps) => {
+export const SignInDialog = ({ open, onOpenChange, callbackUrl }: SignInDialogProps) => {
   const [email, setEmail] = useState("");
   const [emailSent, setEmailSent] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
 
+  const resolvedCallbackUrl = callbackUrl || (typeof window !== "undefined" ? window.location.href : "/");
+
   const handleGoogleSignIn = useCallback(() => {
     setGoogleLoading(true);
-    signIn("google", { callbackUrl: window.location.href });
-  }, []);
+    signIn("google", { callbackUrl: resolvedCallbackUrl });
+  }, [resolvedCallbackUrl]);
 
   const handleEmailSignIn = useCallback(async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!email.trim()) return;
     setIsLoading(true);
     try {
-      await signIn("email", { email, redirect: false, callbackUrl: window.location.href });
+      await signIn("email", { email, redirect: false, callbackUrl: resolvedCallbackUrl });
       setEmailSent(true);
     } finally {
       setIsLoading(false);
     }
-  }, [email]);
+  }, [email, resolvedCallbackUrl]);
 
   const handleOpenChange = useCallback((open: boolean) => {
     if (!open) {

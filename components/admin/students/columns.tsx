@@ -6,7 +6,7 @@ import { type ColumnDef } from "@tanstack/react-table"
 import { toast } from "sonner"
 import { RayoPoints } from "@/components/ui/rayo-points"
 import { MdEdit } from "react-icons/md"
-import { IoWalletOutline, IoReceiptOutline, IoRefreshOutline } from "react-icons/io5"
+import { IoAddOutline, IoReceiptOutline, IoRefreshOutline } from "react-icons/io5"
 import { SubscriptionBadge } from "@/components/ui/subscription-badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -58,6 +58,10 @@ const RenewAction = ({ student }: { student: StudentWithSubscriptions }) => {
           if (result.success) {
             toast.success("Subscription renewed", {
               description: `${pkg.title} - €${pkg.price} for ${student.name}`,
+              action: {
+                label: "View Payments",
+                onClick: () => router.push("/admin/income"),
+              },
             })
             router.refresh()
           } else {
@@ -234,7 +238,7 @@ export const columns: ColumnDef<StudentWithSubscriptions>[] = [
                 useDialogStore.getState().openDialog("PaymentDialog", row.original)
               }
             >
-              <IoWalletOutline size={16} />
+              <IoAddOutline size={16} />
             </Button>
           </TooltipTrigger>
           <TooltipContent>Add Payment</TooltipContent>

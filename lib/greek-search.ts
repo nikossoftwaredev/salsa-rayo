@@ -7,8 +7,8 @@ const GREEK_TO_LATIN: Record<string, string> = {
 const stripAccents = (str: string) =>
   str.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
 
-const toGreeklish = (str: string) =>
-  stripAccents(str)
+const toGreeklish = (normalized: string) =>
+  normalized
     .split("")
     .map((ch) => GREEK_TO_LATIN[ch] ?? ch)
     .join("")
@@ -21,6 +21,5 @@ export const matchesSearch = (text: string, query: string) => {
   if (!q) return true
   const normalized = normalizeForSearch(text)
   if (normalized.includes(q)) return true
-  const greeklish = toGreeklish(text).toLowerCase()
-  return greeklish.includes(q)
+  return toGreeklish(normalized).includes(q)
 }

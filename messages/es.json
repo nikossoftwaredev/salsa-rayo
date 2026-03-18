@@ -132,7 +132,16 @@
     "contactUs": "Contáctanos para obtener orientación personalizada sobre la selección del paquete adecuado.",
     "getInTouch": "Contáctanos",
     "studentOrYouth": "Student 10% Discount",
-    "studentDiscount": "10% descuento estudiante aplicado"
+    "studentDiscount": "10% descuento estudiante aplicado",
+    "classesPerWeek": "{count} clases por semana",
+    "interestedIn": "Estoy interesado/a en el {package} ({classes} clases por semana)"
+  },
+  "CheckoutSuccess": {
+    "title": "Bienvenido/a a la familia Rayo!",
+    "subtitle": "Tu pago fue exitoso. Nos vemos en clase!",
+    "viewProfile": "Ver Tu Perfil",
+    "viewSchedule": "Ver Horario",
+    "backToPricing": "Volver a Paquetes"
   },
   "Faq": {
     "pageTitle": "Preguntas Frecuentes",
@@ -180,6 +189,10 @@
     "hoursPerMonth": "{hours} horas por un mes",
     "classesPerWeek": "{classes} clases por semana",
     "mostPopular": "Más Popular",
-    "getStarted": "Comenzar"
+    "getStarted": "Comenzar",
+    "payOnline": "Pagar Online",
+    "payOnlineDesc": "Pago seguro con tarjeta o Google Pay",
+    "contactUs": "Contáctanos",
+    "contactUsDesc": "Recibe orientacion personalizada"
   }
 }

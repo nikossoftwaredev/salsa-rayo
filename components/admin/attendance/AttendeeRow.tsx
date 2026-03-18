@@ -17,7 +17,7 @@ interface AttendeeRowProps {
 const shortenName = (name: string) => {
   const parts = name.trim().split(/\s+/)
   if (parts.length < 2) return name
-  return `${parts[0]} ${parts[parts.length - 1].slice(0, 2)}.`
+  return `${parts[0]} ${parts[parts.length - 1].slice(0, 3)}.`
 }
 
 export const AttendeeRow = ({ student, onRemove, onClick }: AttendeeRowProps) => {
