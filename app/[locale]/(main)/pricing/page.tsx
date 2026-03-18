@@ -3,6 +3,7 @@ import JsonLd from "@/components/JsonLd";
 import { getBreadcrumbSchema, getPricingSchemas } from "@/lib/schema";
 import PricingContent from "./PricingContent";
 import { BasePageProps } from "@/types/pageprops";
+import { listActiveProducts } from "@/lib/stripe/products";
 
 const BASE_URL = "https://www.salsarayo.com";
 
@@ -50,6 +51,13 @@ export const generateMetadata = async ({
 const PricingPage = async ({ params }: BasePageProps) => {
   const locale = (await params).locale;
 
+  let stripePackages;
+  try {
+    stripePackages = await listActiveProducts();
+  } catch {
+    // Fallback to hardcoded packages if Stripe is unavailable
+  }
+
   return (
     <>
       <JsonLd
@@ -61,7 +69,7 @@ const PricingPage = async ({ params }: BasePageProps) => {
           getPricingSchemas(),
         ]}
       />
-      <PricingContent />
+      <PricingContent stripePackages={stripePackages} />
     </>
   );
 }

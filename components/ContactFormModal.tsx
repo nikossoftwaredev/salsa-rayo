@@ -1,9 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
 import ContactForm from "@/components/sections/contact-form/ContactForm";
-import { motion, AnimatePresence } from "framer-motion";
-import { MdClose } from "react-icons/md";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 interface ContactFormModalProps {
   isOpen: boolean;
@@ -15,64 +18,19 @@ const ContactFormModal = ({
   isOpen,
   onClose,
   initialMessage = "I am interested about the summer offer",
-}: ContactFormModalProps) => {
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "unset";
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, [isOpen]);
-
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50"
-            onClick={onClose}
-          />
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            transition={{
-              duration: 0.3,
-              type: "spring",
-              stiffness: 300,
-              damping: 30,
-            }}
-            className="fixed inset-0 flex items-center justify-center z-50 p-4"
-            onClick={onClose}
-          >
-            <div
-              className="relative max-w-[600px] w-full max-h-[90vh] overflow-y-auto bg-gradient-to-br from-primary/20 via-background to-brand-pink/20 backdrop-blur-lg rounded-2xl shadow-2xl border border-border/20"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                onClick={onClose}
-                className="absolute top-4 right-4 z-10 h-8 w-8 rounded-full flex items-center justify-center text-foreground hover:bg-foreground/10 transition-colors"
-                aria-label="Close modal"
-              >
-                <MdClose size={20} />
-              </button>
-
-              <ContactForm
-                showTextArea={false}
-                initialMessage={initialMessage}
-                hideTitle={true}
-                onSuccess={onClose}
-              />
-            </div>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
-  );
-};
+}: ContactFormModalProps) => (
+  <Dialog open={isOpen} onOpenChange={(open) => { if (!open) onClose(); }}>
+    <DialogContent className="sm:max-w-[600px] px-2 pt-10 pb-2 sm:px-4 sm:pb-4 gap-0">
+      <DialogTitle className="sr-only">Contact Us</DialogTitle>
+      <DialogDescription className="sr-only">Send us a message</DialogDescription>
+      <ContactForm
+        showTextArea={false}
+        initialMessage={initialMessage}
+        hideTitle
+        onSuccess={onClose}
+      />
+    </DialogContent>
+  </Dialog>
+);
 
 export default ContactFormModal;

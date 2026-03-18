@@ -342,6 +342,14 @@ const processData = (
 const processData = ({ id, name, age, active }: ProcessDataParams) => {};
 ```
 
+### Database Migrations
+
+- **Always use `prisma migrate dev`** for schema changes. NEVER use `prisma db push`.
+- `prisma migrate dev --name descriptive-name` creates a migration file, applies it, and regenerates the client.
+- `prisma migrate deploy` applies pending migrations in production (no interactive prompts).
+- Migration files are version-controlled and must be committed to git.
+- Never manually edit migration SQL files after they've been applied.
+
 ### Project Configuration
 
 - Project uses `next.config.ts` (TypeScript config)
