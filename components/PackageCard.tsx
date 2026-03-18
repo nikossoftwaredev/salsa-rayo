@@ -127,13 +127,13 @@ const PackageCard = ({
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" sideOffset={6} className="w-64 p-1.5">
-                  <DropdownMenuItem onClick={onPayOnline} className="cursor-pointer gap-3 px-3 py-3 rounded-md">
+                  <DropdownMenuItem disabled className="gap-3 px-3 py-3 rounded-md opacity-50">
                     <div className="flex-shrink-0 w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center">
                       <IoCardOutline size={18} className="text-primary" />
                     </div>
                     <div className="flex flex-col">
                       <span className="font-medium text-sm">{t("payOnline")}</span>
-                      <span className="text-xs text-muted-foreground">{t("payOnlineDesc")}</span>
+                      <span className="text-xs text-muted-foreground">{t("comingSoon")}</span>
                     </div>
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={onContactUs} className="cursor-pointer gap-3 px-3 py-3 rounded-md">
