@@ -65,7 +65,7 @@ export const StudentFilter = ({ value, onSelect }: StudentFilterProps) => {
             className="h-7 w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
           />
         </div>
-        <ScrollArea className="max-h-[280px]">
+        <ScrollArea className="max-h-[280px] [&>[data-slot=scroll-area-viewport]]:max-h-[280px]">
           {loading ? (
             <div className="space-y-1 p-2">
               {Array.from({ length: 5 }).map((_, i) => (
