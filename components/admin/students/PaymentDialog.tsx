@@ -30,6 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { DatePicker } from "@/components/ui/date-picker"
 import { useDialogStore } from "@/lib/stores/dialog-store"
 import { createPayment } from "@/server-actions/payments/create-payment"
 import { ADMIN_PACKAGES } from "@/data/packages"
@@ -56,6 +57,7 @@ const getInitialForm = () => ({
   packageIndex: 0,
   amount: ADMIN_PACKAGES[0].price,
   description: "",
+  startDate: new Date() as Date | undefined,
 })
 
 export const PaymentDialog = () => {
@@ -108,6 +110,7 @@ export const PaymentDialog = () => {
           packageName: pkg.title,
           lessonsPerWeek: pkg.lessonsPerWeek,
           durationDays: pkg.durationDays,
+          startDate: form.startDate?.toISOString().split("T")[0],
         }),
       })
 
@@ -209,6 +212,17 @@ export const PaymentDialog = () => {
               </SelectContent>
             </Select>
           </div>
+
+          {form.type === "subscription" && (
+            <div className="grid gap-2">
+              <Label>Subscription Start Date</Label>
+              <DatePicker
+                value={form.startDate}
+                onChange={(date) => setForm((prev) => ({ ...prev, startDate: date }))}
+                placeholder="Select start date"
+              />
+            </div>
+          )}
 
           {form.type !== "subscription" && (
             <div className="grid gap-2">

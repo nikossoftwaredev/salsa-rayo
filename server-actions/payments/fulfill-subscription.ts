@@ -12,6 +12,7 @@ interface FulfillSubscriptionInput {
   durationDays: number
   description?: string
   stripePaymentIntentId?: string
+  startDate?: string
 }
 
 export const fulfillSubscription = async (data: FulfillSubscriptionInput) => {
@@ -23,7 +24,7 @@ export const fulfillSubscription = async (data: FulfillSubscriptionInput) => {
   if (!student) throw new Error("Student not found")
 
   const result = await prisma.$transaction(async (tx) => {
-    const now = new Date()
+    const now = data.startDate ? new Date(data.startDate + "T00:00:00") : new Date()
     const durationMs = data.durationDays * 24 * 60 * 60 * 1000
 
     const existingSub = await tx.subscription.findFirst({
