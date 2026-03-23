@@ -6,8 +6,7 @@ import { Button } from "@/components/ui/button"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { copyToClipboard, formatDate } from "@/lib/format"
 import { TYPE_LABELS, METHOD_LABELS } from "@/data/payment-constants"
-import { MdDeleteOutline } from "react-icons/md"
-import { TbFileInvoice, TbRefresh, TbPrinter } from "react-icons/tb"
+import { Trash2, FileText, RefreshCw, Printer } from "lucide-react"
 import { type TransactionWithStudent } from "@/server-actions/payments/get-transactions"
 import {
   Tooltip,
@@ -172,7 +171,7 @@ export const createColumns = ({
                   className="size-8"
                   onClick={() => onViewInvoicePdf(row.original)}
                 >
-                  <TbPrinter size={16} />
+                  <Printer className="size-4" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>Print Invoice</TooltipContent>
@@ -189,7 +188,7 @@ export const createColumns = ({
                   className="size-8 text-primary hover:text-primary"
                   onClick={() => onIssueInvoice(row.original)}
                 >
-                  <TbFileInvoice size={16} />
+                  <FileText className="size-4" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>Issue Invoice</TooltipContent>
@@ -206,7 +205,7 @@ export const createColumns = ({
                   className="size-8 text-yellow-500 hover:text-yellow-500"
                   onClick={() => onRetryInvoice(row.original)}
                 >
-                  <TbRefresh size={16} />
+                  <RefreshCw className="size-4" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>Retry Invoice</TooltipContent>
@@ -219,7 +218,7 @@ export const createColumns = ({
             className="size-8 text-destructive hover:text-destructive"
             onClick={() => onDelete(row.original)}
           >
-            <MdDeleteOutline size={16} />
+            <Trash2 className="size-4" />
           </Button>
         </div>
       )

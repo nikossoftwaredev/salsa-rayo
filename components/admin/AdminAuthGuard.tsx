@@ -1,7 +1,7 @@
 "use client";
 
 import { signIn, signOut } from "next-auth/react";
-import { IoHome } from "react-icons/io5";
+import { Home } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
@@ -25,7 +25,7 @@ export const AdminAuthGuard = ({ isSignedIn }: AdminAuthGuardProps) => {
             <Button onClick={() => signIn("google")}>Sign in</Button>
           )}
           <Button variant="outline" asChild>
-            <Link href="/"><IoHome size={16} /> Home</Link>
+            <Link href="/"><Home className="size-4" /> Home</Link>
           </Button>
         </div>
       </div>

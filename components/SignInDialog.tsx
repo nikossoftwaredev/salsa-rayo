@@ -3,8 +3,7 @@
 import { useState, useCallback } from "react";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
-import { IoMailOutline } from "react-icons/io5";
-import { ImSpinner8 } from "react-icons/im";
+import { Mail, Loader2 } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import {
   Dialog,
@@ -76,7 +75,7 @@ export const SignInDialog = ({ open, onOpenChange, callbackUrl }: SignInDialogPr
 
         {emailSent ? (
           <div className="text-center space-y-3">
-            <IoMailOutline size={40} className="mx-auto text-primary" />
+            <Mail className="size-10 mx-auto text-primary" />
             <h2 className="text-xl font-medium">Check your email</h2>
             <p className="text-sm text-muted-foreground">
               We sent a sign-in link to <strong className="text-foreground">{email}</strong>
@@ -98,7 +97,7 @@ export const SignInDialog = ({ open, onOpenChange, callbackUrl }: SignInDialogPr
                 onClick={handleGoogleSignIn}
                 disabled={googleLoading}
               >
-                {googleLoading ? <ImSpinner8 size={20} className="animate-spin" /> : <FcGoogle size={20} />}
+                {googleLoading ? <Loader2 className="size-5 animate-spin" /> : <FcGoogle size={20} />}
                 Google
               </Button>
               <div className="absolute -top-1 -right-1 backdrop-blur-sm bg-green-100/80 dark:bg-green-900/80 border border-green-200 dark:border-green-700 rounded-full px-2 py-0.5 shadow-sm flex items-center justify-center">
@@ -132,7 +131,7 @@ export const SignInDialog = ({ open, onOpenChange, callbackUrl }: SignInDialogPr
                 type="submit"
                 disabled={isLoading || !email.trim()}
               >
-                {isLoading ? <ImSpinner8 size={16} className="animate-spin" /> : <IoMailOutline size={16} />}
+                {isLoading ? <Loader2 className="size-4 animate-spin" /> : <Mail className="size-4" />}
                 Continue
               </Button>
             </form>

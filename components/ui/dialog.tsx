@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { IoClose } from "react-icons/io5"
+import { X } from "lucide-react"
 import { Dialog as DialogPrimitive } from "radix-ui"
 
 import { cn } from "@/lib/utils"
@@ -69,7 +69,7 @@ const DialogContent = ({
           data-slot="dialog-close"
           className="absolute top-4 right-4 size-8 cursor-pointer rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted ring-offset-background transition-all focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none"
         >
-          <IoClose size={18} />
+          <X className="size-5" />
           <span className="sr-only">Close</span>
         </DialogPrimitive.Close>
       )}

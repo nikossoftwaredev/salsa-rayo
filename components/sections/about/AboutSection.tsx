@@ -5,8 +5,7 @@ import Image from "next/image";
 import { SectionTitle } from "@/components/SectionTitle";
 import { useTranslations } from "next-intl";
 import Logo from "@/components/Logo";
-import { IoCalendarOutline, IoTrophyOutline, IoSchoolOutline, IoHeartOutline } from "react-icons/io5";
-import { MdExpandMore, MdExpandLess } from "react-icons/md";
+import { Calendar, Trophy, GraduationCap, Heart, ChevronDown, ChevronUp } from "lucide-react";
 
 interface HighlightProps {
   icon: React.ReactNode;
@@ -63,7 +62,7 @@ const InstructorDescription = ({ description, name }: InstructorDescriptionProps
               aria-label={`Show more about ${name}`}
             >
               <span>Read more</span>
-              <MdExpandMore className="w-5 h-5" />
+              <ChevronDown className="size-5" />
             </button>
           ) : (
             <>
@@ -80,7 +79,7 @@ const InstructorDescription = ({ description, name }: InstructorDescriptionProps
                 aria-label="Show less"
               >
                 <span>Show less</span>
-                <MdExpandLess className="w-5 h-5" />
+                <ChevronUp className="size-5" />
               </button>
             </>
           )}
@@ -110,22 +109,22 @@ const AboutSection = () => {
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <Highlight
-                    icon={<IoCalendarOutline size={20} />}
+                    icon={<Calendar className="size-5" />}
                     label="Founded"
                     value="2025"
                   />
                   <Highlight
-                    icon={<IoSchoolOutline size={20} />}
+                    icon={<GraduationCap className="size-5" />}
                     label="Location"
                     value="Agios Dimitrios"
                   />
                   <Highlight
-                    icon={<IoTrophyOutline size={20} />}
+                    icon={<Trophy className="size-5" />}
                     label="Awards"
                     value="Multiple"
                   />
                   <Highlight
-                    icon={<IoHeartOutline size={20} />}
+                    icon={<Heart className="size-5" />}
                     label="Passion"
                     value="100%"
                   />

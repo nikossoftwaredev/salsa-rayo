@@ -1,7 +1,7 @@
 "use client"
 
 import { type Table } from "@tanstack/react-table"
-import { IoOptions } from "react-icons/io5"
+import { SlidersHorizontal } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -22,7 +22,7 @@ export const DataTableViewOptions = <TData,>({
   <DropdownMenu>
     <DropdownMenuTrigger asChild>
       <Button variant="outline" size="sm" className="ml-auto hidden h-8 lg:flex">
-        <IoOptions size={14} className="mr-2" />
+        <SlidersHorizontal className="mr-2 size-3.5" />
         View
       </Button>
     </DropdownMenuTrigger>

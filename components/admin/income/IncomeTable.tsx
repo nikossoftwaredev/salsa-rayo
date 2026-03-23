@@ -1,8 +1,10 @@
 "use client"
 
 import { useCallback, useMemo, useState } from "react"
+import { Loader2 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import { NumericInput } from "@/components/ui/numeric-input"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,7 +23,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+
 import { Label } from "@/components/ui/label"
 import { DataTable } from "@/components/data-table/data-table"
 import { createColumns } from "./columns"
@@ -61,7 +63,7 @@ export const IncomeTable = ({ data }: IncomeTableProps) => {
     }
 
     setIsSubmitting(true)
-    const toastId = toast.loading("Issuing invoice & generating PDF...")
+    const toastId = toast.loading("Issuing invoice & generating PDF")
     const result = await issueInvoiceForTransaction(invoicingTransaction.id, amount)
     if (!result.success) {
       toast.error(result.error, { id: toastId })
@@ -84,7 +86,7 @@ export const IncomeTable = ({ data }: IncomeTableProps) => {
 
   const handleViewInvoicePdf = useCallback(async (transaction: TransactionWithStudent) => {
     if (!transaction.invoice?.id) return
-    const toastId = toast.loading("Generating PDF...")
+    const toastId = toast.loading("Generating PDF")
     try {
       await openPdfInNewTab(`/api/invoices/${transaction.invoice.id}/pdf`)
       toast.dismiss(toastId)
@@ -95,7 +97,7 @@ export const IncomeTable = ({ data }: IncomeTableProps) => {
 
   const handleRetryInvoice = useCallback(async (transaction: TransactionWithStudent) => {
     if (!transaction.invoice) return
-    const toastId = toast.loading("Retrying invoice...")
+    const toastId = toast.loading("Retrying invoice")
     const result = await retryFailedInvoice(transaction.invoice.id)
     if (result.success) {
       toast.success("Invoice retried successfully", { id: toastId })
@@ -150,13 +152,10 @@ export const IncomeTable = ({ data }: IncomeTableProps) => {
             </p>
             <div className="space-y-1.5">
               <Label htmlFor="invoice-amount">Amount (€)</Label>
-              <Input
+              <NumericInput
                 id="invoice-amount"
-                type="number"
-                step="0.01"
-                min="0.01"
                 value={invoiceAmount}
-                onChange={(e) => setInvoiceAmount(e.target.value)}
+                onChange={(value) => setInvoiceAmount(value)}
               />
             </div>
           </div>
@@ -165,7 +164,7 @@ export const IncomeTable = ({ data }: IncomeTableProps) => {
               Cancel
             </Button>
             <Button onClick={confirmIssueInvoice} disabled={isSubmitting}>
-              {isSubmitting ? "Issuing..." : "Issue Invoice"}
+              {isSubmitting ? <><Loader2 className="size-4 animate-spin" /> Issuing</> : "Issue Invoice"}
             </Button>
           </DialogFooter>
         </DialogContent>

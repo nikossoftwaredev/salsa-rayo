@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { IoChevronDown, IoSearch } from "react-icons/io5"
+import { ChevronDown, Search } from "lucide-react"
 import {
   Popover,
   PopoverContent,
@@ -149,12 +149,12 @@ export const PhoneInput = ({
           >
             <span className="text-base leading-none">{selectedCountry.flag}</span>
             <span className="text-sm text-muted-foreground">{selectedCountry.dial}</span>
-            <IoChevronDown size={12} className="text-muted-foreground" />
+            <ChevronDown className="size-3 text-muted-foreground" />
           </button>
         </PopoverTrigger>
         <PopoverContent align="start" className="w-64 p-0">
           <div className="flex items-center gap-2 border-b px-3 py-2">
-            <IoSearch size={14} className="shrink-0 text-muted-foreground" />
+            <Search className="size-3.5 shrink-0 text-muted-foreground" />
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}

@@ -12,9 +12,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SectionTitle } from "@/components/SectionTitle";
 import { Textarea } from "@/components/ui/textarea";
-import { IoMdSend } from "react-icons/io";
-import { FaUser, FaPhone, FaEnvelope } from "react-icons/fa6";
-import { ImSpinner8 } from "react-icons/im";
+import { Send, User, Phone, Mail, Loader2 } from "lucide-react";
 import { sendContactFormEmail } from "@/server-actions/send-email";
 import Toast from "@/components/Toast";
 import { z } from "zod";
@@ -61,7 +59,7 @@ const inputFields: InputFieldProps[] = [
     inputType: "text",
     placeholder: "firstName",
     required: true,
-    icon: <FaUser />,
+    icon: <User className="size-4" />,
   },
   {
     id: "lastname",
@@ -69,7 +67,7 @@ const inputFields: InputFieldProps[] = [
     inputType: "text",
     placeholder: "lastName",
     required: true,
-    icon: <FaUser />,
+    icon: <User className="size-4" />,
   },
   {
     id: "email",
@@ -77,7 +75,7 @@ const inputFields: InputFieldProps[] = [
     inputType: "email",
     placeholder: "email",
     required: true,
-    icon: <FaEnvelope />,
+    icon: <Mail className="size-4" />,
   },
   {
     id: "phone",
@@ -85,7 +83,7 @@ const inputFields: InputFieldProps[] = [
     inputType: "tel",
     placeholder: "phone",
     required: true,
-    icon: <FaPhone />,
+    icon: <Phone className="size-4" />,
   },
   {
     id: "message",
@@ -313,7 +311,7 @@ const ContactForm = ({
             type="submit"
             size="lg"
           >
-            {loading ? <ImSpinner8 size={16} className="animate-spin" /> : <IoMdSend size={16} />}
+            {loading ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4" />}
             {t("send")}
           </Button>
         </form>

@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { IoSaveOutline, IoAddOutline } from "react-icons/io5"
-import { ImSpinner8 } from "react-icons/im"
+import { Save, Plus, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -152,7 +151,7 @@ export const InstructorDialog = () => {
               Cancel
             </Button>
             <Button type="submit" disabled={loading}>
-              {loading ? <ImSpinner8 size={14} className="animate-spin" /> : isEdit ? <IoSaveOutline size={14} /> : <IoAddOutline size={14} />}
+              {loading ? <Loader2 className="size-3.5 animate-spin" /> : isEdit ? <Save className="size-3.5" /> : <Plus className="size-3.5" />}
               {isEdit ? "Save Changes" : "Add Instructor"}
             </Button>
           </DialogFooter>

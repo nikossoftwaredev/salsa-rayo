@@ -3,13 +3,7 @@
 import { useTranslations } from "next-intl";
 import { MAIL, PHONE } from "../data/config";
 
-import {
-  MdMailOutline,
-  MdOutlineCalendarToday,
-  MdOutlinePhone,
-  MdLocationPin,
-  MdAccessTime,
-} from "react-icons/md";
+import { Mail, Calendar, Phone, MapPin, Clock } from "lucide-react";
 import AppLink from "./AppLink";
 import SocialsSection from "./sections/socials/SocialsSection";
 import Logo from "./Logo";
@@ -47,19 +41,19 @@ const Footer = () => {
       title: t("schedule"),
       subtitles: [
         {
-          icon: <MdOutlineCalendarToday size={22} />,
+          icon: <Calendar className="size-5" />,
           value: t("workDays"),
           type: "text",
         },
-        { icon: <MdAccessTime size={22} />, value: t("workHours"), type: "text" },
+        { icon: <Clock className="size-5" />, value: t("workHours"), type: "text" },
       ],
     },
     {
       title: t("contactInfo"),
       subtitles: [
-        { icon: <MdLocationPin size={22} />, value: t("address"), type: "text" },
-        { icon: <MdOutlinePhone size={22} />, value: PHONE, type: "tel" },
-        { icon: <MdMailOutline size={22} />, value: MAIL, type: "email" },
+        { icon: <MapPin className="size-5" />, value: t("address"), type: "text" },
+        { icon: <Phone className="size-5" />, value: PHONE, type: "tel" },
+        { icon: <Mail className="size-5" />, value: MAIL, type: "email" },
       ],
     },
   ];

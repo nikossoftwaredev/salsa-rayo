@@ -1,12 +1,7 @@
 "use client"
 
 import { type Column } from "@tanstack/react-table"
-import {
-  IoArrowDown,
-  IoArrowUp,
-  IoSwapVertical,
-  IoEyeOff,
-} from "react-icons/io5"
+import { ArrowDown, ArrowUp, ArrowUpDown, EyeOff } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -24,9 +19,9 @@ interface DataTableColumnHeaderProps<TData, TValue>
 }
 
 const SortIcon = ({ direction }: { direction: false | "asc" | "desc" }) => {
-  if (direction === "desc") return <IoArrowDown size={14} className="ml-2" />
-  if (direction === "asc") return <IoArrowUp size={14} className="ml-2" />
-  return <IoSwapVertical size={14} className="ml-2" />
+  if (direction === "desc") return <ArrowDown className="ml-2 size-3.5" />
+  if (direction === "asc") return <ArrowUp className="ml-2 size-3.5" />
+  return <ArrowUpDown className="ml-2 size-3.5" />
 }
 
 export const DataTableColumnHeader = <TData, TValue>({
@@ -51,16 +46,16 @@ export const DataTableColumnHeader = <TData, TValue>({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start">
           <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
-            <IoArrowUp size={14} className="mr-2 text-muted-foreground/70" />
+            <ArrowUp className="mr-2 size-3.5 text-muted-foreground/70" />
             Asc
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
-            <IoArrowDown size={14} className="mr-2 text-muted-foreground/70" />
+            <ArrowDown className="mr-2 size-3.5 text-muted-foreground/70" />
             Desc
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
-            <IoEyeOff size={14} className="mr-2 text-muted-foreground/70" />
+            <EyeOff className="mr-2 size-3.5 text-muted-foreground/70" />
             Hide
           </DropdownMenuItem>
         </DropdownMenuContent>

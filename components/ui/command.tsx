@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { Command as CommandPrimitive } from "cmdk"
-import { IoSearch } from "react-icons/io5"
+import { Search } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import {
@@ -64,7 +64,7 @@ const CommandInput = ({
     data-slot="command-input-wrapper"
     className="flex h-9 items-center gap-2 border-b px-3"
   >
-    <IoSearch className="size-4 shrink-0 opacity-50" />
+    <Search className="size-4 shrink-0 opacity-50" />
     <CommandPrimitive.Input
       data-slot="command-input"
       className={cn(

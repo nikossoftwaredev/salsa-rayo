@@ -1,4 +1,4 @@
-import { IoFlash } from "react-icons/io5"
+import { Zap } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { compactFormatter } from "@/lib/format"
 import {
@@ -26,7 +26,7 @@ export const RayoPoints = ({ points, size = "default", showPopover = false, clas
         className
       )}
     >
-      <IoFlash size={size === "sm" ? 12 : 14} />
+      <Zap className={size === "sm" ? "size-3" : "size-3.5"} />
       {compactFormatter.format(points)}
     </span>
   )

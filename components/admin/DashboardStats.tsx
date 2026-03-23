@@ -1,16 +1,13 @@
 "use client"
 
 import { useState } from "react"
-import { IoSchool, IoTrendingUp, IoCard, IoEyeOutline, IoEyeOffOutline } from "react-icons/io5"
-import { MdDashboard } from "react-icons/md"
+import { GraduationCap, TrendingUp, CreditCard, Eye, EyeOff, LayoutDashboard, type LucideIcon } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Link } from "@/i18n/navigation"
-import type { IconType } from "react-icons"
-
-const STAT_ICONS: Record<string, IconType> = {
-  "Total Students": IoSchool,
-  "Monthly Income": IoTrendingUp,
-  "Active Subscriptions": IoCard,
+const STAT_ICONS: Record<string, LucideIcon> = {
+  "Total Students": GraduationCap,
+  "Monthly Income": TrendingUp,
+  "Active Subscriptions": CreditCard,
 }
 
 const STAT_LINKS: Record<string, string> = {
@@ -41,13 +38,13 @@ export const DashboardStats = ({ stats }: DashboardStatsProps) => {
           onClick={() => setVisible((prev) => !prev)}
           className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
         >
-          {visible ? <IoEyeOffOutline size={22} /> : <IoEyeOutline size={22} />}
+          {visible ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
         </button>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => {
-          const Icon = STAT_ICONS[stat.title] ?? MdDashboard
+          const Icon = STAT_ICONS[stat.title] ?? LayoutDashboard
           const href = STAT_LINKS[stat.title]
           return (
             <Link key={stat.title} href={href ?? "/admin"} className="group">
@@ -56,7 +53,7 @@ export const DashboardStats = ({ stats }: DashboardStatsProps) => {
                   <CardTitle className="text-sm font-medium">
                     {stat.title}
                   </CardTitle>
-                  <Icon size={16} className="text-muted-foreground" />
+                  <Icon className="size-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
                   <div className={`text-2xl font-bold ${!visible ? "blur-md select-none" : ""}`}>{stat.value}</div>

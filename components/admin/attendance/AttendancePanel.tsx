@@ -1,7 +1,7 @@
 "use client"
 
 import { useMemo } from "react"
-import { IoSearchOutline, IoPersonOutline, IoClose } from "react-icons/io5"
+import { Search, User, X } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -41,7 +41,7 @@ export const AttendancePanel = ({
       {/* Search */}
       <div className="flex h-14 shrink-0 items-center border-b px-4">
         <div className="relative w-full">
-          <IoSearchOutline size={16} className="absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground" />
+          <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
@@ -55,7 +55,7 @@ export const AttendancePanel = ({
               onClick={() => handleSearch("")}
               className="absolute top-1/2 right-3 -translate-y-1/2 rounded-full p-0.5 text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
             >
-              <IoClose size={14} />
+              <X className="size-3.5" />
             </button>
           )}
         </div>
@@ -77,7 +77,7 @@ export const AttendancePanel = ({
           </div>
         ) : visibleStudents.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-muted-foreground">
-            <IoPersonOutline size={24} className="mb-2 opacity-40" />
+            <User className="mb-2 size-6 opacity-40" />
             <p className="text-xs">
               {search ? "No students found." : "No students available."}
             </p>

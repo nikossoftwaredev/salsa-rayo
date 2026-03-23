@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback } from "react"
 import Image from "next/image"
-import { IoAdd, IoClose } from "react-icons/io5"
+import { Plus, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { uploadImage, removeImage } from "@/server-actions/upload-image"
@@ -105,7 +105,7 @@ export const ImageUpload = ({
             "opacity-0 group-hover:opacity-100"
           )}
         >
-          <IoClose className="!size-4" />
+          <X className="!size-4" />
         </Button>
       </div>
     )
@@ -129,7 +129,7 @@ export const ImageUpload = ({
           <span className="text-lg font-medium text-primary">{progress}%</span>
         ) : (
           <>
-            <IoAdd className="size-12 text-muted-foreground" />
+            <Plus className="size-12 text-muted-foreground" />
             <span className="text-sm text-muted-foreground">Add Image</span>
           </>
         )}

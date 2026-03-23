@@ -4,7 +4,7 @@ import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { IoCalendar, IoFlame, IoPencil, IoArrowRedoOutline, IoLogoInstagram, IoGlobeOutline, IoMusicalNotes } from "react-icons/io5";
+import { Calendar, Flame, Pencil, Share2, Instagram, Globe, Music } from "lucide-react";
 import { RayoPoints } from "@/components/ui/rayo-points";
 import {
   Tooltip,
@@ -24,8 +24,8 @@ interface ProfileContentProps {
 }
 
 const BASE_STATS = [
-  { key: "classes", icon: IoFlame, label: "Classes", color: "#fb923c" },
-  { key: "joined", icon: IoCalendar, label: "Member Since", color: "#5b4fdb" },
+  { key: "classes", icon: Flame, label: "Classes", color: "#fb923c" },
+  { key: "joined", icon: Calendar, label: "Member Since", color: "#5b4fdb" },
 ] as const;
 
 export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentProps) => {
@@ -110,7 +110,7 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center size-7 rounded-full text-muted-foreground/50 hover:text-pink-500 hover:bg-pink-500/10 transition-colors"
               >
-                <IoLogoInstagram size={15} />
+                <Instagram className="size-3.5" />
               </a>
             </TooltipTrigger>
             <TooltipContent>@{student.instagram}</TooltipContent>
@@ -125,7 +125,7 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center size-7 rounded-full text-muted-foreground/50 hover:text-primary hover:bg-primary/10 transition-colors"
               >
-                <IoGlobeOutline size={15} />
+                <Globe className="size-3.5" />
               </a>
             </TooltipTrigger>
             <TooltipContent>{student.website}</TooltipContent>
@@ -137,7 +137,7 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
               onClick={handleShare}
               className="inline-flex items-center justify-center size-7 rounded-full text-muted-foreground/50 hover:text-primary hover:bg-primary/10 transition-colors cursor-pointer"
             >
-              <IoArrowRedoOutline size={15} />
+              <Share2 className="size-3.5" />
             </button>
           </TooltipTrigger>
           <TooltipContent>
@@ -166,7 +166,7 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
           transition={{ duration: 0.4, delay: 0.3 }}
           className="mt-2 flex items-center gap-1.5 text-xs text-muted-foreground/70"
         >
-          <IoMusicalNotes size={12} className="text-pink-500" />
+          <Music className="size-3 text-pink-500" />
           Dancing for {student.dancingYears} {student.dancingYears === 1 ? "year" : "years"}
         </motion.p>
       )}
@@ -185,7 +185,7 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
                 className="rounded-xl border border-border/20 bg-card p-4"
               >
                 <div className="flex items-center gap-2 text-muted-foreground">
-                  <Icon size={16} style={{ color: stat.color }} />
+                  <Icon className="size-4" style={{ color: stat.color }} />
                   <span className="text-xs">{stat.label}</span>
                 </div>
                 <span className="mt-2 block text-lg font-bold text-foreground">
@@ -210,7 +210,7 @@ export const ProfileContent = ({ user, isOwnProfile = false }: ProfileContentPro
             size="sm"
             onClick={() => setEditOpen(true)}
           >
-            <IoPencil size={14} />
+            <Pencil className="size-3.5" />
             Edit Profile
           </Button>
         </motion.div>

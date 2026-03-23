@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { type ColumnDef } from "@tanstack/react-table"
-import { IoTrash } from "react-icons/io5"
+import { Trash2, Loader2 } from "lucide-react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import {
@@ -48,7 +48,7 @@ const DeleteAction = ({ row, onSuccess }: { row: AttendanceRecord; onSuccess: ()
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive">
-          <IoTrash size={14} />
+          <Trash2 className="size-3.5" />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent size="sm">
@@ -61,7 +61,7 @@ const DeleteAction = ({ row, onSuccess }: { row: AttendanceRecord; onSuccess: ()
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction variant="destructive" onClick={handleDelete} disabled={loading}>
-            {loading ? "Removing..." : "Remove"}
+            {loading ? <><Loader2 className="size-4 animate-spin" /> Removing</> : "Remove"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

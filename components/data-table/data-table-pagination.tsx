@@ -1,12 +1,7 @@
 "use client"
 
 import { type Table } from "@tanstack/react-table"
-import {
-  IoChevronBack,
-  IoChevronForward,
-  IoPlayBack,
-  IoPlayForward,
-} from "react-icons/io5"
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Select,
@@ -57,7 +52,7 @@ export const DataTablePagination = <TData,>({
           onClick={() => table.setPageIndex(0)}
           disabled={!table.getCanPreviousPage()}
         >
-          <IoPlayBack size={14} />
+          <ChevronsLeft className="size-3.5" />
         </Button>
         <Button
           variant="outline"
@@ -65,7 +60,7 @@ export const DataTablePagination = <TData,>({
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          <IoChevronBack size={14} />
+          <ChevronLeft className="size-3.5" />
         </Button>
         <Button
           variant="outline"
@@ -73,7 +68,7 @@ export const DataTablePagination = <TData,>({
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          <IoChevronForward size={14} />
+          <ChevronRight className="size-3.5" />
         </Button>
         <Button
           variant="outline"
@@ -81,7 +76,7 @@ export const DataTablePagination = <TData,>({
           onClick={() => table.setPageIndex(table.getPageCount() - 1)}
           disabled={!table.getCanNextPage()}
         >
-          <IoPlayForward size={14} />
+          <ChevronsRight className="size-3.5" />
         </Button>
       </div>
     </div>

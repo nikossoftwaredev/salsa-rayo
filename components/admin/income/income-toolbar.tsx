@@ -1,7 +1,7 @@
 "use client"
 
 import { type Table } from "@tanstack/react-table"
-import { IoClose } from "react-icons/io5"
+import { X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DataTableFacetedFilter } from "@/components/data-table/data-table-faceted-filter"
@@ -52,7 +52,7 @@ export const IncomeToolbar = ({ table }: IncomeToolbarProps) => {
             onClick={() => table.resetColumnFilters()}
           >
             Reset
-            <IoClose size={14} className="ml-2" />
+            <X className="size-3.5 ml-2" />
           </Button>
         )}
       </div>

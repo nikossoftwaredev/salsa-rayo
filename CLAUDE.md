@@ -13,13 +13,20 @@ This document contains important development guidelines and best practices to fo
 
 ## Icon Library Preference
 
-**Always use `react-icons` for icons in this project. Do NOT use `lucide-react` or other icon libraries.**
+**Always use `lucide-react` for icons.** Only exception: brand logos (FcGoogle, FaStripe, FaFacebook, FaInstagram, FaSpotify, FaYoutube) stay as `react-icons` since lucide has no brand icons.
 
-Common icon imports:
+### Sizing Convention
+- Use `className="size-X"` (Tailwind) - never the `size` prop
+- Form label icons: `className="size-3.5"`
+- Standard icons: `className="size-4"`
+- Larger icons: `className="size-5"`
 
-- `import { IoClose } from "react-icons/io5"` for close/X icons
-- `import { MdOutlineHive } from "react-icons/md"` for hive icons
-- Check existing components for other icon usage patterns
+### Loading States
+- **Never use text dots ("...")** for loading states
+- Always use: `<Loader2 className="size-4 animate-spin" />`
+
+### Icon-Only Buttons on Mobile
+- Hide text with `hidden sm:inline`, keep icon visible
 
 ## React useEffect Best Practices
 

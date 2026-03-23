@@ -17,7 +17,7 @@ import { twMerge } from "tailwind-merge";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import MasonryGallery from "./MasonryGallery";
-import { IoClose } from "react-icons/io5";
+import { X } from "lucide-react";
 
 interface FilterTab {
   id: GalleryCategory;
@@ -168,7 +168,7 @@ const GallerySection = ({
               onClick={() => setSelectedItem(null)}
               className="absolute top-4 right-4 z-50 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 hover:bg-background hover:scale-110 transition-all duration-200"
             >
-              <IoClose className="w-6 h-6 text-foreground" />
+              <X className="size-6 text-foreground" />
             </button>
             
             {selectedItem.type === "video" ? (

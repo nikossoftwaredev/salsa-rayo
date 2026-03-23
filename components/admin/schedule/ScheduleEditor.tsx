@@ -9,7 +9,7 @@ import { deleteScheduleEntry } from "@/server-actions/schedule/delete-schedule-e
 import { DIALOG_KEY } from "@/components/admin/schedule/ScheduleEntryDialog"
 import { type Instructor, type ScheduleEntryWithInstructors } from "@/lib/db"
 import { DAY_NAMES } from "@/data/schedule"
-import { IoAdd, IoCreateOutline, IoTrashOutline } from "react-icons/io5"
+import { Plus, Pencil, Trash2 } from "lucide-react"
 
 interface ScheduleEditorProps {
   entries: ScheduleEntryWithInstructors[]
@@ -60,7 +60,7 @@ export const ScheduleEditor = ({ entries, instructors }: ScheduleEditorProps) =>
             <div className="flex items-center justify-between border-b px-4 py-3">
               <h3 className="text-lg font-semibold">{dayName}</h3>
               <Button size="sm" variant="outline" onClick={() => handleAdd(dayIndex)}>
-                <IoAdd className="!size-4" />
+                <Plus className="!size-4" />
                 Add Class
               </Button>
             </div>
@@ -108,14 +108,14 @@ export const ScheduleEditor = ({ entries, instructors }: ScheduleEditorProps) =>
                         variant="ghost"
                         onClick={() => handleEdit(entry)}
                       >
-                        <IoCreateOutline className="!size-4" />
+                        <Pencil className="!size-4" />
                       </Button>
                       <Button
                         size="sm"
                         variant="ghost"
                         onClick={() => handleDelete(entry.id)}
                       >
-                        <IoTrashOutline className="!size-4" />
+                        <Trash2 className="!size-4" />
                       </Button>
                     </div>
                   </div>

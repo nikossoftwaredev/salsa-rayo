@@ -3,9 +3,8 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { IoPersonOutline, IoLogoInstagram, IoGlobeOutline } from "react-icons/io5";
-import { ImSpinner8 } from "react-icons/im";
-import { MdOutlineEdit } from "react-icons/md";
+import { NumericInput } from "@/components/ui/numeric-input";
+import { User, Instagram, Globe, Loader2, Pencil } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -48,9 +47,9 @@ interface EditProfileSheetProps {
 }
 
 const FIELDS = [
-  { key: "name", label: "Name", icon: IoPersonOutline, placeholder: "Your name", maxLength: 100, required: true },
-  { key: "instagram", label: "Instagram", icon: IoLogoInstagram, placeholder: "username", maxLength: 50, required: false },
-  { key: "website", label: "Website", icon: IoGlobeOutline, placeholder: "https://yoursite.com", maxLength: 200, required: false },
+  { key: "name", label: "Name", icon: User, placeholder: "Your name", maxLength: 100, required: true },
+  { key: "instagram", label: "Instagram", icon: Instagram, placeholder: "username", maxLength: 50, required: false },
+  { key: "website", label: "Website", icon: Globe, placeholder: "https://yoursite.com", maxLength: 200, required: false },
 ] as const;
 
 const AVATAR_OPTIONS = [
@@ -127,7 +126,7 @@ export const EditProfileSheet = ({ open, onOpenChange }: EditProfileSheetProps) 
       <SheetContent side="right" className="flex flex-col">
         <SheetHeader>
           <SheetTitle className="flex items-center gap-2">
-            <MdOutlineEdit size={18} />
+            <Pencil className="size-5" />
             Edit Profile
           </SheetTitle>
           <SheetDescription>
@@ -218,7 +217,7 @@ export const EditProfileSheet = ({ open, onOpenChange }: EditProfileSheetProps) 
                     {label}{required && <span className="text-red-500 ml-0.5">*</span>}
                   </Label>
                   <div className="relative">
-                    <Icon size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                    <Icon className="size-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                     <Input
                       id={key}
                       value={form[key]}
@@ -246,13 +245,11 @@ export const EditProfileSheet = ({ open, onOpenChange }: EditProfileSheetProps) 
                 <Label htmlFor="dancingYears" className="text-xs text-muted-foreground">
                   Dancing Years
                 </Label>
-                <Input
+                <NumericInput
                   id="dancingYears"
-                  type="number"
-                  min={0}
-                  max={50}
+                  allowDecimal={false}
                   value={form.dancingYears}
-                  onChange={(e) => handleChange("dancingYears", e.target.value)}
+                  onChange={(value) => handleChange("dancingYears", value)}
                   placeholder="Years of salsa experience"
                 />
               </div>
@@ -285,7 +282,7 @@ export const EditProfileSheet = ({ open, onOpenChange }: EditProfileSheetProps) 
             disabled={isSaving || isLoading || !form.name.trim() || !form.phone.trim()}
             className="w-full"
           >
-            {isSaving ? <ImSpinner8 size={16} className="animate-spin" /> : <MdOutlineEdit size={16} />}
+            {isSaving ? <Loader2 className="size-4 animate-spin" /> : <Pencil className="size-4" />}
             Save Changes
           </Button>
         </SheetFooter>

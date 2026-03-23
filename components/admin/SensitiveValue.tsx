@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5"
+import { Eye, EyeOff } from "lucide-react"
 
 interface SensitiveValueProps {
   value: string
@@ -18,7 +18,7 @@ export const SensitiveValue = ({ value }: SensitiveValueProps) => {
         onClick={() => setVisible((prev) => !prev)}
         className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
       >
-        {visible ? <IoEyeOffOutline size={14} /> : <IoEyeOutline size={14} />}
+        {visible ? <EyeOff className="size-3.5" /> : <Eye className="size-3.5" />}
       </button>
     </div>
   )

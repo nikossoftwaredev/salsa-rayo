@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { formatDate } from "@/lib/format"
 import { METHOD_LABELS } from "@/data/payment-constants"
-import { MdEdit, MdDeleteOutline } from "react-icons/md"
+import { Pencil, Trash2 } from "lucide-react"
 import { type ExpenseWithCategory } from "@/server-actions/expenses/get-expenses"
 
 export type ExpenseRowActions = {
@@ -84,7 +84,7 @@ export const createColumns = ({
           className="size-8"
           onClick={() => onEdit(row.original)}
         >
-          <MdEdit size={16} />
+          <Pencil className="size-4" />
         </Button>
         <Button
           variant="ghost"
@@ -92,7 +92,7 @@ export const createColumns = ({
           className="size-8 text-destructive hover:text-destructive"
           onClick={() => onDelete(row.original)}
         >
-          <MdDeleteOutline size={16} />
+          <Trash2 className="size-4" />
         </Button>
       </div>
     ),

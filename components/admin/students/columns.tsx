@@ -5,8 +5,7 @@ import { useRouter } from "next/navigation"
 import { type ColumnDef } from "@tanstack/react-table"
 import { toast } from "sonner"
 import { RayoPoints } from "@/components/ui/rayo-points"
-import { MdEdit } from "react-icons/md"
-import { IoAddOutline, IoReceiptOutline, IoRefreshOutline } from "react-icons/io5"
+import { Pencil, Plus, Receipt, RefreshCw } from "lucide-react"
 import { SubscriptionBadge } from "@/components/ui/subscription-badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -83,7 +82,7 @@ const RenewAction = ({ student }: { student: StudentWithSubscriptions }) => {
           onClick={handleRenew}
           disabled={!hasSub || loading}
         >
-          <IoRefreshOutline size={16} />
+          <RefreshCw className="size-4" />
         </Button>
       </TooltipTrigger>
       <TooltipContent>{hasSub ? "Renew Subscription" : "No subscription"}</TooltipContent>
@@ -224,7 +223,7 @@ export const columns: ColumnDef<StudentWithSubscriptions>[] = [
                 useDialogStore.getState().openDialog("TransactionHistoryDialog", row.original)
               }
             >
-              <IoReceiptOutline size={16} />
+              <Receipt className="size-4" />
             </Button>
           </TooltipTrigger>
           <TooltipContent>Payment History</TooltipContent>
@@ -238,7 +237,7 @@ export const columns: ColumnDef<StudentWithSubscriptions>[] = [
                 useDialogStore.getState().openDialog("PaymentDialog", row.original)
               }
             >
-              <IoAddOutline size={16} />
+              <Plus className="size-4" />
             </Button>
           </TooltipTrigger>
           <TooltipContent>Add Payment</TooltipContent>
@@ -252,7 +251,7 @@ export const columns: ColumnDef<StudentWithSubscriptions>[] = [
                 useDialogStore.getState().openDialog("StudentDialog", row.original)
               }
             >
-              <MdEdit size={16} />
+              <Pencil className="size-4" />
             </Button>
           </TooltipTrigger>
           <TooltipContent>Edit</TooltipContent>

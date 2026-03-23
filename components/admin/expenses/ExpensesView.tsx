@@ -2,12 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
-import {
-  IoCash,
-  IoTrendingDown,
-  IoStatsChart,
-  IoCalendar,
-} from "react-icons/io5"
+import { Banknote, TrendingDown, BarChart3, Calendar } from "lucide-react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import {
@@ -75,25 +70,25 @@ export const ExpensesView = ({ data, categories }: ExpensesViewProps) => {
       {
         label: "This Month",
         value: `€${totalThisMonth.toFixed(0)}`,
-        icon: IoCalendar,
+        icon: Calendar,
         colorClass: "text-rose-500",
       },
       {
         label: "Top Category",
         value: topCategory ? topCategory[0] : "-",
-        icon: IoTrendingDown,
+        icon: TrendingDown,
         colorClass: "text-amber-500",
       },
       {
         label: "Avg Per Expense",
         value: data.length > 0 ? `€${(totalYTD / data.length).toFixed(0)}` : "€0",
-        icon: IoStatsChart,
+        icon: BarChart3,
         colorClass: "text-blue-500",
       },
       {
         label: "Total YTD",
         value: `€${totalYTD.toFixed(0)}`,
-        icon: IoCash,
+        icon: Banknote,
         colorClass: "text-primary",
       },
     ] satisfies StatCard[]
@@ -132,7 +127,7 @@ export const ExpensesView = ({ data, categories }: ExpensesViewProps) => {
           <div key={stat.label} className="rounded-xl border bg-card p-4">
             <div className="flex items-center justify-between">
               <p className="text-sm text-muted-foreground">{stat.label}</p>
-              <stat.icon size={18} className={stat.colorClass} />
+              <stat.icon className={`size-5 ${stat.colorClass}`} />
             </div>
             <p className="mt-2 text-2xl font-bold">{stat.value}</p>
           </div>

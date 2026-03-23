@@ -1,7 +1,7 @@
 "use client"
 
 import { type Table } from "@tanstack/react-table"
-import { IoAdd, IoClose } from "react-icons/io5"
+import { Plus, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options"
 import { StudentFilter } from "@/components/data-table/student-filter"
@@ -31,14 +31,14 @@ export const StudentsToolbar = ({ table }: StudentsToolbarProps) => {
             onClick={() => table.resetColumnFilters()}
           >
             Reset
-            <IoClose size={14} className="ml-2" />
+            <X className="size-3.5 ml-2" />
           </Button>
         )}
       </div>
       <div className="flex items-center gap-2">
         <DataTableViewOptions table={table} />
         <Button size="sm" onClick={() => openDialog("StudentDialog")} className="sm:px-3">
-          <IoAdd size={16} />
+          <Plus className="size-4" />
           <span className="hidden sm:inline">Add Student</span>
         </Button>
       </div>

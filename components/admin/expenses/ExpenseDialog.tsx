@@ -2,8 +2,8 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { IoCashOutline, IoCardOutline, IoWalletOutline, IoSaveOutline, IoAddOutline } from "react-icons/io5"
-import { ImSpinner8 } from "react-icons/im"
+import { NumericInput } from "@/components/ui/numeric-input"
+import { Save, Plus, Loader2 } from "lucide-react"
 import { toast } from "sonner"
 import { DatePicker } from "@/components/ui/date-picker"
 import { Button } from "@/components/ui/button"
@@ -15,7 +15,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
+
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import {
@@ -25,17 +25,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { PAYMENT_METHODS, type PaymentMethod } from "@/data/payment-constants"
+import { PAYMENT_METHODS, METHOD_ICON_MAP, type PaymentMethod } from "@/data/payment-constants"
 import { type ExpenseCategory } from "@/lib/db"
 import { type ExpenseWithCategory } from "@/server-actions/expenses/get-expenses"
 import { createExpense } from "@/server-actions/expenses/create-expense"
 import { updateExpense } from "@/server-actions/expenses/update-expense"
-
-const METHOD_ICON_MAP: Record<string, React.ComponentType<{ size: number }>> = {
-  cash: IoCashOutline,
-  card: IoCardOutline,
-  "bank-transfer": IoWalletOutline,
-}
 
 interface ExpenseDialogProps {
   open: boolean
@@ -54,7 +48,7 @@ export const ExpenseDialog = ({
   const isEditing = !!expense
 
   const [form, setForm] = useState(() => ({
-    amount: expense?.amount ?? 0,
+    amount: expense?.amount != null ? String(expense.amount) : "",
     date: expense ? new Date(expense.date) : new Date(),
     categoryId: expense?.categoryId ?? (categories[0]?.id ?? ""),
     paymentMethod: (expense?.paymentMethod ?? "cash") as PaymentMethod,
@@ -62,6 +56,7 @@ export const ExpenseDialog = ({
   }))
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const amountValue = parseFloat(form.amount) || 0
 
   const handleClose = () => {
     setError(null)
@@ -78,14 +73,14 @@ export const ExpenseDialog = ({
       const result = isEditing
         ? await updateExpense({
             id: expense.id,
-            amount: form.amount,
+            amount: amountValue,
             date: dateStr,
             categoryId: form.categoryId,
             paymentMethod: form.paymentMethod,
             description: form.description || undefined,
           })
         : await createExpense({
-            amount: form.amount,
+            amount: amountValue,
             date: dateStr,
             categoryId: form.categoryId,
             paymentMethod: form.paymentMethod,
@@ -123,16 +118,13 @@ export const ExpenseDialog = ({
         <form onSubmit={handleSubmit} className="grid gap-4">
           <div className="grid gap-2">
             <Label htmlFor="expense-amount">Amount (€)</Label>
-            <Input
+            <NumericInput
               id="expense-amount"
-              type="number"
-              min={0}
-              step={0.01}
               value={form.amount}
-              onChange={(e) =>
+              onChange={(value) =>
                 setForm((prev) => ({
                   ...prev,
-                  amount: Math.max(0, parseFloat(e.target.value) || 0),
+                  amount: value,
                 }))
               }
               required
@@ -190,7 +182,7 @@ export const ExpenseDialog = ({
                   return (
                     <SelectItem key={m.value} value={m.value}>
                       <span className="flex items-center gap-2">
-                        {Icon && <Icon size={14} />}
+                        {Icon && <Icon className="size-3.5" />}
                         {m.label}
                       </span>
                     </SelectItem>
@@ -219,8 +211,8 @@ export const ExpenseDialog = ({
             <Button type="button" variant="outline" onClick={handleClose}>
               Cancel
             </Button>
-            <Button type="submit" disabled={loading || form.amount <= 0 || !form.categoryId}>
-              {loading ? <ImSpinner8 size={14} className="animate-spin" /> : isEditing ? <IoSaveOutline size={14} /> : <IoAddOutline size={14} />}
+            <Button type="submit" disabled={loading || amountValue <= 0 || !form.categoryId}>
+              {loading ? <Loader2 className="size-3.5 animate-spin" /> : isEditing ? <Save className="size-3.5" /> : <Plus className="size-3.5" />}
               {isEditing ? "Update" : `Record €${form.amount}`}
             </Button>
           </DialogFooter>

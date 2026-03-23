@@ -3,14 +3,7 @@
 import { useState, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaBolt } from "react-icons/fa";
-import {
-  MdRocketLaunch,
-  MdCalendarMonth,
-  MdAttachMoney,
-  MdLocationOn,
-  MdSchool,
-} from "react-icons/md";
+import { Zap, Rocket, CalendarDays, DollarSign, MapPin, GraduationCap } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import {
@@ -31,11 +24,11 @@ const CATEGORY_KEYS = {
 } as const;
 
 const CATEGORY_ICONS: Record<FaqCategory, React.ReactNode> = {
-  gettingStarted: <MdRocketLaunch size={24} />,
-  classesSchedule: <MdCalendarMonth size={24} />,
-  pricingPackages: <MdAttachMoney size={24} />,
-  locationLogistics: <MdLocationOn size={24} />,
-  aboutSchool: <MdSchool size={24} />,
+  gettingStarted: <Rocket className="size-6" />,
+  classesSchedule: <CalendarDays className="size-6" />,
+  pricingPackages: <DollarSign className="size-6" />,
+  locationLogistics: <MapPin className="size-6" />,
+  aboutSchool: <GraduationCap className="size-6" />,
 };
 
 const CATEGORIES = ["all" as const, ...FAQ_CATEGORIES];
@@ -73,11 +66,11 @@ const FaqSection = () => {
         transition={{ duration: 0.6 }}
       >
         <div className="flex justify-center items-center gap-3 mb-4">
-          <FaBolt className="text-primary text-3xl" />
+          <Zap className="size-8 text-primary" />
           <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-primary to-brand-pink bg-clip-text text-transparent leading-tight">
             {t("pageTitle")}
           </h1>
-          <FaBolt className="text-brand-pink text-3xl" />
+          <Zap className="size-8 text-brand-pink" />
         </div>
         <p className="text-lg text-muted-foreground mt-4">
           {t("pageSubtitle")}

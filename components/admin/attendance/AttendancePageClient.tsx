@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useCallback } from "react"
-import { IoCalendarOutline, IoListOutline } from "react-icons/io5"
+import { Calendar, List, type LucideIcon } from "lucide-react"
 import { type ScheduleEntryWithInstructors } from "@/lib/db"
 import { getAllAttendances, type AttendanceRecord } from "@/server-actions/attendance/get-all-attendances"
 import { AttendanceView } from "./AttendanceView"
@@ -9,9 +9,9 @@ import { AttendanceHistoryTable } from "./attendance-history/AttendanceHistoryTa
 
 type View = "calendar" | "table"
 
-const VIEWS: { id: View; label: string; icon: typeof IoCalendarOutline }[] = [
-  { id: "calendar", label: "Calendar", icon: IoCalendarOutline },
-  { id: "table", label: "Table", icon: IoListOutline },
+const VIEWS: { id: View; label: string; icon: LucideIcon }[] = [
+  { id: "calendar", label: "Calendar", icon: Calendar },
+  { id: "table", label: "Table", icon: List },
 ]
 
 const SUBTITLES: Record<View, string> = {
@@ -57,7 +57,7 @@ export const AttendancePageClient = ({ entries }: AttendancePageClientProps) => 
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
-              <Icon size={15} />
+              <Icon className="size-4" />
               {label}
             </button>
           ))}

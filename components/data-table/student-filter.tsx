@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { IoSearchOutline, IoPersonOutline, IoCheckmark, IoClose } from "react-icons/io5"
+import { Search, User, Check, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -34,7 +34,7 @@ export const StudentFilter = ({ value, onSelect }: StudentFilterProps) => {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline" size="sm" className="h-8 border-dashed">
-          <IoPersonOutline size={14} className="mr-2" />
+          <User className="mr-2 size-3.5" />
           {selectedStudent ? (
             <>
               <span className="max-w-[120px] truncate">{selectedStudent.name}</span>
@@ -45,7 +45,7 @@ export const StudentFilter = ({ value, onSelect }: StudentFilterProps) => {
                   onSelect(undefined)
                 }}
               >
-                <IoClose size={12} />
+                <X className="size-3" />
               </span>
             </>
           ) : (
@@ -55,7 +55,7 @@ export const StudentFilter = ({ value, onSelect }: StudentFilterProps) => {
       </PopoverTrigger>
       <PopoverContent className="w-[300px] p-0" align="start">
         <div className="flex items-center border-b px-3 py-2">
-          <IoSearchOutline size={14} className="mr-2 shrink-0 text-muted-foreground" />
+          <Search className="mr-2 size-3.5 shrink-0 text-muted-foreground" />
           <input
             ref={inputRef}
             value={search}
@@ -112,7 +112,7 @@ export const StudentFilter = ({ value, onSelect }: StudentFilterProps) => {
                       )}
                     </div>
                     {isSelected && (
-                      <IoCheckmark size={16} className="shrink-0 text-primary" />
+                      <Check className="size-4 shrink-0 text-primary" />
                     )}
                   </button>
                 )

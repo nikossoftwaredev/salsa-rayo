@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { IoAdd, IoPencil, IoTrash } from "react-icons/io5"
+import { Plus, Pencil, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { useDialogStore } from "@/lib/stores/dialog-store"
@@ -58,7 +58,7 @@ export const InstructorsGrid = ({ data }: InstructorsGridProps) => {
     <div>
       <div className="mb-4">
         <Button onClick={handleAdd}>
-          <IoAdd className="!size-5" />
+          <Plus className="!size-5" />
           Add Instructor
         </Button>
       </div>
@@ -107,7 +107,7 @@ export const InstructorsGrid = ({ data }: InstructorsGridProps) => {
                       size="icon"
                       onClick={() => handleEdit(instructor)}
                     >
-                      <IoPencil className="!size-4" />
+                      <Pencil className="!size-4" />
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>Edit</TooltipContent>
@@ -120,7 +120,7 @@ export const InstructorsGrid = ({ data }: InstructorsGridProps) => {
                       onClick={() => handleDelete(instructor)}
                       disabled={deletingId === instructor.id}
                     >
-                      <IoTrash className="!size-4" />
+                      <Trash2 className="!size-4" />
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>Delete</TooltipContent>

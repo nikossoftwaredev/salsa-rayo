@@ -1,19 +1,17 @@
 "use client";
 
-import { FaMusic, FaHeart, FaGuitar } from "react-icons/fa";
-import { GiMicrophone, GiMusicalNotes, GiTrumpet } from "react-icons/gi";
-import { IoMusicalNotesOutline } from "react-icons/io5";
+import { Music, Heart, Guitar, Mic, Music2, Drum } from "lucide-react";
 import PartnerIcon from "@/components/icons/PartnerIcon";
 
 const floatingIcons = [
-  { Icon: FaMusic, delay: "0s", duration: "15s", left: "10%", top: "15%" },
-  { Icon: FaHeart, delay: "2s", duration: "18s", left: "85%", top: "25%" },
-  { Icon: GiMusicalNotes, delay: "4s", duration: "20s", left: "20%", top: "60%" },
-  { Icon: FaGuitar, delay: "1s", duration: "16s", left: "75%", top: "70%" },
-  { Icon: GiMicrophone, delay: "3s", duration: "19s", left: "50%", top: "20%" },
-  { Icon: IoMusicalNotesOutline, delay: "5s", duration: "17s", left: "15%", top: "80%" },
-  { Icon: GiTrumpet, delay: "2.5s", duration: "21s", left: "80%", top: "45%" },
-  { Icon: FaMusic, delay: "6s", duration: "14s", left: "35%", top: "35%" },
+  { Icon: Music, delay: "0s", duration: "15s", left: "10%", top: "15%" },
+  { Icon: Heart, delay: "2s", duration: "18s", left: "85%", top: "25%" },
+  { Icon: Music2, delay: "4s", duration: "20s", left: "20%", top: "60%" },
+  { Icon: Guitar, delay: "1s", duration: "16s", left: "75%", top: "70%" },
+  { Icon: Mic, delay: "3s", duration: "19s", left: "50%", top: "20%" },
+  { Icon: Music2, delay: "5s", duration: "17s", left: "15%", top: "80%" },
+  { Icon: Drum, delay: "2.5s", duration: "21s", left: "80%", top: "45%" },
+  { Icon: Music, delay: "6s", duration: "14s", left: "35%", top: "35%" },
   { Icon: PartnerIcon, delay: "3.5s", duration: "22s", left: "60%", top: "65%" },
 ];
 
@@ -71,7 +69,7 @@ const BackgroundEffects = () => {
             animationDelay: item.delay,
           }}
         >
-          <item.Icon size={24} />
+          <item.Icon className="size-6" />
         </div>
       ))}
 

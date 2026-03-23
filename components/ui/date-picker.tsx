@@ -1,6 +1,6 @@
 "use client"
 
-import { IoCalendarOutline } from "react-icons/io5"
+import { Calendar as CalendarIcon } from "lucide-react"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -37,7 +37,7 @@ export const DatePicker = ({
           className
         )}
       >
-        <IoCalendarOutline size={16} className="mr-2 text-muted-foreground" />
+        <CalendarIcon className="size-4 mr-2 text-muted-foreground" />
         {value ? format(value, "MMM d, yyyy") : placeholder}
       </Button>
     </PopoverTrigger>

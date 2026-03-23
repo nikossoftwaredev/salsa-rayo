@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Link } from "@/i18n/routing";
-import { FaArrowRight, FaClock } from "react-icons/fa";
+import { ArrowRight, Clock } from "lucide-react";
 
 interface BlogCardProps {
   slug: string;
@@ -68,7 +68,7 @@ const BlogCard = ({
           </span>
           <span className="text-xs text-muted-foreground">{formattedDate}</span>
           <span className="flex items-center gap-1 text-xs text-muted-foreground">
-            <FaClock className="size-3" />
+            <Clock className="size-3" />
             {readingTime} min
           </span>
         </div>
@@ -83,7 +83,7 @@ const BlogCard = ({
 
         <div className="flex items-center gap-2 text-sm font-medium text-primary">
           <span>{locale === "el" ? "Διαβάστε περισσότερα" : "Read more"}</span>
-          <FaArrowRight className="size-3 transition-transform group-hover:translate-x-1" />
+          <ArrowRight className="size-3 transition-transform group-hover:translate-x-1" />
         </div>
       </Link>
     </motion.article>

@@ -4,7 +4,7 @@ import { useLocale } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/routing";
 import { SUPPORTED_LOCALES } from "@/i18n/routing";
 import { useTransition } from "react";
-import { MdLanguage, MdCheck } from "react-icons/md";
+import { Languages, Check } from "lucide-react";
 import Image from "next/image";
 import {
   DropdownMenu,
@@ -96,7 +96,7 @@ const LanguageSwitcher = () => {
           aria-label="Change language"
           disabled={isPending}
         >
-          <MdLanguage />
+          <Languages className="size-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
@@ -124,7 +124,7 @@ const LanguageSwitcher = () => {
                 <p className="text-xs opacity-70">{languages[lang].name}</p>
               </div>
               {isActive && (
-                <MdCheck size={20} className="text-primary" />
+                <Check className="size-5 text-primary" />
               )}
             </DropdownMenuItem>
           );

@@ -77,7 +77,7 @@ export const AdminSidebar = () => {
                           href={item.href}
                           onClick={() => setOpenMobile(false)}
                         >
-                          <item.icon size={16} />
+                          <item.icon className="size-4" />
                           <span>{item.label}</span>
                         </Link>
                       </SidebarMenuButton>

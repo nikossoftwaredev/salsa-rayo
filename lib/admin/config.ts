@@ -1,15 +1,15 @@
-import { type IconType } from "react-icons";
 import {
-  IoCalendar,
-  IoCard,
-  IoCheckboxOutline,
-  IoPeople,
-  IoSchool,
-  IoSettings,
-  IoTrendingDown,
-  IoTrendingUp,
-} from "react-icons/io5";
-import { IoMdStats } from "react-icons/io";
+  type LucideIcon,
+  Calendar,
+  CreditCard,
+  ClipboardCheck,
+  Users,
+  GraduationCap,
+  Settings,
+  TrendingDown,
+  TrendingUp,
+  BarChart3,
+} from "lucide-react";
 
 import { MAIL } from "@/data/config";
 
@@ -23,7 +23,7 @@ export const isAdminEmail = (email: string) =>
 export interface AdminNavItem {
   label: string;
   href: string;
-  icon: IconType;
+  icon: LucideIcon;
 }
 
 export interface AdminNavGroup {
@@ -35,20 +35,20 @@ export const adminNavGroups: AdminNavGroup[] = [
   {
     groupLabel: "School",
     items: [
-      { label: "Students", href: "/admin", icon: IoSchool },
+      { label: "Students", href: "/admin", icon: GraduationCap },
       {
         label: "Attendance",
         href: "/admin/attendance",
-        icon: IoCheckboxOutline,
+        icon: ClipboardCheck,
       },
-      { label: "Stats", href: "/admin/stats", icon: IoMdStats },
+      { label: "Stats", href: "/admin/stats", icon: BarChart3 },
     ],
   },
   {
     groupLabel: "Classes",
     items: [
-      { label: "Schedule", href: "/admin/schedule", icon: IoCalendar },
-      { label: "Instructors", href: "/admin/instructors", icon: IoPeople },
+      { label: "Schedule", href: "/admin/schedule", icon: Calendar },
+      { label: "Instructors", href: "/admin/instructors", icon: Users },
     ],
   },
   {
@@ -57,14 +57,14 @@ export const adminNavGroups: AdminNavGroup[] = [
       {
         label: "Subscriptions",
         href: "/admin/subscriptions",
-        icon: IoCard,
+        icon: CreditCard,
       },
-      { label: "Income", href: "/admin/income", icon: IoTrendingUp },
-      { label: "Expenses", href: "/admin/expenses", icon: IoTrendingDown },
+      { label: "Income", href: "/admin/income", icon: TrendingUp },
+      { label: "Expenses", href: "/admin/expenses", icon: TrendingDown },
     ],
   },
   {
     groupLabel: "System",
-    items: [{ label: "Settings", href: "/admin/settings", icon: IoSettings }],
+    items: [{ label: "Settings", href: "/admin/settings", icon: Settings }],
   },
 ];

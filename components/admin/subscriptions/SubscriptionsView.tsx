@@ -1,7 +1,7 @@
 "use client"
 
 import { useMemo } from "react"
-import { IoCard, IoWarning, IoCloseCircle, IoCash } from "react-icons/io5"
+import { CreditCard, AlertTriangle, XCircle, Banknote } from "lucide-react"
 import { type SubscriptionWithDetails } from "@/server-actions/subscriptions/get-subscriptions"
 import { SubscriptionsTable } from "./SubscriptionsTable"
 
@@ -38,10 +38,10 @@ export const SubscriptionsView = ({ data }: SubscriptionsViewProps) => {
     }
 
     return [
-      { label: "Active", value: active, icon: IoCard, colorClass: "text-emerald-500" },
-      { label: "Expiring Soon", value: expiringSoon, icon: IoWarning, colorClass: "text-amber-500" },
-      { label: "Expired", value: expired, icon: IoCloseCircle, colorClass: "text-red-500" },
-      { label: "Monthly Revenue", value: `€${monthlyRevenue.toFixed(0)}`, icon: IoCash, colorClass: "text-primary" },
+      { label: "Active", value: active, icon: CreditCard, colorClass: "text-emerald-500" },
+      { label: "Expiring Soon", value: expiringSoon, icon: AlertTriangle, colorClass: "text-amber-500" },
+      { label: "Expired", value: expired, icon: XCircle, colorClass: "text-red-500" },
+      { label: "Monthly Revenue", value: `€${monthlyRevenue.toFixed(0)}`, icon: Banknote, colorClass: "text-primary" },
     ] satisfies StatCard[]
   }, [data])
 
@@ -52,7 +52,7 @@ export const SubscriptionsView = ({ data }: SubscriptionsViewProps) => {
           <div key={stat.label} className="rounded-xl border bg-card p-4">
             <div className="flex items-center justify-between">
               <p className="text-sm text-muted-foreground">{stat.label}</p>
-              <stat.icon size={18} className={stat.colorClass} />
+              <stat.icon className={`size-5 ${stat.colorClass}`} />
             </div>
             <p className="mt-2 text-2xl font-bold">{stat.value}</p>
           </div>

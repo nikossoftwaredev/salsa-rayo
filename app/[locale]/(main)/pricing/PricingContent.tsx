@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import BackgroundEffects from "@/components/BackgroundEffects";
 import PackageCard from "@/components/PackageCard";
 import { motion } from "framer-motion";
-import { FaBolt } from "react-icons/fa";
+import { Zap } from "lucide-react";
 import Logo from "@/components/Logo";
 import { Link } from "@/i18n/routing";
 import { PACKAGES } from "@/data/packages";
@@ -109,11 +109,11 @@ const PricingContent = ({ stripePackages }: PricingContentProps) => {
         {/* Page Header */}
         <div className="text-center mb-16 max-w-3xl mx-auto">
           <div className="flex justify-center items-center gap-3 mb-4">
-            <FaBolt className="text-primary text-3xl" />
+            <Zap className="size-8 text-primary" />
             <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-primary to-brand-pink bg-clip-text text-transparent leading-tight">
               {t("pageTitle")}
             </h1>
-            <FaBolt className="text-brand-pink text-3xl" />
+            <Zap className="size-8 text-brand-pink" />
           </div>
           <p className="text-xl text-muted-foreground mt-4">{t("pageSubtitle")}</p>
         </div>

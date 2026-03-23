@@ -2,14 +2,9 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import {
-  IoCashOutline,
-  IoCardOutline,
-  IoWalletOutline,
-  IoAddOutline,
-} from "react-icons/io5"
+import { NumericInput } from "@/components/ui/numeric-input"
+import { Plus, Loader2 } from "lucide-react"
 import { FaStripe } from "react-icons/fa6"
-import { ImSpinner8 } from "react-icons/im"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import {
@@ -20,7 +15,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
+
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import {
@@ -37,6 +32,8 @@ import { ADMIN_PACKAGES } from "@/data/packages"
 import {
   PAYMENT_TYPES,
   PAYMENT_METHODS,
+  METHOD_ICON_MAP,
+  type PaymentMethodIcon,
   type PaymentType,
   type PaymentMethod,
 } from "@/data/payment-constants"
@@ -44,18 +41,13 @@ import { type StudentWithSubscriptions } from "./types"
 
 const DIALOG_KEY = "PaymentDialog"
 
-const METHOD_ICON_MAP: Record<string, React.ComponentType<{ size: number }>> = {
-  cash: IoCashOutline,
-  card: IoCardOutline,
-  "bank-transfer": IoWalletOutline,
-  stripe: FaStripe,
-}
+const PAYMENT_METHOD_ICONS: Record<string, PaymentMethodIcon> = { ...METHOD_ICON_MAP, stripe: FaStripe }
 
 const getInitialForm = () => ({
   type: "subscription" as PaymentType,
   paymentMethod: "cash" as PaymentMethod,
   packageIndex: 0,
-  amount: ADMIN_PACKAGES[0].price,
+  amount: String(ADMIN_PACKAGES[0].price),
   description: "",
   startDate: new Date() as Date | undefined,
 })
@@ -68,6 +60,7 @@ export const PaymentDialog = () => {
   const [form, setForm] = useState(getInitialForm)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const amountValue = parseFloat(form.amount) || 0
 
   if (!student) return null
 
@@ -80,16 +73,16 @@ export const PaymentDialog = () => {
   const handleTypeChange = (type: PaymentType) => {
     if (type === "subscription") {
       const pkg = ADMIN_PACKAGES[0]
-      setForm((prev) => ({ ...prev, type, packageIndex: 0, amount: pkg.price, description: "" }))
+      setForm((prev) => ({ ...prev, type, packageIndex: 0, amount: String(pkg.price), description: "" }))
     } else {
-      setForm((prev) => ({ ...prev, type, amount: 0, description: "" }))
+      setForm((prev) => ({ ...prev, type, amount: "", description: "" }))
     }
   }
 
   const handlePackageChange = (value: string) => {
     const index = parseInt(value)
     const pkg = ADMIN_PACKAGES[index]
-    setForm((prev) => ({ ...prev, packageIndex: index, amount: pkg.price }))
+    setForm((prev) => ({ ...prev, packageIndex: index, amount: String(pkg.price) }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -104,7 +97,7 @@ export const PaymentDialog = () => {
         studentId: student.id,
         type: form.type,
         paymentMethod: form.paymentMethod,
-        amount: form.amount,
+        amount: amountValue,
         description: form.description || undefined,
         ...(pkg && {
           packageName: pkg.title,
@@ -180,13 +173,10 @@ export const PaymentDialog = () => {
 
           <div className="grid gap-2">
             <Label htmlFor="amount">Amount (€)</Label>
-            <Input
+            <NumericInput
               id="amount"
-              type="number"
-              min={0}
-              step={0.01}
               value={form.amount}
-              onChange={(e) => setForm((prev) => ({ ...prev, amount: Math.max(0, parseFloat(e.target.value) || 0) }))}
+              onChange={(value) => setForm((prev) => ({ ...prev, amount: value }))}
               required
             />
           </div>
@@ -199,11 +189,11 @@ export const PaymentDialog = () => {
               </SelectTrigger>
               <SelectContent>
                 {PAYMENT_METHODS.map((m) => {
-                  const Icon = METHOD_ICON_MAP[m.value]
+                  const Icon = PAYMENT_METHOD_ICONS[m.value]
                   return (
                     <SelectItem key={m.value} value={m.value}>
                       <span className="flex items-center gap-2">
-                        {Icon && <Icon size={14} />}
+                        {Icon && <Icon className="size-3.5" />}
                         {m.label}
                       </span>
                     </SelectItem>
@@ -245,8 +235,8 @@ export const PaymentDialog = () => {
             <Button type="button" variant="outline" onClick={handleClose}>
               Cancel
             </Button>
-            <Button type="submit" disabled={loading || form.amount <= 0}>
-              {loading ? <ImSpinner8 size={14} className="animate-spin" /> : <IoAddOutline size={14} />}
+            <Button type="submit" disabled={loading || amountValue <= 0}>
+              {loading ? <Loader2 className="size-3.5 animate-spin" /> : <Plus className="size-3.5" />}
               {`Record €${form.amount}`}
             </Button>
           </DialogFooter>

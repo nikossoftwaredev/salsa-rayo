@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback, startTransition } from "react";
 import { useSession } from "next-auth/react";
-import { IoCallOutline } from "react-icons/io5";
+import { Phone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { EditProfileSheet } from "@/components/EditProfileSheet";
 import { getOwnProfile } from "@/server-actions/profile/get-own-profile";
@@ -56,7 +56,7 @@ export const PhonePromptBanner = () => {
                   onClick={() => setEditOpen(true)}
                   className="flex items-center gap-2 text-sm text-foreground/80 hover:text-foreground transition-colors cursor-pointer"
                 >
-                  <IoCallOutline size={14} className="text-primary shrink-0" />
+                  <Phone className="size-3.5 text-primary shrink-0" />
                   <span>
                     Please add your <strong className="text-primary">phone number</strong> to your profile - we need it to contact you about classes.
                   </span>

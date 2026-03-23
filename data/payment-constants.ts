@@ -1,3 +1,5 @@
+import { Banknote, CreditCard, Wallet } from "lucide-react"
+
 export const PAYMENT_TYPES = [
   { value: "subscription", label: "Subscription" },
   { value: "drop-in", label: "Drop-in" },
@@ -13,6 +15,14 @@ export const PAYMENT_METHODS = [
 
 export type PaymentType = (typeof PAYMENT_TYPES)[number]["value"]
 export type PaymentMethod = (typeof PAYMENT_METHODS)[number]["value"]
+
+export type PaymentMethodIcon = React.ComponentType<{ className?: string }>
+
+export const METHOD_ICON_MAP: Record<string, PaymentMethodIcon> = {
+  cash: Banknote,
+  card: CreditCard,
+  "bank-transfer": Wallet,
+}
 
 export const TYPE_LABELS: Record<string, string> = Object.fromEntries(
   PAYMENT_TYPES.map((t) => [t.value, t.label])

@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { stripe } from "@/lib/stripe";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
-import { FaBolt } from "react-icons/fa";
+import { Zap } from "lucide-react";
 import BackgroundEffects from "@/components/BackgroundEffects";
 import { CheckoutConfetti } from "./CheckoutConfetti";
 import { getTranslations } from "next-intl/server";
@@ -42,7 +42,7 @@ const CheckoutSuccessPage = async ({
         <div className="text-center max-w-lg mx-auto">
           <div className="flex justify-center mb-6">
             <div className="w-20 h-20 rounded-full bg-gradient-to-r from-primary to-brand-pink flex items-center justify-center">
-              <FaBolt className="text-white text-3xl" />
+              <Zap className="size-8 text-white" />
             </div>
           </div>
 

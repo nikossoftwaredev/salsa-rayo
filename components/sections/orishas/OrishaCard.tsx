@@ -3,12 +3,7 @@
 import Image from 'next/image'
 import { useLocale } from 'next-intl'
 import { Orisha } from '@/data/orishas'
-import { 
-  FaBolt, FaDrum, FaExternalLinkAlt, FaHammer, 
-  FaBullseye, FaDove, FaWind, FaHeart, FaWater, 
-  FaCrutch, FaFire 
-} from 'react-icons/fa'
-import { GiCrossroad } from 'react-icons/gi'
+import { Zap, Drum, ExternalLink, Hammer, Target, Bird, Wind, Heart, Waves, Accessibility, Flame, Crosshair } from 'lucide-react'
 
 interface OrishaCardProps {
   orisha: Orisha
@@ -19,32 +14,31 @@ const OrishaCard = ({ orisha }: OrishaCardProps) => {
   
   const getOrishaIcon = (id: string) => {
     const iconProps = {
-      className: "flex-shrink-0",
+      className: "size-4 flex-shrink-0",
       style: { color: orisha.color },
-      size: 16
     }
-    
+
     switch(id) {
       case 'shango':
-        return <FaBolt {...iconProps} />
+        return <Zap {...iconProps} />
       case 'eleggua':
-        return <GiCrossroad {...iconProps} />
+        return <Crosshair {...iconProps} />
       case 'oggun':
-        return <FaHammer {...iconProps} />
+        return <Hammer {...iconProps} />
       case 'ochosi':
-        return <FaBullseye {...iconProps} />
+        return <Target {...iconProps} />
       case 'obatala':
-        return <FaDove {...iconProps} />
+        return <Bird {...iconProps} />
       case 'oya':
-        return <FaWind {...iconProps} />
+        return <Wind {...iconProps} />
       case 'oshun':
-        return <FaHeart {...iconProps} />
+        return <Heart {...iconProps} />
       case 'yemaya':
-        return <FaWater {...iconProps} />
+        return <Waves {...iconProps} />
       case 'babalu-aye':
-        return <FaCrutch {...iconProps} />
+        return <Accessibility {...iconProps} />
       default:
-        return <FaFire {...iconProps} />
+        return <Flame {...iconProps} />
     }
   }
   return (
@@ -94,10 +88,9 @@ const OrishaCard = ({ orisha }: OrishaCardProps) => {
           </div>
           
           <div className="flex items-center gap-2">
-            <FaDrum 
-              className="flex-shrink-0" 
-              style={{ color: orisha.color }} 
-              size={16} 
+            <Drum
+              className="size-4 flex-shrink-0"
+              style={{ color: orisha.color }}
             />
             <p className="opacity-90 leading-tight">{orisha.movements[locale] || orisha.movements.en}</p>
           </div>
@@ -112,7 +105,7 @@ const OrishaCard = ({ orisha }: OrishaCardProps) => {
             className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md hover:bg-white/10 hover:text-primary transition-colors duration-200"
           >
             <span>See More</span>
-            <FaExternalLinkAlt size={10} />
+            <ExternalLink className="size-2.5" />
           </a>
         </div>
       </div>

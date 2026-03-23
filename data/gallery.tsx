@@ -1,9 +1,4 @@
-import {
-  FaTheaterMasks,
-  FaHeart,
-  FaChalkboardTeacher,
-  FaCamera,
-} from "react-icons/fa";
+import { Camera, Drama, Heart, Presentation } from "lucide-react";
 
 export interface GalleryImage {
   id: string;
@@ -31,25 +26,25 @@ export const GALLERY_CATEGORIES: Record<
   photos: {
     label: "Photos",
     description: "Dance photos and memories",
-    icon: <FaCamera size={18} />,
+    icon: <Camera className="size-5" />,
     color: "text-amber-500",
   },
   shows: {
     label: "Shows",
     description: "Live dance performances and showcases",
-    icon: <FaTheaterMasks size={18} />,
+    icon: <Drama className="size-5" />,
     color: "text-purple-500",
   },
   social: {
     label: "Social Dancing",
     description: "Social dance nights and parties",
-    icon: <FaHeart size={18} />,
+    icon: <Heart className="size-5" />,
     color: "text-red-500",
   },
   workshop: {
     label: "Workshops",
     description: "Special workshops and masterclasses",
-    icon: <FaChalkboardTeacher size={18} />,
+    icon: <Presentation className="size-5" />,
     color: "text-blue-500",
   },
 };

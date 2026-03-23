@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
-import { MdLocationPin, MdOpenInNew } from "react-icons/md";
+import { MapPin, ExternalLink } from "lucide-react";
 import { NAVIGATION, ADDRESS } from "@/data/config";
 import { SectionTitle } from "@/components/SectionTitle";
 
@@ -138,9 +138,8 @@ const MapSection = () => {
                 animate={{ scale: 1, y: 0 }}
                 transition={{ type: "spring", stiffness: 400, damping: 20, delay: 0.3 }}
               >
-                <MdLocationPin
-                  size={32}
-                  className="text-primary drop-shadow-lg"
+                <MapPin
+                  className="size-8 text-primary drop-shadow-lg"
                   style={{ filter: "drop-shadow(0 0 10px oklch(0.55 0.2 280 / 0.5))" }}
                 />
               </motion.div>
@@ -183,7 +182,7 @@ const MapSection = () => {
 
                 {/* Google Maps link */}
                 <span className="inline-flex items-center gap-1.5 text-xs font-medium text-primary">
-                  <MdOpenInNew size={12} />
+                  <ExternalLink className="size-3" />
                   Google Maps
                 </span>
               </div>

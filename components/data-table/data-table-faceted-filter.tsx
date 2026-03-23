@@ -1,7 +1,7 @@
 "use client"
 
 import { type Column } from "@tanstack/react-table"
-import { IoCheckmark, IoAdd } from "react-icons/io5"
+import { Check, PlusCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -45,7 +45,7 @@ export const DataTableFacetedFilter = <TData, TValue>({
     <Popover>
       <PopoverTrigger asChild>
         <Button variant="outline" size="sm" className="h-8 border-dashed">
-          <IoAdd size={14} className="mr-2" />
+          <PlusCircle className="mr-2 size-3.5" />
           {title}
           {selectedValues?.size > 0 && (
             <>
@@ -113,7 +113,7 @@ export const DataTableFacetedFilter = <TData, TValue>({
                           : "opacity-50 [&_svg]:invisible"
                       )}
                     >
-                      <IoCheckmark size={12} />
+                      <Check className="size-3" />
                     </div>
                     {option.icon && (
                       <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />

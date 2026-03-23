@@ -3,15 +3,7 @@
 import { useState, useMemo, useCallback, useRef, useEffect } from "react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import {
-  IoCalendarOutline,
-  IoTimeOutline,
-  IoPersonOutline,
-  IoChevronDown,
-
-  IoSaveOutline,
-} from "react-icons/io5"
-import { ImSpinner8 } from "react-icons/im"
+import { Calendar as CalendarIcon, Clock, User, ChevronDown, Save, Loader2 } from "lucide-react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -310,7 +302,7 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
           >
             {lessonsForDay.length === 0 ? (
               <div className="flex flex-col items-center justify-center rounded-xl border border-dashed py-16 text-muted-foreground">
-                <IoCalendarOutline size={32} className="mb-3 opacity-40" />
+                <CalendarIcon className="mb-3 size-8 opacity-40" />
                 <p className="text-sm">No classes scheduled for {dayName}.</p>
               </div>
             ) : loadingCounts ? (
@@ -367,7 +359,7 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                               )}
                             </div>
                             <div className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
-                              <IoTimeOutline size={12} className="shrink-0 opacity-60" />
+                              <Clock className="size-3 shrink-0 opacity-60" />
                               <span>{entry.time}</span>
                             </div>
                           </div>
@@ -393,9 +385,8 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                             <span className="min-w-7 rounded-full bg-yellow-500/10 px-2.5 py-0.5 text-center text-xs font-semibold tabular-nums text-yellow-500">
                               {effectiveCount}
                             </span>
-                            <IoChevronDown
-                              size={16}
-                              className={`shrink-0 text-muted-foreground/50 transition-transform ${isExpanded ? "rotate-180" : ""}`}
+                            <ChevronDown
+                              className={`size-4 shrink-0 text-muted-foreground/50 transition-transform ${isExpanded ? "rotate-180" : ""}`}
                             />
                           </div>
                         </div>
@@ -432,7 +423,7 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                                     disabled={!hasPendingChanges || submitting}
                                     onClick={handleGlobalSubmit}
                                   >
-                                    {submitting ? <ImSpinner8 size={14} className="animate-spin" /> : <IoSaveOutline size={14} />}
+                                    {submitting ? <Loader2 className="size-3.5 animate-spin" /> : <Save className="size-3.5" />}
                                     Save
                                   </Button>
                                 </div>
@@ -445,7 +436,7 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                                     </div>
                                   ) : effectiveCount === 0 ? (
                                     <div className="flex flex-col items-center justify-center py-8 text-muted-foreground/50">
-                                      <IoPersonOutline size={24} className="mb-2 opacity-40" />
+                                      <User className="mb-2 size-6 opacity-40" />
                                       <p className="text-xs">No attendees for this date</p>
                                     </div>
                                   ) : (
@@ -502,7 +493,7 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
               Discard
             </Button>
             <Button onClick={handleUnsavedSave} disabled={submitting}>
-              {submitting ? <ImSpinner8 size={14} className="animate-spin" /> : <IoSaveOutline size={14} />}
+              {submitting ? <Loader2 className="size-3.5 animate-spin" /> : <Save className="size-3.5" />}
               Save
             </Button>
           </AlertDialogFooter>

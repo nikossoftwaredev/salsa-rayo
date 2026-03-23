@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { FaArrowRight } from "react-icons/fa";
+import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import Lightning from "@/components/react-bits/Backgrounds/Lightning/Lightning";
@@ -30,7 +30,7 @@ const GetStartedButton = () => {
       {/* Text content */}
       <div className="relative z-10 flex items-center justify-center gap-3">
         <span className="text-lg font-extrabold">{t('getStarted')}</span>
-        <FaArrowRight className={`transition-transform duration-300 ${isHovered ? "translate-x-2" : ""}`} />
+        <ArrowRight className={`size-4 transition-transform duration-300 ${isHovered ? "translate-x-2" : ""}`} />
       </div>
     </Link>
   );

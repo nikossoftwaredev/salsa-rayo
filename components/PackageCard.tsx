@@ -2,9 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Card } from "@/components/ui/card";
-import { FaBolt } from "react-icons/fa";
-import { IoCardOutline, IoChatbubblesOutline, IoChevronDown } from "react-icons/io5";
-import { ImSpinner8 } from "react-icons/im";
+import { Zap, CreditCard, MessageCircle, ChevronDown, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import {
   DropdownMenu,
@@ -100,7 +98,7 @@ const PackageCard = ({
                 className="flex items-start gap-3 group"
               >
                 <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-primary/20 to-brand-pink/20 flex items-center justify-center group-hover:from-primary/30 group-hover:to-brand-pink/30 transition-all duration-300">
-                  <FaBolt className="text-primary text-sm group-hover:text-brand-pink transition-colors duration-300" />
+                  <Zap className="size-3.5 text-primary group-hover:text-brand-pink transition-colors duration-300" />
                 </div>
                 <span className="text-foreground/80 text-sm leading-relaxed">
                   {feature}
@@ -113,7 +111,7 @@ const PackageCard = ({
           <div className="pt-4">
             {isLoading ? (
               <div className="h-11 w-full rounded-lg bg-gradient-to-r from-primary to-brand-pink flex items-center justify-center gap-2 text-white font-bold opacity-80">
-                <ImSpinner8 size={16} className="animate-spin" />
+                <Loader2 className="size-4 animate-spin" />
                 {t("getStarted")}
               </div>
             ) : (
@@ -122,14 +120,14 @@ const PackageCard = ({
                   <button className="group relative w-full h-11 rounded-lg bg-gradient-to-r from-primary to-brand-pink text-white font-bold text-base flex items-center overflow-hidden cursor-pointer hover:shadow-lg hover:shadow-primary/25 hover:scale-[1.03] transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-ring">
                     <span className="flex-1 text-center">{t("getStarted")}</span>
                     <span className="flex items-center justify-center w-10 h-full border-l border-white/20 group-hover:bg-white/10 transition-colors">
-                      <IoChevronDown size={16} />
+                      <ChevronDown className="size-4" />
                     </span>
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" sideOffset={6} className="w-64 p-1.5">
                   <DropdownMenuItem disabled className="gap-3 px-3 py-3 rounded-md opacity-50">
                     <div className="flex-shrink-0 w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center">
-                      <IoCardOutline size={18} className="text-primary" />
+                      <CreditCard className="size-5 text-primary" />
                     </div>
                     <div className="flex flex-col">
                       <span className="font-medium text-sm">{t("payOnline")}</span>
@@ -138,7 +136,7 @@ const PackageCard = ({
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={onContactUs} className="cursor-pointer gap-3 px-3 py-3 rounded-md">
                     <div className="flex-shrink-0 w-9 h-9 rounded-full bg-brand-pink/10 flex items-center justify-center">
-                      <IoChatbubblesOutline size={18} className="text-brand-pink" />
+                      <MessageCircle className="size-5 text-brand-pink" />
                     </div>
                     <div className="flex flex-col">
                       <span className="font-medium text-sm">{t("contactUs")}</span>

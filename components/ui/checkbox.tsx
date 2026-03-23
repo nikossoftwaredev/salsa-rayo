@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
-import { IoCheckmark } from "react-icons/io5"
+import { Check } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -22,7 +22,7 @@ const Checkbox = ({
       data-slot="checkbox-indicator"
       className="grid place-content-center text-current transition-none"
     >
-      <IoCheckmark size={14} />
+      <Check className="size-3.5" />
     </CheckboxPrimitive.Indicator>
   </CheckboxPrimitive.Root>
 )

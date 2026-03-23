@@ -4,7 +4,7 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
-import { FaArrowLeft, FaClock, FaCalendarAlt, FaUser } from "react-icons/fa";
+import { ArrowLeft, Clock, Calendar, User } from "lucide-react";
 import type { Post } from "@/lib/blog";
 
 interface BlogArticleProps {
@@ -28,7 +28,7 @@ export const BlogArticle = ({ post, locale }: BlogArticleProps) => {
             href="/blog"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-8"
           >
-            <FaArrowLeft className="size-3" />
+            <ArrowLeft className="size-3" />
             {locale === "el" ? "Πίσω στο Blog" : "Back to Blog"}
           </Link>
 
@@ -37,15 +37,15 @@ export const BlogArticle = ({ post, locale }: BlogArticleProps) => {
               {post.frontmatter.category}
             </span>
             <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
-              <FaCalendarAlt className="size-3" />
+              <Calendar className="size-3" />
               {formattedDate}
             </span>
             <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
-              <FaClock className="size-3" />
+              <Clock className="size-3" />
               {post.readingTime} min {locale === "el" ? "ανάγνωση" : "read"}
             </span>
             <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
-              <FaUser className="size-3" />
+              <User className="size-3" />
               {post.frontmatter.author}
             </span>
           </div>

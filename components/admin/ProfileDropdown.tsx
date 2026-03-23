@@ -3,10 +3,8 @@
 import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { getInitials } from "@/lib/format";
-import { IoHome, IoLogInOutline, IoLogOutOutline, IoPerson, IoCalendar, IoImages, IoHelpCircle, IoNewspaper } from "react-icons/io5";
-import { MdAdminPanelSettings, MdInfo, MdAttachMoney, MdMenu, MdOutlineEdit } from "react-icons/md";
+import { Home, LogIn, LogOut, User, Calendar, Images, HelpCircle, Newspaper, ShieldCheck, Info, DollarSign, Menu, Pencil, Orbit } from "lucide-react";
 import { EditProfileSheet } from "@/components/EditProfileSheet";
-import { GiOrbDirection } from "react-icons/gi";
 import { SignInDialog } from "@/components/SignInDialog";
 import { usePathname } from "next/navigation";
 import { useLocale } from "next-intl";
@@ -30,13 +28,13 @@ import { resolveAvatarSrc } from "@/lib/avatar";
 import type { ReactNode } from "react";
 
 const NAV_ICONS: Record<string, ReactNode> = {
-  "/#about": <MdInfo size={16} />,
-  "/#schedule": <IoCalendar size={16} />,
-  "/pricing": <MdAttachMoney size={16} />,
-  "/#gallery": <IoImages size={16} />,
-  "/faq": <IoHelpCircle size={16} />,
-  "/orishas": <GiOrbDirection size={16} />,
-  "/blog": <IoNewspaper size={16} />,
+  "/#about": <Info className="size-4" />,
+  "/#schedule": <Calendar className="size-4" />,
+  "/pricing": <DollarSign className="size-4" />,
+  "/#gallery": <Images className="size-4" />,
+  "/faq": <HelpCircle className="size-4" />,
+  "/orishas": <Orbit className="size-4" />,
+  "/blog": <Newspaper className="size-4" />,
 };
 
 interface ProfileDropdownProps {
@@ -81,7 +79,7 @@ export const ProfileDropdown = ({
       className="relative size-8 rounded-full"
       aria-label="Open menu"
     >
-      <MdMenu size={20} />
+      <Menu className="size-5" />
     </Button>
   );
 
@@ -136,19 +134,19 @@ export const ProfileDropdown = ({
               {session?.user?.id && (
                 <DropdownMenuItem asChild>
                   <Link href={`/profile/${session.user.id}`}>
-                    <IoPerson size={16} />
+                    <User className="size-4" />
                     Profile
                   </Link>
                 </DropdownMenuItem>
               )}
               <DropdownMenuItem onClick={() => setEditOpen(true)}>
-                <MdOutlineEdit size={16} />
+                <Pencil className="size-4" />
                 Edit Profile
               </DropdownMenuItem>
               {isOnAdmin && (
                 <DropdownMenuItem asChild>
                   <Link href="/">
-                    <IoHome size={16} />
+                    <Home className="size-4" />
                     Home
                   </Link>
                 </DropdownMenuItem>
@@ -156,14 +154,14 @@ export const ProfileDropdown = ({
               {!isOnAdmin && session?.user?.isAdmin && (
                 <DropdownMenuItem asChild>
                   <Link href="/admin">
-                    <MdAdminPanelSettings size={16} />
+                    <ShieldCheck className="size-4" />
                     Admin
                   </Link>
                 </DropdownMenuItem>
               )}
             </DropdownMenuGroup>
             <DropdownMenuItem variant="destructive" onClick={() => signOut()}>
-              <IoLogOutOutline size={16} />
+              <LogOut className="size-4" />
               Sign out
             </DropdownMenuItem>
           </>
@@ -172,7 +170,7 @@ export const ProfileDropdown = ({
         {/* Sign in — unauthenticated only */}
         {!isAuthenticated && (
           <DropdownMenuItem onClick={() => setSignInOpen(true)}>
-            <IoLogInOutline size={16} />
+            <LogIn className="size-4" />
             Sign in
           </DropdownMenuItem>
         )}

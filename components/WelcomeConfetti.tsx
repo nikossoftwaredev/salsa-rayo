@@ -3,8 +3,7 @@
 import { useEffect, useState, useCallback, startTransition } from "react";
 import { useSession } from "next-auth/react";
 import confetti from "canvas-confetti";
-import { IoCheckmarkCircle } from "react-icons/io5";
-import { MdOutlineEdit } from "react-icons/md";
+import { CheckCircle, Pencil } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { EditProfileSheet } from "@/components/EditProfileSheet";
@@ -61,14 +60,14 @@ export const WelcomeConfetti = () => {
               animate={{ y: 0 }}
               className="relative bg-background border rounded-2xl p-8 max-w-sm w-full text-center space-y-4 shadow-2xl"
             >
-              <IoCheckmarkCircle size={48} className="mx-auto text-green-500" />
+              <CheckCircle className="size-12 mx-auto text-green-500" />
               <h2 className="text-xl font-semibold">Welcome to Salsa Rayo!</h2>
               <p className="text-sm text-muted-foreground">
                 Your account has been created successfully. Edit your profile to add more information.
               </p>
               <div className="flex flex-col gap-2 pt-2">
                 <Button variant="gradient" onClick={handleEditProfile}>
-                  <MdOutlineEdit size={16} />
+                  <Pencil className="size-4" />
                   Edit Profile
                 </Button>
                 <Button variant="ghost" size="sm" onClick={handleDismiss}>

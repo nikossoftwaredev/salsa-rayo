@@ -2,17 +2,8 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import {
-  IoPersonOutline,
-  IoMailOutline,
-  IoLocationOutline,
-  IoFlash,
-  IoTrash,
-
-  IoSaveOutline,
-  IoAddOutline,
-} from "react-icons/io5"
-import { ImSpinner8 } from "react-icons/im"
+import { NumericInput } from "@/components/ui/numeric-input"
+import { User, Mail, MapPin, Zap, Trash2, Save, Plus, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   AlertDialog,
@@ -198,7 +189,7 @@ export const StudentDialog = () => {
           <div className="grid gap-2">
             <Label htmlFor="name">Name *</Label>
             <div className="relative">
-              <IoPersonOutline size={16} className="absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground" />
+              <User className="size-4 absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground" />
               <Input
                 id="name"
                 name="name"
@@ -214,7 +205,7 @@ export const StudentDialog = () => {
           <div className="grid gap-2">
             <Label htmlFor="email">Email *</Label>
             <div className="relative">
-              <IoMailOutline size={16} className="absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground" />
+              <Mail className="size-4 absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground" />
               <Input
                 id="email"
                 name="email"
@@ -242,7 +233,7 @@ export const StudentDialog = () => {
           <div className="grid gap-2">
             <Label htmlFor="address">Address</Label>
             <div className="relative">
-              <IoLocationOutline size={16} className="absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground" />
+              <MapPin className="size-4 absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground" />
               <Input
                 id="address"
                 name="address"
@@ -268,14 +259,12 @@ export const StudentDialog = () => {
 
           <div className="grid gap-2">
             <Label htmlFor="dancingYears">Dancing Years</Label>
-            <Input
+            <NumericInput
               id="dancingYears"
               name="dancingYears"
-              type="number"
-              min={0}
-              max={50}
+              allowDecimal={false}
               value={form.dancingYears}
-              onChange={handleChange}
+              onChange={(value) => setForm((prev) => ({ ...prev, dancingYears: value }))}
               placeholder="Years of salsa experience"
             />
           </div>
@@ -321,14 +310,13 @@ export const StudentDialog = () => {
             <div className="grid gap-2">
               <Label htmlFor="rayoPoints">Rayo Points</Label>
               <div className="relative">
-                <IoFlash size={16} className="absolute top-1/2 left-3 -translate-y-1/2 text-yellow-400" />
-                <Input
+                <Zap className="size-4 absolute top-1/2 left-3 -translate-y-1/2 text-yellow-400" />
+                <NumericInput
                   id="rayoPoints"
                   name="rayoPoints"
-                  type="number"
-                  min={0}
+                  allowDecimal={false}
                   value={form.rayoPoints}
-                  onChange={(e) => setForm((prev) => ({ ...prev, rayoPoints: e.target.value }))}
+                  onChange={(value) => setForm((prev) => ({ ...prev, rayoPoints: value }))}
                   className="pl-9"
                 />
               </div>
@@ -358,7 +346,7 @@ export const StudentDialog = () => {
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button type="button" variant="outline" className="border-destructive/50 text-destructive hover:bg-destructive/10 hover:text-destructive" disabled={deleting}>
-                    {deleting ? <ImSpinner8 size={14} className="animate-spin" /> : <IoTrash size={14} />}
+                    {deleting ? <Loader2 className="size-3.5 animate-spin" /> : <Trash2 className="size-3.5" />}
                     Delete
                   </Button>
                 </AlertDialogTrigger>
@@ -385,7 +373,7 @@ export const StudentDialog = () => {
                 Cancel
               </Button>
               <Button type="submit" disabled={loading}>
-                {loading ? <ImSpinner8 size={14} className="animate-spin" /> : isEdit ? <IoSaveOutline size={14} /> : <IoAddOutline size={14} />}
+                {loading ? <Loader2 className="size-3.5 animate-spin" /> : isEdit ? <Save className="size-3.5" /> : <Plus className="size-3.5" />}
                 {isEdit ? "Save Changes" : "Add Student"}
               </Button>
             </div>

@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { IoAdd, IoTrashOutline } from "react-icons/io5"
+import { Plus, Trash2 } from "lucide-react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import {
@@ -88,7 +88,7 @@ export const CategoryManager = ({ categories }: CategoryManagerProps) => {
               onClick={handleCreate}
               disabled={loading || !newName.trim()}
             >
-              <IoAdd size={16} />
+              <Plus className="size-4" />
             </Button>
           </div>
 
@@ -110,7 +110,7 @@ export const CategoryManager = ({ categories }: CategoryManagerProps) => {
                   className="size-7 text-destructive hover:text-destructive"
                   onClick={() => handleDelete(cat)}
                 >
-                  <IoTrashOutline size={14} />
+                  <Trash2 className="size-3.5" />
                 </Button>
               </div>
             ))}

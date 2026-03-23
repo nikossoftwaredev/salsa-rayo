@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ProfileDropdown } from "@/components/admin/ProfileDropdown";
 import { RayoPoints } from "@/components/ui/rayo-points";
 import { SignInDialog } from "@/components/SignInDialog";
-import { IoLogInOutline } from "react-icons/io5";
+import { LogIn } from "lucide-react";
 
 interface AuthButtonProps {
   showNavRoutes?: boolean;
@@ -28,7 +28,7 @@ export const AuthButton = ({ showNavRoutes = false }: AuthButtonProps) => {
           size="sm"
           className="rounded-full border-primary/40 text-primary hover:text-primary-foreground hover:bg-primary/90 hover:border-primary transition-all duration-300"
         >
-          <IoLogInOutline />
+          <LogIn className="size-4" />
           Sign In
         </Button>
         <SignInDialog open={signInOpen} onOpenChange={setSignInOpen} />

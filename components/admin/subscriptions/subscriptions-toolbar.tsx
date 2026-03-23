@@ -1,7 +1,7 @@
 "use client"
 
 import { type Table } from "@tanstack/react-table"
-import { IoClose } from "react-icons/io5"
+import { X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DataTableFacetedFilter } from "@/components/data-table/data-table-faceted-filter"
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options"
@@ -42,7 +42,7 @@ export const SubscriptionsToolbar = ({ table }: SubscriptionsToolbarProps) => {
             onClick={() => table.resetColumnFilters()}
           >
             Reset
-            <IoClose size={14} className="ml-2" />
+            <X className="ml-2 size-3.5" />
           </Button>
         )}
       </div>

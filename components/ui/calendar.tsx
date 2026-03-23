@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { IoChevronDown, IoChevronBack, IoChevronForward } from "react-icons/io5"
+import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react"
 import {
   DayPicker,
   getDefaultClassNames,
@@ -144,13 +144,13 @@ const Calendar = ({
         Chevron: ({ className, orientation, ...props }) => {
           if (orientation === "left") {
             return (
-              <IoChevronBack className={cn("size-3.5", className)} {...props} />
+              <ChevronLeft className={cn("size-3.5", className)} {...props} />
             )
           }
 
           if (orientation === "right") {
             return (
-              <IoChevronForward
+              <ChevronRight
                 className={cn("size-3.5", className)}
                 {...props}
               />
@@ -158,7 +158,7 @@ const Calendar = ({
           }
 
           return (
-            <IoChevronDown className={cn("size-3.5", className)} {...props} />
+            <ChevronDown className={cn("size-3.5", className)} {...props} />
           )
         },
         DayButton: CalendarDayButton,
