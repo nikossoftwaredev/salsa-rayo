@@ -27,23 +27,30 @@ export const fulfillSubscription = async (data: FulfillSubscriptionInput) => {
     const now = data.startDate ? new Date(data.startDate + "T00:00:00") : new Date()
     const durationMs = data.durationDays * 24 * 60 * 60 * 1000
 
+    // Find the student's single subscription (if any)
     const existingSub = await tx.subscription.findFirst({
-      where: {
-        studentId: data.studentId,
-        isActive: true,
-        expiresAt: { gt: now },
-      },
+      where: { studentId: data.studentId },
       orderBy: { expiresAt: "desc" },
     })
 
     let subscriptionId: string
 
     if (existingSub) {
-      const newExpiry = new Date(existingSub.expiresAt.getTime() + durationMs)
+      const isStillActive = new Date(existingSub.expiresAt) > now
+      // Recently expired (within 4 days) → continue from old expiry so they don't lose days
+      const SWEET_SPOT_MS = 4 * 24 * 60 * 60 * 1000
+      const isInSweetSpot = !isStillActive && (now.getTime() - existingSub.expiresAt.getTime()) <= SWEET_SPOT_MS
+
+      const newStart = isStillActive ? existingSub.startDate : (isInSweetSpot ? existingSub.expiresAt : now)
+      const baseDate = isStillActive ? existingSub.expiresAt : newStart
+      const newExpiry = new Date(baseDate.getTime() + durationMs)
+
       await tx.subscription.update({
         where: { id: existingSub.id },
         data: {
+          startDate: newStart,
           expiresAt: newExpiry,
+          isActive: true,
           packageName: data.packageName,
           lessonsPerWeek: data.lessonsPerWeek,
           amountPaid: data.amount,
@@ -51,31 +58,14 @@ export const fulfillSubscription = async (data: FulfillSubscriptionInput) => {
       })
       subscriptionId = existingSub.id
     } else {
-      const SWEET_SPOT_DAYS = 4
-      const sweetSpotCutoff = new Date(
-        now.getTime() - SWEET_SPOT_DAYS * 24 * 60 * 60 * 1000
-      )
-
-      const recentlyExpiredSub = await tx.subscription.findFirst({
-        where: {
-          studentId: data.studentId,
-          expiresAt: { gte: sweetSpotCutoff, lte: now },
-        },
-        orderBy: { expiresAt: "desc" },
-      })
-
-      const startDate = recentlyExpiredSub
-        ? recentlyExpiredSub.expiresAt
-        : now
-
       const subscription = await tx.subscription.create({
         data: {
           studentId: data.studentId,
           packageName: data.packageName,
           lessonsPerWeek: data.lessonsPerWeek,
           amountPaid: data.amount,
-          startDate,
-          expiresAt: new Date(startDate.getTime() + durationMs),
+          startDate: now,
+          expiresAt: new Date(now.getTime() + durationMs),
         },
       })
       subscriptionId = subscription.id
@@ -97,7 +87,7 @@ export const fulfillSubscription = async (data: FulfillSubscriptionInput) => {
     return { subscriptionId, transactionId: transaction.id }
   })
 
-  revalidatePath("/admin/students")
+  revalidatePath("/admin")
   revalidatePath("/admin/income")
   revalidatePath("/admin/subscriptions")
 

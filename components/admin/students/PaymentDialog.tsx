@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { NumericInput } from "@/components/ui/numeric-input"
 import { Plus, Loader2 } from "lucide-react"
@@ -58,7 +58,7 @@ export const PaymentDialog = () => {
   const student = dialogData as StudentWithSubscriptions | null
 
   const [form, setForm] = useState(getInitialForm)
-  const [loading, setLoading] = useState(false)
+  const [isPending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
   const amountValue = parseFloat(form.amount) || 0
 
@@ -85,47 +85,46 @@ export const PaymentDialog = () => {
     setForm((prev) => ({ ...prev, packageIndex: index, amount: String(pkg.price) }))
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    setLoading(true)
     setError(null)
 
-    try {
-      const pkg = form.type === "subscription" ? ADMIN_PACKAGES[form.packageIndex] : null
+    startTransition(async () => {
+      try {
+        const pkg = form.type === "subscription" ? ADMIN_PACKAGES[form.packageIndex] : null
 
-      const result = await createPayment({
-        studentId: student.id,
-        type: form.type,
-        paymentMethod: form.paymentMethod,
-        amount: amountValue,
-        description: form.description || undefined,
-        ...(pkg && {
-          packageName: pkg.title,
-          lessonsPerWeek: pkg.lessonsPerWeek,
-          durationDays: pkg.durationDays,
-          startDate: form.startDate?.toISOString().split("T")[0],
-        }),
-      })
+        const result = await createPayment({
+          studentId: student.id,
+          type: form.type,
+          paymentMethod: form.paymentMethod,
+          amount: amountValue,
+          description: form.description || undefined,
+          ...(pkg && {
+            packageName: pkg.title,
+            lessonsPerWeek: pkg.lessonsPerWeek,
+            durationDays: pkg.durationDays,
+            startDate: form.startDate?.toISOString().split("T")[0],
+          }),
+        })
 
-      if (!result.success) {
-        setError(result.error)
-        return
+        if (!result.success) {
+          setError(result.error)
+          return
+        }
+
+        toast.success("Payment recorded", {
+          description: `€${form.amount} ${form.type} for ${student.name}`,
+          action: {
+            label: "View Payments",
+            onClick: () => router.push("/admin/income"),
+          },
+        })
+        router.refresh()
+        handleClose()
+      } catch {
+        setError("Something went wrong. Please try again.")
       }
-
-      toast.success("Payment recorded", {
-        description: `€${form.amount} ${form.type} for ${student.name}`,
-        action: {
-          label: "View Payments",
-          onClick: () => router.push("/admin/income"),
-        },
-      })
-      handleClose()
-      router.refresh()
-    } catch {
-      setError("Something went wrong. Please try again.")
-    } finally {
-      setLoading(false)
-    }
+    })
   }
 
   return (
@@ -235,8 +234,8 @@ export const PaymentDialog = () => {
             <Button type="button" variant="outline" onClick={handleClose}>
               Cancel
             </Button>
-            <Button type="submit" disabled={loading || amountValue <= 0}>
-              {loading ? <Loader2 className="size-3.5 animate-spin" /> : <Plus className="size-3.5" />}
+            <Button type="submit" disabled={isPending || amountValue <= 0}>
+              {isPending ? <Loader2 className="size-3.5 animate-spin" /> : <Plus className="size-3.5" />}
               {`Record €${form.amount}`}
             </Button>
           </DialogFooter>

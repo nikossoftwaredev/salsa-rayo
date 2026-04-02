@@ -1,11 +1,11 @@
 "use client"
 
-import { useState } from "react"
+import { useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { type ColumnDef } from "@tanstack/react-table"
 import { toast } from "sonner"
 import { RayoPoints } from "@/components/ui/rayo-points"
-import { Pencil, Plus, Receipt, RefreshCw } from "lucide-react"
+import { Loader2, Pencil, Plus, Receipt, RefreshCw } from "lucide-react"
 import { SubscriptionBadge } from "@/components/ui/subscription-badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -22,12 +22,12 @@ import { ADMIN_PACKAGES } from "@/data/packages"
 import { type StudentWithSubscriptions } from "./types"
 
 const getActiveSubscription = (student: StudentWithSubscriptions) =>
-  student.subscriptions.find((sub) => sub.isActive) ?? student.subscriptions[0]
+  student.subscriptions[0]
 
 const RenewAction = ({ student }: { student: StudentWithSubscriptions }) => {
   const router = useRouter()
   const { confirm } = useConfirmStore()
-  const [loading, setLoading] = useState(false)
+  const [isPending, startTransition] = useTransition()
 
   const sub = getActiveSubscription(student)
   const hasSub = !!sub
@@ -43,7 +43,6 @@ const RenewAction = ({ student }: { student: StudentWithSubscriptions }) => {
       actionLabel: "Renew",
       variant: "default",
       onConfirm: async () => {
-        setLoading(true)
         try {
           const result = await createPayment({
             studentId: student.id,
@@ -62,12 +61,14 @@ const RenewAction = ({ student }: { student: StudentWithSubscriptions }) => {
                 onClick: () => router.push("/admin/income"),
               },
             })
-            router.refresh()
+            startTransition(() => {
+              router.refresh()
+            })
           } else {
             toast.error(result.error ?? "Failed to renew subscription")
           }
-        } finally {
-          setLoading(false)
+        } catch {
+          toast.error("Failed to renew subscription")
         }
       },
     })
@@ -80,9 +81,9 @@ const RenewAction = ({ student }: { student: StudentWithSubscriptions }) => {
           variant="ghost"
           size="icon-sm"
           onClick={handleRenew}
-          disabled={!hasSub || loading}
+          disabled={!hasSub || isPending}
         >
-          <RefreshCw className="size-4" />
+          {isPending ? <Loader2 className="size-4 animate-spin" /> : <RefreshCw className="size-4" />}
         </Button>
       </TooltipTrigger>
       <TooltipContent>{hasSub ? "Renew Subscription" : "No subscription"}</TooltipContent>

@@ -33,7 +33,7 @@ export const deleteStudent = async (id: string) => {
       }
     })
 
-    revalidatePath("/admin/students")
+    revalidatePath("/admin")
     revalidatePath("/admin/attendance")
     revalidatePath("/admin/subscriptions")
     revalidatePath("/admin/income")

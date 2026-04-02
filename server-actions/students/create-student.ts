@@ -17,7 +17,7 @@ export const createStudent = async (data: CreateStudentInput) => {
 
     const student = await prisma.student.create({ data })
 
-    revalidatePath("/admin/students")
+    revalidatePath("/admin")
     return { success: true as const, data: student }
   } catch (error) {
     console.error("Database Error:", error)

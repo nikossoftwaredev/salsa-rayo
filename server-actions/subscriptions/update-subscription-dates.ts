@@ -23,7 +23,7 @@ export const updateSubscriptionDates = async (subscriptionId: string, startDate:
       data: { startDate, expiresAt },
     })
 
-    revalidatePath("/admin/students")
+    revalidatePath("/admin")
     revalidatePath("/admin/subscriptions")
     return { success: true as const, data: subscription }
   } catch (error) {

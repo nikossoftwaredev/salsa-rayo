@@ -65,7 +65,7 @@ export const StudentDialog = () => {
   const { closeDialog, dialogData, onSuccess } = useDialogStore()
   const student = dialogData as StudentWithSubscriptions | null
   const isEdit = !!student?.id
-  const activeSubscription = student?.subscriptions?.find((s) => s.isActive) ?? null
+  const activeSubscription = student?.subscriptions?.[0] ?? null
 
   const [form, setForm] = useState(getInitialForm())
   const [loading, setLoading] = useState(false)

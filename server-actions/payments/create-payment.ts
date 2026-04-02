@@ -64,7 +64,7 @@ export const createPayment = async (data: CreatePaymentInput) => {
         },
       })
 
-      revalidatePath("/admin/students")
+      revalidatePath("/admin")
       revalidatePath("/admin/income")
       revalidatePath("/admin/subscriptions")
     }

@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useMemo, useState, useTransition } from "react"
 import { Loader2 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
@@ -33,6 +33,8 @@ import { issueInvoiceForTransaction } from "@/server-actions/invoices/issue-invo
 import { retryFailedInvoice } from "@/server-actions/invoices/retry-failed-invoice"
 import { type TransactionWithStudent } from "@/server-actions/payments/get-transactions"
 import { openPdfInNewTab } from "@/lib/pdf"
+import { getPackageDurationMs } from "@/data/packages"
+import { formatDate } from "@/lib/format"
 
 interface IncomeTableProps {
   data: TransactionWithStudent[]
@@ -41,6 +43,7 @@ interface IncomeTableProps {
 export const IncomeTable = ({ data }: IncomeTableProps) => {
   const router = useRouter()
   const [deletingTransaction, setDeletingTransaction] = useState<TransactionWithStudent | null>(null)
+  const [isDeleting, startDeleteTransition] = useTransition()
   const [invoicingTransaction, setInvoicingTransaction] = useState<TransactionWithStudent | null>(null)
   const [invoiceAmount, setInvoiceAmount] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -107,16 +110,28 @@ export const IncomeTable = ({ data }: IncomeTableProps) => {
     }
   }, [router])
 
-  const confirmDelete = async () => {
+  const deleteImpact = useMemo(() => {
+    if (!deletingTransaction?.subscription || deletingTransaction.type !== "subscription" || !deletingTransaction.subscriptionId) return null
+    const sub = deletingTransaction.subscription
+    const durationMs = getPackageDurationMs(sub.packageName)
+    const durationDays = durationMs / (24 * 60 * 60 * 1000)
+    const isLast = data.filter((t) => t.subscriptionId === deletingTransaction.subscriptionId).length <= 1
+    const newExpiry = isLast ? null : new Date(sub.expiresAt.getTime() - durationMs)
+    return { durationDays, isLast, newExpiry }
+  }, [deletingTransaction, data])
+
+  const confirmDelete = () => {
     if (!deletingTransaction) return
-    const result = await deleteTransaction(deletingTransaction.id)
-    if (result.success) {
-      toast.success("Transaction deleted")
-      router.refresh()
-    } else {
-      toast.error(result.error)
-    }
-    setDeletingTransaction(null)
+    startDeleteTransition(async () => {
+      const result = await deleteTransaction(deletingTransaction.id)
+      if (result.success) {
+        toast.success("Transaction deleted")
+        router.refresh()
+      } else {
+        toast.error(result.error)
+      }
+      setDeletingTransaction(null)
+    })
   }
 
   const columns = useMemo(
@@ -178,19 +193,27 @@ export const IncomeTable = ({ data }: IncomeTableProps) => {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete transaction?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This will permanently delete the €{deletingTransaction?.amount.toFixed(2)}{" "}
-              {deletingTransaction?.studentName || deletingTransaction?.student?.name} transaction.
-              {deletingTransaction?.type === "subscription" && deletingTransaction?.subscriptionId && (
-                <> This will also cancel their active subscription.</>
-              )}
-              {" "}This action cannot be undone.
+            <AlertDialogDescription asChild>
+              <div>
+                <p>
+                  This will permanently delete the €{deletingTransaction?.amount.toFixed(2)}{" "}
+                  {deletingTransaction?.studentName || deletingTransaction?.student?.name} transaction.
+                </p>
+                {deleteImpact && (
+                  <p className="mt-2 font-medium text-destructive">
+                    {deleteImpact.isLast
+                      ? "This will delete their subscription entirely."
+                      : `This will subtract ${deleteImpact.durationDays} days from their subscription (new end date: ${formatDate(deleteImpact.newExpiry!)}).`}
+                  </p>
+                )}
+                <p className="mt-2">This action cannot be undone.</p>
+              </div>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction variant="destructive" onClick={confirmDelete}>
-              Delete
+            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+            <AlertDialogAction variant="destructive" onClick={confirmDelete} disabled={isDeleting}>
+              {isDeleting ? <><Loader2 className="size-4 animate-spin" /> Deleting</> : "Delete"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

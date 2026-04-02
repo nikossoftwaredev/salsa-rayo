@@ -38,3 +38,8 @@ export const ADMIN_PACKAGES: AdminPackage[] = [
   { title: "Rayo 16", price: 75, lessonsPerWeek: 4, durationDays: 30 },
   { title: "Rayo 24", price: 99, lessonsPerWeek: 6, durationDays: 30 },
 ];
+
+export const getPackageDurationMs = (packageName: string) => {
+  const pkg = ADMIN_PACKAGES.find((p) => p.title === packageName)
+  return (pkg?.durationDays ?? 30) * 24 * 60 * 60 * 1000
+}

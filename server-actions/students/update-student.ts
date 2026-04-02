@@ -22,7 +22,7 @@ export const updateStudent = async (id: string, data: UpdateStudentInput) => {
       data,
     })
 
-    revalidatePath("/admin/students")
+    revalidatePath("/admin")
     return { success: true as const, data: student }
   } catch (error) {
     console.error("Database Error:", error)
