@@ -17,7 +17,7 @@ import { twMerge } from "tailwind-merge";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import MasonryGallery from "./MasonryGallery";
-import { X } from "lucide-react";
+import { X, Loader2 } from "lucide-react";
 
 interface FilterTab {
   id: GalleryCategory;
@@ -68,6 +68,7 @@ const GallerySection = ({
   const t = useTranslations('Gallery');
   const [activeFilter, setActiveFilter] = useState<GalleryCategory>(initialCategory || "photos");
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
+  const [isImageLoading, setIsImageLoading] = useState(false);
   const router = useRouter();
 
   const filterTabs = getFilterTabs();
@@ -134,9 +135,12 @@ const GallerySection = ({
             isFullPage ? "max-w-7xl" : "max-w-6xl"
           )}
         >
-          <MasonryGallery 
+          <MasonryGallery
             items={filteredItems}
-            onItemClick={(item) => setSelectedItem(item as GalleryItem)}
+            onItemClick={(item) => {
+              if (item.type === "image") setIsImageLoading(true);
+              setSelectedItem(item as GalleryItem);
+            }}
           />
         </div>
 
@@ -166,11 +170,11 @@ const GallerySection = ({
           <div className="relative w-full h-full flex items-center justify-center p-4">
             <button
               onClick={() => setSelectedItem(null)}
-              className="absolute top-4 right-4 z-50 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 hover:bg-background hover:scale-110 transition-all duration-200"
+              className="absolute top-4 right-4 z-50 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 hover:bg-background hover:scale-110 transition-all duration-200 cursor-pointer"
             >
               <X className="size-6 text-foreground" />
             </button>
-            
+
             {selectedItem.type === "video" ? (
               <div className="relative w-full max-w-6xl aspect-video">
                 <iframe
@@ -182,15 +186,27 @@ const GallerySection = ({
                 />
               </div>
             ) : (
-              <Image
-                src={selectedItem.src || ''}
-                alt={selectedItem.alt || ''}
-                width={2400}
-                height={2400}
-                className="max-w-full max-h-full w-auto h-auto object-contain rounded-lg"
-                quality={100}
-                priority
-              />
+              <>
+                {isImageLoading && (
+                  <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none">
+                    <Loader2 className="size-12 animate-spin text-primary" />
+                  </div>
+                )}
+                <Image
+                  key={selectedItem.src}
+                  src={selectedItem.src || ''}
+                  alt={selectedItem.alt || ''}
+                  width={2400}
+                  height={2400}
+                  className={twMerge(
+                    "max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-lg transition-opacity duration-300",
+                    isImageLoading ? "opacity-0" : "opacity-100"
+                  )}
+                  quality={100}
+                  priority
+                  onLoadingComplete={() => setIsImageLoading(false)}
+                />
+              </>
             )}
           </div>
         </div>
