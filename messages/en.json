@@ -4,9 +4,8 @@
     "description": "Learn salsa dancing with us"
   },
   "Hero": {
-    "dance": "Dance",
-    "and": " & ",
-    "connect": "Connect",
+    "heading": "Salsa & Bachata in Athens",
+    "srHeading": "Salsa Rayo Dance School - Salsa and Bachata classes in Agios Dimitrios, Athens, Greece.",
     "tagline": "Salsa & Bachata classes in Athens",
     "cta": "Ready to catch the lightning?",
     "imageAlt": "Salsa dancers in vibrant costumes",
@@ -174,11 +173,11 @@
     "q12": "Where is the school located?",
     "a12": "We're located at Thermopylon 19, Agios Dimitrios, Athens. The area is easily accessible by public transport as well as by car. There is easy parking on the surrounding streets.",
     "q13": "How do I get there by public transport?",
-    "a13": "Agios Dimitrios is connected by the Athens Metro (Line 2 - Red Line). The school is a short walk from the Agios Dimitrios metro station. You can also reach us by bus — check our map for detailed directions.",
+    "a13": "Agios Dimitrios is connected by the Athens Metro (Line 2 - Red Line). The school is a short walk from the Agios Dimitrios metro station. You can also reach us by bus - check our map for detailed directions.",
     "q14": "Who are the instructors?",
     "a14": "Our teachers are Konstantinos Bitsis, Anna Lontou and Natasha Chumakova, award-winning salsa dancers with international competition experience. They've trained with top instructors worldwide and bring years of experience, passion and positive energy to every class.",
     "q15": "What does 'Rayo' mean and what is Salsa Rayo?",
-    "a15": "\"Rayo\" means lightning in Spanish. Salsa Rayo is a dance school founded by Konstantinos Bitsis and Anna Lontou — an internationally competing dance duo. The name represents the explosive energy, speed, and power we bring to every class. We combine world-class salsa technique with a warm, welcoming atmosphere in Athens.",
+    "a15": "\"Rayo\" means lightning in Spanish. Salsa Rayo is a dance school founded by Konstantinos Bitsis and Anna Lontou - an internationally competing dance duo. The name represents the explosive energy, speed, and power we bring to every class. We combine world-class salsa technique with a warm, welcoming atmosphere in Athens.",
     "stillHaveQuestions": "Still have questions?",
     "stillHaveQuestionsText": "Can't find the answer you're looking for? We'd love to hear from you.",
     "contactUs": "Contact Us"

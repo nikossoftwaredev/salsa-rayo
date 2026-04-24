@@ -4,9 +4,8 @@
     "description": "Aprende a bailar salsa con nosotros"
   },
   "Hero": {
-    "dance": "Baila",
-    "and": " y ",
-    "connect": "Conecta",
+    "heading": "Salsa y Bachata en Atenas",
+    "srHeading": "Escuela de Baile Salsa Rayo - Clases de Salsa y Bachata en Agios Dimitrios, Atenas, Grecia.",
     "tagline": "Clases de Salsa & Bachata en Atenas",
     "cta": "¿Listo para atrapar el rayo?",
     "imageAlt": "Bailarines de salsa con trajes vibrantes",
@@ -173,11 +172,11 @@
     "q12": "¿Dónde está ubicada la escuela?",
     "a12": "Estamos ubicados en Thermopylon 19, Agios Dimitrios, Atenas. La zona es fácilmente accesible en transporte público y en coche. Hay estacionamiento fácil en las calles cercanas.",
     "q13": "¿Cómo llego en transporte público?",
-    "a13": "Agios Dimitrios está conectado por el Metro de Atenas (Línea 2 - Línea Roja). La escuela está a poca distancia a pie de la estación de metro Agios Dimitrios. También puedes llegar en autobús — consulta nuestro mapa para indicaciones detalladas.",
+    "a13": "Agios Dimitrios está conectado por el Metro de Atenas (Línea 2 - Línea Roja). La escuela está a poca distancia a pie de la estación de metro Agios Dimitrios. También puedes llegar en autobús - consulta nuestro mapa para indicaciones detalladas.",
     "q14": "¿Quiénes son los instructores?",
     "a14": "Nuestros profesores son Konstantinos Bitsis, Anna Lontou y Natasha Chumakova, bailarines de salsa premiados con experiencia en competencias internacionales. Han entrenado con los mejores instructores del mundo y aportan años de experiencia, pasión y energía positiva a cada clase.",
     "q15": "¿Qué significa 'Rayo' y qué es Salsa Rayo?",
-    "a15": "\"Rayo\" significa rayo de luz — simbolizando fuerza, velocidad y energía pura. Salsa Rayo es una escuela de baile en Atenas fundada por Konstantinos Bitsis y Anna Lontou, una apasionada pareja de baile que ha competido y actuado internacionalmente. El nombre refleja su filosofía de enseñanza: clases dinámicas y enérgicas que combinan técnica de clase mundial con un ambiente cálido y acogedor.",
+    "a15": "\"Rayo\" significa rayo de luz - simbolizando fuerza, velocidad y energía pura. Salsa Rayo es una escuela de baile en Atenas fundada por Konstantinos Bitsis y Anna Lontou, una apasionada pareja de baile que ha competido y actuado internacionalmente. El nombre refleja su filosofía de enseñanza: clases dinámicas y enérgicas que combinan técnica de clase mundial con un ambiente cálido y acogedor.",
     "stillHaveQuestions": "¿Aún tienes preguntas?",
     "stillHaveQuestionsText": "¿No encuentras la respuesta que buscas? Nos encantaría saber de ti.",
     "contactUs": "Contáctanos"

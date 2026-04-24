@@ -3,7 +3,25 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  compress: true,
+  productionBrowserSourceMaps: false,
   serverExternalPackages: ["@react-pdf/renderer"],
+  experimental: {
+    optimizePackageImports: [
+      "lucide-react",
+      "react-icons",
+      "framer-motion",
+      "recharts",
+      "@radix-ui/react-avatar",
+      "@radix-ui/react-checkbox",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-dropdown-menu",
+      "@radix-ui/react-label",
+      "@radix-ui/react-separator",
+      "@radix-ui/react-switch",
+      "@radix-ui/react-tooltip",
+    ],
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     qualities: [75, 85],

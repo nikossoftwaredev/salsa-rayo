@@ -20,15 +20,52 @@ const BASE_URL = "https://www.salsarayo.com";
 const APPLICATION_NAME = "Salsa Rayo Dance School";
 
 const TITLES: Record<string, string> = {
-  en: "Salsa Rayo Dance School | Salsa & Bachata Classes in Athens, Greece",
-  el: "Salsa Rayo | Μαθήματα Salsa & Bachata στην Αθήνα — Άγιος Δημήτριος",
-  es: "Salsa Rayo | Clases de Salsa y Bachata en Atenas, Grecia",
+  en: "Salsa & Bachata Classes in Athens | Salsa Rayo Dance School",
+  el: "Μαθήματα Salsa & Bachata στην Αθήνα | Salsa Rayo",
+  es: "Clases de Salsa y Bachata en Atenas | Salsa Rayo",
 };
 
 const DESCRIPTIONS: Record<string, string> = {
-  en: "Salsa Rayo offers Salsa and Bachata classes for all levels in Agios Dimitrios, Athens, Greece. We teach New York Style Salsa (On2). Expert instructors, welcoming community. From €50/month.",
-  el: "Η Salsa Rayo προσφέρει μαθήματα Salsa και Bachata για όλα τα επίπεδα στον Άγιο Δημήτριο, Αθήνα. Διδάσκουμε New York Style Salsa (On2). Έμπειροι δάσκαλοι. Από €50/μήνα.",
-  es: "Salsa Rayo ofrece clases de Salsa y Bachata para todos los niveles en Agios Dimitrios, Atenas, Grecia. Enseñamos Salsa Estilo Nueva York (On2). Instructores expertos. Desde €50/mes.",
+  en: "Learn Salsa and Bachata in Athens with Salsa Rayo. New York Style Salsa (On2) classes in Agios Dimitrios for all levels. Packages from €50/month.",
+  el: "Μάθετε Salsa και Bachata στον Άγιο Δημήτριο Αθηνών με τη Salsa Rayo. New York Style Salsa (On2) για όλα τα επίπεδα. Πακέτα από €50/μήνα.",
+  es: "Aprende Salsa y Bachata en Atenas con Salsa Rayo. Salsa Estilo Nueva York (On2) en Agios Dimitrios para todos los niveles. Paquetes desde €50/mes.",
+};
+
+const KEYWORDS: Record<string, string[]> = {
+  en: [
+    "salsa classes Athens",
+    "bachata classes Athens",
+    "salsa lessons Athens Greece",
+    "New York Style Salsa On2",
+    "dance school Agios Dimitrios",
+    "Salsa Rayo",
+    "Latin dance Athens",
+    "beginner salsa Athens",
+  ],
+  el: [
+    "μαθήματα salsa Αθήνα",
+    "μαθήματα bachata Αθήνα",
+    "σχολή χορού Άγιος Δημήτριος",
+    "New York Style Salsa On2",
+    "Salsa Rayo",
+    "λατινικοί χοροί Αθήνα",
+    "salsa για αρχάριους",
+  ],
+  es: [
+    "clases de salsa Atenas",
+    "clases de bachata Atenas",
+    "escuela de baile Atenas",
+    "Salsa Estilo Nueva York On2",
+    "Salsa Rayo",
+    "baile latino Atenas",
+    "salsa principiantes Atenas",
+  ],
+};
+
+const OG_LOCALES: Record<string, string> = {
+  en: "en_US",
+  el: "el_GR",
+  es: "es_ES",
 };
 
 export const generateMetadata = async ({
@@ -37,13 +74,29 @@ export const generateMetadata = async ({
   const locale = (await params).locale;
   const title = TITLES[locale] || TITLES.en;
   const description = DESCRIPTIONS[locale] || DESCRIPTIONS.en;
+  const keywords = KEYWORDS[locale] || KEYWORDS.en;
+  const ogLocale = OG_LOCALES[locale] || OG_LOCALES.en;
 
   return {
     metadataBase: new URL(BASE_URL),
     title,
     description,
+    keywords,
     applicationName: APPLICATION_NAME,
-    robots: "index, follow",
+    authors: [{ name: APPLICATION_NAME, url: BASE_URL }],
+    creator: APPLICATION_NAME,
+    publisher: APPLICATION_NAME,
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-snippet": -1,
+        "max-image-preview": "large",
+        "max-video-preview": -1,
+      },
+    },
     alternates: {
       canonical: `${BASE_URL}/${locale}`,
       languages: {
@@ -54,7 +107,7 @@ export const generateMetadata = async ({
       },
     },
     openGraph: {
-      title: APPLICATION_NAME,
+      title,
       description,
       url: `${BASE_URL}/${locale}`,
       images: [
@@ -66,12 +119,12 @@ export const generateMetadata = async ({
         },
       ],
       siteName: APPLICATION_NAME,
-      locale: "en_US",
+      locale: ogLocale,
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: APPLICATION_NAME,
+      title,
       description,
       images: [`${BASE_URL}/images/gallery/our-space.jpg`],
     },

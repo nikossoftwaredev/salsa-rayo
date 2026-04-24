@@ -1,4 +1,5 @@
 import { lazy, Suspense } from "react";
+import { getTranslations } from "next-intl/server";
 import HeroSection from "@/components/sections/hero/HeroSection";
 import AboutSection from "@/components/sections/about/AboutSection";
 import ContactForm from "@/components/sections/contact-form/ContactForm";
@@ -6,7 +7,13 @@ import ScheduleLoader from "@/components/sections/schedule/ScheduleLoader";
 import ScheduleSkeleton from "@/components/sections/schedule/ScheduleSkeleton";
 import { GOOGLE_PLACE_ID } from "@/data/config";
 import JsonLd from "@/components/JsonLd";
-import { getCourseSchemas, getBreadcrumbSchema } from "@/lib/schema";
+import {
+  getCourseSchemas,
+  getBreadcrumbSchema,
+  getFAQPageSchema,
+} from "@/lib/schema";
+import { FAQ_ITEMS } from "@/data/faq";
+import { SUPPORTED_LOCALES } from "@/i18n/routing";
 import { BasePageProps } from "@/types/pageprops";
 
 const BackgroundEffects = lazy(() => import("@/components/BackgroundEffects"));
@@ -19,7 +26,13 @@ const SectionLoader = () => (
 );
 
 const Home = async ({ params }: BasePageProps) => {
-  const locale = (await params).locale;
+  const locale = (await params).locale as (typeof SUPPORTED_LOCALES)[number];
+  const tFaq = await getTranslations({ locale, namespace: "Faq" });
+
+  const faqItems = FAQ_ITEMS.map((item) => ({
+    question: tFaq(item.questionKey),
+    answer: tFaq(item.answerKey),
+  }));
 
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden">
@@ -29,6 +42,7 @@ const Home = async ({ params }: BasePageProps) => {
             { name: "Home", url: `https://www.salsarayo.com/${locale}` },
           ]),
           ...getCourseSchemas(),
+          getFAQPageSchema(faqItems),
         ]}
       />
       <Suspense fallback={null}>

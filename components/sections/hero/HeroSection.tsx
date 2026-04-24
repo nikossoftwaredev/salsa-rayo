@@ -40,11 +40,9 @@ const HeroSection = () => {
         <Logo size="xxl" />
 
         <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight">
-          <span className="sr-only">Salsa Rayo — Salsa & Bachata Dance School in Athens, Greece — </span>
+          <span className="sr-only">{tHero("srHeading")} </span>
           <span className="bg-gradient-to-r from-primary to-brand-pink bg-clip-text text-transparent">
-            {tHero("dance")}
-            {tHero("and")}
-            {tHero("connect")}
+            {tHero("heading")}
           </span>
         </h1>
 
