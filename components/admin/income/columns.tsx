@@ -18,6 +18,9 @@ const typeBadgeStyles: Record<string, string> = {
   subscription: "border-transparent bg-blue-500/15 text-blue-500",
   "drop-in": "border-transparent bg-amber-500/15 text-amber-500",
   private: "border-transparent bg-purple-500/15 text-purple-500",
+  party: "border-transparent bg-pink-500/15 text-pink-500",
+  choreo: "border-transparent bg-cyan-500/15 text-cyan-500",
+  other: "border-transparent bg-slate-500/15 text-slate-400",
 }
 
 const invoiceBadgeStyles: Record<string, string> = {
@@ -126,8 +129,8 @@ const baseColumns: ColumnDef<TransactionWithStudent>[] = [
                   : invoice.status}
               </Badge>
             </TooltipTrigger>
-            <TooltipContent>
-              <div className="text-xs space-y-1">
+            <TooltipContent className="max-w-xs">
+              <div className="text-xs space-y-1 whitespace-normal break-words">
                 <p>Series: {invoice.series} / {invoice.sequenceNumber}</p>
                 <p>Net: €{invoice.netAmount.toFixed(2)} + VAT: €{invoice.vatAmount.toFixed(2)}</p>
                 {invoice.mark && <p>MARK: {invoice.mark}</p>}

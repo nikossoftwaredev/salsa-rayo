@@ -4,6 +4,9 @@ export const PAYMENT_TYPES = [
   { value: "subscription", label: "Subscription" },
   { value: "drop-in", label: "Drop-in" },
   { value: "private", label: "Private Lesson" },
+  { value: "party", label: "Party" },
+  { value: "choreo", label: "Choreography" },
+  { value: "other", label: "Other" },
 ] as const
 
 export const PAYMENT_METHODS = [

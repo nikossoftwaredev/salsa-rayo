@@ -20,12 +20,18 @@ export const getAadeClient = () => {
 interface StudentData {
   name?: string | null
   address?: string | null
+  vatNumber?: string | null
+  country?: string | null
 }
 
 export const buildAadeInvoiceFromRecord = (invoice: Invoice, student?: StudentData): AadeInvoiceInput => {
-  const counterpart = student?.name || student?.address
+  // myDATA schema: <counterpart> requires <vatNumber> as the first child.
+  // For B2C retail receipts (type 11.x) to consumers without a VAT number,
+  // omit <counterpart> entirely. Only send it for B2B with a real VAT.
+  const counterpart = student?.vatNumber
     ? {
-        country: "GR" as const,
+        vatNumber: student.vatNumber,
+        country: (student.country || "GR") as string,
         branch: 0,
         ...(student.name && { name: student.name }),
         ...(student.address && {

@@ -21,13 +21,14 @@ const buildIssuerXml = (issuer: AadeInvoiceInput["issuer"]) => {
 const buildCounterpartXml = (
   counterpart: NonNullable<AadeInvoiceInput["counterpart"]>
 ) => {
+  // myDATA schema: vatNumber is the required first child of <counterpart>.
+  // Without it the whole element is invalid - callers must omit counterpart
+  // entirely for B2C retail receipts instead of passing a partial object.
+  if (!counterpart.vatNumber) return ""
   let xml = `<counterpart>`
-  if (counterpart.vatNumber)
-    xml += `<vatNumber>${escapeXml(counterpart.vatNumber)}</vatNumber>`
-  if (counterpart.country)
-    xml += `<country>${escapeXml(counterpart.country)}</country>`
-  if (counterpart.branch !== undefined)
-    xml += `<branch>${counterpart.branch}</branch>`
+  xml += `<vatNumber>${escapeXml(counterpart.vatNumber)}</vatNumber>`
+  xml += `<country>${escapeXml(counterpart.country || "GR")}</country>`
+  xml += `<branch>${counterpart.branch ?? 0}</branch>`
   if (counterpart.name)
     xml += `<name>${escapeXml(counterpart.name)}</name>`
   if (counterpart.address) {

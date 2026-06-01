@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback, useMemo, useState, useTransition } from "react"
-import { Loader2 } from "lucide-react"
+import { Loader2, Plus } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { NumericInput } from "@/components/ui/numeric-input"
@@ -28,6 +28,7 @@ import { Label } from "@/components/ui/label"
 import { DataTable } from "@/components/data-table/data-table"
 import { createColumns } from "./columns"
 import { IncomeToolbar } from "./income-toolbar"
+import { ManualIncomeDialog } from "./ManualIncomeDialog"
 import { deleteTransaction } from "@/server-actions/payments/delete-transaction"
 import { issueInvoiceForTransaction } from "@/server-actions/invoices/issue-invoice-for-transaction"
 import { retryFailedInvoice } from "@/server-actions/invoices/retry-failed-invoice"
@@ -47,6 +48,7 @@ export const IncomeTable = ({ data }: IncomeTableProps) => {
   const [invoicingTransaction, setInvoicingTransaction] = useState<TransactionWithStudent | null>(null)
   const [invoiceAmount, setInvoiceAmount] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [manualIncomeOpen, setManualIncomeOpen] = useState(false)
 
   const handleDelete = useCallback((transaction: TransactionWithStudent) => {
     setDeletingTransaction(transaction)
@@ -146,10 +148,22 @@ export const IncomeTable = ({ data }: IncomeTableProps) => {
 
   return (
     <>
+      <div className="mb-4 flex items-center gap-2">
+        <Button size="sm" onClick={() => setManualIncomeOpen(true)}>
+          <Plus className="size-3.5" />
+          Add Income
+        </Button>
+      </div>
+
       <DataTable
         columns={columns}
         data={data}
         toolbar={(table) => <IncomeToolbar table={table} />}
+      />
+
+      <ManualIncomeDialog
+        open={manualIncomeOpen}
+        onOpenChange={setManualIncomeOpen}
       />
 
       {/* Issue Invoice Dialog */}
