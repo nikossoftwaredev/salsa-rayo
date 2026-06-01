@@ -20,10 +20,14 @@ export interface Post {
   frontmatter: PostFrontmatter;
   content: string;
   readingTime: number;
+  wordCount: number;
 }
 
-const calculateReadingTime = (content: string) =>
-  Math.ceil(content.split(/\s+/).length / 200);
+const countWords = (content: string) =>
+  content.split(/\s+/).filter(Boolean).length;
+
+const calculateReadingTime = (wordCount: number) =>
+  Math.ceil(wordCount / 200);
 
 export const getPostBySlug = (slug: string, locale: string): Post | null => {
   const filePath = path.join(POSTS_DIR, `${slug}.${locale}.md`);
@@ -32,12 +36,14 @@ export const getPostBySlug = (slug: string, locale: string): Post | null => {
 
   const fileContent = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(fileContent);
+  const wordCount = countWords(content);
 
   return {
     slug,
     frontmatter: data as PostFrontmatter,
     content,
-    readingTime: calculateReadingTime(content),
+    wordCount,
+    readingTime: calculateReadingTime(wordCount),
   };
 };
 
@@ -66,4 +72,29 @@ export const getAllSlugs = (): string[] => {
   );
 
   return Array.from(slugs);
+};
+
+export const getRelatedPosts = (
+  currentSlug: string,
+  locale: string,
+  limit = 3
+): Post[] => {
+  const current = getPostBySlug(currentSlug, locale);
+  if (!current) return [];
+
+  const others = getAllPosts(locale).filter((p) => p.slug !== currentSlug);
+
+  const scored = others.map((post) => {
+    const sharedTags = post.frontmatter.tags.filter((tag) =>
+      current.frontmatter.tags.includes(tag)
+    ).length;
+    const sameCategory =
+      post.frontmatter.category === current.frontmatter.category ? 1 : 0;
+    return { post, score: sharedTags * 2 + sameCategory };
+  });
+
+  return scored
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map((s) => s.post);
 };

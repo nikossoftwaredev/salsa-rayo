@@ -36,6 +36,9 @@ export const generateMetadata = async ({
         el: `${BASE_URL}/el/blog`,
         "x-default": `${BASE_URL}/en/blog`,
       },
+      types: {
+        "application/rss+xml": `${BASE_URL}/feed.xml`,
+      },
     },
     openGraph: {
       title: localeMetadata.title,
@@ -51,13 +54,52 @@ const BlogPage = async ({ params }: BasePageProps) => {
   const { locale } = await params;
   const posts = getAllPosts(locale);
 
+  const blogSchema = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "@id": `${BASE_URL}/${locale}/blog#blog`,
+    url: `${BASE_URL}/${locale}/blog`,
+    name: metadata[locale]?.title || metadata.en.title,
+    description: metadata[locale]?.description || metadata.en.description,
+    inLanguage: locale,
+    publisher: { "@id": `${BASE_URL}/#organization` },
+    blogPost: posts.map((post) => ({
+      "@type": "BlogPosting",
+      "@id": `${BASE_URL}/${locale}/blog/${post.slug}#article`,
+      headline: post.frontmatter.title,
+      description: post.frontmatter.description,
+      url: `${BASE_URL}/${locale}/blog/${post.slug}`,
+      datePublished: post.frontmatter.date,
+      dateModified: post.frontmatter.date,
+      author: { "@id": `${BASE_URL}/#organization` },
+      image: post.frontmatter.image
+        ? `${BASE_URL}${post.frontmatter.image}`
+        : undefined,
+    })),
+  };
+
+  const itemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: posts.map((post, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: `${BASE_URL}/${locale}/blog/${post.slug}`,
+      name: post.frontmatter.title,
+    })),
+  };
+
   return (
     <main className="min-h-screen bg-background">
       <JsonLd
-        data={getBreadcrumbSchema([
-          { name: "Home", url: `${BASE_URL}/${locale}` },
-          { name: "Blog", url: `${BASE_URL}/${locale}/blog` },
-        ])}
+        data={[
+          getBreadcrumbSchema([
+            { name: "Home", url: `${BASE_URL}/${locale}` },
+            { name: "Blog", url: `${BASE_URL}/${locale}/blog` },
+          ]),
+          blogSchema,
+          itemListSchema,
+        ]}
       />
 
       {/* Hero Section */}

@@ -6,13 +6,19 @@ import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Clock, Calendar, User } from "lucide-react";
 import type { Post } from "@/lib/blog";
+import BlogCard, { BlogCardGrid } from "@/components/blog/BlogCard";
 
 interface BlogArticleProps {
   post: Post;
   locale: string;
+  relatedPosts?: Post[];
 }
 
-export const BlogArticle = ({ post, locale }: BlogArticleProps) => {
+export const BlogArticle = ({
+  post,
+  locale,
+  relatedPosts = [],
+}: BlogArticleProps) => {
   const formattedDate = new Date(post.frontmatter.date).toLocaleDateString(
     locale === "el" ? "el-GR" : "en-US",
     { year: "numeric", month: "long", day: "numeric" }
@@ -133,6 +139,33 @@ export const BlogArticle = ({ post, locale }: BlogArticleProps) => {
           </Markdown>
         </article>
       </section>
+
+      {/* Related Posts */}
+      {relatedPosts.length > 0 && (
+        <section className="px-4 pb-16 border-t border-border/30 pt-16">
+          <div className="mx-auto max-w-6xl">
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">
+              <span className="bg-gradient-to-r from-primary to-brand-pink bg-clip-text text-transparent">
+                {locale === "el" ? "Σχετικά Άρθρα" : "Related Articles"}
+              </span>
+            </h2>
+            <BlogCardGrid>
+              {relatedPosts.map((related) => (
+                <BlogCard
+                  key={related.slug}
+                  slug={related.slug}
+                  title={related.frontmatter.title}
+                  excerpt={related.frontmatter.excerpt}
+                  date={related.frontmatter.date}
+                  readingTime={related.readingTime}
+                  category={related.frontmatter.category}
+                  locale={locale}
+                />
+              ))}
+            </BlogCardGrid>
+          </div>
+        </section>
+      )}
 
       {/* CTA */}
       <section className="px-4 pb-24">

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import { getBreadcrumbSchema, getArticleAuthorSchema } from "@/lib/schema";
-import { getPostBySlug, getAllSlugs } from "@/lib/blog";
+import { getPostBySlug, getAllSlugs, getRelatedPosts } from "@/lib/blog";
 import { notFound } from "next/navigation";
 import { BlogArticle } from "./BlogArticle";
 
@@ -40,6 +40,8 @@ export const generateMetadata = async ({
   return {
     title,
     description,
+    keywords: post.frontmatter.tags,
+    authors: [{ name: post.frontmatter.author }],
     alternates: {
       canonical: `${BASE_URL}/${locale}/blog/${slug}`,
       languages: {
@@ -54,6 +56,11 @@ export const generateMetadata = async ({
       url: `${BASE_URL}/${locale}/blog/${slug}`,
       siteName: "Salsa Rayo",
       type: "article",
+      publishedTime: post.frontmatter.date,
+      modifiedTime: post.frontmatter.date,
+      authors: [post.frontmatter.author],
+      section: post.frontmatter.category,
+      tags: post.frontmatter.tags,
       images: [ogImage],
     },
     twitter: {
@@ -71,22 +78,33 @@ const BlogPostPage = async ({ params }: BlogPostPageProps) => {
 
   if (!post) notFound();
 
+  const relatedPosts = getRelatedPosts(slug, locale, 3);
+
   const articleSchema = {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
+    "@id": `${BASE_URL}/${locale}/blog/${slug}#article`,
     headline: post.frontmatter.title,
     description: post.frontmatter.description,
     url: `${BASE_URL}/${locale}/blog/${slug}`,
     inLanguage: locale,
     author: getArticleAuthorSchema(post.frontmatter.author),
-    publisher: {
-      "@id": `${BASE_URL}/#organization`,
-    },
+    publisher: { "@id": `${BASE_URL}/#organization` },
     image: post.frontmatter.image
-      ? `${BASE_URL}${post.frontmatter.image}`
+      ? {
+          "@type": "ImageObject",
+          url: `${BASE_URL}${post.frontmatter.image}`,
+          width: 1200,
+          height: 630,
+        }
       : undefined,
     datePublished: post.frontmatter.date,
     dateModified: post.frontmatter.date,
+    articleSection: post.frontmatter.category,
+    keywords: post.frontmatter.tags.join(", "),
+    wordCount: post.wordCount,
+    timeRequired: `PT${post.readingTime}M`,
+    isPartOf: { "@id": `${BASE_URL}/${locale}/blog#blog` },
     mainEntityOfPage: `${BASE_URL}/${locale}/blog/${slug}`,
   };
 
@@ -102,7 +120,7 @@ const BlogPostPage = async ({ params }: BlogPostPageProps) => {
   return (
     <>
       <JsonLd data={[breadcrumbSchema, articleSchema]} />
-      <BlogArticle post={post} locale={locale} />
+      <BlogArticle post={post} locale={locale} relatedPosts={relatedPosts} />
     </>
   );
 };

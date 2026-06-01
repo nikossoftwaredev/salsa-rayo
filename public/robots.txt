@@ -32,3 +32,4 @@ User-agent: cohere-ai
 Disallow: /
 
 Sitemap: https://www.salsarayo.com/sitemap.xml
+
