@@ -1,9 +1,17 @@
 import { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 import OrishasGrid from '@/components/sections/orishas/OrishasGrid'
 import BackgroundEffects from '@/components/BackgroundEffects'
 import { BasePageProps } from '@/types/pageprops'
 import JsonLd from '@/components/JsonLd'
-import { getBreadcrumbSchema, getOrishasArticleSchema } from '@/lib/schema'
+import {
+  getBreadcrumbSchema,
+  getOrishasArticleSchema,
+  getFAQPageSchema,
+} from '@/lib/schema'
+import { SUPPORTED_LOCALES } from '@/i18n/routing'
+
+export const revalidate = 3600
 
 export const generateMetadata = async ({ params }: BasePageProps): Promise<Metadata> => {
   const locale = (await params).locale
@@ -44,8 +52,22 @@ export const generateMetadata = async ({ params }: BasePageProps): Promise<Metad
   }
 }
 
+const FAQ_KEY_PAIRS = [
+  ['faq.q1', 'faq.a1'],
+  ['faq.q2', 'faq.a2'],
+  ['faq.q3', 'faq.a3'],
+  ['faq.q4', 'faq.a4'],
+  ['faq.q5', 'faq.a5'],
+] as const
+
 const OrishasPage = async ({ params }: BasePageProps) => {
-  const locale = (await params).locale
+  const locale = (await params).locale as (typeof SUPPORTED_LOCALES)[number]
+  const t = await getTranslations({ locale, namespace: 'Orishas' })
+
+  const faqItems = FAQ_KEY_PAIRS.map(([qKey, aKey]) => ({
+    question: t(qKey),
+    answer: t(aKey),
+  }))
 
   return (
     <main className="min-h-screen bg-background">
@@ -56,6 +78,7 @@ const OrishasPage = async ({ params }: BasePageProps) => {
             { name: "Orishas", url: `https://www.salsarayo.com/${locale}/orishas` },
           ]),
           getOrishasArticleSchema(locale),
+          getFAQPageSchema(faqItems),
         ]}
       />
       <BackgroundEffects />

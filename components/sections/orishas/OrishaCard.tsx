@@ -58,7 +58,7 @@ const OrishaCard = ({ orisha }: OrishaCardProps) => {
       <figure className="relative h-80 overflow-hidden bg-gradient-to-b from-black/20 to-black/60 rounded-t-xl">
         <Image
           src={orisha.image}
-          alt={orisha.name}
+          alt={`${orisha.name} - ${orisha.title[locale] || orisha.title.en} - Orisha in Afro-Cuban salsa`}
           width={400}
           height={600}
           className="object-cover object-top w-full h-full"

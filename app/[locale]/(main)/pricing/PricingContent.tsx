@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import BackgroundEffects from "@/components/BackgroundEffects";
 import PackageCard from "@/components/PackageCard";
 import { motion } from "framer-motion";
-import { Zap } from "lucide-react";
+import { Zap, Check, Sparkles, CalendarX, GraduationCap, PartyPopper } from "lucide-react";
 import Logo from "@/components/Logo";
 import { Link } from "@/i18n/routing";
 import { PACKAGES } from "@/data/packages";
@@ -167,6 +167,82 @@ const PricingContent = ({ stripePackages }: PricingContentProps) => {
             </p>
           </div>
         </div>
+
+        {/* What's Included */}
+        <section className="mt-20 max-w-4xl mx-auto">
+          <h2 className="text-3xl font-bold text-foreground mb-6 text-center">
+            <Sparkles className="size-6 inline-block mr-2 text-primary" />
+            {t("includedTitle")}
+          </h2>
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {t("includedItems")
+              .split(" | ")
+              .map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-3 text-foreground/80"
+                >
+                  <Check className="size-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+          </ul>
+        </section>
+
+        {/* How to Choose */}
+        <section className="mt-16 max-w-4xl mx-auto">
+          <h2 className="text-3xl font-bold text-foreground mb-6 text-center">
+            {t("chooseTitle")}
+          </h2>
+          <div className="space-y-4">
+            <article className="rounded-xl border border-border/30 bg-card/60 p-6">
+              <p className="text-foreground/85 leading-relaxed">
+                {t("chooseRayo8")}
+              </p>
+            </article>
+            <article className="rounded-xl border border-primary/30 bg-card/60 p-6">
+              <p className="text-foreground/85 leading-relaxed">
+                {t("chooseRayo16")}
+              </p>
+            </article>
+            <article className="rounded-xl border border-border/30 bg-card/60 p-6">
+              <p className="text-foreground/85 leading-relaxed">
+                {t("chooseRayo24")}
+              </p>
+            </article>
+          </div>
+        </section>
+
+        {/* Trial + Cancel + Student */}
+        <section className="mt-16 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+          <article className="rounded-xl border border-border/30 bg-card/60 p-6">
+            <h3 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
+              <PartyPopper className="size-5 text-primary" />
+              {t("trialTitle")}
+            </h3>
+            <p className="text-sm text-foreground/75 leading-relaxed">
+              {t("trialText")}
+            </p>
+          </article>
+          <article className="rounded-xl border border-border/30 bg-card/60 p-6">
+            <h3 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
+              <CalendarX className="size-5 text-primary" />
+              {t("cancelTitle")}
+            </h3>
+            <p className="text-sm text-foreground/75 leading-relaxed">
+              {t("cancelText")}
+            </p>
+          </article>
+          <article className="rounded-xl border border-border/30 bg-card/60 p-6">
+            <h3 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
+              <GraduationCap className="size-5 text-primary" />
+              {t("studentTitle")}
+            </h3>
+            <p className="text-sm text-foreground/75 leading-relaxed">
+              {t("studentText")}
+            </p>
+          </article>
+        </section>
 
         {/* Additional Info Section */}
         <div className="text-center mt-20 max-w-2xl mx-auto">

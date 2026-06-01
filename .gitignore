@@ -53,3 +53,9 @@ next-env.d.ts
 gcp-mcp-secret.json
 client_secret*.json
 *-oauth.json
+
+# audit / scratch files
+tmpsalsarayo*
+audit-*.md
+FULL-AUDIT-REPORT.md
+ACTION-PLAN.md

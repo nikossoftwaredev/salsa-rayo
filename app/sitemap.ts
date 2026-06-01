@@ -1,48 +1,46 @@
 import { MetadataRoute } from 'next'
-import { getAllSlugs } from '@/lib/blog'
+import { getAllSlugs, getPostBySlug } from '@/lib/blog'
 
 const BASE_URL = 'https://www.salsarayo.com'
 const LOCALES = ['en', 'el', 'es'] as const
 const BLOG_LOCALES = ['en', 'el'] as const
 
-const routes: {
-  path: string
-  priority: number
-  changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency']
-}[] = [
-  { path: '', priority: 1.0, changeFrequency: 'monthly' },
-  { path: '/pricing', priority: 0.9, changeFrequency: 'monthly' },
-  { path: '/gallery', priority: 0.8, changeFrequency: 'weekly' },
-  { path: '/blog', priority: 0.8, changeFrequency: 'weekly' },
-  { path: '/faq', priority: 0.7, changeFrequency: 'monthly' },
-  { path: '/orishas', priority: 0.7, changeFrequency: 'monthly' },
-]
-
 const sitemap = (): MetadataRoute.Sitemap => {
-  const staticRoutes = routes.map(route => ({
-    url: `${BASE_URL}/en${route.path}`,
-    lastModified: new Date(),
-    changeFrequency: route.changeFrequency,
-    priority: route.priority,
+  const now = new Date()
+  const staticPaths = ['', '/pricing', '/gallery', '/blog', '/faq', '/orishas']
+
+  const staticRoutes = staticPaths.map(path => ({
+    url: `${BASE_URL}/en${path}`,
+    lastModified: now,
     alternates: {
-      languages: Object.fromEntries(
-        LOCALES.map(locale => [locale, `${BASE_URL}/${locale}${route.path}`])
-      ),
+      languages: {
+        ...Object.fromEntries(
+          LOCALES.map(locale => [locale, `${BASE_URL}/${locale}${path}`])
+        ),
+        'x-default': `${BASE_URL}/en${path}`,
+      },
     },
   }))
 
   const blogSlugs = getAllSlugs()
-  const blogRoutes = blogSlugs.map(slug => ({
-    url: `${BASE_URL}/en/blog/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-    alternates: {
-      languages: Object.fromEntries(
-        BLOG_LOCALES.map(locale => [locale, `${BASE_URL}/${locale}/blog/${slug}`])
-      ),
-    },
-  }))
+  const blogRoutes = blogSlugs.map(slug => {
+    const post = getPostBySlug(slug, 'en')
+    const lastModified = post?.frontmatter.date
+      ? new Date(post.frontmatter.date)
+      : now
+    return {
+      url: `${BASE_URL}/en/blog/${slug}`,
+      lastModified,
+      alternates: {
+        languages: {
+          ...Object.fromEntries(
+            BLOG_LOCALES.map(locale => [locale, `${BASE_URL}/${locale}/blog/${slug}`])
+          ),
+          'x-default': `${BASE_URL}/en/blog/${slug}`,
+        },
+      },
+    }
+  })
 
   return [...staticRoutes, ...blogRoutes]
 }

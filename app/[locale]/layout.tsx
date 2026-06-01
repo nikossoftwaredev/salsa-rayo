@@ -68,7 +68,7 @@ const KEYWORDS: Record<string, string[]> = {
 };
 
 const OG_LOCALES: Record<string, string> = {
-  en: "en_US",
+  en: "en_GB",
   el: "el_GR",
   es: "es_ES",
 };

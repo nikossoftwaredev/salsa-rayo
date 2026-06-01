@@ -7,14 +7,16 @@ import BlogCard, { BlogCardGrid } from "@/components/blog/BlogCard";
 
 const BASE_URL = "https://www.salsarayo.com";
 
+export const revalidate = 3600;
+
 const metadata: Record<string, { title: string; description: string }> = {
   en: {
-    title: "Blog | Salsa Rayo Dance School — Articles & Tips",
+    title: "Salsa & Bachata Blog | Salsa Rayo Dance School Athens",
     description:
       "Read articles about salsa, bachata, dance tips, and Latin dance culture. Expert insights from Salsa Rayo Dance School in Athens, Greece.",
   },
   el: {
-    title: "Blog | Salsa Rayo — Άρθρα & Συμβουλές Χορού",
+    title: "Blog Salsa & Bachata | Άρθρα Χορού - Salsa Rayo Αθήνα",
     description:
       "Διαβάστε άρθρα για salsa, bachata, συμβουλές χορού και κουλτούρα Latin χορού. Εξειδικευμένες γνώσεις από τη Salsa Rayo στην Αθήνα.",
   },

@@ -25,6 +25,7 @@ export const generateMetadata = async ({ params }: ProfilePageProps): Promise<Me
   return {
     title: `${name} | Salsa Rayo`,
     description,
+    robots: { index: false, follow: false },
     openGraph: {
       title: `${name} | Salsa Rayo`,
       description,

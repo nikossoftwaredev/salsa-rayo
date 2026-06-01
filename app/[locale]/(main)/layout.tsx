@@ -1,7 +1,11 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
-import { getDanceSchoolSchema, getWebSiteSchema } from "@/lib/schema";
+import {
+  getDanceSchoolSchema,
+  getWebSiteSchema,
+  getInstructorSchemas,
+} from "@/lib/schema";
 import { PhonePromptBanner } from "@/components/PhonePromptBanner";
 import { WelcomeConfetti } from "@/components/WelcomeConfetti";
 
@@ -12,7 +16,13 @@ const MainLayout = ({
 }) => {
   return (
     <>
-      <JsonLd data={[getDanceSchoolSchema(), getWebSiteSchema()]} />
+      <JsonLd
+        data={[
+          getDanceSchoolSchema(),
+          getWebSiteSchema(),
+          ...getInstructorSchemas(),
+        ]}
+      />
       <Header />
       <PhonePromptBanner />
       <WelcomeConfetti />

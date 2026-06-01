@@ -55,6 +55,11 @@
     "subtitle": "Tips, guides and stories about salsa, bachata, and couple dance",
     "cta": "Read all articles"
   },
+  "Reviews": {
+    "title": "What Our Students Say",
+    "subtitle": "Real reviews from Salsa Rayo students on Google",
+    "readMore": "Read all {count} reviews on Google"
+  },
   "Contact": {
     "title": "CONTACT US",
     "firstName": "First Name",
@@ -94,6 +99,25 @@
     "title": "Orishas in Salsa Dance",
     "subtitle": "Discover the Sacred Rhythms",
     "intro": "In salsa, the Afro element is deeply incorporated through Orisha movements from Yoruba traditions. Below we showcase some of the existing Orishas - the ones that we dance to. Each deity brings specific rhythms and dance characteristics, connecting spiritual expression with vibrant salsa energy.",
+    "historyTitle": "From Yoruba West Africa to Cuban Salsa",
+    "historyText": "The Orishas are sacred deities of the Yoruba people of West Africa, in what is now Nigeria and Benin. When millions of Africans were taken to Cuba during the transatlantic slave trade between the 16th and 19th centuries, they carried their religion, music, and movement with them. Under Spanish colonial rule, enslaved Yoruba people were forced to convert to Catholicism - and they responded by syncretising each Orisha with a Catholic saint, hiding their faith in plain sight. This blended tradition became known as Santería, or Lucumí. The drums never stopped. The rhythms of the Bata, Conga, and Bembe - the sacred percussion patterns used to summon each Orisha - survived intact, were passed from generation to generation, and eventually flowed directly into Cuban son, mambo, rumba, and finally modern salsa.",
+    "musicTitle": "How Orisha Rhythms Live Inside Salsa",
+    "musicText": "Every Orisha has a signature rhythm pattern (toque) and a corresponding body movement that mimics what that deity rules over: thunder, ocean waves, war, healing, wind, fertility. When you hear a salsa song and a sudden drum break drops into a 6/8 pattern, you are usually hearing an Orisha rhythm - most often Eleguá at the start of the song (he opens the path), or Changó during the moment of greatest fire. Salsa dancers who study Afro-Cuban roots learn to recognise these breaks and respond with the appropriate movement: shoulder rolls for Yemayá, knees pumping for Oggún, sharp arm strikes for Shangó. This is what separates trained Cuban-influenced dancers from those who only know the basic steps.",
+    "learningTitle": "Why Learning Orishas Makes You a Better Salsa Dancer",
+    "learningText": "Knowing the Orishas changes how you hear music. You start anticipating the breaks, understanding why a song builds the way it does, and responding to percussion the way the music was designed to be answered. It also improves your body isolation: each Orisha movement targets a different part of the body - hips, shoulders, knees, hands, head - so working through all nine builds the full toolkit of expressive movement that high-level salsa requires. At Salsa Rayo we introduce Orisha movements gradually in our intermediate classes, after students have built a strong foundation in basic salsa On2 and bachata technique.",
+    "faqTitle": "Frequently Asked Questions About Orishas in Salsa",
+    "faq": {
+      "q1": "Do you have to be religious to dance Orisha movements?",
+      "a1": "No. We teach Orisha movements as a cultural and rhythmic vocabulary, with full respect for their religious origin. You do not need to practice Santería or hold any spiritual belief to learn the movements - the same way you do not need to be religious to enjoy gospel music or appreciate flamenco.",
+      "q2": "How many Orishas are there?",
+      "a2": "There are hundreds of Orishas in the original Yoruba religion. In Cuba, around 21 are commonly worshipped, and in salsa dance about 7 to 9 appear regularly because their rhythms are the ones most often used in popular Latin music. We feature the most danceable ones above.",
+      "q3": "Is this cultural appropriation?",
+      "a3": "We teach Orisha movements in their full cultural context - naming the deities, explaining their origins in Yoruba and Cuban history, and crediting the tradition. Sharing dance respectfully is how culture stays alive across generations. Erasing the names and origins would be the disrespectful path.",
+      "q4": "Which Orisha is right for a beginner?",
+      "a4": "Yemayá is the most accessible starting point. Her movement is a flowing, wave-like motion through the torso and arms that translates immediately into salsa styling, and her rhythm appears frequently in popular salsa music.",
+      "q5": "Can I learn Orishas without learning salsa first?",
+      "a5": "Yes, but we recommend at least 2 to 3 months of basic salsa or bachata first. Without the underlying step pattern and body isolation foundation, the Orisha movements feel disconnected from the music. Once you have basic timing, the Orishas open up an entire layer of expression."
+    },
     "bottomTitle": "Experience the Sacred Dance",
     "bottomText": "In our salsa classes, we honor these traditions by incorporating Orisha-inspired movements, helping you connect with the deeper cultural roots of Afro-Cuban dance while mastering the rhythms that move both body and spirit."
   },
@@ -139,7 +163,19 @@
     "studentOrYouth": "Student 10% Discount",
     "studentDiscount": "10% student discount applied",
     "classesPerWeek": "{count} classes per week",
-    "interestedIn": "I am interested in the {package} ({classes} classes per week)"
+    "interestedIn": "I am interested in the {package} ({classes} classes per week)",
+    "includedTitle": "What All Packages Include",
+    "includedItems": "Access to every class in your schedule | Instruction from school co-founders Anna and Konstantinos | Salsa, Bachata, Mambo, Pachanga and Ladies Styling | Levels from beginner to advanced | Air-conditioned studio in Agios Dimitrios | 5 minutes from Agios Dimitrios Metro Station (Line 2 Red) | One free trial class for new students",
+    "chooseTitle": "How to Choose the Right Package",
+    "chooseRayo8": "Rayo 8 (€50/month) - 2 classes per week. Ideal for beginners who want steady progress without overcommitting. The most popular way to start.",
+    "chooseRayo16": "Rayo 16 (€75/month) - 4 classes per week. For students who want fast progress, combining for example salsa + bachata or technique + styling. The best value for those with time.",
+    "chooseRayo24": "Rayo 24 (€99/month) - 6 classes per week. For committed students who want to grow into performer level or cover every style we teach.",
+    "trialTitle": "Free Trial Class",
+    "trialText": "You do not have to buy a package before trying. All new students get one free trial class to meet the school, the teachers, and see our level. Contact us to book your trial - no partner needed, no prior experience required.",
+    "cancelTitle": "Cancellation Policy",
+    "cancelText": "Packages are monthly and renew automatically. You can cancel your subscription anytime from your profile - no penalties, no hidden fees. Cancellation applies to the next month, so you complete the current month's classes as planned.",
+    "studentTitle": "10% Student Discount",
+    "studentText": "Every package has an automatic 10% discount for students and anyone under 26. Just toggle the switch above the packages. Proof of student status will be requested at your first class."
   },
   "CheckoutSuccess": {
     "title": "Welcome to the Rayo Family!",

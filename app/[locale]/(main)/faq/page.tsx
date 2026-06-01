@@ -7,6 +7,8 @@ import JsonLd from "@/components/JsonLd";
 import { getBreadcrumbSchema, getFAQPageSchema } from "@/lib/schema";
 import { FAQ_ITEMS } from "@/data/faq";
 
+export const revalidate = 3600;
+
 export const generateMetadata = async ({
   params,
 }: BasePageProps): Promise<Metadata> => {

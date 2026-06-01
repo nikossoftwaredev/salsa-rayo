@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
 
 import { AdminAuthGuard } from "@/components/admin/AdminAuthGuard";
@@ -9,6 +10,10 @@ import { authOptions } from "@/lib/auth";
 import { isAdmin } from "@/server-actions/is-admin";
 import { BaseLayoutProps } from "@/types/pageprops";
 import { Toaster } from "sonner";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false, nocache: true },
+};
 
 const AdminLayout = async ({ children }: BaseLayoutProps) => {
   const [isUserAdmin, session] = await Promise.all([

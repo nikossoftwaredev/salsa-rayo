@@ -10,6 +10,55 @@ import {
 const BASE_URL = "https://www.salsarayo.com";
 
 // ============================================================
+// Instructor Person schemas - boosts E-E-A-T signals
+// ============================================================
+export const getInstructorSchemas = () => [
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": `${BASE_URL}/#anna-lontou`,
+    name: "Anna Lontou",
+    jobTitle: "Lead Instructor & Co-Founder",
+    description:
+      "Co-founder of Salsa Rayo Dance School. Professional salsa and bachata instructor specialising in New York Style Salsa On2, with international festival and competition experience.",
+    image: `${BASE_URL}/images/anna.jpg`,
+    worksFor: { "@id": `${BASE_URL}/#organization` },
+    knowsAbout: [
+      "New York Style Salsa",
+      "Salsa On2",
+      "Bachata",
+      "Mambo",
+      "Pachanga",
+      "Latin dance instruction",
+      "Wedding first dance choreography",
+    ],
+    nationality: "Greek",
+    sameAs: [INSTAGRAM_URL],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": `${BASE_URL}/#konstantinos-bitsis`,
+    name: "Konstantinos Bitsis",
+    jobTitle: "Senior Instructor & Co-Founder",
+    description:
+      "Co-founder of Salsa Rayo Dance School. Professional salsa and bachata instructor with award-winning duet performances at international festivals.",
+    image: `${BASE_URL}/images/konstantinos.jpg`,
+    worksFor: { "@id": `${BASE_URL}/#organization` },
+    knowsAbout: [
+      "New York Style Salsa",
+      "Salsa On2",
+      "Bachata",
+      "Mambo",
+      "Latin dance instruction",
+      "Wedding first dance choreography",
+    ],
+    nationality: "Greek",
+    sameAs: [INSTAGRAM_URL],
+  },
+];
+
+// ============================================================
 // DanceSchool (LocalBusiness subtype) - Global / Homepage
 // ============================================================
 export const getDanceSchoolSchema = () => ({
@@ -57,6 +106,19 @@ export const getDanceSchoolSchema = () => ({
     },
   ],
   sameAs: [INSTAGRAM_URL, YOUTUBE_URL, FACEBOOK_URL],
+  knowsLanguage: ["en", "el", "es"],
+  employee: [
+    { "@id": `${BASE_URL}/#anna-lontou` },
+    { "@id": `${BASE_URL}/#konstantinos-bitsis` },
+  ],
+  hasMap: "https://maps.app.goo.gl/TMKKekvqWxn3fhA16",
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: PHONE,
+    contactType: "customer service",
+    areaServed: "GR",
+    availableLanguage: ["English", "Greek", "Spanish"],
+  },
   hasOfferCatalog: {
     "@type": "OfferCatalog",
     name: "Dance Class Packages",
@@ -86,6 +148,24 @@ export const getDanceSchoolSchema = () => ({
         url: `${BASE_URL}/en/pricing`,
       },
     ],
+  },
+});
+
+// ============================================================
+// AggregateRating - merge into DanceSchool via @id
+// ============================================================
+export const getAggregateRatingSchema = (
+  ratingValue: number,
+  reviewCount: number
+) => ({
+  "@context": "https://schema.org",
+  "@id": `${BASE_URL}/#organization`,
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: ratingValue.toFixed(1),
+    reviewCount,
+    bestRating: "5",
+    worstRating: "1",
   },
 });
 

@@ -15,7 +15,7 @@ export interface Orisha {
 export const orishas: Orisha[] = [
   {
     id: 'shango',
-    name: 'Shangó ⚡',
+    name: 'Shangó',
     title: { en: 'God of Thunder (Rayo)', el: 'Θεός του Κεραυνού (Rayo)', es: 'Dios del Trueno (Rayo)' },
     specialty: { en: 'Thunder, lightning, fire, justice, drums', el: 'Κεραυνός, αστραπή, φωτιά, δικαιοσύνη, τύμπανα' },
     rhythm: { en: 'Toque de Shangó', el: 'Toque de Shangó' },

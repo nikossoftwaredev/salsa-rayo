@@ -1,6 +1,11 @@
 # Search engine crawlers
 User-agent: *
 Allow: /
+Disallow: /*/admin
+Disallow: /*/admin/*
+Disallow: /*/profile/*
+Disallow: /api/
+Disallow: /*/checkout/*
 
 # AI search crawlers - explicitly allowed
 User-agent: GPTBot

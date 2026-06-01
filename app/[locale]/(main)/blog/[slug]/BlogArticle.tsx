@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Link } from "@/i18n/routing";
@@ -72,12 +73,14 @@ export const BlogArticle = ({
       {post.frontmatter.image && (
         <section className="px-4 pb-8">
           <div className="mx-auto max-w-3xl">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={post.frontmatter.image}
               alt={post.frontmatter.title}
-              className="w-full rounded-xl shadow-lg"
-              loading="eager"
+              width={1200}
+              height={630}
+              priority
+              sizes="(max-width: 768px) 100vw, 768px"
+              className="w-full h-auto rounded-xl shadow-lg"
             />
           </div>
         </section>

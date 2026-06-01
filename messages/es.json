@@ -55,6 +55,11 @@
     "subtitle": "Consejos, guías e historias sobre salsa, bachata y baile en pareja",
     "cta": "Ver todos los artículos"
   },
+  "Reviews": {
+    "title": "Lo Que Dicen Nuestros Alumnos",
+    "subtitle": "Reseñas reales de alumnos de Salsa Rayo en Google",
+    "readMore": "Lee las {count} reseñas en Google"
+  },
   "Contact": {
     "title": "CONTÁCTANOS",
     "firstName": "Nombre",
@@ -94,6 +99,25 @@
     "title": "Los Orishas en la Salsa",
     "subtitle": "Descubre los Ritmos Sagrados",
     "intro": "En la salsa, el elemento afro se incorpora profundamente a través de los movimientos de los Orishas de las tradiciones Yoruba. A continuación mostramos algunos de los Orishas existentes - los que bailamos. Cada deidad trae ritmos específicos y características de baile, conectando la expresión espiritual con la vibrante energía de la salsa.",
+    "historyTitle": "Del África Yoruba a la Salsa Cubana",
+    "historyText": "Los Orishas son deidades sagradas del pueblo Yoruba de África Occidental, en lo que hoy es Nigeria y Benín. Cuando millones de africanos fueron llevados a Cuba durante la trata transatlántica entre los siglos XVI y XIX, llevaron consigo su religión, su música y su movimiento. Bajo el régimen colonial español, los Yoruba esclavizados fueron forzados a convertirse al catolicismo - y respondieron sincretizando cada Orisha con un santo católico, escondiendo su fe a la vista de todos. Esta tradición mezclada se conoció como Santería, o Lucumí. Los tambores nunca pararon. Los ritmos de Bata, Conga y Bembe - los patrones percusivos sagrados usados para invocar a cada Orisha - sobrevivieron intactos, pasaron de generación en generación, y finalmente fluyeron directamente al son cubano, al mambo, a la rumba y a la salsa moderna.",
+    "musicTitle": "Cómo los Ritmos de los Orishas Viven Dentro de la Salsa",
+    "musicText": "Cada Orisha tiene un patrón rítmico (toque) y un movimiento corporal correspondiente que imita aquello que la deidad rige: trueno, olas del mar, guerra, sanación, viento, fertilidad. Cuando escuchas una canción de salsa y un drum break repentino entra en 6/8, normalmente estás escuchando un ritmo Orisha - casi siempre Eleguá al inicio de la canción (él abre el camino), o Changó en el momento de mayor fuego. Los bailadores que estudian las raíces afrocubanas aprenden a reconocer esos breaks y responder con el movimiento adecuado: hombros para Yemayá, rodillas para Oggún, golpes secos de brazos para Changó.",
+    "learningTitle": "Por Qué Aprender los Orishas te Hace Mejor Bailador",
+    "learningText": "Conocer a los Orishas cambia cómo escuchas la música. Empiezas a anticipar los breaks, a entender por qué una canción se construye como lo hace, y a responder a la percusión de la manera en que la música fue diseñada. También mejora el aislamiento corporal: cada movimiento Orisha trabaja una parte del cuerpo diferente. En Salsa Rayo introducimos los movimientos Orisha gradualmente en las clases intermedias.",
+    "faqTitle": "Preguntas Frecuentes sobre los Orishas en la Salsa",
+    "faq": {
+      "q1": "¿Hay que ser religioso para bailar movimientos Orisha?",
+      "a1": "No. Enseñamos los movimientos Orisha como vocabulario cultural y rítmico, con pleno respeto a su origen religioso. No necesitas practicar Santería ni tener ninguna creencia espiritual para aprenderlos.",
+      "q2": "¿Cuántos Orishas hay?",
+      "a2": "En la religión Yoruba original hay cientos. En Cuba se veneran unos 21 comúnmente, y en el baile de salsa aparecen regularmente entre 7 y 9 porque sus ritmos son los más usados en la música latina popular.",
+      "q3": "¿Es apropiación cultural?",
+      "a3": "Enseñamos los movimientos Orisha en su contexto cultural completo - nombrando a las deidades, explicando sus orígenes en la historia Yoruba y cubana, y dando crédito a la tradición. Compartir el baile con respeto es como la cultura se mantiene viva.",
+      "q4": "¿Qué Orisha es ideal para un principiante?",
+      "a4": "Yemayá es el punto de partida más accesible. Su movimiento es fluido y ondulante a través del torso y los brazos, y se traduce inmediatamente al estilo de salsa.",
+      "q5": "¿Puedo aprender Orishas sin saber salsa primero?",
+      "a5": "Sí, pero recomendamos al menos 2 a 3 meses de salsa o bachata básica primero. Sin el patrón de pasos y la base de aislamiento corporal, los movimientos Orisha se sienten desconectados de la música."
+    },
     "bottomTitle": "Experimenta la Danza Sagrada",
     "bottomText": "En nuestras clases de salsa, honramos estas tradiciones incorporando movimientos inspirados en los Orishas, ayudándote a conectar con las raíces culturales más profundas del baile afrocubano mientras dominas los ritmos que mueven tanto el cuerpo como el espíritu."
   },
@@ -138,7 +162,19 @@
     "studentOrYouth": "Student 10% Discount",
     "studentDiscount": "10% descuento estudiante aplicado",
     "classesPerWeek": "{count} clases por semana",
-    "interestedIn": "Estoy interesado/a en el {package} ({classes} clases por semana)"
+    "interestedIn": "Estoy interesado/a en el {package} ({classes} clases por semana)",
+    "includedTitle": "Qué Incluyen Todos los Paquetes",
+    "includedItems": "Acceso a todas las clases de tu horario | Instrucción de los fundadores Anna y Konstantinos | Salsa, Bachata, Mambo, Pachanga y Estilo de Damas | Niveles desde principiante hasta avanzado | Estudio con aire acondicionado en Agios Dimitrios | A 5 minutos del metro Agios Dimitrios (Línea 2) | Una clase de prueba gratuita para nuevos alumnos",
+    "chooseTitle": "Cómo Elegir el Paquete Adecuado",
+    "chooseRayo8": "Rayo 8 (€50/mes) - 2 clases por semana. Ideal para principiantes que quieren progreso constante sin demasiado compromiso. La forma más popular de empezar.",
+    "chooseRayo16": "Rayo 16 (€75/mes) - 4 clases por semana. Para alumnos que quieren progreso rápido, combinando por ejemplo salsa + bachata o técnica + estilo. La mejor relación calidad-precio.",
+    "chooseRayo24": "Rayo 24 (€99/mes) - 6 clases por semana. Para alumnos comprometidos que quieren crecer hasta nivel performer o cubrir todos los estilos que enseñamos.",
+    "trialTitle": "Clase de Prueba Gratuita",
+    "trialText": "No tienes que comprar un paquete antes de probar. Todos los nuevos alumnos reciben una clase de prueba gratuita para conocer la escuela, los profesores y ver nuestro nivel. Contáctanos para reservar - no necesitas pareja ni experiencia previa.",
+    "cancelTitle": "Política de Cancelación",
+    "cancelText": "Los paquetes son mensuales y se renuevan automáticamente. Puedes cancelar tu suscripción en cualquier momento desde tu perfil - sin penalizaciones ni cargos ocultos. La cancelación se aplica al mes siguiente.",
+    "studentTitle": "10% Descuento para Estudiantes",
+    "studentText": "Cada paquete tiene un descuento automático del 10% para estudiantes y menores de 26 años. Activa el interruptor sobre los paquetes. Se solicitará justificante al iniciar el primer mes."
   },
   "CheckoutSuccess": {
     "title": "Bienvenido/a a la familia Rayo!",

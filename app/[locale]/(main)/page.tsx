@@ -6,15 +6,15 @@ import ContactForm from "@/components/sections/contact-form/ContactForm";
 import ScheduleLoader from "@/components/sections/schedule/ScheduleLoader";
 import ScheduleSkeleton from "@/components/sections/schedule/ScheduleSkeleton";
 import BlogTeaserSection from "@/components/sections/blog-teaser/BlogTeaserSection";
+import ReviewsSection from "@/components/sections/reviews/ReviewsSection";
 import { GOOGLE_PLACE_ID } from "@/data/config";
 import JsonLd from "@/components/JsonLd";
 import {
   getCourseSchemas,
-  getBreadcrumbSchema,
   getFAQPageSchema,
-  getDanceSchoolSchema,
-  getWebSiteSchema,
+  getAggregateRatingSchema,
 } from "@/lib/schema";
+import { getGoogleReviews } from "@/server-actions/getGoogleReviews";
 import { FAQ_ITEMS } from "@/data/faq";
 import { SUPPORTED_LOCALES } from "@/i18n/routing";
 import { BasePageProps } from "@/types/pageprops";
@@ -22,11 +22,12 @@ import { BasePageProps } from "@/types/pageprops";
 const BackgroundEffects = lazy(() => import("@/components/BackgroundEffects"));
 const MapSection = lazy(() => import("@/components/sections/map/MapSection"));
 const GallerySection = lazy(() => import("@/components/sections/gallery/GallerySection"));
-const GoogleReviews = lazy(() => import("@/components/GoogleReviews"));
 
 const SectionLoader = () => (
   <div className="w-full h-96 animate-pulse bg-secondary/10 rounded-lg" />
 );
+
+export const revalidate = 3600;
 
 const Home = async ({ params }: BasePageProps) => {
   const locale = (await params).locale as (typeof SUPPORTED_LOCALES)[number];
@@ -37,17 +38,22 @@ const Home = async ({ params }: BasePageProps) => {
     answer: tFaq(item.answerKey),
   }));
 
+  const reviewsData = await getGoogleReviews(GOOGLE_PLACE_ID).catch(() => null);
+  const aggregateRatingSchema =
+    reviewsData?.rating && reviewsData.user_ratings_total
+      ? getAggregateRatingSchema(
+          reviewsData.rating,
+          reviewsData.user_ratings_total
+        )
+      : null;
+
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden">
       <JsonLd
         data={[
-          getDanceSchoolSchema(),
-          getWebSiteSchema(),
-          getBreadcrumbSchema([
-            { name: "Home", url: `https://www.salsarayo.com/${locale}` },
-          ]),
           ...getCourseSchemas(),
           getFAQPageSchema(faqItems),
+          ...(aggregateRatingSchema ? [aggregateRatingSchema] : []),
         ]}
       />
       <Suspense fallback={null}>
@@ -75,10 +81,8 @@ const Home = async ({ params }: BasePageProps) => {
               <MapSection />
             </Suspense>
           </div>
-          <div className="w-full py-16 px-4 md:px-8 flex justify-center">
-            <Suspense fallback={<SectionLoader />}>
-              <GoogleReviews placeId={GOOGLE_PLACE_ID} />
-            </Suspense>
+          <div className="w-full py-24 px-4 md:px-8 relative">
+            <ReviewsSection placeId={GOOGLE_PLACE_ID} locale={locale} />
           </div>
           <div className="w-full py-24 px-4 md:px-8 bg-gradient-to-b from-transparent via-secondary/20 to-transparent relative">
             <BlogTeaserSection locale={locale} />
