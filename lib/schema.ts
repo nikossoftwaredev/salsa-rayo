@@ -112,6 +112,18 @@ export const getDanceSchoolSchema = () => ({
     { "@id": `${BASE_URL}/#konstantinos-bitsis` },
   ],
   hasMap: "https://maps.app.goo.gl/TMKKekvqWxn3fhA16",
+  areaServed: [
+    { "@type": "City", name: "Athens" },
+    { "@type": "AdministrativeArea", name: "South Athens" },
+    { "@type": "Place", name: "Agios Dimitrios" },
+    { "@type": "Place", name: "Dafni" },
+    { "@type": "Place", name: "Nea Smyrni" },
+    { "@type": "Place", name: "Alimos" },
+    { "@type": "Place", name: "Glyfada" },
+  ],
+  publicAccess: true,
+  smokingAllowed: false,
+  isAccessibleForFree: false,
   contactPoint: {
     "@type": "ContactPoint",
     telephone: PHONE,
@@ -168,6 +180,75 @@ export const getAggregateRatingSchema = (
     worstRating: "1",
   },
 });
+
+// ============================================================
+// Service schemas - dedicated offerings of the school
+// ============================================================
+export const getServiceSchemas = () => [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${BASE_URL}/#service-wedding-dance`,
+    name: "Wedding First Dance Choreography",
+    alternateName: [
+      "Couple Dance Lessons for Weddings",
+      "Χορός Ζευγαριού για Γάμο",
+      "Πρώτος Χορός Γάμου",
+    ],
+    description:
+      "Personalised wedding first dance lessons for couples. Salsa, bachata, waltz, or a custom mix. We choreograph to your song and prepare you in 4 to 12 lessons depending on style and complexity.",
+    serviceType: "Dance Choreography",
+    provider: { "@id": `${BASE_URL}/#organization` },
+    areaServed: [
+      { "@type": "City", name: "Athens" },
+      { "@type": "AdministrativeArea", name: "Attica" },
+    ],
+    audience: { "@type": "Audience", audienceType: "Engaged Couples" },
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "EUR",
+      availability: "https://schema.org/InStock",
+      url: `${BASE_URL}/en/blog/protos-horos-gamou`,
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${BASE_URL}/#service-private-lessons`,
+    name: "Private Dance Lessons",
+    alternateName: ["Ιδιαίτερα Μαθήματα Χορού", "Clases Particulares"],
+    description:
+      "One-on-one private lessons in Salsa On2, Bachata, or Ladies Styling. Scheduled flexibly with Anna or Konstantinos. Ideal for focused technical work, performance prep, or accelerated learning.",
+    serviceType: "Private Dance Instruction",
+    provider: { "@id": `${BASE_URL}/#organization` },
+    areaServed: { "@type": "City", name: "Athens" },
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "EUR",
+      url: `${BASE_URL}/en/pricing`,
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${BASE_URL}/#service-group-classes`,
+    name: "Group Dance Classes",
+    alternateName: ["Ομαδικά Μαθήματα Χορού", "Clases Grupales"],
+    description:
+      "Group classes in New York Style Salsa On2 and Bachata for all levels, from absolute beginner to advanced. Monthly packages from €50 to €99.",
+    serviceType: "Group Dance Instruction",
+    provider: { "@id": `${BASE_URL}/#organization` },
+    areaServed: { "@type": "City", name: "Athens" },
+    offers: {
+      "@type": "AggregateOffer",
+      lowPrice: "50",
+      highPrice: "99",
+      priceCurrency: "EUR",
+      offerCount: 3,
+      url: `${BASE_URL}/en/pricing`,
+    },
+  },
+];
 
 // ============================================================
 // WebSite - Global

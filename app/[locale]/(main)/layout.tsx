@@ -5,6 +5,7 @@ import {
   getDanceSchoolSchema,
   getWebSiteSchema,
   getInstructorSchemas,
+  getServiceSchemas,
 } from "@/lib/schema";
 import { PhonePromptBanner } from "@/components/PhonePromptBanner";
 import { WelcomeConfetti } from "@/components/WelcomeConfetti";
@@ -21,6 +22,7 @@ const MainLayout = ({
           getDanceSchoolSchema(),
           getWebSiteSchema(),
           ...getInstructorSchemas(),
+          ...getServiceSchemas(),
         ]}
       />
       <Header />
