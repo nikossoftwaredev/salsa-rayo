@@ -9,15 +9,15 @@ export const generateMetadata = async ({ params }: BasePageProps): Promise<Metad
   const locale = (await params).locale
 
   const titles = {
-    en: 'Orishas in Salsa Dance | Salsa Rayo',
-    el: 'Οι Orishas στην Salsa | Salsa Rayo',
-    es: 'Los Orishas en la Salsa | Salsa Rayo'
+    en: 'Orisha Dance Rhythms in Salsa: 7 Yoruba Deities Guide',
+    el: 'Οι 7 Orishas στην Salsa: Ιεροί Χοροί των Γιορούμπα',
+    es: 'Los 7 Orishas en la Salsa: Guía de Ritmos Yoruba'
   }
 
   const descriptions = {
-    en: 'Explore the sacred Orisha rhythms in Afro-Cuban salsa. Learn about the movements, specialties, and dance characteristics of each deity.',
-    el: 'Εξερευνήστε τους ιερούς ρυθμούς των Orishas στην Afro-Cuban salsa. Μάθετε για τις κινήσεις, τις ειδικότητες και τα χορευτικά χαρακτηριστικά κάθε θεότητας.',
-    es: 'Explora los ritmos sagrados de los Orishas en la salsa afrocubana. Aprende sobre los movimientos, especialidades y características de baile de cada deidad.'
+    en: 'Discover the 7 sacred Orisha rhythms of Afro-Cuban salsa - Yemayá, Changó, Oyá and more. Each Yoruba deity\'s signature dance movements, music, and meaning explained.',
+    el: 'Ανακαλύψτε τους 7 ιερούς ρυθμούς των Orishas στην Afro-Cuban salsa - Yemayá, Changó, Oyá και άλλους. Οι κινήσεις, η μουσική και η σημασία κάθε θεότητας Γιορούμπα.',
+    es: 'Descubre los 7 ritmos sagrados de los Orishas en la salsa afrocubana - Yemayá, Changó, Oyá y más. Movimientos, música y significado de cada deidad Yoruba.'
   }
 
   const title = titles[locale as keyof typeof titles] || titles.en

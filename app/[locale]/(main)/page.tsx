@@ -5,12 +5,15 @@ import AboutSection from "@/components/sections/about/AboutSection";
 import ContactForm from "@/components/sections/contact-form/ContactForm";
 import ScheduleLoader from "@/components/sections/schedule/ScheduleLoader";
 import ScheduleSkeleton from "@/components/sections/schedule/ScheduleSkeleton";
+import BlogTeaserSection from "@/components/sections/blog-teaser/BlogTeaserSection";
 import { GOOGLE_PLACE_ID } from "@/data/config";
 import JsonLd from "@/components/JsonLd";
 import {
   getCourseSchemas,
   getBreadcrumbSchema,
   getFAQPageSchema,
+  getDanceSchoolSchema,
+  getWebSiteSchema,
 } from "@/lib/schema";
 import { FAQ_ITEMS } from "@/data/faq";
 import { SUPPORTED_LOCALES } from "@/i18n/routing";
@@ -38,6 +41,8 @@ const Home = async ({ params }: BasePageProps) => {
     <div className="relative min-h-screen w-full overflow-x-hidden">
       <JsonLd
         data={[
+          getDanceSchoolSchema(),
+          getWebSiteSchema(),
           getBreadcrumbSchema([
             { name: "Home", url: `https://www.salsarayo.com/${locale}` },
           ]),
@@ -74,6 +79,9 @@ const Home = async ({ params }: BasePageProps) => {
             <Suspense fallback={<SectionLoader />}>
               <GoogleReviews placeId={GOOGLE_PLACE_ID} />
             </Suspense>
+          </div>
+          <div className="w-full py-24 px-4 md:px-8 bg-gradient-to-b from-transparent via-secondary/20 to-transparent relative">
+            <BlogTeaserSection locale={locale} />
           </div>
           <div className="w-full py-24 px-4 md:px-8 relative">
             <ContactForm />

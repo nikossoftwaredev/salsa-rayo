@@ -4,9 +4,9 @@
     "description": "Learn salsa dancing with us"
   },
   "Hero": {
-    "heading": "Salsa & Bachata in Athens",
-    "srHeading": "Salsa Rayo Dance School - Salsa and Bachata classes in Agios Dimitrios, Athens, Greece.",
-    "tagline": "Salsa & Bachata classes in Athens",
+    "heading": "Salsa Lessons in Athens",
+    "srHeading": "Salsa Rayo Dance School - Salsa and Bachata classes in Agios Dimitrios, Athens, Greece. New York Style Salsa On2 and wedding dance lessons.",
+    "tagline": "Salsa & Bachata Classes - Dance School Athens",
     "cta": "Ready to catch the lightning?",
     "imageAlt": "Salsa dancers in vibrant costumes",
     "danceSchool": "Dance School"
@@ -49,6 +49,11 @@
       "bachata2": "Bachata Level 2",
       "ladiesStyle": "Ladies Style"
     }
+  },
+  "BlogTeaser": {
+    "title": "Latest from the Blog",
+    "subtitle": "Tips, guides and stories about salsa, bachata, and couple dance",
+    "cta": "Read all articles"
   },
   "Contact": {
     "title": "CONTACT US",

@@ -1,11 +1,11 @@
 ---
-title: "Wedding First Dance: Salsa, Bachata, or Something Classic?"
-description: "Planning your wedding first dance? Learn how to choose the right style, how many lessons you need, and why salsa or bachata make it unforgettable."
+title: "Wedding First Dance Lessons: Salsa, Bachata or Waltz?"
+description: "Wedding couple dance lessons - first dance in salsa, bachata or waltz. How to choose your style, how many lessons you need, and what makes wedding choreography unforgettable."
 author: "Salsa Rayo"
 date: "2026-03-31"
 excerpt: "Your wedding first dance doesn't have to be an awkward slow sway. Salsa, bachata, or a creative mix - learn how to make it the highlight of the night."
 category: "Guide"
-tags: ["wedding first dance", "wedding dance salsa", "wedding dance bachata", "wedding dance lessons", "first dance choreography", "wedding dance athens"]
+tags: ["wedding first dance", "couple dance lessons", "wedding couple dance", "wedding dance salsa", "wedding dance bachata", "wedding dance lessons", "first dance choreography", "wedding dance Athens"]
 image: "/images/blog/wedding-first-dance.jpg"
 ---
 

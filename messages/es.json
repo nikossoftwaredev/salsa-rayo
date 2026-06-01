@@ -50,6 +50,11 @@
       "ladiesStyle": "Estilo de Damas"
     }
   },
+  "BlogTeaser": {
+    "title": "Últimos Artículos",
+    "subtitle": "Consejos, guías e historias sobre salsa, bachata y baile en pareja",
+    "cta": "Ver todos los artículos"
+  },
   "Contact": {
     "title": "CONTÁCTANOS",
     "firstName": "Nombre",

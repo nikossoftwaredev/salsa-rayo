@@ -394,19 +394,24 @@ export const getArticleAuthorSchema = (authorName: string) => {
 export const getOrishasArticleSchema = (locale: string) => ({
   "@context": "https://schema.org",
   "@type": "Article",
-  headline: "Orishas in Salsa Dance - The Sacred Rhythms of Afro-Cuban Culture",
+  headline:
+    "Orisha Dance Rhythms in Salsa: The 7 Yoruba Deities of Afro-Cuban Culture",
   description:
-    "Explore the sacred Orisha rhythms in Afro-Cuban salsa. Learn about the movements, specialties, and dance characteristics of each deity.",
+    "Discover the 7 sacred Orisha rhythms of Afro-Cuban salsa - Yemayá, Changó, Oyá and more. Each Yoruba deity's signature dance movements, music, and meaning explained.",
   url: `${BASE_URL}/${locale}/orishas`,
   inLanguage: locale,
-  author: {
-    "@id": `${BASE_URL}/#organization`,
-  },
-  publisher: {
-    "@id": `${BASE_URL}/#organization`,
-  },
+  author: { "@id": `${BASE_URL}/#organization` },
+  publisher: { "@id": `${BASE_URL}/#organization` },
   image: `${BASE_URL}/images/orishas/shango.jpg`,
   datePublished: "2025-09-01",
-  dateModified: "2025-09-01",
+  dateModified: "2026-06-01",
+  keywords:
+    "orishas, orisha dance, salsa yoruba, afro-cuban salsa, Yemayá, Changó, Oyá, Eleguá, Obatalá, Yoruba dance",
+  about: [
+    { "@type": "Thing", name: "Orisha" },
+    { "@type": "Thing", name: "Yoruba religion" },
+    { "@type": "Thing", name: "Afro-Cuban dance" },
+    { "@type": "Thing", name: "Salsa music" },
+  ],
   mainEntityOfPage: `${BASE_URL}/${locale}/orishas`,
 });

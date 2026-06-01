@@ -4,9 +4,9 @@
     "description": "Μάθετε salsa μαζί μας"
   },
   "Hero": {
-    "heading": "Salsa & Bachata στην Αθήνα",
-    "srHeading": "Σχολή Χορού Salsa Rayo - Μαθήματα Salsa και Bachata στον Άγιο Δημήτριο Αθηνών.",
-    "tagline": "Μαθήματα Salsa & Bachata στην Αθήνα",
+    "heading": "Σάλσα Χορός & Bachata στην Αθήνα",
+    "srHeading": "Σχολή Χορού Salsa Rayo - Μαθήματα σάλσα και bachata στον Άγιο Δημήτριο Αθηνών. New York Style Salsa On2 και χορός ζευγαριού για γάμο.",
+    "tagline": "Μαθήματα Σάλσα & Bachata - Σχολή Χορού Αθήνα",
     "cta": "Έτοιμος να πιάσεις τον κεραυνό;",
     "imageAlt": "Χορευτές salsa με γαματα κοστούμια",
     "danceSchool": "Dance School"
@@ -49,6 +49,11 @@
       "bachata2": "Bachata Επίπεδο 2",
       "ladiesStyle": "Ladies Style"
     }
+  },
+  "BlogTeaser": {
+    "title": "Τελευταία Άρθρα",
+    "subtitle": "Συμβουλές, οδηγοί και ιστορίες για salsa, bachata και χορό ζευγαριού",
+    "cta": "Δες όλα τα άρθρα"
   },
   "Contact": {
     "title": "ΕΠΙΚΟΙΝΩΝΙΑ",

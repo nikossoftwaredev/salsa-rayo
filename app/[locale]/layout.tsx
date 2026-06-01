@@ -20,45 +20,50 @@ const BASE_URL = "https://www.salsarayo.com";
 const APPLICATION_NAME = "Salsa Rayo Dance School";
 
 const TITLES: Record<string, string> = {
-  en: "Salsa & Bachata Classes in Athens | Salsa Rayo Dance School",
-  el: "Μαθήματα Salsa & Bachata στην Αθήνα | Salsa Rayo",
-  es: "Clases de Salsa y Bachata en Atenas | Salsa Rayo",
+  en: "Salsa Lessons Athens | NY Style Salsa Dance School - Salsa Rayo",
+  el: "Σάλσα Αθήνα | Μαθήματα Salsa & Σχολή Χορού - Salsa Rayo",
+  es: "Clases de Salsa Atenas | Escuela de Baile Latino - Salsa Rayo",
 };
 
 const DESCRIPTIONS: Record<string, string> = {
-  en: "Learn Salsa and Bachata in Athens with Salsa Rayo. New York Style Salsa (On2) classes in Agios Dimitrios for all levels. Packages from €50/month.",
-  el: "Μάθετε Salsa και Bachata στον Άγιο Δημήτριο Αθηνών με τη Salsa Rayo. New York Style Salsa (On2) για όλα τα επίπεδα. Πακέτα από €50/μήνα.",
-  es: "Aprende Salsa y Bachata en Atenas con Salsa Rayo. Salsa Estilo Nueva York (On2) en Agios Dimitrios para todos los niveles. Paquetes desde €50/mes.",
+  en: "Salsa & Bachata classes in Athens, Greece. New York Style salsa (On2) lessons for all levels at Salsa Rayo dance school in Agios Dimitrios. Packages from €50/month.",
+  el: "Μαθήματα σάλσα και bachata στην Αθήνα. Σχολή χορού στον Άγιο Δημήτριο για όλα τα επίπεδα. Salsa, bachata, μαμπο, και χορός ζευγαριού για γάμο. Πακέτα από €50/μήνα.",
+  es: "Clases de salsa y bachata en Atenas, Grecia. Salsa Estilo Nueva York (On2) para todos los niveles en Salsa Rayo escuela de baile. Paquetes desde €50/mes.",
 };
 
 const KEYWORDS: Record<string, string[]> = {
   en: [
     "salsa classes Athens",
+    "salsa lessons Athens",
+    "salsa dance school Athens",
     "bachata classes Athens",
-    "salsa lessons Athens Greece",
+    "salsa in Athens Greece",
     "New York Style Salsa On2",
-    "dance school Agios Dimitrios",
+    "Latin dance school Agios Dimitrios",
     "Salsa Rayo",
-    "Latin dance Athens",
-    "beginner salsa Athens",
+    "wedding dance lessons Athens",
   ],
   el: [
-    "μαθήματα salsa Αθήνα",
-    "μαθήματα bachata Αθήνα",
+    "σάλσα χορός",
+    "μαθήματα σάλσα Αθήνα",
+    "μαθήματα salsa",
+    "σχολή χορού Αθήνα",
     "σχολή χορού Άγιος Δημήτριος",
+    "bachata Αθήνα",
+    "χορός ζευγαριού γάμου",
+    "πρώτος χορός γάμου",
     "New York Style Salsa On2",
     "Salsa Rayo",
-    "λατινικοί χοροί Αθήνα",
-    "salsa για αρχάριους",
   ],
   es: [
     "clases de salsa Atenas",
     "clases de bachata Atenas",
     "escuela de baile Atenas",
+    "salsa en Atenas",
     "Salsa Estilo Nueva York On2",
     "Salsa Rayo",
     "baile latino Atenas",
-    "salsa principiantes Atenas",
+    "baile para boda",
   ],
 };
 

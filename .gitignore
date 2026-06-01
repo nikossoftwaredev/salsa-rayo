@@ -48,3 +48,8 @@ lib/db/generated/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# secrets - OAuth credentials (Google Cloud, MCP servers, etc.)
+gcp-mcp-secret.json
+client_secret*.json
+*-oauth.json
