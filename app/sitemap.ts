@@ -7,7 +7,7 @@ const BLOG_LOCALES = ['en', 'el'] as const
 
 const sitemap = (): MetadataRoute.Sitemap => {
   const now = new Date()
-  const staticPaths = ['', '/pricing', '/gallery', '/blog', '/faq', '/orishas', '/bachata']
+  const staticPaths = ['', '/services', '/pricing', '/gallery', '/blog', '/faq', '/orishas', '/bachata']
 
   const staticRoutes = staticPaths.map(path => ({
     url: `${BASE_URL}/en${path}`,
