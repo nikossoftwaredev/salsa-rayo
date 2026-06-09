@@ -3,7 +3,15 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
-import { Heart, Music, Users, MapPin, Calendar, Clock } from "lucide-react";
+import { Gem, Heart, Music, ListChecks, MapPin, Calendar, Clock } from "lucide-react";
+
+const STYLE_CARDS = [
+  { titleKey: "styleSalsaTitle", textKey: "styleSalsaText", accent: "primary" },
+  { titleKey: "styleBachataTitle", textKey: "styleBachataText", accent: "pink" },
+  { titleKey: "styleMixTitle", textKey: "styleMixText", accent: "primary" },
+] as const;
+
+const STEP_KEYS = ["step1", "step2", "step3", "step4"] as const;
 
 const FAQ_PAIRS = [
   ["faq.q1", "faq.a1"],
@@ -11,11 +19,10 @@ const FAQ_PAIRS = [
   ["faq.q3", "faq.a3"],
   ["faq.q4", "faq.a4"],
   ["faq.q5", "faq.a5"],
-  ["faq.q6", "faq.a6"],
 ] as const;
 
-const BachataContent = () => {
-  const t = useTranslations("Bachata");
+const WeddingChoreoContent = () => {
+  const t = useTranslations("WeddingChoreo");
 
   return (
     <main className="min-h-screen bg-background">
@@ -28,9 +35,7 @@ const BachataContent = () => {
               {t("title")}
             </span>
           </h1>
-          <p className="text-lg md:text-xl text-foreground/70 mb-8">
-            {t("subtitle")}
-          </p>
+          <p className="text-lg md:text-xl text-foreground/70 mb-8">{t("subtitle")}</p>
           <div className="flex flex-wrap items-center justify-center gap-2 text-sm text-foreground/60">
             <span className="flex items-center gap-1.5">
               <MapPin className="size-4" /> Agios Dimitrios, Athens
@@ -44,15 +49,21 @@ const BachataContent = () => {
               <Clock className="size-4" /> 19:00 - 23:00
             </span>
           </div>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <Button variant="gradient" size="lg" asChild>
+              <Link href="/#contact-form">{t("ctaContact")}</Link>
+            </Button>
+            <Button variant="outline" size="lg" asChild>
+              <Link href="/pricing">{t("ctaPricing")}</Link>
+            </Button>
+          </div>
         </div>
       </section>
 
       {/* Intro */}
       <section className="px-4 py-12">
         <div className="max-w-3xl mx-auto">
-          <p className="text-lg text-foreground/80 leading-relaxed">
-            {t("intro")}
-          </p>
+          <p className="text-lg text-foreground/80 leading-relaxed">{t("intro")}</p>
         </div>
       </section>
 
@@ -75,61 +86,62 @@ const BachataContent = () => {
             {t("stylesTitle")}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <article className="rounded-xl border border-border/30 bg-card/80 p-6 hover:border-primary/30 transition-colors">
-              <h3 className="text-xl font-bold mb-3 text-primary">
-                {t("stylesTraditionalTitle")}
-              </h3>
-              <p className="text-sm text-foreground/75 leading-relaxed">
-                {t("stylesTraditionalText")}
-              </p>
-            </article>
-            <article className="rounded-xl border border-brand-pink/30 bg-card/80 p-6 hover:border-brand-pink/60 transition-colors">
-              <h3 className="text-xl font-bold mb-3 text-brand-pink">
-                {t("stylesModernTitle")}
-              </h3>
-              <p className="text-sm text-foreground/75 leading-relaxed">
-                {t("stylesModernText")}
-              </p>
-            </article>
-            <article className="rounded-xl border border-border/30 bg-card/80 p-6 hover:border-primary/30 transition-colors">
-              <h3 className="text-xl font-bold mb-3 text-primary">
-                {t("stylesSensualTitle")}
-              </h3>
-              <p className="text-sm text-foreground/75 leading-relaxed">
-                {t("stylesSensualText")}
-              </p>
-            </article>
+            {STYLE_CARDS.map(({ titleKey, textKey, accent }) => {
+              const isPink = accent === "pink";
+
+              return (
+                <article
+                  key={titleKey}
+                  className={`rounded-xl border bg-card/80 p-6 transition-colors ${
+                    isPink
+                      ? "border-brand-pink/30 hover:border-brand-pink/60"
+                      : "border-primary/20 hover:border-primary/50"
+                  }`}
+                >
+                  <h3 className={`text-xl font-bold mb-3 ${isPink ? "text-brand-pink" : "text-primary"}`}>
+                    {t(titleKey)}
+                  </h3>
+                  <p className="text-sm text-foreground/75 leading-relaxed">{t(textKey)}</p>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* First Class */}
+      {/* Process */}
       <section className="px-4 py-12 bg-gradient-to-b from-transparent via-secondary/20 to-transparent">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 flex items-center gap-3">
-            <Users className="size-7 text-primary" />
-            {t("firstClassTitle")}
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 flex items-center gap-3">
+            <ListChecks className="size-7 text-primary" />
+            {t("processTitle")}
           </h2>
-          <p className="text-foreground/80 leading-relaxed">
-            {t("firstClassText")}
-          </p>
+          <ol className="flex flex-col gap-4">
+            {STEP_KEYS.map((stepKey, index) => (
+              <li key={stepKey} className="flex gap-4 rounded-xl border border-border/30 bg-card/60 p-5">
+                <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10 font-bold text-primary">
+                  {index + 1}
+                </span>
+                <p className="text-foreground/80 leading-relaxed">{t(stepKey)}</p>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
-      {/* Wedding */}
+      {/* Lessons */}
       <section className="px-4 py-12">
         <div className="max-w-3xl mx-auto rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 to-brand-pink/5 p-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-            {t("weddingTitle")}
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4 flex items-center gap-3">
+            <Gem className="size-6 text-primary" />
+            {t("lessonsTitle")}
           </h2>
-          <p className="text-foreground/80 leading-relaxed mb-4">
-            {t("weddingText")}
-          </p>
+          <p className="text-foreground/80 leading-relaxed mb-4">{t("lessonsText")}</p>
           <Link
-            href="/xorografia-gamou"
-            className="inline-flex items-center gap-2 text-primary hover:text-brand-pink transition-colors font-semibold"
+            href="/blog/protos-horos-gamou"
+            className="inline-flex items-center gap-2 font-semibold text-primary transition-colors hover:text-brand-pink"
           >
-            {t("weddingLink")}
+            {t("guideLink")}
             <span aria-hidden>→</span>
           </Link>
         </div>
@@ -143,13 +155,8 @@ const BachataContent = () => {
           </h2>
           <div className="space-y-6">
             {FAQ_PAIRS.map(([qKey, aKey]) => (
-              <article
-                key={qKey}
-                className="rounded-xl border border-border/30 bg-card/60 p-6"
-              >
-                <h3 className="text-lg font-semibold text-foreground mb-2">
-                  {t(qKey)}
-                </h3>
+              <article key={qKey} className="rounded-xl border border-border/30 bg-card/60 p-6">
+                <h3 className="text-lg font-semibold text-foreground mb-2">{t(qKey)}</h3>
                 <p className="text-foreground/75 leading-relaxed">{t(aKey)}</p>
               </article>
             ))}
@@ -160,9 +167,7 @@ const BachataContent = () => {
       {/* CTA */}
       <section className="px-4 py-20">
         <div className="max-w-2xl mx-auto text-center bg-gradient-to-br from-primary/10 via-brand-pink/10 to-primary/10 rounded-2xl p-10 border border-primary/20">
-          <h2 className="text-3xl font-bold text-foreground mb-4">
-            {t("ctaTitle")}
-          </h2>
+          <h2 className="text-3xl font-bold text-foreground mb-4">{t("ctaTitle")}</h2>
           <p className="text-foreground/70 mb-8">{t("ctaText")}</p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Button variant="gradient" size="lg" asChild>
@@ -181,4 +186,4 @@ const BachataContent = () => {
   );
 };
 
-export default BachataContent;
+export default WeddingChoreoContent;

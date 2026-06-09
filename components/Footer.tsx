@@ -5,9 +5,23 @@ import { MAIL, PHONE } from "../data/config";
 
 import { Mail, Calendar, Phone, MapPin, Clock } from "lucide-react";
 import AppLink from "./AppLink";
+import { Link } from "@/i18n/routing";
 import SocialsSection from "./sections/socials/SocialsSection";
 import Logo from "./Logo";
 import { CircleIcon } from "./CircleIcon";
+
+// Internal links surfaced site-wide for SEO: pushes link equity to the
+// dedicated landing pages so they (not the homepage) rank for their terms.
+const FOOTER_NAV = [
+  { href: "/", key: "navSalsa" },
+  { href: "/bachata", key: "navBachata" },
+  { href: "/xorografia-gamou", key: "navWedding" },
+  { href: "/services", key: "navServices" },
+  { href: "/pricing", key: "navPricing" },
+  { href: "/orishas", key: "navOrishas" },
+  { href: "/blog", key: "navBlog" },
+  { href: "/faq", key: "navFaq" },
+] as const;
 
 const renderSubtitleValue = (value: string, type: string) => {
   if (type === "tel")
@@ -68,7 +82,7 @@ const Footer = () => {
 
       <div className="relative flex items-center flex-col py-20 px-8 w-full font-sans z-10">
         {/* Main Footer Content */}
-        <div className="grid md:grid-cols-3 pb-12 gap-12 grid-cols-1 max-w-6xl w-full">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 pb-12 gap-12 grid-cols-1 max-w-6xl w-full">
           {/* Brand Section */}
           <section className="text-left">
             <div className="mb-6">
@@ -81,6 +95,25 @@ const Footer = () => {
               <SocialsSection isMobile />
             </div>
           </section>
+
+          {/* Navigation links (internal SEO) */}
+          <nav className="text-left" aria-label={t("navTitle")}>
+            <h4 className="text-2xl pb-6 font-bold bg-gradient-to-r from-primary to-brand-pink bg-clip-text text-transparent">
+              {t("navTitle")}
+            </h4>
+            <ul className="space-y-3">
+              {FOOTER_NAV.map(({ href, key }) => (
+                <li key={key}>
+                  <Link
+                    href={href}
+                    className="text-base text-foreground/70 hover:text-brand-pink transition-colors duration-300"
+                  >
+                    {t(key)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
           {/* Footer Sections */}
           {footerSections.map((footerSection) => (

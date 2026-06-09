@@ -10,7 +10,7 @@ export const SERVICE_ITEMS = [
   { titleKey: "privateBachataTitle", textKey: "privateBachataText", Icon: UserRound, accent: "pink", href: "/#contact-form", linkKey: "linkAsk", schemaName: "Private Bachata Lessons" },
   { titleKey: "songChoreoTitle", textKey: "songChoreoText", Icon: Music, accent: "primary", href: "/#contact-form", linkKey: "linkAsk", schemaName: "Song Choreographies" },
   { titleKey: "coupleChoreoTitle", textKey: "coupleChoreoText", Icon: HeartHandshake, accent: "pink", href: "/#contact-form", linkKey: "linkAsk", schemaName: "Couple Choreographies" },
-  { titleKey: "weddingTitle", textKey: "weddingText", Icon: Gem, accent: "primary", href: "/#contact-form", linkKey: "linkAsk", schemaName: "Wedding First Dance" },
+  { titleKey: "weddingTitle", textKey: "weddingText", Icon: Gem, accent: "primary", href: "/xorografia-gamou", linkKey: "linkWedding", schemaName: "Wedding First Dance" },
 ] as const;
 
 export const SERVICE_FAQ_KEYS = [

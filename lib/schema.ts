@@ -192,6 +192,8 @@ export const getServiceSchemas = () => [
     name: "Wedding First Dance Choreography",
     alternateName: [
       "Couple Dance Lessons for Weddings",
+      "Χορογραφία Γάμου",
+      "Χορογραφία Γάμου Salsa",
       "Χορός Ζευγαριού για Γάμο",
       "Πρώτος Χορός Γάμου",
     ],
@@ -208,7 +210,7 @@ export const getServiceSchemas = () => [
       "@type": "Offer",
       priceCurrency: "EUR",
       availability: "https://schema.org/InStock",
-      url: `${BASE_URL}/en/blog/protos-horos-gamou`,
+      url: `${BASE_URL}/en/xorografia-gamou`,
     },
   },
   {

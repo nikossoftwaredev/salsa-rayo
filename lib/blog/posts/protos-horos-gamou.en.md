@@ -1,11 +1,11 @@
 ---
-title: "Wedding First Dance Lessons: Salsa, Bachata or Waltz?"
-description: "Wedding couple dance lessons - first dance in salsa, bachata or waltz. How to choose your style, how many lessons you need, and what makes wedding choreography unforgettable."
+title: "Wedding Dance Choreography: First Dance in Salsa, Bachata or Waltz"
+description: "Wedding dance choreography for your first dance in salsa, bachata or waltz. How to choose your style, how many lessons you need, and what makes a wedding choreography unforgettable."
 author: "Salsa Rayo"
 date: "2026-03-31"
 excerpt: "Your wedding first dance doesn't have to be an awkward slow sway. Salsa, bachata, or a creative mix - learn how to make it the highlight of the night."
 category: "Guide"
-tags: ["wedding first dance", "couple dance lessons", "wedding couple dance", "wedding dance salsa", "wedding dance bachata", "wedding dance lessons", "first dance choreography", "wedding dance Athens"]
+tags: ["wedding dance choreography", "salsa wedding choreography", "wedding first dance", "couple dance lessons", "wedding dance salsa", "wedding dance bachata", "first dance choreography", "wedding dance Athens"]
 image: "/images/blog/wedding-first-dance.jpg"
 ---
 
@@ -62,7 +62,7 @@ The most common question: "How early should we start?" The answer depends on you
 
 Our recommendation: start at least 2 months before the wedding. This gives enough time for learning, practising, and polishing - without pressure.
 
-Salsa Rayo offers **private wedding first dance lessons** tailored to the couple - music selection, choreography, styling, and rehearsal. You can check [our pricing details](https://www.salsarayo.com/en/pricing) or contact us for a personalised package.
+Salsa Rayo offers [private wedding dance choreography](https://www.salsarayo.com/en/xorografia-gamou) tailored to the couple - music selection, choreography, styling, and rehearsal. You can check [our pricing details](https://www.salsarayo.com/en/pricing) or contact us for a personalised package.
 
 ## How the wedding first dance preparation works
 
