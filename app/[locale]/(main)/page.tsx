@@ -49,6 +49,24 @@ const Home = async ({ params }: BasePageProps) => {
 
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden">
+      {/* LCP hero preloads — media-conditional so each device fetches ONE image.
+          Must mirror the <picture> sources in HeroSection exactly. */}
+      <link
+        rel="preload"
+        as="image"
+        href="/images/gallery/our-space-vertical.avif"
+        type="image/avif"
+        media="(max-width: 767px)"
+        fetchPriority="high"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href="/images/gallery/our-space.avif"
+        type="image/avif"
+        media="(min-width: 768px)"
+        fetchPriority="high"
+      />
       <JsonLd
         data={[
           ...getCourseSchemas(),

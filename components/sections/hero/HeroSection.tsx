@@ -1,7 +1,6 @@
 "use client";
 import GetStartedButton from "@/components/GetStartedButton";
 import Logo from "@/components/Logo";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 const HeroSection = () => {
@@ -12,26 +11,39 @@ const HeroSection = () => {
       id="hero"
       className="h-screen w-full flex items-center justify-center relative overflow-hidden"
     >
-      {/* Background */}
+      {/* Background — art-directed <picture>: pre-optimized static AVIF/WebP,
+          mobile loads ONLY the vertical, desktop ONLY the horizontal.
+          Bypasses _next/image cold-encode; LCP-critical so fetchPriority high. */}
       <div className="absolute inset-0">
-        <Image
-          src="/images/gallery/our-space-vertical.jpg"
-          alt="Salsa Rayo dance studio interior in Agios Dimitrios, Athens"
-          fill
-          className="object-cover md:hidden"
-          priority
-          sizes="100vw"
-          quality={85}
-        />
-        <Image
-          src="/images/gallery/our-space.jpg"
-          alt="Salsa Rayo dance studio with hardwood floor in Athens, Greece"
-          fill
-          className="object-cover hidden md:block"
-          priority
-          sizes="100vw"
-          quality={85}
-        />
+        <picture>
+          <source
+            media="(min-width: 768px)"
+            srcSet="/images/gallery/our-space.avif"
+            type="image/avif"
+          />
+          <source
+            media="(min-width: 768px)"
+            srcSet="/images/gallery/our-space.webp"
+            type="image/webp"
+          />
+          <source
+            media="(max-width: 767px)"
+            srcSet="/images/gallery/our-space-vertical.avif"
+            type="image/avif"
+          />
+          <source
+            media="(max-width: 767px)"
+            srcSet="/images/gallery/our-space-vertical.webp"
+            type="image/webp"
+          />
+          <img
+            src="/images/gallery/our-space-vertical.jpg"
+            alt="Salsa Rayo dance studio interior in Agios Dimitrios, Athens"
+            fetchPriority="high"
+            decoding="async"
+            className="absolute inset-0 size-full object-cover"
+          />
+        </picture>
         <div className="absolute inset-0 bg-background/80" />
       </div>
 
