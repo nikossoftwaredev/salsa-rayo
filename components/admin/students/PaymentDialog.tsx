@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
+import { format } from "date-fns"
 import { NumericInput } from "@/components/ui/numeric-input"
 import { Plus, Loader2 } from "lucide-react"
 import { FaStripe } from "react-icons/fa6"
@@ -103,7 +104,7 @@ export const PaymentDialog = () => {
             packageName: pkg.title,
             lessonsPerWeek: pkg.lessonsPerWeek,
             durationDays: pkg.durationDays,
-            startDate: form.startDate?.toISOString().split("T")[0],
+            startDate: form.startDate ? format(form.startDate, "yyyy-MM-dd") : undefined,
           }),
         })
 

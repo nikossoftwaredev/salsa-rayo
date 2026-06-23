@@ -36,13 +36,25 @@ export const fulfillSubscription = async (data: FulfillSubscriptionInput) => {
     let subscriptionId: string
 
     if (existingSub) {
-      const isStillActive = new Date(existingSub.expiresAt) > now
-      // Recently expired (within 4 days) → continue from old expiry so they don't lose days
-      const SWEET_SPOT_MS = 4 * 24 * 60 * 60 * 1000
-      const isInSweetSpot = !isStillActive && (now.getTime() - existingSub.expiresAt.getTime()) <= SWEET_SPOT_MS
+      const isStillActive = existingSub.expiresAt > now
 
-      const newStart = isStillActive ? existingSub.startDate : (isInSweetSpot ? existingSub.expiresAt : now)
-      const baseDate = isStillActive ? existingSub.expiresAt : newStart
+      // "Days late" = whole calendar days between the expiry date and today, ignoring the
+      // time-of-day, so it matches how late the renewal actually is ("expired N days ago").
+      // Negative or zero while the subscription is still active.
+      const startOfDay = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate())
+      const daysLate = Math.round(
+        (startOfDay(now).getTime() - startOfDay(existingSub.expiresAt).getTime()) / (24 * 60 * 60 * 1000)
+      )
+
+      // Grace window: renewing up to 5 days late keeps continuity from the old expiry, so the
+      // student loses no days. From 6 days late onward the subscription resets to a fresh
+      // period starting today (the gap is forfeited).
+      const GRACE_DAYS = 5
+      const isInGrace = !isStillActive && daysLate <= GRACE_DAYS
+
+      // Active or in-grace: extend from the old expiry. Otherwise start fresh from today.
+      const baseDate = isStillActive || isInGrace ? existingSub.expiresAt : now
+      const newStart = isStillActive ? existingSub.startDate : baseDate
       const newExpiry = new Date(baseDate.getTime() + durationMs)
 
       await tx.subscription.update({
