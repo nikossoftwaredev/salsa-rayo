@@ -2,6 +2,13 @@ import { FcGoogle } from "react-icons/fc";
 import { Star } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import {
   getGoogleReviews,
   type PlaceReviewsResponse,
 } from "@/server-actions/getGoogleReviews";
@@ -72,37 +79,45 @@ const ReviewsSection = async ({ placeId, locale }: ReviewsSectionProps) => {
         <p className="text-foreground/70 max-w-2xl mx-auto">{t("subtitle")}</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {featured.map((review) => (
-          <article
-            key={`${review.author_name}-${review.time}`}
-            className="rounded-xl border border-border/30 bg-card/80 p-6 flex flex-col gap-3 hover:border-primary/30 transition-colors"
-            itemScope
-            itemType="https://schema.org/Review"
-          >
-            <meta itemProp="reviewBody" content={review.text} />
-            <meta itemProp="datePublished" content={new Date(review.time * 1000).toISOString()} />
-            <div className="flex items-center gap-3">
-              <div className="flex-1">
-                <p className="font-medium text-foreground" itemProp="author" itemScope itemType="https://schema.org/Person">
-                  <span itemProp="name">{review.author_name}</span>
+      <Carousel opts={{ align: "start", loop: true }} className="w-full md:px-12">
+        <CarouselContent className="-ml-6">
+          {featured.map((review) => (
+            <CarouselItem
+              key={`${review.author_name}-${review.time}`}
+              className="pl-6 md:basis-1/2 lg:basis-1/3"
+            >
+              <article
+                className="h-full rounded-xl border border-border/30 bg-card/80 p-6 flex flex-col gap-3 hover:border-primary/30 transition-colors"
+                itemScope
+                itemType="https://schema.org/Review"
+              >
+                <meta itemProp="reviewBody" content={review.text} />
+                <meta itemProp="datePublished" content={new Date(review.time * 1000).toISOString()} />
+                <div className="flex items-center gap-3">
+                  <div className="flex-1">
+                    <p className="font-medium text-foreground" itemProp="author" itemScope itemType="https://schema.org/Person">
+                      <span itemProp="name">{review.author_name}</span>
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {review.relative_time_description}
+                    </p>
+                  </div>
+                  <div itemProp="reviewRating" itemScope itemType="https://schema.org/Rating">
+                    <meta itemProp="ratingValue" content={String(review.rating)} />
+                    <meta itemProp="bestRating" content="5" />
+                    <StarRating rating={review.rating} />
+                  </div>
+                </div>
+                <p className="text-sm text-foreground/80 leading-relaxed">
+                  {truncate(review.text)}
                 </p>
-                <p className="text-xs text-muted-foreground">
-                  {review.relative_time_description}
-                </p>
-              </div>
-              <div itemProp="reviewRating" itemScope itemType="https://schema.org/Rating">
-                <meta itemProp="ratingValue" content={String(review.rating)} />
-                <meta itemProp="bestRating" content="5" />
-                <StarRating rating={review.rating} />
-              </div>
-            </div>
-            <p className="text-sm text-foreground/80 leading-relaxed">
-              {truncate(review.text)}
-            </p>
-          </article>
-        ))}
-      </div>
+              </article>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="hidden md:inline-flex left-0" />
+        <CarouselNext className="hidden md:inline-flex right-0" />
+      </Carousel>
 
       {data.url && (
         <div className="flex justify-center mt-10">

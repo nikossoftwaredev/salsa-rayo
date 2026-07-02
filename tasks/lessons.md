@@ -63,3 +63,10 @@ Rules and patterns captured from user corrections. Review at session start.
 ## Delete Actions Should Clean Up Storage
 
 **Rule**: When deleting a record that has an uploaded image (e.g., Instructor), also delete the image from Supabase storage. Use `.catch(console.error)` so storage failures don't block the DB delete.
+
+## Paid External APIs Must Be Aggressively Cached (Google Places incident)
+
+**Mistake**: `getGoogleReviews` (Places Details with `reviews` field = billed Atmosphere Data SKU) was cached for only 5 minutes AND exposed as a `"use server"` action callable from any browser with arbitrary place_ids. Result: real money charged on the Google Cloud bill.
+**Rule**: Any call to a paid external API (Google Places/Maps, LLM APIs, etc.) gets `unstable_cache` with `revalidate: 86400` (24h) minimum unless the data genuinely needs to be fresher.
+**Rule**: NEVER put paid-API fetchers in a `"use server"` file unless a client component truly needs them - a server action is a public unauthenticated endpoint; attackers can spam it with unique args to bypass the cache and rack up charges. Keep them as plain server-only functions imported by server components.
+**Rule**: When adding any metered/billable integration, state the expected call volume and cache TTL explicitly in the PR/summary so the cost is a conscious decision.

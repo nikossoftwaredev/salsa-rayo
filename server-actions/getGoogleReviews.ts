@@ -1,5 +1,3 @@
-"use server";
-
 import { unstable_cache } from "next/cache";
 
 export interface GoogleReview {
@@ -60,10 +58,11 @@ const fetchGoogleReviewsFromAPI = async (place_id: string): Promise<PlaceReviews
 };
 
 /**
- * Get Google reviews for a place using Google Places Details API
- * Cached for 5 minutes per place_id
+ * Get Google reviews for a place using Google Places Details API.
+ * Cached for 24 hours per place_id - the reviews field bills as
+ * Atmosphere Data on every uncached call, so keep the TTL long.
  */
 export const getGoogleReviews = unstable_cache(fetchGoogleReviewsFromAPI, ["google-reviews"], {
-  revalidate: 300, // 5 minutes
+  revalidate: 86400, // 24 hours
   tags: ["google-reviews"],
 });
