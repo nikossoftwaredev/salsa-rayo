@@ -298,7 +298,8 @@
     "cancelTitle": "Cancellation Policy",
     "cancelText": "Packages are monthly and renew automatically. You can cancel your subscription anytime from your profile - no penalties, no hidden fees. Cancellation applies to the next month, so you complete the current month's classes as planned.",
     "studentTitle": "10% Student Discount",
-    "studentText": "Every package has an automatic 10% discount for students and anyone under 26. Just toggle the switch above the packages. Proof of student status will be requested at your first class."
+    "studentText": "Every package has an automatic 10% discount for students and anyone under 26. Just toggle the switch above the packages. Proof of student status will be requested at your first class.",
+    "orDropIn": "Or just one class"
   },
   "CheckoutSuccess": {
     "title": "Welcome to the Rayo Family!",
@@ -359,5 +360,16 @@
     "comingSoon": "Coming soon",
     "contactUs": "Contact Us",
     "contactUsDesc": "Get personalized guidance first"
+  },
+  "DropIn": {
+    "title": "Drop-in Class",
+    "subtitle": "No package, no subscription - just one class.",
+    "featureDuration": "One {minutes}-minute class",
+    "featureAnyStyle": "Any class on the schedule",
+    "featureNoCommitment": "Pay as you go - come back whenever it suits you",
+    "noStudentDiscount": "The student discount applies to monthly packages only, not to drop-in classes.",
+    "perClass": "per class",
+    "cta": "Book a drop-in",
+    "interestedIn": "I am interested in a drop-in class ({price}€ for a single class)"
   }
 }

@@ -26,6 +26,13 @@ export const PACKAGES: PackageCardData[] = [
   },
 ];
 
+// Single drop-in class (one lesson, no subscription).
+// Deliberately excluded from the student discount.
+export const DROP_IN = {
+  price: 12,
+  durationMinutes: 50,
+} as const;
+
 export interface AdminPackage {
   title: string;
   price: number;

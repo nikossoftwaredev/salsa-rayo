@@ -3,11 +3,12 @@
 import { useTranslations } from "next-intl";
 import BackgroundEffects from "@/components/BackgroundEffects";
 import PackageCard from "@/components/PackageCard";
+import DropInCard from "@/components/DropInCard";
 import { motion } from "framer-motion";
 import { Zap, Check, Sparkles, CalendarX, GraduationCap, PartyPopper } from "lucide-react";
 import Logo from "@/components/Logo";
 import { Link } from "@/i18n/routing";
-import { PACKAGES } from "@/data/packages";
+import { PACKAGES, DROP_IN } from "@/data/packages";
 import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -25,6 +26,7 @@ interface PricingContentProps {
 
 const PricingContent = ({ stripePackages }: PricingContentProps) => {
   const t = useTranslations("Pricing");
+  const tDropIn = useTranslations("DropIn");
   const [isStudentDiscount, setIsStudentDiscount] = useState(false);
   const [checkingOutIndex, setCheckingOutIndex] = useState<number | null>(null);
   const [showSignIn, setShowSignIn] = useState(false);
@@ -85,6 +87,11 @@ const PricingContent = ({ stripePackages }: PricingContentProps) => {
     setContactMessage(t("interestedIn", { package: pkg.title, classes: pkg.numberOfLessons }));
     setShowContact(true);
   }, [packages, t]);
+
+  const handleDropInContact = useCallback(() => {
+    setContactMessage(tDropIn("interestedIn", { price: DROP_IN.price }));
+    setShowContact(true);
+  }, [tDropIn]);
 
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || "";
   const signInCallbackUrl = `${appUrl}/${locale}/pricing?pkg=${signInPackageIndex}`;
@@ -156,6 +163,21 @@ const PricingContent = ({ stripePackages }: PricingContentProps) => {
               />
             </motion.div>
           ))}
+        </div>
+
+        {/* Drop-in: single class, no subscription */}
+        <div className="mt-12">
+          <div className="flex items-center gap-4 max-w-4xl mx-auto mb-6">
+            <span className="h-px flex-1 bg-border/50" />
+            <span className="text-sm text-muted-foreground uppercase tracking-wider">
+              {t("orDropIn")}
+            </span>
+            <span className="h-px flex-1 bg-border/50" />
+          </div>
+          <DropInCard
+            isStudentDiscount={isStudentDiscount}
+            onContactUs={handleDropInContact}
+          />
         </div>
 
         {/* Logo with Dance School text - Temporary for Screenshot */}

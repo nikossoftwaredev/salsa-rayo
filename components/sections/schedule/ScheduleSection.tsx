@@ -5,6 +5,7 @@ import { SectionTitle } from "@/components/SectionTitle";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { type ScheduleEntryWithInstructors } from "@/lib/db";
+import ScheduleEmptyState from "./ScheduleEmptyState";
 
 interface ScheduleSectionProps {
   entries: ScheduleEntryWithInstructors[]
@@ -42,6 +43,9 @@ const ScheduleSection = ({ entries }: ScheduleSectionProps) => {
 
       <SectionTitle title={t("title")} isMainSection />
 
+      {days.length === 0 ? (
+        <ScheduleEmptyState />
+      ) : (
       <div className="w-full max-w-4xl space-y-4">
         {days.map(([dayIndex, schedule], index) => {
           const dayKey = DAY_KEYS[dayIndex] ?? "unknown"
@@ -124,6 +128,7 @@ const ScheduleSection = ({ entries }: ScheduleSectionProps) => {
           )
         })}
       </div>
+      )}
     </section>
   );
 };

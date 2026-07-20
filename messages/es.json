@@ -297,7 +297,8 @@
     "cancelTitle": "Política de Cancelación",
     "cancelText": "Los paquetes son mensuales y se renuevan automáticamente. Puedes cancelar tu suscripción en cualquier momento desde tu perfil - sin penalizaciones ni cargos ocultos. La cancelación se aplica al mes siguiente.",
     "studentTitle": "10% Descuento para Estudiantes",
-    "studentText": "Cada paquete tiene un descuento automático del 10% para estudiantes y menores de 26 años. Activa el interruptor sobre los paquetes. Se solicitará justificante al iniciar el primer mes."
+    "studentText": "Cada paquete tiene un descuento automático del 10% para estudiantes y menores de 26 años. Activa el interruptor sobre los paquetes. Se solicitará justificante al iniciar el primer mes.",
+    "orDropIn": "O solo una clase"
   },
   "CheckoutSuccess": {
     "title": "Bienvenido/a a la familia Rayo!",
@@ -358,5 +359,16 @@
     "comingSoon": "Proximamente",
     "contactUs": "Contáctanos",
     "contactUsDesc": "Recibe orientacion personalizada"
+  },
+  "DropIn": {
+    "title": "Clase Suelta",
+    "subtitle": "Sin paquete, sin suscripción - solo una clase.",
+    "featureDuration": "Una clase de {minutes} minutos",
+    "featureAnyStyle": "Cualquier clase del horario",
+    "featureNoCommitment": "Pagas cuando vienes - sin compromiso",
+    "noStudentDiscount": "El descuento para estudiantes se aplica solo a los paquetes mensuales, no a las clases sueltas.",
+    "perClass": "por clase",
+    "cta": "Reservar una clase",
+    "interestedIn": "Estoy interesado/a en una clase suelta ({price}€ por una clase)"
   }
 }
