@@ -54,7 +54,7 @@ const Home = async ({ params }: BasePageProps) => {
       <link
         rel="preload"
         as="image"
-        href="/images/gallery/our-space-vertical.avif"
+        href="/images/gallery/salsa-class-athens-vertical.avif"
         type="image/avif"
         media="(max-width: 767px)"
         fetchPriority="high"
@@ -62,7 +62,7 @@ const Home = async ({ params }: BasePageProps) => {
       <link
         rel="preload"
         as="image"
-        href="/images/gallery/our-space.avif"
+        href="/images/gallery/salsa-class-athens.avif"
         type="image/avif"
         media="(min-width: 768px)"
         fetchPriority="high"

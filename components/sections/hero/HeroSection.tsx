@@ -9,42 +9,47 @@ const HeroSection = () => {
   return (
     <section
       id="hero"
-      className="h-screen w-full flex items-center justify-center relative overflow-hidden"
+      className="h-svh w-full flex items-center justify-center relative overflow-hidden"
     >
       {/* Background — art-directed <picture>: pre-optimized static AVIF/WebP,
-          mobile loads ONLY the vertical, desktop ONLY the horizontal.
+          mobile loads ONLY the vertical crop, desktop ONLY the horizontal.
           Bypasses _next/image cold-encode; LCP-critical so fetchPriority high. */}
       <div className="absolute inset-0">
         <picture>
           <source
             media="(min-width: 768px)"
-            srcSet="/images/gallery/our-space.avif"
+            srcSet="/images/gallery/salsa-class-athens.avif"
             type="image/avif"
           />
           <source
             media="(min-width: 768px)"
-            srcSet="/images/gallery/our-space.webp"
+            srcSet="/images/gallery/salsa-class-athens.webp"
             type="image/webp"
           />
           <source
             media="(max-width: 767px)"
-            srcSet="/images/gallery/our-space-vertical.avif"
+            srcSet="/images/gallery/salsa-class-athens-vertical.avif"
             type="image/avif"
           />
           <source
             media="(max-width: 767px)"
-            srcSet="/images/gallery/our-space-vertical.webp"
+            srcSet="/images/gallery/salsa-class-athens-vertical.webp"
             type="image/webp"
           />
           <img
-            src="/images/gallery/our-space-vertical.jpg"
-            alt="Salsa Rayo dance studio interior in Agios Dimitrios, Athens"
+            src="/images/gallery/salsa-class-athens-vertical.jpg"
+            alt="Students dancing in pairs during a New York style salsa class at Salsa Rayo in Agios Dimitrios, Athens"
             fetchPriority="high"
             decoding="async"
-            className="absolute inset-0 size-full object-cover"
+            className="absolute inset-0 size-full object-cover object-[50%_35%] md:object-center"
           />
         </picture>
-        <div className="absolute inset-0 bg-background/80" />
+        {/* Scrim, two layers: the vertical pass darkens under the nav and fades
+            the bottom into the next section; the radial pool sits behind the
+            headline so the gradient type clears 3:1 over the studio's white
+            wall while the dancers stay visible at the edges. */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/68 via-background/48 to-background" />
+        <div className="absolute inset-0 bg-radial-[ellipse_65%_55%_at_50%_46%] from-background/88 via-background/72 via-45% to-transparent" />
       </div>
 
       {/* Content */}
