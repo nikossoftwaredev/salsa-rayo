@@ -16,7 +16,7 @@ const OrishasGrid = () => {
   const t = useTranslations("Orishas");
 
   return (
-    <section className="py-20 px-4 bg-gray-900 min-h-screen">
+    <section className="pt-28 pb-20 px-4 bg-gray-900 min-h-screen">
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-16">
           <h1 className="text-5xl md:text-6xl font-bold mb-4">

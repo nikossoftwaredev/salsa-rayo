@@ -28,7 +28,7 @@ export const BlogArticle = ({
   return (
     <main className="min-h-screen bg-background">
       {/* Hero */}
-      <section className="relative py-20 md:py-28 px-4">
+      <section className="relative pt-28 pb-20 md:py-28 px-4">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent" />
         <div className="relative z-10 mx-auto max-w-3xl">
           <Link

@@ -21,7 +21,7 @@ const GalleryContent = () => {
     <div className="relative min-h-screen w-full overflow-x-hidden">
       <BackgroundEffects />
 
-      <div className="relative pt-20 pb-16 px-4 md:px-8">
+      <div className="relative pt-28 pb-16 px-4 md:px-8">
         {/* Header */}
         <div className="max-w-7xl mx-auto mb-12">
           <motion.h1
