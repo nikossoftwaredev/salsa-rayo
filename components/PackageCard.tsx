@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { Card } from "@/components/ui/card";
 import { Zap, CreditCard, MessageCircle, ChevronDown, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { applyStudentDiscount } from "@/data/packages";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -37,7 +38,7 @@ const PackageCard = ({
   const lessonsPerMonth = numberOfLessons * 4;
 
   const displayPrice = isStudentDiscount
-    ? Math.floor(parseFloat(price) * 0.9).toString()
+    ? applyStudentDiscount(parseFloat(price)).toString()
     : price;
 
   const features = [

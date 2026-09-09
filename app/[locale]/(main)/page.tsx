@@ -15,7 +15,7 @@ import {
   getAggregateRatingSchema,
 } from "@/lib/schema";
 import { getGoogleReviews } from "@/server-actions/getGoogleReviews";
-import { FAQ_ITEMS } from "@/data/faq";
+import { FAQ_ITEMS, FAQ_PARAMS } from "@/data/faq";
 import { SUPPORTED_LOCALES } from "@/i18n/routing";
 import { BasePageProps } from "@/types/pageprops";
 
@@ -35,7 +35,7 @@ const Home = async ({ params }: BasePageProps) => {
 
   const faqItems = FAQ_ITEMS.map((item) => ({
     question: tFaq(item.questionKey),
-    answer: tFaq(item.answerKey),
+    answer: tFaq(item.answerKey, FAQ_PARAMS),
   }));
 
   const reviewsData = await getGoogleReviews(GOOGLE_PLACE_ID).catch(() => null);

@@ -1,3 +1,5 @@
+import type { StripePackage } from "@/lib/stripe/types"
+
 import {
   BUSINESS_NAME,
   PHONE,
@@ -61,7 +63,7 @@ export const getInstructorSchemas = () => [
 // ============================================================
 // DanceSchool (LocalBusiness subtype) - Global / Homepage
 // ============================================================
-export const getDanceSchoolSchema = () => ({
+export const getDanceSchoolSchema = (packages: StripePackage[]) => ({
   "@context": "https://schema.org",
   "@type": "DanceSchool",
   "@id": `${BASE_URL}/#organization`,
@@ -94,13 +96,7 @@ export const getDanceSchoolSchema = () => ({
   openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday"],
-      opens: "19:00",
-      closes: "22:00",
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Wednesday", "Thursday"],
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
       opens: "19:00",
       closes: "23:00",
     },
@@ -131,36 +127,20 @@ export const getDanceSchoolSchema = () => ({
     areaServed: "GR",
     availableLanguage: ["English", "Greek", "Spanish"],
   },
-  hasOfferCatalog: {
-    "@type": "OfferCatalog",
-    name: "Dance Class Packages",
-    itemListElement: [
-      {
+  ...(packages.length && {
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Dance Class Packages",
+      itemListElement: packages.map((pkg) => ({
         "@type": "Offer",
-        name: "Rayo 8",
-        description: "8 dance classes per month (2 per week)",
-        price: "50",
-        priceCurrency: "EUR",
+        name: pkg.name,
+        description: pkg.description ?? undefined,
+        price: String(pkg.priceAmount),
+        priceCurrency: pkg.currency.toUpperCase(),
         url: `${BASE_URL}/en/pricing`,
-      },
-      {
-        "@type": "Offer",
-        name: "Rayo 16",
-        description: "16 dance classes per month (4 per week)",
-        price: "75",
-        priceCurrency: "EUR",
-        url: `${BASE_URL}/en/pricing`,
-      },
-      {
-        "@type": "Offer",
-        name: "Rayo 24",
-        description: "24 dance classes per month (6 per week)",
-        price: "99",
-        priceCurrency: "EUR",
-        url: `${BASE_URL}/en/pricing`,
-      },
-    ],
-  },
+      })),
+    },
+  }),
 });
 
 // ============================================================
@@ -310,6 +290,7 @@ export const getCourseSchemas = () => [
             "https://schema.org/Tuesday",
             "https://schema.org/Wednesday",
             "https://schema.org/Thursday",
+            "https://schema.org/Friday",
           ],
           startTime: "19:00",
           endTime: "23:00",
@@ -412,7 +393,13 @@ export const getCourseSchemas = () => [
 // ============================================================
 // Pricing page - Product with Offers
 // ============================================================
-export const getPricingSchemas = () => ({
+// Google warns on Offers whose priceValidUntil is in the past, so keep it a
+// year out from build time instead of a date that quietly expires.
+const PRICE_VALID_UNTIL = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)
+  .toISOString()
+  .slice(0, 10)
+
+export const getPricingSchemas = (packages: StripePackage[]) => ({
   "@context": "https://schema.org",
   "@type": "Product",
   name: "Salsa Rayo Dance Class Packages",
@@ -422,50 +409,20 @@ export const getPricingSchemas = () => ({
     "@type": "Brand",
     name: BUSINESS_NAME,
   },
-  offers: [
-    {
-      "@type": "Offer",
-      name: "Rayo 8",
-      description: "8 dance classes per month (2 classes per week)",
-      price: "50",
-      priceCurrency: "EUR",
-      availability: "https://schema.org/InStock",
-      url: `${BASE_URL}/en/pricing`,
-      validFrom: "2025-09-01",
-      priceValidUntil: "2026-12-31",
-      seller: {
-        "@id": `${BASE_URL}/#organization`,
-      },
+  offers: packages.map((pkg) => ({
+    "@type": "Offer",
+    name: pkg.name,
+    description: pkg.description ?? undefined,
+    price: String(pkg.priceAmount),
+    priceCurrency: pkg.currency.toUpperCase(),
+    availability: "https://schema.org/InStock",
+    url: `${BASE_URL}/en/pricing`,
+    validFrom: "2025-09-01",
+    priceValidUntil: PRICE_VALID_UNTIL,
+    seller: {
+      "@id": `${BASE_URL}/#organization`,
     },
-    {
-      "@type": "Offer",
-      name: "Rayo 16",
-      description: "16 dance classes per month (4 classes per week)",
-      price: "75",
-      priceCurrency: "EUR",
-      availability: "https://schema.org/InStock",
-      url: `${BASE_URL}/en/pricing`,
-      validFrom: "2025-09-01",
-      priceValidUntil: "2026-12-31",
-      seller: {
-        "@id": `${BASE_URL}/#organization`,
-      },
-    },
-    {
-      "@type": "Offer",
-      name: "Rayo 24",
-      description: "24 dance classes per month (6 classes per week)",
-      price: "99",
-      priceCurrency: "EUR",
-      availability: "https://schema.org/InStock",
-      url: `${BASE_URL}/en/pricing`,
-      validFrom: "2025-09-01",
-      priceValidUntil: "2026-12-31",
-      seller: {
-        "@id": `${BASE_URL}/#organization`,
-      },
-    },
-  ],
+  })),
 });
 
 // ============================================================

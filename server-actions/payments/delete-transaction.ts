@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 import { prisma } from "@/lib/db"
 import { isAdmin } from "../is-admin"
-import { getPackageDurationMs } from "@/data/packages"
+import { SUBSCRIPTION_PERIOD_MS } from "@/data/packages"
 
 export const deleteTransaction = async (id: string) => {
   try {
@@ -28,7 +28,7 @@ export const deleteTransaction = async (id: string) => {
         if (remaining === 0) {
           await tx.subscription.delete({ where: { id: transaction.subscriptionId } })
         } else if (transaction.type === "subscription") {
-          const newExpiry = new Date(sub.expiresAt.getTime() - getPackageDurationMs(sub.packageName))
+          const newExpiry = new Date(sub.expiresAt.getTime() - SUBSCRIPTION_PERIOD_MS)
           await tx.subscription.update({
             where: { id: transaction.subscriptionId },
             data: { expiresAt: newExpiry },

@@ -29,7 +29,7 @@ import {
 import { DatePicker } from "@/components/ui/date-picker"
 import { useDialogStore } from "@/lib/stores/dialog-store"
 import { createPayment } from "@/server-actions/payments/create-payment"
-import { ADMIN_PACKAGES } from "@/data/packages"
+import { useStripePackages } from "@/lib/stripe/packages-context"
 import {
   PAYMENT_TYPES,
   PAYMENT_METHODS,
@@ -44,11 +44,11 @@ const DIALOG_KEY = "PaymentDialog"
 
 const PAYMENT_METHOD_ICONS: Record<string, PaymentMethodIcon> = { ...METHOD_ICON_MAP, stripe: FaStripe }
 
-const getInitialForm = () => ({
+const getInitialForm = (packagePrice?: number) => ({
   type: "subscription" as PaymentType,
   paymentMethod: "cash" as PaymentMethod,
   packageIndex: 0,
-  amount: String(ADMIN_PACKAGES[0].price),
+  amount: packagePrice === undefined ? "" : String(packagePrice),
   description: "",
   startDate: new Date() as Date | undefined,
 })
@@ -57,8 +57,9 @@ export const PaymentDialog = () => {
   const router = useRouter()
   const { closeDialog, dialogData } = useDialogStore()
   const student = dialogData as StudentWithSubscriptions | null
+  const packages = useStripePackages()
 
-  const [form, setForm] = useState(getInitialForm)
+  const [form, setForm] = useState(() => getInitialForm(packages[0]?.priceAmount))
   const [isPending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
   const amountValue = parseFloat(form.amount) || 0
@@ -66,15 +67,15 @@ export const PaymentDialog = () => {
   if (!student) return null
 
   const handleClose = () => {
-    setForm(getInitialForm())
+    setForm(getInitialForm(packages[0]?.priceAmount))
     setError(null)
     closeDialog(DIALOG_KEY)
   }
 
   const handleTypeChange = (type: PaymentType) => {
     if (type === "subscription") {
-      const pkg = ADMIN_PACKAGES[0]
-      setForm((prev) => ({ ...prev, type, packageIndex: 0, amount: String(pkg.price), description: "" }))
+      const pkg = packages[0]
+      setForm((prev) => ({ ...prev, type, packageIndex: 0, amount: pkg ? String(pkg.priceAmount) : "", description: "" }))
     } else {
       setForm((prev) => ({ ...prev, type, amount: "", description: "" }))
     }
@@ -82,8 +83,8 @@ export const PaymentDialog = () => {
 
   const handlePackageChange = (value: string) => {
     const index = parseInt(value)
-    const pkg = ADMIN_PACKAGES[index]
-    setForm((prev) => ({ ...prev, packageIndex: index, amount: String(pkg.price) }))
+    const pkg = packages[index]
+    setForm((prev) => ({ ...prev, packageIndex: index, amount: pkg ? String(pkg.priceAmount) : prev.amount }))
   }
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -92,7 +93,7 @@ export const PaymentDialog = () => {
 
     startTransition(async () => {
       try {
-        const pkg = form.type === "subscription" ? ADMIN_PACKAGES[form.packageIndex] : null
+        const pkg = form.type === "subscription" ? packages[form.packageIndex] : null
 
         const result = await createPayment({
           studentId: student.id,
@@ -101,7 +102,7 @@ export const PaymentDialog = () => {
           amount: amountValue,
           description: form.description || undefined,
           ...(pkg && {
-            packageName: pkg.title,
+            packageName: pkg.name,
             lessonsPerWeek: pkg.lessonsPerWeek,
             durationDays: pkg.durationDays,
             startDate: form.startDate ? format(form.startDate, "yyyy-MM-dd") : undefined,
@@ -153,7 +154,13 @@ export const PaymentDialog = () => {
             </Select>
           </div>
 
-          {form.type === "subscription" && (
+          {form.type === "subscription" && packages.length === 0 && (
+            <p className="text-sm text-destructive">
+              Could not load packages from Stripe. Enter the amount manually, or retry once Stripe is reachable.
+            </p>
+          )}
+
+          {form.type === "subscription" && packages.length > 0 && (
             <div className="grid gap-2">
               <Label>Package</Label>
               <Select value={String(form.packageIndex)} onValueChange={handlePackageChange}>
@@ -161,9 +168,9 @@ export const PaymentDialog = () => {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {ADMIN_PACKAGES.map((pkg, i) => (
-                    <SelectItem key={pkg.title} value={String(i)}>
-                      {pkg.title} — €{pkg.price} ({pkg.lessonsPerWeek}x/week)
+                  {packages.map((pkg, i) => (
+                    <SelectItem key={pkg.id} value={String(i)}>
+                      {pkg.name} - €{pkg.priceAmount} ({pkg.lessonsPerWeek}x/week)
                     </SelectItem>
                   ))}
                 </SelectContent>

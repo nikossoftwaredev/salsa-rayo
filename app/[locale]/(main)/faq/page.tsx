@@ -5,7 +5,7 @@ import BackgroundEffects from "@/components/BackgroundEffects";
 import { BasePageProps } from "@/types/pageprops";
 import JsonLd from "@/components/JsonLd";
 import { getBreadcrumbSchema, getFAQPageSchema } from "@/lib/schema";
-import { FAQ_ITEMS } from "@/data/faq";
+import { FAQ_ITEMS, FAQ_PARAMS } from "@/data/faq";
 
 export const revalidate = 3600;
 
@@ -57,7 +57,7 @@ const FaqPage = async ({ params }: BasePageProps) => {
 
   const faqSchemaItems = FAQ_ITEMS.map((item) => ({
     question: t(item.questionKey),
-    answer: t(item.answerKey),
+    answer: t(item.answerKey, FAQ_PARAMS),
   }));
 
   return (
@@ -76,7 +76,7 @@ const FaqPage = async ({ params }: BasePageProps) => {
         {FAQ_ITEMS.map((item) => (
           <div key={item.questionKey}>
             <h2>{t(item.questionKey)}</h2>
-            <p>{t(item.answerKey)}</p>
+            <p>{t(item.answerKey, FAQ_PARAMS)}</p>
           </div>
         ))}
       </div>

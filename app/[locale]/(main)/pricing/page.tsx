@@ -3,7 +3,7 @@ import JsonLd from "@/components/JsonLd";
 import { getBreadcrumbSchema, getPricingSchemas } from "@/lib/schema";
 import PricingContent from "./PricingContent";
 import { BasePageProps } from "@/types/pageprops";
-import { listActiveProducts } from "@/lib/stripe/products";
+import { getStripePackages } from "@/lib/stripe/products";
 
 const BASE_URL = "https://www.salsarayo.com";
 
@@ -12,16 +12,34 @@ export const generateMetadata = async ({
 }: BasePageProps): Promise<Metadata> => {
   const locale = (await params).locale;
 
+  // Package names and the entry price come from Stripe so the search snippet
+  // never advertises a price we no longer charge.
+  const packages = await getStripePackages();
+  const names = packages.map((p) => p.name).join(", ");
+  const from = packages[0]?.priceAmount;
+
   const titles = {
     en: "Pricing | Salsa & Bachata Class Packages - Salsa Rayo Athens",
     el: "Τιμές | Πακέτα Μαθημάτων Salsa & Bachata - Salsa Rayo Αθήνα",
     es: "Precios | Paquetes de Clases de Salsa y Bachata - Salsa Rayo Atenas",
   };
 
+  const packageBlurb = {
+    en: names ? `Choose from our ${names} dance class packages` : "Choose from our monthly dance class packages",
+    el: names ? `Επιλέξτε από τα πακέτα μαθημάτων ${names}` : "Επιλέξτε από τα μηνιαία πακέτα μαθημάτων μας",
+    es: names ? `Elige entre nuestros paquetes de clases ${names}` : "Elige entre nuestros paquetes mensuales de clases",
+  };
+
+  const fromBlurb = {
+    en: from ? ` starting at €${from}/month` : "",
+    el: from ? ` από €${from}/μήνα` : "",
+    es: from ? ` desde €${from}/mes` : "",
+  };
+
   const descriptions = {
-    en: "Choose from our Rayo 8, 16, or 24 dance class packages starting at €50/month. Salsa, Bachata, Mambo & Styling classes in Agios Dimitrios, Athens.",
-    el: "Επιλέξτε από τα πακέτα μαθημάτων Rayo 8, 16 ή 24 από €50/μήνα. Μαθήματα Salsa, Bachata, Mambo & Styling στον Άγιο Δημήτριο, Αθήνα.",
-    es: "Elige entre nuestros paquetes de clases Rayo 8, 16 o 24 desde €50/mes. Clases de Salsa, Bachata, Mambo y Styling en Agios Dimitrios, Atenas.",
+    en: `${packageBlurb.en}${fromBlurb.en}. Salsa, Bachata, Mambo & Styling classes in Agios Dimitrios, Athens.`,
+    el: `${packageBlurb.el}${fromBlurb.el}. Μαθήματα Salsa, Bachata, Mambo & Styling στον Άγιο Δημήτριο, Αθήνα.`,
+    es: `${packageBlurb.es}${fromBlurb.es}. Clases de Salsa, Bachata, Mambo y Styling en Agios Dimitrios, Atenas.`,
   };
 
   const title = titles[locale as keyof typeof titles] || titles.en;
@@ -51,12 +69,7 @@ export const generateMetadata = async ({
 const PricingPage = async ({ params }: BasePageProps) => {
   const locale = (await params).locale;
 
-  let stripePackages;
-  try {
-    stripePackages = await listActiveProducts();
-  } catch {
-    // Fallback to hardcoded packages if Stripe is unavailable
-  }
+  const stripePackages = await getStripePackages();
 
   return (
     <>
@@ -66,7 +79,7 @@ const PricingPage = async ({ params }: BasePageProps) => {
             { name: "Home", url: `${BASE_URL}/${locale}` },
             { name: "Pricing", url: `${BASE_URL}/${locale}/pricing` },
           ]),
-          getPricingSchemas(),
+          ...(stripePackages.length ? [getPricingSchemas(stripePackages)] : []),
         ]}
       />
       <PricingContent stripePackages={stripePackages} />

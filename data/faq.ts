@@ -1,3 +1,5 @@
+import { STUDENT_DISCOUNT_PERCENT } from "./packages";
+
 export const FAQ_CATEGORIES = [
   "gettingStarted",
   "classesSchedule",
@@ -51,3 +53,10 @@ export const FAQ_ITEMS: FaqItem[] = [
   { questionKey: "q14", answerKey: "a14", category: "aboutSchool" },
   { questionKey: "q15", answerKey: "a15", category: "aboutSchool" },
 ];
+
+/**
+ * Values interpolated into FAQ answers. Passed at every render site so the
+ * answers stay in sync with the code that owns the number - next-intl ignores
+ * params a message does not use.
+ */
+export const FAQ_PARAMS = { percent: STUDENT_DISCOUNT_PERCENT };

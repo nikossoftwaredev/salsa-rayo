@@ -1,11 +1,20 @@
 import { getAllPosts } from "@/lib/blog";
+import { getStripePackages } from "@/lib/stripe/products";
+import { STUDENT_DISCOUNT_PERCENT } from "@/data/packages";
 
 const BASE_URL = "https://www.salsarayo.com";
 
 export const revalidate = 3600;
 
-export const GET = () => {
+export const GET = async () => {
   const posts = getAllPosts("en");
+  const packages = await getStripePackages();
+
+  const packageList = packages.length
+    ? packages
+        .map((pkg) => `${pkg.name} (€${pkg.priceAmount}/mo)`)
+        .join(", ")
+    : "see the pricing page";
 
   const blogList = posts
     .map(
@@ -22,8 +31,9 @@ export const GET = () => {
 
 - Location: Thermopylon 19, Agios Dimitrios, Athens, Greece
 - Primary dances: New York Style Salsa (On2), Bachata, Mambo, Pachanga
-- Class hours: Mon-Tue 19:00-22:00, Wed-Thu 19:00-23:00
-- Packages: Rayo 8 (€50/mo), Rayo 16 (€75/mo), Rayo 24 (€99/mo)
+- Class hours: Mon-Fri 19:00-23:00
+- Packages: ${packageList}
+- Student / under-26 discount: ${STUDENT_DISCOUNT_PERCENT}% off monthly packages
 - Languages: English, Greek, Spanish
 
 ## Key Pages

@@ -5,6 +5,12 @@ export interface StripePackage {
   priceId: string
   priceAmount: number
   currency: string
+  /** Classes per week, from the product's `lessonsPerWeek` metadata. */
+  lessonsPerWeek: number
+  /** Highlights the card on the pricing page, from `mostPopular` metadata. */
+  isMostPopular: boolean
+  /** One billing period in days, derived from the price's recurring interval. */
+  durationDays: number
   metadata: Record<string, string>
   active: boolean
 }

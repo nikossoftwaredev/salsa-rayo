@@ -34,7 +34,7 @@ import { issueInvoiceForTransaction } from "@/server-actions/invoices/issue-invo
 import { retryFailedInvoice } from "@/server-actions/invoices/retry-failed-invoice"
 import { type TransactionWithStudent } from "@/server-actions/payments/get-transactions"
 import { openPdfInNewTab } from "@/lib/pdf"
-import { getPackageDurationMs } from "@/data/packages"
+import { SUBSCRIPTION_PERIOD_MS } from "@/data/packages"
 import { formatDate } from "@/lib/format"
 
 interface IncomeTableProps {
@@ -115,10 +115,9 @@ export const IncomeTable = ({ data }: IncomeTableProps) => {
   const deleteImpact = useMemo(() => {
     if (!deletingTransaction?.subscription || deletingTransaction.type !== "subscription" || !deletingTransaction.subscriptionId) return null
     const sub = deletingTransaction.subscription
-    const durationMs = getPackageDurationMs(sub.packageName)
-    const durationDays = durationMs / (24 * 60 * 60 * 1000)
+    const durationDays = SUBSCRIPTION_PERIOD_MS / (24 * 60 * 60 * 1000)
     const isLast = data.filter((t) => t.subscriptionId === deletingTransaction.subscriptionId).length <= 1
-    const newExpiry = isLast ? null : new Date(sub.expiresAt.getTime() - durationMs)
+    const newExpiry = isLast ? null : new Date(sub.expiresAt.getTime() - SUBSCRIPTION_PERIOD_MS)
     return { durationDays, isLast, newExpiry }
   }, [deletingTransaction, data])
 

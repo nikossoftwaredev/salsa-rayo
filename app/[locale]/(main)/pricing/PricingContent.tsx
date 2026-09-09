@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { Zap, Check, Sparkles, CalendarX, GraduationCap, PartyPopper } from "lucide-react";
 import Logo from "@/components/Logo";
 import { Link } from "@/i18n/routing";
-import { PACKAGES, DROP_IN } from "@/data/packages";
+import { DROP_IN, STUDENT_DISCOUNT_PERCENT } from "@/data/packages";
 import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -21,7 +21,7 @@ import { SignInDialog } from "@/components/SignInDialog";
 import ContactFormModal from "@/components/ContactFormModal";
 
 interface PricingContentProps {
-  stripePackages?: StripePackage[];
+  stripePackages: StripePackage[];
 }
 
 const PricingContent = ({ stripePackages }: PricingContentProps) => {
@@ -38,19 +38,17 @@ const PricingContent = ({ stripePackages }: PricingContentProps) => {
   const searchParams = useSearchParams();
   const hasAutoOpenedRef = useRef(false);
 
-  const packages = useMemo(() =>
-    stripePackages?.length
-      ? stripePackages.map((sp) => ({
-          title: sp.name,
-          price: sp.priceAmount.toString(),
-          numberOfLessons: parseInt(sp.metadata.lessonsPerWeek || "2"),
-          isMostPopular: sp.metadata.mostPopular === "true",
-          priceId: sp.priceId,
-        }))
-      : PACKAGES.map((pkg) => ({
-          ...pkg,
-          priceId: undefined as string | undefined,
-        })),
+  // Prices come from Stripe only. There is deliberately no hardcoded fallback:
+  // showing a stale price is worse than showing none.
+  const packages = useMemo(
+    () =>
+      stripePackages.map((sp) => ({
+        title: sp.name,
+        price: sp.priceAmount.toString(),
+        numberOfLessons: sp.lessonsPerWeek,
+        isMostPopular: sp.isMostPopular,
+        priceId: sp.priceId as string | undefined,
+      })),
     [stripePackages]
   );
 
@@ -87,6 +85,11 @@ const PricingContent = ({ stripePackages }: PricingContentProps) => {
     setContactMessage(t("interestedIn", { package: pkg.title, classes: pkg.numberOfLessons }));
     setShowContact(true);
   }, [packages, t]);
+
+  const handlePricesUnavailableContact = useCallback(() => {
+    setContactMessage(t("pricesUnavailableMessage"));
+    setShowContact(true);
+  }, [t]);
 
   const handleDropInContact = useCallback(() => {
     setContactMessage(tDropIn("interestedIn", { price: DROP_IN.price }));
@@ -137,12 +140,25 @@ const PricingContent = ({ stripePackages }: PricingContentProps) => {
               htmlFor="student-discount"
               className="text-foreground/80 cursor-pointer"
             >
-              {t("studentOrYouth")}
+              {t("studentOrYouth", { percent: STUDENT_DISCOUNT_PERCENT })}
             </Label>
           </div>
         </div>
 
         {/* Packages Grid */}
+        {packages.length === 0 && (
+          <div className="max-w-xl mx-auto rounded-xl border border-border/30 bg-card/60 p-8 text-center">
+            <p className="text-foreground/80 mb-4">{t("pricesUnavailable")}</p>
+            <button
+              onClick={handlePricesUnavailableContact}
+              className="inline-flex items-center gap-2 text-primary hover:text-brand-pink transition-colors duration-300 font-semibold cursor-pointer"
+            >
+              {t("getInTouch")}
+              <span className="animate-bounce-x">-&gt;</span>
+            </button>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {packages.map((pkg, index) => (
             <motion.div
@@ -258,10 +274,10 @@ const PricingContent = ({ stripePackages }: PricingContentProps) => {
           <article className="rounded-xl border border-border/30 bg-card/60 p-6">
             <h3 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
               <GraduationCap className="size-5 text-primary" />
-              {t("studentTitle")}
+              {t("studentTitle", { percent: STUDENT_DISCOUNT_PERCENT })}
             </h3>
             <p className="text-sm text-foreground/75 leading-relaxed">
-              {t("studentText")}
+              {t("studentText", { percent: STUDENT_DISCOUNT_PERCENT })}
             </p>
           </article>
         </section>

@@ -7,19 +7,22 @@ import {
   getInstructorSchemas,
   getServiceSchemas,
 } from "@/lib/schema";
+import { getStripePackages } from "@/lib/stripe/products";
 import { PhonePromptBanner } from "@/components/PhonePromptBanner";
 import { WelcomeConfetti } from "@/components/WelcomeConfetti";
 
-const MainLayout = ({
+const MainLayout = async ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
+  const stripePackages = await getStripePackages();
+
   return (
     <>
       <JsonLd
         data={[
-          getDanceSchoolSchema(),
+          getDanceSchoolSchema(stripePackages),
           getWebSiteSchema(),
           ...getInstructorSchemas(),
           ...getServiceSchemas(),

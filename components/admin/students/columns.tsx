@@ -18,7 +18,8 @@ import { copyToClipboard, formatDate } from "@/lib/format"
 import { useDialogStore } from "@/lib/stores/dialog-store"
 import { useConfirmStore } from "@/lib/stores/confirm-store"
 import { createPayment } from "@/server-actions/payments/create-payment"
-import { ADMIN_PACKAGES } from "@/data/packages"
+import { DEFAULT_PERIOD_DAYS } from "@/lib/stripe/constants"
+import { findPackageByName, useStripePackages } from "@/lib/stripe/packages-context"
 import { type StudentWithSubscriptions } from "./types"
 
 const getActiveSubscription = (student: StudentWithSubscriptions) =>
@@ -29,17 +30,27 @@ const RenewAction = ({ student }: { student: StudentWithSubscriptions }) => {
   const { confirm } = useConfirmStore()
   const [isPending, startTransition] = useTransition()
 
+  const packages = useStripePackages()
+
   const sub = getActiveSubscription(student)
   const hasSub = !!sub
-  const pkg = sub
-    ? ADMIN_PACKAGES.find((p) => p.title === sub.packageName) ?? ADMIN_PACKAGES[0]
-    : ADMIN_PACKAGES[0]
+
+  // Renew at the package's current Stripe price. If the product is gone from
+  // Stripe, repeat what this subscription itself recorded rather than falling
+  // back to some other package's price.
+  const stripePkg = sub ? findPackageByName(packages, sub.packageName) : undefined
+  const renewal = sub && {
+    name: sub.packageName,
+    price: stripePkg?.priceAmount ?? sub.amountPaid,
+    lessonsPerWeek: stripePkg?.lessonsPerWeek ?? sub.lessonsPerWeek,
+    durationDays: stripePkg?.durationDays ?? DEFAULT_PERIOD_DAYS,
+  }
 
   const handleRenew = () => {
-    if (!hasSub) return
+    if (!renewal) return
     confirm({
       title: "Renew Subscription",
-      description: `Renew ${student.name}'s ${pkg.title} subscription for ${pkg.durationDays} days at €${pkg.price} (${pkg.lessonsPerWeek}x/week, cash)?`,
+      description: `Renew ${student.name}'s ${renewal.name} subscription for ${renewal.durationDays} days at €${renewal.price} (${renewal.lessonsPerWeek}x/week, cash)?`,
       actionLabel: "Renew",
       variant: "default",
       onConfirm: async () => {
@@ -48,14 +59,14 @@ const RenewAction = ({ student }: { student: StudentWithSubscriptions }) => {
             studentId: student.id,
             type: "subscription",
             paymentMethod: "cash",
-            amount: pkg.price,
-            packageName: pkg.title,
-            lessonsPerWeek: pkg.lessonsPerWeek,
-            durationDays: pkg.durationDays,
+            amount: renewal.price,
+            packageName: renewal.name,
+            lessonsPerWeek: renewal.lessonsPerWeek,
+            durationDays: renewal.durationDays,
           })
           if (result.success) {
             toast.success("Subscription renewed", {
-              description: `${pkg.title} - €${pkg.price} for ${student.name}`,
+              description: `${renewal.name} - €${renewal.price} for ${student.name}`,
               action: {
                 label: "View Payments",
                 onClick: () => router.push("/admin/income"),

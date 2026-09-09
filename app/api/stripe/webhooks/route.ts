@@ -1,3 +1,4 @@
+import { DEFAULT_LESSONS_PER_WEEK, DEFAULT_PERIOD_DAYS } from "@/lib/stripe/constants"
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/db"
 import { stripe } from "@/lib/stripe"
@@ -76,10 +77,10 @@ const handleCheckoutCompleted = async (
   const result = await fulfillSubscription({
     studentId,
     packageName,
-    lessonsPerWeek: parseInt(product?.metadata?.lessonsPerWeek || "2"),
+    lessonsPerWeek: parseInt(product?.metadata?.lessonsPerWeek ?? "") || DEFAULT_LESSONS_PER_WEEK,
     amount,
     paymentMethod: "stripe",
-    durationDays: parseInt(product?.metadata?.durationDays || "30"),
+    durationDays: parseInt(product?.metadata?.durationDays ?? "") || DEFAULT_PERIOD_DAYS,
     description: `${packageName} - Stripe payment`,
     stripePaymentIntentId: paymentIntentId || undefined,
   })

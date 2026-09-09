@@ -7,6 +7,8 @@ import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { DialogProvider } from "@/components/dialogs/DialogProvider";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { authOptions } from "@/lib/auth";
+import { getStripePackages } from "@/lib/stripe/products";
+import { StripePackagesProvider } from "@/lib/stripe/packages-context";
 import { isAdmin } from "@/server-actions/is-admin";
 import { BaseLayoutProps } from "@/types/pageprops";
 import { Toaster } from "sonner";
@@ -16,9 +18,10 @@ export const metadata: Metadata = {
 };
 
 const AdminLayout = async ({ children }: BaseLayoutProps) => {
-  const [isUserAdmin, session] = await Promise.all([
+  const [isUserAdmin, session, stripePackages] = await Promise.all([
     isAdmin(),
     getServerSession(authOptions),
+    getStripePackages(),
   ]);
 
   if (!isUserAdmin) {
@@ -26,19 +29,21 @@ const AdminLayout = async ({ children }: BaseLayoutProps) => {
   }
 
   return (
-    <SidebarProvider>
-      <AdminSidebar />
-      <SidebarInset className="h-svh max-h-svh overflow-hidden">
-        <AdminHeader />
-        <div className="flex-1 overflow-y-auto">
-          <main className="mx-auto min-w-0 max-w-6xl px-3 py-4 sm:px-6 sm:py-6">
-            {children}
-          </main>
-        </div>
-      </SidebarInset>
-      <DialogProvider />
-      <Toaster theme="dark" position="bottom-right" />
-    </SidebarProvider>
+    <StripePackagesProvider packages={stripePackages}>
+      <SidebarProvider>
+        <AdminSidebar />
+        <SidebarInset className="h-svh max-h-svh overflow-hidden">
+          <AdminHeader />
+          <div className="flex-1 overflow-y-auto">
+            <main className="mx-auto min-w-0 max-w-6xl px-3 py-4 sm:px-6 sm:py-6">
+              {children}
+            </main>
+          </div>
+        </SidebarInset>
+        <DialogProvider />
+        <Toaster theme="dark" position="bottom-right" />
+      </SidebarProvider>
+    </StripePackagesProvider>
   );
 };
 

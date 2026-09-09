@@ -12,7 +12,7 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
-import { FAQ_ITEMS, FAQ_CATEGORIES, type FaqCategory } from "@/data/faq";
+import { FAQ_ITEMS, FAQ_CATEGORIES, type FaqCategory, FAQ_PARAMS } from "@/data/faq";
 
 const CATEGORY_KEYS = {
   all: "categories.all",
@@ -167,7 +167,7 @@ const FaqSection = () => {
                             </span>
                           </AccordionTrigger>
                           <AccordionContent className="text-foreground/60 text-[15px] leading-relaxed pl-[1.125rem] pr-2 pb-5">
-                            {t(item.answerKey)}
+                            {t(item.answerKey, FAQ_PARAMS)}
                           </AccordionContent>
                         </AccordionItem>
                     ))}
@@ -195,7 +195,7 @@ const FaqSection = () => {
                         {t(item.questionKey)}
                       </AccordionTrigger>
                       <AccordionContent className="text-foreground/60 text-[15px] leading-relaxed pr-2 pb-5">
-                        {t(item.answerKey)}
+                        {t(item.answerKey, FAQ_PARAMS)}
                       </AccordionContent>
                     </AccordionItem>
                 ))}
