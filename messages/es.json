@@ -235,6 +235,10 @@
     "bottomTitle": "Experimenta la Danza Sagrada",
     "bottomText": "En nuestras clases de salsa, honramos estas tradiciones incorporando movimientos inspirados en los Orishas, ayudándote a conectar con las raíces culturales más profundas del baile afrocubano mientras dominas los ritmos que mueven tanto el cuerpo como el espíritu."
   },
+  "Team": {
+    "title": "Nuestro Equipo",
+    "teacher": "Profesor/a"
+  },
   "Map": {
     "title": "ENCUÉNTRANOS",
     "subtitle": "Nuestra Ubicación",

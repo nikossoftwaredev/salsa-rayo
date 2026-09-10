@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useTranslations } from "next-intl";
 import { SectionTitle } from "@/components/SectionTitle";
 import { motion } from "framer-motion";
@@ -12,12 +12,11 @@ import {
   GalleryImage,
   GalleryVideo
 } from "@/data/gallery";
-import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import MasonryGallery from "./MasonryGallery";
-import { X, Loader2 } from "lucide-react";
+import MediaLightbox, { type LightboxMedia } from "@/components/MediaLightbox";
 
 interface FilterTab {
   id: GalleryCategory;
@@ -43,6 +42,11 @@ const getFilterTabs = (): FilterTab[] =>
     color,
   }));
 
+const toLightboxMedia = (item: GalleryItem): LightboxMedia =>
+  item.type === "video"
+    ? { type: "video", youtubeId: item.youtubeId, title: item.title }
+    : { type: "image", src: item.src, alt: item.alt };
+
 const getGalleryItems = (isFullPage: boolean, category?: GalleryCategory): GalleryItem[] => {
   const images: GalleryItem[] = GALLERY_IMAGES.map(img => ({ ...img, type: "image" as const }));
   const videos: GalleryItem[] = GALLERY_VIDEOS.map(vid => ({ ...vid, type: "video" as const }));
@@ -67,9 +71,10 @@ const GallerySection = ({
 }: GallerySectionProps) => {
   const t = useTranslations('Gallery');
   const [activeFilter, setActiveFilter] = useState<GalleryCategory>(initialCategory || "photos");
-  const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
-  const [isImageLoading, setIsImageLoading] = useState(false);
+  const [selectedMedia, setSelectedMedia] = useState<LightboxMedia | null>(null);
   const router = useRouter();
+
+  const closeLightbox = useCallback(() => setSelectedMedia(null), []);
 
   const filterTabs = getFilterTabs();
   const filteredItems = getGalleryItems(isFullPage, activeFilter);
@@ -137,10 +142,7 @@ const GallerySection = ({
         >
           <MasonryGallery
             items={filteredItems}
-            onItemClick={(item) => {
-              if (item.type === "image") setIsImageLoading(true);
-              setSelectedItem(item as GalleryItem);
-            }}
+            onItemClick={(item) => setSelectedMedia(toLightboxMedia(item as GalleryItem))}
           />
         </div>
 
@@ -157,60 +159,7 @@ const GallerySection = ({
         </div>
       )}
 
-      {/* Dialog for enlarged view */}
-      {selectedItem && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          {/* Backdrop */}
-          <div 
-            className="absolute inset-0 bg-background/90 backdrop-blur-sm"
-            onClick={() => setSelectedItem(null)}
-          />
-          
-          {/* Content */}
-          <div className="relative w-full h-full flex items-center justify-center p-4">
-            <button
-              onClick={() => setSelectedItem(null)}
-              className="absolute top-4 right-4 z-50 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 hover:bg-background hover:scale-110 transition-all duration-200 cursor-pointer"
-            >
-              <X className="size-6 text-foreground" />
-            </button>
-
-            {selectedItem.type === "video" ? (
-              <div className="relative w-full max-w-6xl aspect-video">
-                <iframe
-                  className="absolute inset-0 w-full h-full rounded-lg"
-                  src={`https://www.youtube.com/embed/${selectedItem.youtubeId}?autoplay=1`}
-                  title={selectedItem.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                />
-              </div>
-            ) : (
-              <>
-                {isImageLoading && (
-                  <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none">
-                    <Loader2 className="size-12 animate-spin text-primary" />
-                  </div>
-                )}
-                <Image
-                  key={selectedItem.src}
-                  src={selectedItem.src || ''}
-                  alt={selectedItem.alt || ''}
-                  width={2400}
-                  height={2400}
-                  className={twMerge(
-                    "max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-lg transition-opacity duration-300",
-                    isImageLoading ? "opacity-0" : "opacity-100"
-                  )}
-                  quality={100}
-                  priority
-                  onLoadingComplete={() => setIsImageLoading(false)}
-                />
-              </>
-            )}
-          </div>
-        </div>
-      )}
+      <MediaLightbox media={selectedMedia} onClose={closeLightbox} />
     </section>
   );
 };

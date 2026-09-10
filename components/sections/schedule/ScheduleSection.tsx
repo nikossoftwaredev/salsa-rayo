@@ -1,10 +1,12 @@
 "use client";
 
+import { useCallback, useState } from "react";
 import { useTranslations } from "next-intl";
 import { SectionTitle } from "@/components/SectionTitle";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { type ScheduleEntryWithInstructors } from "@/lib/db";
+import MediaLightbox, { type LightboxMedia } from "@/components/MediaLightbox";
 import ScheduleEmptyState from "./ScheduleEmptyState";
 
 interface ScheduleSectionProps {
@@ -21,6 +23,9 @@ const getTodayDayIndex = () => {
 const ScheduleSection = ({ entries }: ScheduleSectionProps) => {
   const todayDayIndex = getTodayDayIndex();
   const t = useTranslations("Schedule");
+  const [selectedMedia, setSelectedMedia] = useState<LightboxMedia | null>(null);
+
+  const closeLightbox = useCallback(() => setSelectedMedia(null), []);
 
   const days = Array.from(
     entries.reduce((map, entry) => {
@@ -97,9 +102,20 @@ const ScheduleSection = ({ entries }: ScheduleSectionProps) => {
                         {entry.instructors.length > 0 && (
                           <div className="flex -space-x-2">
                             {entry.instructors.map((instructor) => (
-                              <div
+                              <button
                                 key={instructor.id}
-                                className="relative w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden border-2 border-border/30 shadow-sm"
+                                type="button"
+                                aria-label={instructor.name}
+                                title={instructor.name}
+                                onClick={() =>
+                                  setSelectedMedia({
+                                    type: "image",
+                                    src: instructor.image,
+                                    alt: instructor.name,
+                                    caption: instructor.name,
+                                  })
+                                }
+                                className="relative w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden border-2 border-border/30 shadow-sm cursor-pointer transition-all duration-200 hover:z-10 hover:border-primary hover:shadow-md hover:shadow-primary/30 focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                               >
                                 <Image
                                   src={instructor.image}
@@ -109,7 +125,7 @@ const ScheduleSection = ({ entries }: ScheduleSectionProps) => {
                                   loading="lazy"
                                   className="object-cover object-top scale-125 -translate-y-1"
                                 />
-                              </div>
+                              </button>
                             ))}
                           </div>
                         )}
@@ -129,6 +145,8 @@ const ScheduleSection = ({ entries }: ScheduleSectionProps) => {
         })}
       </div>
       )}
+
+      <MediaLightbox media={selectedMedia} onClose={closeLightbox} />
     </section>
   );
 };

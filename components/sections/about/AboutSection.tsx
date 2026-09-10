@@ -26,15 +26,17 @@ const Highlight = ({ icon, label, value }: HighlightProps) => (
 interface AboutCardProps {
   children: React.ReactNode;
   isSchool?: boolean;
+  className?: string;
 }
 
-const AboutCard = ({ children, isSchool }: AboutCardProps) => (
+export const AboutCard = ({ children, isSchool, className = "" }: AboutCardProps) => (
   <Card className={`
     overflow-hidden transition-all duration-300
     hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1
     border border-border/30 hover:border-primary/25
     backdrop-blur-sm
     ${isSchool ? 'bg-gradient-to-br from-primary/[0.06] via-transparent to-brand-pink/[0.03]' : 'bg-card/80'}
+    ${className}
   `}>
     {children}
   </Card>
