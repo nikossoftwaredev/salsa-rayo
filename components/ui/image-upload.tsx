@@ -2,9 +2,10 @@
 
 import { useState, useRef, useCallback } from "react"
 import Image from "next/image"
-import { Plus, X } from "lucide-react"
+import { Loader2, Plus, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { useConfirmStore } from "@/lib/stores/confirm-store"
 import { uploadImage, removeImage } from "@/server-actions/upload-image"
 
 interface ImageUploadProps {
@@ -28,6 +29,8 @@ export const ImageUpload = ({
   const [progress, setProgress] = useState(0)
   const [error, setError] = useState<string | null>(null)
   const [dragOver, setDragOver] = useState(false)
+  const [removing, setRemoving] = useState(false)
+  const { confirm } = useConfirmStore()
   const inputRef = useRef<HTMLInputElement>(null)
 
   const roundedClass = rounded === "full" ? "rounded-full" : rounded === "md" ? "rounded-md" : "rounded-lg"
@@ -79,33 +82,44 @@ export const ImageUpload = ({
     if (file?.type.startsWith("image/")) handleUpload(file)
   }
 
-  const handleRemove = async () => {
-    if (value) {
-      await removeImage(value)
-      onChange("")
-    }
+  const handleRemove = () => {
+    if (!value) return
+    confirm({
+      title: "Remove image?",
+      description: "The image will be deleted. You can upload a new one afterwards.",
+      actionLabel: "Remove",
+      onConfirm: async () => {
+        setRemoving(true)
+        try {
+          await removeImage(value)
+          onChange("")
+        } finally {
+          setRemoving(false)
+        }
+      },
+    })
   }
 
   if (value) {
     return (
-      <div className={cn("group relative inline-block", className)} style={{ width: size, height: size }}>
+      <div className={cn("relative inline-block", className)} style={{ width: size, height: size }}>
         <Image
           src={value}
           alt="Uploaded image"
           fill
           className={cn("object-cover", roundedClass)}
         />
+        {/* Always visible: hover-only controls are unreachable on touch screens */}
         <Button
           type="button"
           variant="destructive"
-          size="icon"
+          size="icon-sm"
           onClick={handleRemove}
-          className={cn(
-            "absolute -right-2 -top-2 !size-6 rounded-full shadow-sm transition-opacity",
-            "opacity-0 group-hover:opacity-100"
-          )}
+          disabled={removing}
+          aria-label="Remove image"
+          className="absolute -right-2 -top-2 rounded-full shadow-md"
         >
-          <X className="!size-4" />
+          {removing ? <Loader2 className="size-4 animate-spin" /> : <X className="size-4" />}
         </Button>
       </div>
     )
