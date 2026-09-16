@@ -11,7 +11,13 @@ export const getStudents = async () => {
 
     const students = await prisma.student.findMany({
       where: { isActive: true },
-      include: { user: true, subscriptions: true },
+      include: {
+        user: true,
+        subscriptions: {
+          include: { scheduleEntries: { select: { id: true } } },
+          orderBy: { expiresAt: "desc" },
+        },
+      },
       orderBy: { createdAt: "desc" },
     })
 

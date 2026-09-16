@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/db"
 import { revalidatePath } from "next/cache"
+import { createBookings, syncBookings } from "@/lib/attendance/bookings"
 
 interface FulfillSubscriptionInput {
   studentId: string
@@ -13,6 +14,8 @@ interface FulfillSubscriptionInput {
   description?: string
   stripePaymentIntentId?: string
   startDate?: string
+  /** Classes the student attends. Omit to keep the subscription's current classes (e.g. renewals). */
+  scheduleEntryIds?: string[]
 }
 
 export const fulfillSubscription = async (data: FulfillSubscriptionInput) => {
@@ -31,7 +34,10 @@ export const fulfillSubscription = async (data: FulfillSubscriptionInput) => {
     const existingSub = await tx.subscription.findFirst({
       where: { studentId: data.studentId },
       orderBy: { expiresAt: "desc" },
+      include: { scheduleEntries: { select: { id: true } } },
     })
+
+    const toConnect = (ids: string[]) => ids.map((id) => ({ id }))
 
     let subscriptionId: string
 
@@ -57,6 +63,9 @@ export const fulfillSubscription = async (data: FulfillSubscriptionInput) => {
       const newStart = isStillActive ? existingSub.startDate : baseDate
       const newExpiry = new Date(baseDate.getTime() + durationMs)
 
+      const previousEntryIds = existingSub.scheduleEntries.map((e) => e.id)
+      const nextEntryIds = data.scheduleEntryIds ?? previousEntryIds
+
       await tx.subscription.update({
         where: { id: existingSub.id },
         data: {
@@ -66,9 +75,38 @@ export const fulfillSubscription = async (data: FulfillSubscriptionInput) => {
           packageName: data.packageName,
           lessonsPerWeek: data.lessonsPerWeek,
           amountPaid: data.amount,
+          scheduleEntries: { set: toConnect(nextEntryIds) },
         },
       })
       subscriptionId = existingSub.id
+
+      if (isStillActive || isInGrace) {
+        // Class changes apply to what is left of the current period, then the
+        // new period is booked in full.
+        await syncBookings({
+          db: tx,
+          studentId: data.studentId,
+          previousEntryIds,
+          nextEntryIds,
+          from: now,
+          to: existingSub.expiresAt,
+        })
+        await createBookings({
+          db: tx,
+          studentId: data.studentId,
+          scheduleEntryIds: nextEntryIds,
+          from: existingSub.expiresAt,
+          to: newExpiry,
+        })
+      } else {
+        await createBookings({
+          db: tx,
+          studentId: data.studentId,
+          scheduleEntryIds: nextEntryIds,
+          from: baseDate,
+          to: newExpiry,
+        })
+      }
     } else {
       const subscription = await tx.subscription.create({
         data: {
@@ -78,9 +116,18 @@ export const fulfillSubscription = async (data: FulfillSubscriptionInput) => {
           amountPaid: data.amount,
           startDate: now,
           expiresAt: new Date(now.getTime() + durationMs),
+          scheduleEntries: { connect: toConnect(data.scheduleEntryIds ?? []) },
         },
       })
       subscriptionId = subscription.id
+
+      await createBookings({
+        db: tx,
+        studentId: data.studentId,
+        scheduleEntryIds: data.scheduleEntryIds ?? [],
+        from: subscription.startDate,
+        to: subscription.expiresAt,
+      })
     }
 
     const transaction = await tx.transaction.create({
@@ -97,11 +144,12 @@ export const fulfillSubscription = async (data: FulfillSubscriptionInput) => {
     })
 
     return { subscriptionId, transactionId: transaction.id }
-  })
+  }, { timeout: 20000 })
 
   revalidatePath("/admin")
   revalidatePath("/admin/income")
   revalidatePath("/admin/subscriptions")
+  revalidatePath("/admin/attendance")
 
   return { ...result, studentName: student.name, studentAddress: student.address }
 }

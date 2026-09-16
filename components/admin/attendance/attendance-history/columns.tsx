@@ -16,6 +16,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { Badge } from "@/components/ui/badge"
 import { RayoPoints } from "@/components/ui/rayo-points"
 import { SubscriptionBadge } from "@/components/ui/subscription-badge"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
@@ -124,11 +125,18 @@ export const columns: ColumnDef<AttendanceRecord>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Class Date" />
     ),
-    cell: ({ row }) => (
-      <span className="text-muted-foreground">
-        {formatDate(row.original.danceClass.date)}
-      </span>
-    ),
+    cell: ({ row }) => {
+      const date = new Date(row.original.danceClass.date)
+      const isUpcoming = date.getTime() > Date.now()
+      return (
+        <div className="flex items-center gap-2">
+          <span className="text-muted-foreground">{formatDate(date)}</span>
+          {isUpcoming && (
+            <Badge className="border-transparent bg-primary/15 text-primary">Booked</Badge>
+          )}
+        </div>
+      )
+    },
     sortingFn: "datetime",
   },
   {

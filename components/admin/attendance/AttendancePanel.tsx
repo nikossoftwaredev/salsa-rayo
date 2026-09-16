@@ -16,8 +16,8 @@ interface AttendancePanelProps {
 export type { StudentForAttendance }
 
 const getLastAttendanceTime = (student: StudentForAttendance) =>
-  student.attendances[0]?.createdAt
-    ? new Date(student.attendances[0].createdAt).getTime()
+  student.attendances[0]
+    ? new Date(student.attendances[0].danceClass.date).getTime()
     : 0
 
 export const AttendancePanel = ({

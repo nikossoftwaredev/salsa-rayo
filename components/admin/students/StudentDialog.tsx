@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import { NumericInput } from "@/components/ui/numeric-input"
 import { User, Mail, MapPin, Zap, Trash2, Save, Plus, Loader2 } from "lucide-react"
@@ -34,8 +34,10 @@ import { createStudent } from "@/server-actions/students/create-student"
 import { updateStudent } from "@/server-actions/students/update-student"
 import { deleteStudent } from "@/server-actions/students/delete-student"
 import { updateSubscriptionDates } from "@/server-actions/subscriptions/update-subscription-dates"
+import { updateSubscriptionClasses } from "@/server-actions/subscriptions/update-subscription-classes"
 import { formatDate } from "@/lib/format"
 import { DatePicker } from "@/components/ui/date-picker"
+import { ClassPicker } from "../subscriptions/ClassPicker"
 import { type StudentWithSubscriptions } from "./types"
 
 const DIALOG_KEY = "StudentDialog"
@@ -46,6 +48,9 @@ const toLocalDateString = (date: Date) => {
   const d = String(date.getDate()).padStart(2, "0")
   return `${y}-${m}-${d}`
 }
+
+const haveSameIds = (a: string[], b: string[]) =>
+  a.length === b.length && a.every((id) => b.includes(id))
 
 const getInitialForm = () => ({
   name: "",
@@ -58,6 +63,7 @@ const getInitialForm = () => ({
   rayoPoints: "30",
   joinedDate: toLocalDateString(new Date()),
   subscriptionStartDate: null as string | null,
+  scheduleEntryIds: [] as string[],
 })
 
 export const StudentDialog = () => {
@@ -125,6 +131,20 @@ export const StudentDialog = () => {
         }
       }
 
+      if (isEdit && activeSubscription) {
+        const originalIds = activeSubscription.scheduleEntries.map((e) => e.id)
+        if (!haveSameIds(form.scheduleEntryIds, originalIds)) {
+          const classesResult = await updateSubscriptionClasses({
+            subscriptionId: activeSubscription.id,
+            scheduleEntryIds: form.scheduleEntryIds,
+          })
+          if (!classesResult.success) {
+            setError(classesResult.error)
+            return
+          }
+        }
+      }
+
       handleClose()
       onSuccess?.()
       router.refresh()
@@ -134,6 +154,11 @@ export const StudentDialog = () => {
       setLoading(false)
     }
   }
+
+  const handleClassesChange = useCallback(
+    (scheduleEntryIds: string[]) => setForm((prev) => ({ ...prev, scheduleEntryIds })),
+    []
+  )
 
   const handleDelete = async () => {
     if (!student?.id) return
@@ -168,6 +193,7 @@ export const StudentDialog = () => {
         rayoPoints: student.rayoPoints.toString(),
         joinedDate: toLocalDateString(new Date(student.createdAt)),
         subscriptionStartDate: activeSubscription ? toLocalDateString(new Date(activeSubscription.startDate)) : null,
+        scheduleEntryIds: activeSubscription?.scheduleEntries.map((e) => e.id) ?? [],
       })
     } else {
       setForm(getInitialForm())
@@ -304,6 +330,14 @@ export const StudentDialog = () => {
                 )
               })()}
             </div>
+          )}
+
+          {isEdit && activeSubscription && (
+            <ClassPicker
+              value={form.scheduleEntryIds}
+              onChange={handleClassesChange}
+              lessonsPerWeek={activeSubscription.lessonsPerWeek}
+            />
           )}
 
           {isEdit && (

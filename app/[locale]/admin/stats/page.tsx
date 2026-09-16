@@ -14,6 +14,7 @@ const getMonthLabel = (date: Date) =>
 
 const StatsPage = async () => {
   const now = new Date()
+  const todayClassDate = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()))
 
   const startOfMonth = new Date(now)
   startOfMonth.setDate(1)
@@ -48,8 +49,8 @@ const StatsPage = async () => {
       where: { isActive: true, expiresAt: { gte: now } },
     }),
     prisma.attendance.findMany({
-      where: { createdAt: { gte: twelveWeeksAgo } },
-      select: { createdAt: true },
+      where: { danceClass: { date: { gte: twelveWeeksAgo, lte: todayClassDate } } },
+      select: { danceClass: { select: { date: true } } },
     }),
     prisma.subscription.groupBy({
       by: ["packageName"],
@@ -93,7 +94,7 @@ const StatsPage = async () => {
   }
   for (const record of attendanceRecords) {
     const weeksAgo = Math.floor(
-      (now.getTime() - record.createdAt.getTime()) / (7 * 24 * 60 * 60 * 1000)
+      (todayClassDate.getTime() - record.danceClass.date.getTime()) / (7 * 24 * 60 * 60 * 1000)
     )
     if (weeksAgo >= 0 && weeksAgo < 12) {
       const weekStart = new Date(now)

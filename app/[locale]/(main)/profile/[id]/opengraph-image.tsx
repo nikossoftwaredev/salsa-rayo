@@ -19,6 +19,8 @@ const loadLogo = async () => {
 
 const OGImage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params
+  const now = new Date()
+  const today = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()))
 
   const [user, logoSrc] = await Promise.all([
     prisma.user.findUnique({
@@ -31,7 +33,8 @@ const OGImage = async ({ params }: { params: Promise<{ id: string }> }) => {
             name: true,
             rayoPoints: true,
             createdAt: true,
-            _count: { select: { attendances: true } },
+            // Future bookings are attendance rows too - only classes up to today count
+            _count: { select: { attendances: { where: { danceClass: { date: { lte: today } } } } } },
           },
         },
       },

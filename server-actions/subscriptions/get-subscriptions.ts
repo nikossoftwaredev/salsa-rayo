@@ -7,13 +7,9 @@ const getWeekBounds = () => {
   const now = new Date()
   const dayOfWeek = now.getDay()
   const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek
-  const monday = new Date(now)
-  monday.setDate(now.getDate() + mondayOffset)
-  monday.setHours(0, 0, 0, 0)
-
-  const sunday = new Date(monday)
-  sunday.setDate(monday.getDate() + 6)
-  sunday.setHours(23, 59, 59, 999)
+  // DanceClass.date is stored as UTC midnight of the calendar day
+  const monday = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate() + mondayOffset))
+  const sunday = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate() + mondayOffset + 6))
 
   return { monday, sunday }
 }
@@ -40,6 +36,10 @@ export const getSubscriptions = async () => {
         startDate: true,
         expiresAt: true,
         isActive: true,
+        scheduleEntries: {
+          select: { id: true, dayIndex: true, time: true, title: true },
+          orderBy: [{ dayIndex: "asc" }, { time: "asc" }],
+        },
         transactions: {
           where: {
             createdAt: { gte: monthStart },
@@ -54,7 +54,7 @@ export const getSubscriptions = async () => {
             email: true,
             attendances: {
               where: {
-                createdAt: { gte: monday, lte: sunday },
+                danceClass: { date: { gte: monday, lte: sunday } },
               },
               select: { id: true },
             },

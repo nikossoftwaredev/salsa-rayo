@@ -31,7 +31,7 @@ export const getAllAttendances = async () => {
       return { success: false as const, error: "Unauthorized: Admin access required" }
 
     const attendances: AttendanceRecord[] = await prisma.attendance.findMany({
-      orderBy: { createdAt: "desc" },
+      orderBy: [{ danceClass: { date: "desc" } }, { createdAt: "desc" }],
       select: {
         id: true,
         createdAt: true,

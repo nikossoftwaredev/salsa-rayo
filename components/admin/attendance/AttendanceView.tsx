@@ -34,6 +34,9 @@ const toDayIndex = (date: Date) => {
   return jsDay === 0 ? 7 : jsDay
 }
 
+// How far ahead the calendar lets you book students into classes
+const BOOKING_HORIZON_MONTHS = 3
+
 const toDateString = (date: Date) =>
   new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())).toISOString()
 
@@ -73,13 +76,23 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [todayKey])
 
+  const bookingHorizon = useMemo(() => {
+    const d = new Date(today)
+    d.setMonth(d.getMonth() + BOOKING_HORIZON_MONTHS)
+    return d
+  }, [today])
+
   const disabledDays = useMemo(
     () => [
       (date: Date) => !activeDayIndices.has(toDayIndex(date)),
-      { before: ESTABLISHED_DATE, after: today },
+      { before: ESTABLISHED_DATE, after: bookingHorizon },
     ],
-    [activeDayIndices, today]
+    [activeDayIndices, bookingHorizon]
   )
+
+  // Rows on a future date are bookings, rows up to today are attendance
+  const isFutureDate = selectedDate > today
+  const attendeesLabel = isFutureDate ? "Booked" : "Attendees"
 
   const lessonsForDay = useMemo(
     () => entries.filter((e) => e.dayIndex === dayIndex),
@@ -277,7 +290,7 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
             onSelect={handleDateSelect}
             weekStartsOn={1}
             startMonth={ESTABLISHED_DATE}
-            endMonth={today}
+            endMonth={bookingHorizon}
             disabled={disabledDays}
             className="lg:block"
             classNames={{ month_grid: "lg:text-base" }}
@@ -290,6 +303,11 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
         <div className="mb-6 flex items-baseline gap-3">
           <h3 className="text-2xl font-bold tracking-tight">{dayName}</h3>
           <span className="text-sm text-muted-foreground">{formattedDate}</span>
+          {isFutureDate && (
+            <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
+              Upcoming
+            </span>
+          )}
         </div>
 
         <AnimatePresence mode="wait">
@@ -416,7 +434,7 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                                 {/* Header with save */}
                                 <div className="flex h-14 shrink-0 items-center justify-between border-b px-4">
                                   <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground/60">
-                                    Attendees ({effectiveCount})
+                                    {attendeesLabel} ({effectiveCount})
                                   </p>
                                   <Button
                                     size="sm"
@@ -437,7 +455,9 @@ export const AttendanceView = ({ entries }: AttendanceViewProps) => {
                                   ) : effectiveCount === 0 ? (
                                     <div className="flex flex-col items-center justify-center py-8 text-muted-foreground/50">
                                       <User className="mb-2 size-6 opacity-40" />
-                                      <p className="text-xs">No attendees for this date</p>
+                                      <p className="text-xs">
+                                        {isFutureDate ? "No bookings for this date" : "No attendees for this date"}
+                                      </p>
                                     </div>
                                   ) : (
                                     <div className="space-y-1 py-2">

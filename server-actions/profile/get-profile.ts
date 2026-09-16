@@ -2,6 +2,12 @@
 
 import { prisma } from "@/lib/db";
 
+// Future bookings are attendance rows too - only classes up to today count
+const todayClassDate = () => {
+  const now = new Date();
+  return new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+};
+
 export const getProfile = async (userId: string) =>
   prisma.user.findUnique({
     where: { id: userId },
@@ -19,7 +25,9 @@ export const getProfile = async (userId: string) =>
           rayoPoints: true,
           createdAt: true,
           _count: {
-            select: { attendances: true },
+            select: {
+              attendances: { where: { danceClass: { date: { lte: todayClassDate() } } } },
+            },
           },
         },
       },

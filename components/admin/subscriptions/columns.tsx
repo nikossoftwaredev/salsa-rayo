@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { SubscriptionBadge } from "@/components/ui/subscription-badge"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { copyToClipboard, formatDate } from "@/lib/format"
+import { DAY_NAMES } from "@/data/schedule"
 import { type SubscriptionWithDetails } from "@/server-actions/subscriptions/get-subscriptions"
 
 const packageBadgeStyles: Record<string, string> = {
@@ -54,6 +55,24 @@ export const columns: ColumnDef<SubscriptionWithDetails>[] = [
     cell: ({ row }) => (
       <span className="text-muted-foreground">{row.getValue("lessonsPerWeek")}</span>
     ),
+  },
+  {
+    id: "classes",
+    header: "Classes",
+    cell: ({ row }) => {
+      const entries = row.original.scheduleEntries
+      if (entries.length === 0) return <span className="text-muted-foreground">-</span>
+      return (
+        <div className="space-y-0.5 text-xs">
+          {entries.map((entry) => (
+            <p key={entry.id} className="whitespace-nowrap">
+              <span className="text-muted-foreground">{DAY_NAMES[entry.dayIndex - 1].slice(0, 3)} {entry.time.split(" ")[0]}</span>{" "}
+              {entry.title}
+            </p>
+          ))}
+        </div>
+      )
+    },
   },
   {
     id: "weeklyUsage",

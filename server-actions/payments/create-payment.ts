@@ -19,6 +19,7 @@ interface CreatePaymentInput {
   lessonsPerWeek?: number
   durationDays?: number
   startDate?: string
+  scheduleEntryIds?: string[]
 }
 
 export const createPayment = async (data: CreatePaymentInput) => {
@@ -43,6 +44,7 @@ export const createPayment = async (data: CreatePaymentInput) => {
         durationDays: data.durationDays,
         description: data.description,
         startDate: data.startDate,
+        scheduleEntryIds: data.scheduleEntryIds,
       })
     } else {
       const student = await prisma.student.findUnique({

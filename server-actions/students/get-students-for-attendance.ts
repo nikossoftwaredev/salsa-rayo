@@ -17,6 +17,8 @@ export const getStudentsForAttendance = async (
       return { success: false as const, error: "Unauthorized: Admin access required" }
 
     const search = input?.search?.trim() ?? ""
+    const now = new Date()
+    const today = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()))
 
     const students = await prisma.student.findMany({
       where: { isActive: true },
@@ -32,9 +34,10 @@ export const getStudentsForAttendance = async (
           select: { expiresAt: true },
         },
         attendances: {
-          orderBy: { createdAt: "desc" },
+          where: { danceClass: { date: { lte: today } } },
+          orderBy: { danceClass: { date: "desc" } },
           take: 1,
-          select: { createdAt: true },
+          select: { danceClass: { select: { date: true } } },
         },
       },
       orderBy: { name: "asc" },

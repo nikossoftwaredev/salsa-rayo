@@ -36,7 +36,7 @@ export const AttendanceHistoryTable = ({ data }: AttendanceHistoryTableProps) =>
       columns={columns}
       data={data}
       toolbar={(table) => <AttendanceHistoryToolbar table={table} />}
-      initialSorting={[{ id: "createdAt", desc: true }]}
+      initialSorting={[{ id: "classDate", desc: true }]}
       initialColumnVisibility={initialVisibility}
       storageKey="dt-col-attendance-history"
       meta={meta}

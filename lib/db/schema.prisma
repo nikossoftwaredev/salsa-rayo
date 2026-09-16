@@ -91,6 +91,7 @@ model Subscription {
   stripeSubscriptionId String?       @unique
   stripePriceId        String?
   stripeStatus         String?
+  scheduleEntries      ScheduleEntry[] @relation("SubscriptionScheduleEntries")
   transactions         Transaction[]
   createdAt            DateTime      @default(now())
   updatedAt            DateTime      @updatedAt
@@ -187,6 +188,7 @@ model ScheduleEntry {
   hint        String?
   instructors Instructor[] @relation("ScheduleEntryInstructors")
   danceClasses DanceClass[]
+  subscriptions Subscription[] @relation("SubscriptionScheduleEntries")
   isActive    Boolean      @default(true)
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
